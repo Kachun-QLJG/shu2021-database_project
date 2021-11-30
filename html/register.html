@@ -3,7 +3,55 @@
 <head>
     <meta charset="utf-8">
     <title>注册</title>
-    <script type="text/javascript" src="/p/sha256.js"></script>
+    <script type="text/javascript">
+        function checkphone(){
+            var check = false;
+            var phone = document.getElementById("phone").value;
+            if(phone.length !== 11){
+                document.getElementById("checktext1").innerHTML = " × 请输入正确的手机号";
+                check = false;
+            } else {
+                document.getElementById("checktext1").innerHTML = " √";
+                check = true;
+            }
+            return check;
+        }
+        function checkpwd(){
+            var check = false;
+            var pswd = document.getElementById("pswd").value;
+            if(pswd.length < 6){
+                document.getElementById("checktext2").innerHTML = " × 不要少于6位";
+                check = false;
+            }
+            else {
+                document.getElementById("checktext2").innerHTML = " √";
+                check = true;
+            }
+            return check;
+        }
+        function checkpwdc() {
+            var check = false;
+            var password = document.getElementById("pswd").value;
+            var pwdc = document.getElementById("pwdc").value;
+            if (password !== pwdc) {
+                document.getElementById("checktext3").innerHTML = " × 两次输入密码不一致";
+                check = false;
+            }
+            else {
+                document.getElementById("checktext3").innerHTML = " √";
+                check = true;
+            }
+            return check;
+        }
+        function check() {
+            return checkphone() && checkpwd() && checkpwdc()
+        }
+        function copy() {
+            document.getElementById("phone_number").value = document.getElementById("phone").value;
+            document.getElementById("password").value = document.getElementById("pswd").value;
+            document.getElementById("ver_code").value = document.getElementById("ver").value;
+        }
+    </script>
 </head>
 
 <body>
@@ -11,7 +59,7 @@
     <fieldset>
         <legend> 用户注册 </legend>
         <label> 用户名：</label>
-        <input type="text" id="username" name="username" onKeyUp="value=value.replace(/[\W]/g,'')" onchange="checkusrn()" />
+        <input type="text" id="phone" name="phone" onKeyUp="value=value.replace(\[/D],'')" onchange="checkphone()" />
         <span id="checktext1"></span>
         </br></br>
 
@@ -34,10 +82,10 @@
     </fieldset>
 </form> </br>
 <form action="/register" method="post" onsubmit="return check()">
-    <input type="hidden" id="user" name="username" />
-    <input type="hidden" id="hashpassword" name="password" />
-    <input type="hidden" id="verCode" name="verCode"/>
-    <input type="submit" value="注册" onclick="hashpswd()" />
+    <input type="hidden" id="phone_number" name="phone_number" />
+    <input type="hidden" id="password" name="password" />
+    <input type="hidden" id="ver_code" name="ver_code"/>
+    <input type="submit" value="注册" onclick="copy()"/>
 </form>
 </body>
 </html>
