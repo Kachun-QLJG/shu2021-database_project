@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>退出登录</title>
+</head>
+<body>
+    <font size="3"><b>登录状态：{{.userName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.Group}}</b></font>
+    <br><br>是否退出登录？
+    <br><br>
+    <form action="/logout" method="post">
+        <input type="submit" value="退出登录">
+    </form>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>注册</title>
+    <script type="text/javascript" src="/p/sha256.js"></script>
+</head>
+
+<body>
+<form id="aform">
+    <fieldset>
+        <legend> 用户注册 </legend>
+        <label> 用户名：</label>
+        <input type="text" id="username" name="username" onKeyUp="value=value.replace(/[\W]/g,'')" onchange="checkusrn()" />
+        <span id="checktext1"></span>
+        </br></br>
+
+        <label> 密码：</label>
+        <input type="password" id="pswd" name="pswd" onchange="checkpwd()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+        <span id="checktext2"></span>
+        </br></br>
+
+        <label> 确认密码：</label>
+        <input type="password" id="pwdc" name="pwdc" onchange="checkpwdc()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+        <span id="checktext3"></span>
+        </br></br>
+
+        <label> 验证码：</label>
+        <input type="text" id="ver" name="ver"/>
+        <img src="/captcha" onclick="this.src='/captcha?v='+Math.random()">
+        </br></br>
+
+
+    </fieldset>
+</form> </br>
+<form action="/register" method="post" onsubmit="return check()">
+    <input type="hidden" id="user" name="username" />
+    <input type="hidden" id="hashpassword" name="password" />
+    <input type="hidden" id="verCode" name="verCode"/>
+    <input type="submit" value="注册" onclick="hashpswd()" />
+</form>
+</body>
+</html>
