@@ -1,60 +1,8 @@
 ﻿# Host: 127.0.0.1  (Version: 5.7.26)
-# Date: 2021-11-30 19:54:53
+# Date: 2021-11-30 22:16:27
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
-
-#
-# Structure for table "arrangement"
-#
-
-DROP TABLE IF EXISTS `arrangement`;
-CREATE TABLE `arrangement` (
-  `order_number` varchar(11) NOT NULL,
-  `project_number` varchar(8) NOT NULL,
-  `repairman_number` varchar(8) NOT NULL,
-  `parts_number` varchar(8) NOT NULL,
-  `parts_count` int(2) NOT NULL,
-  `progress` varchar(6) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-#
-# Data for table "arrangement"
-#
-
-/*!40000 ALTER TABLE `arrangement` DISABLE KEYS */;
-/*!40000 ALTER TABLE `arrangement` ENABLE KEYS */;
-
-#
-# Structure for table "attorney"
-#
-
-DROP TABLE IF EXISTS `attorney`;
-CREATE TABLE `attorney` (
-  `number` varchar(11) NOT NULL,
-  `user_id` varchar(8) NOT NULL,
-  `vehicle_number` varchar(17) NOT NULL,
-  `repair_type` varchar(4) DEFAULT NULL,
-  `classification` varchar(4) DEFAULT NULL,
-  `pay_method` varchar(4) DEFAULT NULL,
-  `start_time` varchar(20) NOT NULL,
-  `salesman_id` varchar(8) DEFAULT NULL,
-  `predict_finish_time` varchar(20) DEFAULT NULL,
-  `actual_finish_time` varchar(20) DEFAULT NULL,
-  `rough_problem` varchar(255) NOT NULL,
-  `specific_problem` varchar(255) NOT NULL,
-  `progress` varchar(10) NOT NULL,
-  `total_cost` double(6,2) NOT NULL,
-  PRIMARY KEY (`number`),
-  UNIQUE KEY `uix_attorney_number` (`number`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-#
-# Data for table "attorney"
-#
-
-/*!40000 ALTER TABLE `attorney` DISABLE KEYS */;
-/*!40000 ALTER TABLE `attorney` ENABLE KEYS */;
 
 #
 # Structure for table "auth_session"
@@ -62,19 +10,17 @@ CREATE TABLE `attorney` (
 
 DROP TABLE IF EXISTS `auth_session`;
 CREATE TABLE `auth_session` (
-  `time_hash` varchar(64) NOT NULL,
-  `last_visit` varchar(30) NOT NULL,
-  `username` varchar(20) NOT NULL,
+  `time_hash` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `last_visit` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`time_hash`),
   UNIQUE KEY `uix_auth_session_time_hash` (`time_hash`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 #
 # Data for table "auth_session"
 #
 
-/*!40000 ALTER TABLE `auth_session` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_session` ENABLE KEYS */;
 
 #
 # Structure for table "parts_overview"
@@ -82,17 +28,17 @@ CREATE TABLE `auth_session` (
 
 DROP TABLE IF EXISTS `parts_overview`;
 CREATE TABLE `parts_overview` (
-  `parts_number` varchar(8) NOT NULL,
-  `parts_name` varchar(50) NOT NULL,
-  `parts_cost` double(8,2) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `parts_number` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `parts_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `parts_cost` double(8,2) NOT NULL,
+  PRIMARY KEY (`parts_number`),
+  UNIQUE KEY `uix_parts_overview_parts_number` (`parts_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 #
 # Data for table "parts_overview"
 #
 
-/*!40000 ALTER TABLE `parts_overview` DISABLE KEYS */;
-/*!40000 ALTER TABLE `parts_overview` ENABLE KEYS */;
 
 #
 # Structure for table "repairman"
@@ -100,22 +46,20 @@ CREATE TABLE `parts_overview` (
 
 DROP TABLE IF EXISTS `repairman`;
 CREATE TABLE `repairman` (
-  `number` varchar(8) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `type` varchar(10) NOT NULL,
+  `number` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `current_work_hour` int(4) NOT NULL,
   PRIMARY KEY (`number`),
   UNIQUE KEY `uix_repairman_number` (`number`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 #
 # Data for table "repairman"
 #
 
-/*!40000 ALTER TABLE `repairman` DISABLE KEYS */;
 INSERT INTO `repairman` VALUES ('RE-0246','奚嘉骏','$2a$10$6NBVE248Ig9/TFz9QW9vquTsTH.HLlK2y8M.z4D/FaYA8wsnAnePq','机修工',0),('RE-0248','伍慕庭','$2a$10$pfPLL4MczpKHpmaALWSbCO90wBz47v/Ce6ssN6YUAMVPNMWUsgHVe','电工',0),('RE-0249','夏逸凡','$2a$10$XtptbBnCexoEUmAzLV1TCeqrJTepnKJZsiMgtpYNd76a9/ti6ti.m','钣金工',0),('RE-0251','张霖锋','$2a$10$U159VfMPR9IzZpxlCvdLH.DbUL5Rr.ufYfReUDpWrWlV3wU57Nibi','喷漆工',0);
-/*!40000 ALTER TABLE `repairman` ENABLE KEYS */;
 
 #
 # Structure for table "salesman"
@@ -123,20 +67,18 @@ INSERT INTO `repairman` VALUES ('RE-0246','奚嘉骏','$2a$10$6NBVE248Ig9/TFz9QW
 
 DROP TABLE IF EXISTS `salesman`;
 CREATE TABLE `salesman` (
-  `number` varchar(8) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `number` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`number`),
   UNIQUE KEY `uix_salesman_number` (`number`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 #
 # Data for table "salesman"
 #
 
-/*!40000 ALTER TABLE `salesman` DISABLE KEYS */;
 INSERT INTO `salesman` VALUES ('SA-0246','奚嘉骏','$2a$10$twmzVNJP1m09vTIysSB8K.939/zQ666zv.w96ox2nbr70hqys6NqW'),('SA-0248','伍慕庭','$2a$10$ZUnlWs99.r2rT4vXekXLru4hRRYNVcBKZ/EOs/o.8NoCRh1muE9jq'),('SA-0249','夏逸凡','$2a$10$RNyBPg7160koaffiF.DdIO90b5Fzf1zIcWN8qLvl.PWjsjwjatJrK'),('SA-0251','张霖锋','$2a$10$dsp2i6FCvYzlFvU8pD8R7O/nj/ok5I/R.qSfKlBrrA.rbeQomQOvu');
-/*!40000 ALTER TABLE `salesman` ENABLE KEYS */;
 
 #
 # Structure for table "type_overview"
@@ -144,18 +86,16 @@ INSERT INTO `salesman` VALUES ('SA-0246','奚嘉骏','$2a$10$twmzVNJP1m09vTIysSB
 
 DROP TABLE IF EXISTS `type_overview`;
 CREATE TABLE `type_overview` (
-  `project_number` varchar(8) NOT NULL,
-  `project_name` varchar(100) NOT NULL,
+  `project_number` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `project_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `work_hour` int(3) NOT NULL,
-  `type` varchar(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `type` varchar(10) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 #
 # Data for table "type_overview"
 #
 
-/*!40000 ALTER TABLE `type_overview` DISABLE KEYS */;
-/*!40000 ALTER TABLE `type_overview` ENABLE KEYS */;
 
 #
 # Structure for table "user"
@@ -163,23 +103,22 @@ CREATE TABLE `type_overview` (
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `number` varchar(8) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `property` varchar(4) DEFAULT NULL,
+  `number` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `property` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
   `discount_rate` int(2) DEFAULT NULL,
-  `contact_person` varchar(10) DEFAULT NULL,
-  `contact_tel` varchar(20) NOT NULL,
+  `contact_person` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contact_tel` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`number`),
-  UNIQUE KEY `uix_user_number` (`number`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  UNIQUE KEY `uix_user_number` (`number`),
+  UNIQUE KEY `uix_user_contact_tel` (`contact_tel`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 #
 # Data for table "user"
 #
 
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 #
 # Structure for table "vehicle"
@@ -187,19 +126,79 @@ CREATE TABLE `user` (
 
 DROP TABLE IF EXISTS `vehicle`;
 CREATE TABLE `vehicle` (
-  `number` varchar(17) NOT NULL,
-  `license_number` varchar(10) NOT NULL,
-  `user_id` varchar(8) NOT NULL,
-  `color` varchar(10) NOT NULL,
-  `model` varchar(40) NOT NULL,
-  `type` varchar(10) NOT NULL,
+  `number` varchar(17) COLLATE utf8_unicode_ci NOT NULL,
+  `license_number` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `color` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `model` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`number`),
-  UNIQUE KEY `uix_vehicle_number` (`number`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  UNIQUE KEY `uix_vehicle_number` (`number`),
+  KEY `vehicle_user_id_user_number_foreign` (`user_id`),
+  CONSTRAINT `vehicle_user_id_user_number_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 #
 # Data for table "vehicle"
 #
 
-/*!40000 ALTER TABLE `vehicle` DISABLE KEYS */;
-/*!40000 ALTER TABLE `vehicle` ENABLE KEYS */;
+
+#
+# Structure for table "attorney"
+#
+
+DROP TABLE IF EXISTS `attorney`;
+CREATE TABLE `attorney` (
+  `number` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `vehicle_number` varchar(17) COLLATE utf8_unicode_ci NOT NULL,
+  `repair_type` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `classification` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pay_method` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `start_time` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `salesman_id` varchar(8) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `predict_finish_time` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `actual_finish_time` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `rough_problem` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `specific_problem` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `progress` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `total_cost` double(6,2) NOT NULL,
+  PRIMARY KEY (`number`),
+  UNIQUE KEY `uix_attorney_number` (`number`),
+  KEY `attorney_user_id_user_number_foreign` (`user_id`),
+  KEY `attorney_vehicle_number_vehicle_number_foreign` (`vehicle_number`),
+  KEY `attorney_salesman_id_salesman_number_foreign` (`salesman_id`),
+  CONSTRAINT `attorney_salesman_id_salesman_number_foreign` FOREIGN KEY (`salesman_id`) REFERENCES `salesman` (`number`),
+  CONSTRAINT `attorney_user_id_user_number_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`number`),
+  CONSTRAINT `attorney_vehicle_number_vehicle_number_foreign` FOREIGN KEY (`vehicle_number`) REFERENCES `vehicle` (`number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+#
+# Data for table "attorney"
+#
+
+
+#
+# Structure for table "arrangement"
+#
+
+DROP TABLE IF EXISTS `arrangement`;
+CREATE TABLE `arrangement` (
+  `order_number` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `project_number` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `repairman_number` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `parts_number` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `parts_count` int(2) NOT NULL,
+  `progress` varchar(6) COLLATE utf8_unicode_ci NOT NULL,
+  KEY `arrangement_order_number_attorney_number_foreign` (`order_number`),
+  KEY `arrangement_repairman_number_repairman_number_foreign` (`repairman_number`),
+  KEY `arrangement_parts_number_parts_overview_parts_number_foreign` (`parts_number`),
+  CONSTRAINT `arrangement_order_number_attorney_number_foreign` FOREIGN KEY (`order_number`) REFERENCES `attorney` (`number`),
+  CONSTRAINT `arrangement_parts_number_parts_overview_parts_number_foreign` FOREIGN KEY (`parts_number`) REFERENCES `parts_overview` (`parts_number`),
+  CONSTRAINT `arrangement_repairman_number_repairman_number_foreign` FOREIGN KEY (`repairman_number`) REFERENCES `repairman` (`number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+#
+# Data for table "arrangement"
+#
+
