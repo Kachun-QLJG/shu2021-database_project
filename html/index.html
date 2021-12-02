@@ -3,8 +3,10 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>欢迎使用？？系统</title>
+		<script src="/p/js/axios.js"></script>
+		<script src="/p/js/axios.min.js"></script>
 	</head>
-<body bgcolor="#f0f8ff">
+<body bgcolor="#f0f8ff" id="body">
 
 	<font size="8">欢迎使用？？系统!<br>本页面为临时展示测试页面！</font>
 	<br><br><hr>
@@ -12,5 +14,51 @@
 	<p><a href="/register" title="注册">前往注册（未登录状态）</a></p>
 	<p><a href="/login" title="登录">前往登录（未登录状态）</a></p>
 	<p><a href="/logout" title="退出登录">退出登录（登录状态）</a></p>
+	<p><a href="/changePassword" title="更改密码">更改密码（登录状态）</a></p>
+	<script>
+		window.onload= checkNotification();
+		function checkNotification(){
+			axios({
+			  method: 'get',
+			  url: '/checkNotification'
+			  })
+			  .then(function(response) {
+				var last = JSON.stringify(response.data);
+				if(last !== "null"){
+					var body=document.getElementById("body");
+					var div = document.createElement("div");
+					body.appendChild(div);
+					div.style.cssText = "width: 50%; height: 50%;position: absolute; top: 25%; left: 25%; text-align: center; background-color: white;";
+					div.id = "alert";
+					var title = document.createElement("h1");
+					div.appendChild(title);
+					title.innerHTML = last;
+					var button = document.createElement("button");
+					div.appendChild(button);
+					button.onclick= function () { read(); };
+					button.style.cssText = "width: 50px; height:30px";
+					button.innerHTML = "已读";
+					var button1 = document.createElement("button");
+					div.appendChild(button1);
+					button1.onclick= function () { closeNotification(); };
+					button1.style.cssText = "width: 100px; height:30px";
+					button1.innerHTML = "暂时忽略";
+				}
+			  });
+		}
+		function read(){
+			axios({
+				method: 'get',
+				url: '/read'
+			});
+			closeNotification();
+			checkNotification();
+		}
+		function closeNotification(){
+			var father = document.getElementById("body");
+			var child = document.getElementById("alert");
+			father.removeChild(child);
+		}
+	</script>
 </body>
 </html>
