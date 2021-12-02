@@ -149,7 +149,8 @@ func main() {
 	database.DB().SetConnMaxLifetime(time.Hour * 24 * 21) //设置超时时间
 	// 创建一个默认的路由引擎
 	r := gin.Default()
-	r.Static("/p", "./html/statics") //将相对html的路径替换成相对工程的路径
+	r.Static("/src", "./html/src")
+	r.Static("/src", "./html/src") //将相对html的路径替换成相对工程的路径
 	r.LoadHTMLFiles("./html/login.html", "./html/logout.html", "./html/register.html", "./html/error.html",
 		"./html/success.html", "./html/index.html", "./html/change_password.html") //加载html模板
 	r.Use(Session("SHU")) //验证码生成会使用SHU作为密钥生成session
