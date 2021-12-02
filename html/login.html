@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>登录</title>
+</head>
+
+<body>
+<form action="/login" method="post">
+	<fieldset>
+		<legend> 用户登录 </legend>
+		<label> 用户名（手机号/工号）：</label>
+		<input type="text" name="username"/>
+		</br></br>
+
+		<label> 密码：</label>
+		<input type="password" name="password" onpaste="return false"  onkeydown="if(event.keyCode==32) return false"/>
+		</br></br>
+
+		<label> 验证码：</label>
+		<input type="text" name="ver_code"/>
+		<img src="/captcha" onclick="this.src='/captcha?v='+Math.random()">
+		</br></br>
+		<input type="submit" value="登录" >
+	</fieldset>
+</form> </br>
+</body>
+</html>
