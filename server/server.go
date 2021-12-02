@@ -164,8 +164,11 @@ func main() {
 	r.GET("/addVehicle", addVehicle)                                                    //用户登出
 	r.GET("/changePassword", authMiddleWare(), checkPermission(), startChangePassword)  //更改密码
 	r.GET("/checkNotification", authMiddleWare(), checkPermission(), checkNotification) //检查通知
-	r.GET("/read", authMiddleWare(), checkPermission(), read)                           //设置已读
+	r.GET("/checkGroup", authMiddleWare(), checkPermission(), checkGroup)               //返回用户组
+	r.GET("/checkStatus", authMiddleWare(), checkPermission(), checkStatus)             //返回维修工状态
 
+	r.POST("/changeStatus", authMiddleWare(), checkPermission(), changeStatus)     //后端处理更改密码
+	r.POST("/read", authMiddleWare(), checkPermission(), read)                     //设置已读
 	r.POST("/changePassword", authMiddleWare(), checkPermission(), changePassword) //后端处理更改密码
 	r.POST("/logout", logout)                                                      //后端处理用户登出
 	r.POST("/login", login)                                                        //后端处理用户登陆
@@ -177,6 +180,37 @@ func main() {
 	if err != nil {
 		fmt.Println("启动HTTP服务失败：", err)
 	}
+}
+
+func checkStatus(c *gin.Context) {
+	number := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	if group != "维修员" {
+		c.String(http.StatusForbidden, "错误！")
+		return
+	}
+	var repairman Repairman
+	database.First(&repairman, "number = ?", number)
+	c.String(http.StatusOK, repairman.Status)
+}
+
+func changeStatus(c *gin.Context) {
+	status := c.PostForm("status")
+	number := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	if group != "维修员" {
+		c.String(http.StatusBadRequest, "错误！")
+		return
+	}
+	var repairman Repairman
+	database.First(&repairman, "number = ?", number)
+	database.Model(&repairman).Update("status", status) //更改状态为传过来的状态
+	c.String(http.StatusOK, "修改成功！")
+}
+
+func checkGroup(c *gin.Context) {
+	group := c.MustGet("group").(string)
+	c.String(http.StatusOK, group)
 }
 
 func read(c *gin.Context) {
@@ -390,7 +424,6 @@ func login(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 	value := c.PostForm("ver_code")
-	fmt.Println(username, password)
 	if CaptchaVerify(c, value) { //验证码正确
 		var user User
 		result := database.First(&user, "contact_tel=?", username)
