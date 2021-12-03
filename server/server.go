@@ -1,23 +1,14 @@
 package main
 
 import (
-	"bytes"
-	"crypto/sha256"
-	"encoding/hex"
 	"fmt"
-	"github.com/dchest/captcha"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"golang.org/x/crypto/bcrypt"
-	"net/http"
-	"strings"
 	"time"
 )
 
-type User struct { //客户表
+/*type User struct { //客户表
 	Number        string `gorm:"type:varchar(8);unique_index;not null;primary_key"` //客户编号
 	Password      string `gorm:"type:varchar(255);not null"`                        //密码
 	Name          string `gorm:"type:varchar(100)"`                                 //客户名称
@@ -111,7 +102,7 @@ type AuthSession struct { //登录表
 	TimeHash  string `gorm:"type:varchar(64);not null;unique_index;primary_key"` //时间戳的哈希值
 	LastVisit string `gorm:"type:varchar(30);not null"`                          //最后一次访问的时间戳（精确到秒）
 	Username  string `gorm:"type:varchar(20);not null"`                          //当前session对应的用户信息
-}
+}*/
 
 var database, databaseERR = gorm.Open("mysql", "admin:123456@(127.0.0.1:3306)/database?charset=utf8mb4&parseTime=True&loc=Local")
 
@@ -185,7 +176,7 @@ func main() {
 	}
 }
 
-func test(c *gin.Context) {
+/*func test(c *gin.Context) {
 	text := c.Query("text")
 	searchText := "%" + strings.ToLower(text) + "%"
 	var typeOverview []TypeOverview
@@ -370,10 +361,10 @@ func welcome(c *gin.Context) {
 		}
 	}
 	c.HTML(http.StatusOK, "index.html", gin.H{"username": username, "group": group})
-}
+}*/
 
 //-----------------------------登录与登出---------------------------------------------
-func startLogout(c *gin.Context) {
+/*func startLogout(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	c.HTML(http.StatusOK, "logout.html", gin.H{"username": username, "group": group})
@@ -558,10 +549,10 @@ func checkPermission() gin.HandlerFunc {
 			}
 		}
 	}
-}
+}*/
 
 //-----------------------------验证码-------------------------------------------------------------
-func Session(keyPairs string) gin.HandlerFunc {
+/*func Session(keyPairs string) gin.HandlerFunc {
 	store := SessionConfig()
 	return sessions.Sessions(keyPairs, store)
 }
@@ -631,4 +622,4 @@ func Serve(w http.ResponseWriter, r *http.Request, id, ext, lang string, downloa
 	}
 	http.ServeContent(w, r, id+ext, time.Time{}, bytes.NewReader(content.Bytes()))
 	return nil
-}
+}*/
