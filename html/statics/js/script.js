@@ -139,3 +139,38 @@ function checkUser(){
 			}
 		})
 }
+
+function test(){
+	axios({
+		method: 'get',
+		url: '/test?text='+document.getElementById("txt").value
+	})
+		.then(function(response) {
+			try {
+				var text = document.getElementById("res");
+				text.innerHTML = JSON.stringify(response.data);
+			}catch (error)
+			{
+				var div = document.getElementById("test_div");
+				var result_div = document.createElement("div");
+				div.appendChild(result_div);
+				result_div.id = "result";
+				result_div.style.cssText = "width: 200px; height: 200px;position: relative; text-align: left; background-color: red; margin-left:10%";
+				var text = document.createElement("p");
+				result_div.appendChild(text);
+				text.id = "res";
+				text.innerHTML = JSON.stringify(response.data);
+			}
+		})
+}
+
+function deltest(){
+	try {
+		var div = document.getElementById("test_div");
+		var res = document.getElementById("result");
+		div.removeChild(res);
+	}catch (error)
+	{
+
+	}
+}
