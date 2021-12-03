@@ -141,6 +141,7 @@ function checkUser(){
 }
 
 function test(){
+	if(document.getElementById("txt").value === "") return;
 	axios({
 		method: 'get',
 		url: '/test?text='+document.getElementById("txt").value
