@@ -11,7 +11,7 @@
 	<script src="/p/js/script.js"></script>
 	<title>欢迎使用？？系统</title>
 </head>
-<body bgcolor="#f0f8ff">
+<body bgcolor="#f0f8ff" id="body">
 <div class="navbar-header" id="head1">
 	<a class="navbar-brand">502汽修厂管理系统</a>
 </div>
@@ -30,7 +30,7 @@
 	</ul>
 	-->
 	<ul class="nav navbar-nav navbar-right">
-		<li><a>用户名：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}（登录状态）</a></li>
+		<li><a id="text">用户名：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}（登录状态）</a></li>
 		<li><a href="/register" title="注册">前往注册（未登录状态）</a></li>
 		<li><a href="/login" title="登录">前往登录（未登录状态）</a></li>
 		<li><a href="/logout" title="退出登录">退出登录（登录状态）</a></li>
