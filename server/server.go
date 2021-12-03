@@ -43,9 +43,10 @@ type Repairman struct { //维修员表
 }
 
 type TypeOverview struct { //工种总览表
-	ProjectNumber string `gorm:"type:varchar(8);unique_index;not null;primary_key"` //维修项目编号
-	ProjectName   string `gorm:"type:varchar(100);not null"`                        //维修项目名称
-	Type          string `gorm:"type:varchar(10);not null;primary_key"`             //工种
+	ProjectNumber   string `gorm:"type:varchar(8);unique_index;not null;primary_key"` //维修项目编号
+	ProjectName     string `gorm:"type:varchar(100);not null"`                        //维修项目名称
+	Type            string `gorm:"type:varchar(10);not null;primary_key"`             //工种
+	ProjectSpelling string `gorm:"type:varchar(50);not null;primary_key"`             //项目名称首字母
 }
 
 type PartsOverview struct { //零件总览表
@@ -167,6 +168,7 @@ func main() {
 	r.GET("/checkNotification", authMiddleWare(), checkPermission(), checkNotification) //检查通知
 	r.GET("/checkGroup", authMiddleWare(), checkPermission(), checkGroup)               //返回用户组
 	r.GET("/checkStatus", authMiddleWare(), checkPermission(), checkStatus)             //返回维修工状态
+	r.GET("/test", authMiddleWare(), checkPermission(), test)                           //测试
 
 	r.POST("/changeStatus", authMiddleWare(), checkPermission(), changeStatus)     //后端处理更改密码
 	r.POST("/read", authMiddleWare(), checkPermission(), read)                     //设置已读
@@ -181,6 +183,28 @@ func main() {
 	if err != nil {
 		fmt.Println("启动HTTP服务失败：", err)
 	}
+}
+
+func test(c *gin.Context) {
+	text := c.Query("text")
+	searchText := "%" + strings.ToLower(text) + "%"
+	var typeOverview []TypeOverview
+	if searchText[1] >= 'a' && searchText[1] <= 'z' {
+		database.Limit(10).Where("project_spelling LIKE ?", searchText).Find(&typeOverview)
+	} else {
+		database.Limit(10).Where("project_name LIKE ?", searchText).Find(&typeOverview)
+	}
+	var result [10]struct {
+		Name string
+		Id   string
+	}
+	count := 0
+	for row := range typeOverview {
+		result[count].Id = typeOverview[row].ProjectNumber
+		result[count].Name = typeOverview[row].ProjectName
+		count++
+	}
+	c.JSON(http.StatusOK, result)
 }
 
 func checkStatus(c *gin.Context) {

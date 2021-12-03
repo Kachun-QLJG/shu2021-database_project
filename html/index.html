@@ -29,12 +29,12 @@
 		<li><a>系统设置</a></li>
 	</ul>
 	-->
-	<ul class="nav navbar-nav navbar-right">
-		<li><a id="text">用户名：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}（登录状态）</a></li>
-		<li><a href="/register" title="注册">前往注册（未登录状态）</a></li>
-		<li><a href="/login" title="登录">前往登录（未登录状态）</a></li>
-		<li><a href="/logout" title="退出登录">退出登录（登录状态）</a></li>
-		<li><a href="/changePassword" title="更改密码">更改密码（登录状态）</a></li>
+	<ul id="navbar" class="nav navbar-nav navbar-right" >
+		<li><a id="text">用户名：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}</a></li>
+		<li><a id="register" href="/register" title="注册" >前往注册</a></li>
+		<li><a id="login"href="/login" title="登录">前往登录</a></li>
+		<li><a id="logout"href="/logout" title="退出登录">退出登录</a></li>
+		<li><a id="changePassword"href="/changePassword" title="更改密码">更改密码</a></li>
 	</ul>
 </div>
 
@@ -139,10 +139,16 @@
 	</div>
 </div>
 
+<div id="test_div">
+	<h1>【登录可用】根据维修项目名称查询维修项目（可以输入首字母）：</h1>
+	<input id="txt" onblur="deltest()" onfocus="test()" oninput="test()" placeholder="即时查询" style="margin-left: 10%" width="100px"/>
+</div>
+
 <script>
 	window.onload= function(){
 		checkNotification();
-		checkGroup()
+		checkGroup();
+		checkUser();
 	}
 </script>
 
