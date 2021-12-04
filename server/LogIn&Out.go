@@ -94,6 +94,7 @@ func login(c *gin.Context) {
 				goto CORRECT
 			} else { //密码比对不通过
 				c.HTML(http.StatusBadRequest, "error.html", gin.H{"errdata": "登录失败！", "website": "/login", "webName": "登录页面"})
+				return
 			}
 		} else { //不是用户表里的，找业务员表和维修员表
 			var repairMan Repairman
@@ -103,6 +104,7 @@ func login(c *gin.Context) {
 					goto CORRECT
 				} else { //密码比对不通过
 					c.HTML(http.StatusBadRequest, "error.html", gin.H{"errdata": "登录失败！", "website": "/login", "webName": "登录页面"})
+					return
 				}
 			} else { //不是用户表和维修员表里的，找业务员表
 				var salesman Salesman
@@ -112,7 +114,11 @@ func login(c *gin.Context) {
 						goto CORRECT
 					} else { //密码比对不通过
 						c.HTML(http.StatusBadRequest, "error.html", gin.H{"errdata": "登录失败！", "website": "/login", "webName": "登录页面"})
+						return
 					}
+				} else {
+					c.HTML(http.StatusBadRequest, "error.html", gin.H{"errdata": "登录失败！", "website": "/login", "webName": "登录页面"})
+					return
 				}
 			}
 		}
