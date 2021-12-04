@@ -4,7 +4,7 @@ function checkGroup(){
 		url: '/checkGroup'
 	})
 	.then(function(response){
-		if(response.data == "维修员"){
+		if(response.data === "维修员"){
 			document.getElementById("register").style.display="none";
 			var text = document.getElementById("text");
 			axios({
@@ -40,13 +40,13 @@ function checkGroup(){
 				option3.innerHTML = "离职";
 				console.log(response1.data);
 				console.log(response1.data);
-				if(response1.data == "正常"){
+				if(response1.data === "正常"){
 					option1.setAttribute("selected", true);
 				}
-				if(response1.data == "休假"){
+				if(response1.data === "休假"){
 					option2.setAttribute("selected", true);
 				}
-				if(response1.data == "离职"){
+				if(response1.data === "离职"){
 					option3.setAttribute("selected", true);
 				}
 
