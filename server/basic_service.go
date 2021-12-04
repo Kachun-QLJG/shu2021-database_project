@@ -178,20 +178,24 @@ func welcome(c *gin.Context) {
 	result := database.First(&user, "contact_tel = ?", username)
 	if result.RowsAffected == 1 {
 		group = "普通用户"
+		c.HTML(http.StatusOK, "customer_index.html", gin.H{"username": username, "group": group})
 	} else {
 		var repairman Repairman
 		result := database.First(&repairman, "number = ?", username)
 		if result.RowsAffected == 1 {
 			group = "维修员"
+			c.HTML(http.StatusOK, "repairman_index.html", gin.H{"username": username, "group": group})
 		} else {
 			var salesman Salesman
 			result := database.First(&salesman, "number = ?", username)
 			if result.RowsAffected == 1 {
 				group = "业务员"
+				c.HTML(http.StatusOK, "salesman_index.html", gin.H{"username": username, "group": group})
 			} else {
 				group = "未登录"
+				c.HTML(http.StatusOK, "index.html", gin.H{"username": username, "group": group})
 			}
 		}
 	}
-	c.HTML(http.StatusOK, "index.html", gin.H{"username": username, "group": group})
+	//c.HTML(http.StatusOK, "index.html", gin.H{"username": username, "group": group})
 }
