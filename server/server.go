@@ -144,13 +144,17 @@ func main() {
 	r.Static("/p", "./html/statics")
 	r.Static("/src", "./html/src") //将相对html的路径替换成相对工程的路径
 	r.LoadHTMLFiles("./html/login.html", "./html/logout.html", "./html/register.html", "./html/error.html",
-		"./html/success.html", "./html/index.html", "./html/change_password.html") //加载html模板
+		"./html/success.html", "./html/index.html", "./html/change_password.html", "./html/customer_index.html",
+		"./html/salesman_index.html", "./html/repairman_index.html") //加载html模板
 	r.Use(Session("SHU")) //验证码生成会使用SHU作为密钥生成session
 	// 	GET：请求方式；/index：请求的路径
 	// 	当客户端以GET方法请求/index路径时，会执行后面的匿名函数
 	//	authMiddleWare是一个中间件，用以检查cookie来判断用户是否登录。并将用户名提交给下一个中间件checkPermission。
 	//	checkPermission也是一个中间件，用以判断已登录用户所处的组别。并将用户名与组别提交给下一个匿名函数。
 	r.GET("/index", welcome)                                                            //用户登录
+	r.GET("/customer_index", welcome)                                                   //顾客登录
+	r.GET("/repairman_index", welcome)                                                  //维修员登录
+	r.GET("/salesman_index", welcome)                                                   //业务员登录
 	r.GET("/register", startRegister)                                                   //用户注册
 	r.GET("/login", startLogin)                                                         //用户登录
 	r.GET("/logout", authMiddleWare(), checkPermission(), startLogout)                  //用户登出
