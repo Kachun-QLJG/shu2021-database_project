@@ -44,6 +44,7 @@ func Captcha(c *gin.Context, length ...int) {
 	_ = session.Save()
 	_ = Serve(c.Writer, c.Request, captchaId, ".png", "zh", false, w, h)
 }
+
 func CaptchaVerify(c *gin.Context, code string) bool {
 	session := sessions.Default(c)
 	if captchaId := session.Get("captcha"); captchaId != nil {
@@ -58,6 +59,7 @@ func CaptchaVerify(c *gin.Context, code string) bool {
 		return false
 	}
 }
+
 func Serve(w http.ResponseWriter, r *http.Request, id, ext, lang string, download bool, width, height int) error {
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Pragma", "no-cache")
