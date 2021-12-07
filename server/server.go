@@ -13,7 +13,11 @@ var database, databaseERR = gorm.Open("mysql", "admin:123456@(127.0.0.1:3306)/da
 //连接mysql数据库
 
 func main() {
-	connectToSql(database, databaseERR)
+	if databaseERR != nil {
+		panic(databaseERR)
+	}
+	defer database.Close()
+	connectToSql(database)
 
 	database.DB().SetConnMaxLifetime(time.Hour * 24 * 21) //设置连接数据库超时时间
 	// 创建一个默认的路由引擎

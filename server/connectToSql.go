@@ -2,16 +2,7 @@ package main
 
 import "github.com/jinzhu/gorm"
 
-func connectToSql(database *gorm.DB, databaseERR error) {
-	if databaseERR != nil {
-		panic(databaseERR)
-	}
-	defer func(database *gorm.DB) {
-		err := database.Close()
-		if err != nil {
-
-		}
-	}(database)
+func connectToSql(database *gorm.DB) {
 	database.SingularTable(true)
 	database.InstantSet("gorm:table_options", "ENGINE=InnoDB")
 	// 刷新数据库中的表格定义，使其保持最新（只增不减）
