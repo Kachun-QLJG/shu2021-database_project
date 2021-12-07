@@ -16,7 +16,12 @@ func main() {
 	if databaseERR != nil {
 		panic(databaseERR)
 	}
-	defer database.Close()
+	defer func(database *gorm.DB) {
+		err := database.Close()
+		if err != nil {
+
+		}
+	}(database)
 	connectToSql(database)
 
 	database.DB().SetConnMaxLifetime(time.Hour * 24 * 21) //设置连接数据库超时时间
