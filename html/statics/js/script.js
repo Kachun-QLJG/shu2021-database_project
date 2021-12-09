@@ -13,10 +13,9 @@ function checkGroup(){
 			})
 				.then(function(response1){
 					text.innerHTML = text.innerHTML + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;工作状态：" + response1.data;
-				var body = document.getElementById("body");
-				var div = document.createElement("div");
+				var body = document.getElementById("con");
+				var div = document.getElementById("test_div");
 				body.appendChild(div);
-				div.id = "status";
 				var h1 = document.createElement("h1");
 				div.appendChild(h1);
 				h1.style.cssText = "display: inline-block;";
