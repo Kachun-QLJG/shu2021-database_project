@@ -9,6 +9,16 @@ import (
 	"time"
 )
 
+func startChangeStatus(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	if group != "维修员" {
+		c.HTML(http.StatusOK, "error.html", gin.H{"data": "无权限！", "website": "/index", "webName": "主页"})
+		return
+	}
+	c.HTML(http.StatusOK, "repairman_status_change.html", gin.H{"username": username, "group": group})
+}
+
 func test(c *gin.Context) {
 	text := c.Query("text")
 	searchText := "%" + strings.ToLower(text) + "%"

@@ -4,8 +4,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="stylesheet" href="/src/styles/bootstrap.min.css">
-	<link rel="stylesheet" href="/src/styles/style.css">
+	<link href="/src/styles/bootstrap.min.css" rel="stylesheet">
+	<link href="/src/styles/style.css" rel="stylesheet">
 	<script src="/statics/js/axios.js"></script>
 	<script src="/statics/js/axios.min.js"></script>
 	<script src="/statics/js/script.js"></script>
@@ -43,107 +43,26 @@
 	<div class="row">
 		<!--左导航栏-->
 		<div class="hidden-xs  col-md-2">
-			<div class="customer_function">
-				<a class="customer_function-item customer_function-item-success">
+			<div class="list-group">
+				<a class="list-group-item list-group-item-success">
 					功能
 				</a>
-				<a class="customer_function-item"></a>
-				<a class="customer_function-item">更改个人信息</a>
-				<a class="customer_function-item">更改密码</a>
-				<a class="customer_function-item">绑定车辆</a>
-				<a class="customer_function-item">查看申请详情</a>
+				<a class="list-group-item">更改个人信息</a>
+				<a class="list-group-item" href="/changePassword">更改密码</a>
+				<a class="list-group-item">绑定车辆</a>
+				<a class="list-group-item">查看申请详情</a>
 			</div>
-
-			<!--
-			<div class="list-group">
-				<a class="list-group-item list-group-item-info">
-					订单管理
-				</a>
-				<a class="list-group-item">订单列表</a>
-				<a class="list-group-item">订单查询</a>
-				<a class="list-group-item">订单打印</a>
-				<a class="list-group-item">缺货登记</a>
-				<a class="list-group-item">添加订单</a>
-			</div>
-
-			<div class="list-group">
-				<a class="list-group-item list-group-item-danger">
-					物流管理
-				</a>
-				<a class="list-group-item">已发货物流</a>
-				<a class="list-group-item">物流查询</a>
-				<a class="list-group-item">新增物流</a>
-				<a class="list-group-item">已到货物流</a>
-			</div>
-			-->
 		</div>
-
 		<!--右导航栏-->
 		<div class="col-xs-10" id="con">
 			<div class="container-fluid">
-				<form class="navbar-form navbar-left" role="search">
-					<div class="form-group">
-						<lable></lable>
-						<input type="text" class="form-control" ng-change="filterchange($event)" ng-model="filtervalue" placeholder="商品编号/名称关键字">
-					</div>
-					<button type="submit" class="btn btn-default">搜索商品</button>
-
-					<!-- Standard button -->
-					<button type="button" class="btn btn-primary">高级搜索</button>
-					<!-- Large modal -->
-					<!-- Indicates a successful or positive action -->
-					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" ng-click="addgoodbtn()">添加商品</button>
-
-					<!-- Contextual button for informational alert messages -->
-					<button type="button" class="btn btn-info">查看选中</button>
-
-					<!-- Indicates caution should be taken with this action -->
-					<button type="button" class="btn btn-warning">修改选中</button>
-
-					<!-- Indicates a dangerous or potentially negative action -->
-					<button type="button" class="btn btn-danger" ng-click="deleteAll()">全选删除</button>
-				</form>
-			</div>
-
-			<div class="table-responsive">
-				<table class="table  table-bordered table-hover">
-					<tr>
-						<th>
-							<input type="checkbox" ng-model="checkAll" ng-click="checkclick()">
-						</th>
-						<th>商品id</th>
-						<th>商品编号</th>
-						<th>商品名称</th>
-						<th>原价格</th>
-						<th>现价格</th>
-						<th>规格</th>
-						<<th>图片</th>
-						<th>操作</th>
-					</tr>
-
-					<tr ng-repeat="item in list | filter:listfilter">
-						<td><input type="checkbox" ng-model="checkbool" ng-click="checkinput($event,item.id)"></td>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>4</td>
-						<td>5</td>
-						<td>6</td>
-						<td><img class="img-responsive" ng-src="" width="20" alt=""/></td>
-						<td>
-							<a ng-click="changegood($event)" data-id="修改1" data-toggle="modal" data-target="#myModal">修改</a>
-							<a ng-click="deletegood($event)" data-id="删除1">删除</a>
-						</td>
-					</tr>
-				</table>
+				<div id="test_div">
+					<h1>【登录可用】根据维修项目名称查询维修项目（可以输入首字母）：</h1>
+					<input id="txt" onblur="deltest()" onfocus="test()" oninput="test()" placeholder="即时查询" style="margin-left: 10%" width="100px"/>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-
-<div id="test_div">
-	<h1>【登录可用】根据维修项目名称查询维修项目（可以输入首字母）：</h1>
-	<input id="txt" onblur="deltest()" onfocus="test()" oninput="test()" placeholder="即时查询" style="margin-left: 10%" width="100px"/>
 </div>
 
 <script>
