@@ -171,7 +171,33 @@ function deltest(){
 		var res = document.getElementById("result");
 		div.removeChild(res);
 	}catch (error)
-	{
+	{}
+}
 
-	}
+function getinfo(){
+	axios({
+		method : 'get',
+		url: '/userinfo'
+	})
+	.then(function(response){
+		var data = response.data
+		for(var k in data ){//遍历packJson 对象的每个key/value对,k为key
+			var div = document.getElementById("info");
+			info.innerHTML = info.innerHTML + "<br>" + k +": " + data[k];
+		}
+	})
+}
+
+function changeinfo(){
+	let formData = new FormData();
+	formData.append("name", "郑宇");
+	formData.append("property", "个人");
+	formData.append("contact_person", "郑宇");
+	let config = {
+	   headers: {"Content-Type": "multipart/form-data"}
+	};
+	axios.post("/change_userinfo", formData, config).then(res => {
+				 alert(res.data);
+				 location.reload();
+			})
 }

@@ -20,13 +20,15 @@ func addPath(r *gin.Engine) {
 	r.GET("/checkGroup", authMiddleWare(), checkPermission(), checkGroup)               //返回用户组
 	r.GET("/checkStatus", authMiddleWare(), checkPermission(), checkStatus)             //返回维修工状态
 	r.GET("/test", authMiddleWare(), checkPermission(), test)                           //测试
+	r.GET("/change_status", authMiddleWare(), checkPermission(), startChangeStatus)     //进入更改工作状态界面
+	r.GET("/userinfo", authMiddleWare(), checkPermission(), userinfo)                   //查询用户个人信息
 
-	r.POST("/changeStatus", authMiddleWare(), checkPermission(), changeStatus)      //后端处理更改密码
-	r.POST("/read", authMiddleWare(), checkPermission(), read)                      //设置已读
-	r.POST("/changePassword", authMiddleWare(), checkPermission(), changePassword)  //后端处理更改密码
-	r.POST("/logout", logout)                                                       //后端处理用户登出
-	r.POST("/login", login)                                                         //后端处理用户登陆
-	r.POST("/register", register)                                                   //后端处理用户注册
-	r.GET("/captcha", func(c *gin.Context) { Captcha(c, 4) })                       //随机生成一个4位数字验证码
-	r.GET("/change_status", authMiddleWare(), checkPermission(), startChangeStatus) //进入更改工作状态界面
+	r.POST("/change_userinfo", authMiddleWare(), checkPermission(), changeUserinfo)
+	r.POST("/changeStatus", authMiddleWare(), checkPermission(), changeStatus)     //后端处理更改密码
+	r.POST("/read", authMiddleWare(), checkPermission(), read)                     //设置已读
+	r.POST("/changePassword", authMiddleWare(), checkPermission(), changePassword) //后端处理更改密码
+	r.POST("/logout", logout)                                                      //后端处理用户登出
+	r.POST("/login", login)                                                        //后端处理用户登陆
+	r.POST("/register", register)                                                  //后端处理用户注册
+	r.GET("/captcha", func(c *gin.Context) { Captcha(c, 4) })                      //随机生成一个4位数字验证码
 }
