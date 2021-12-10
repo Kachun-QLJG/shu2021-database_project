@@ -1,3 +1,58 @@
+function displayChangeStatus() {
+	document.getElementById("register").style.display="none";
+	var text = document.getElementById("text");
+	axios({
+		method : 'get',
+		url: '/checkStatus'
+	})
+		.then(function(response1) {
+			text.innerHTML = text.innerHTML + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;工作状态：" + response1.data;
+			var body = document.getElementById("con");
+			var div = document.getElementById("test_div");
+			body.appendChild(div);
+			var h1 = document.createElement("h1");
+			div.appendChild(h1);
+			h1.style.cssText = "display: inline-block;";
+			h1.innerHTML = "更改工作状态：";
+			var select = document.createElement("select");
+			select.id = "select";
+			div.appendChild(select);
+			select.name = "status";
+
+			var option1 = document.createElement("option");
+			select.appendChild(option1);
+			option1.value = "正常";
+			option1.innerHTML = "正常";
+			var option2 = document.createElement("option");
+			select.appendChild(option2);
+			option2.value = "休假";
+			option2.innerHTML = "休假";
+			var option3 = document.createElement("option");
+			select.appendChild(option3);
+			option3.value = "离职";
+			option3.innerHTML = "离职";
+			console.log(response1.data);
+			console.log(response1.data);
+			if (response1.data === "正常") {
+				option1.setAttribute("selected", true);
+			}
+			if (response1.data === "休假") {
+				option2.setAttribute("selected", true);
+			}
+			if (response1.data === "离职") {
+				option3.setAttribute("selected", true);
+			}
+
+			var button = document.createElement("button");
+			div.appendChild(button);
+			button.onclick = function () {
+				changeStatus();
+			};
+			button.style.cssText = "width: 50px; height:20px";
+			button.innerHTML = "更改";
+		})
+}
+
 function checkGroup(){
 	axios({
 		method : 'get',
@@ -5,60 +60,11 @@ function checkGroup(){
 	})
 	.then(function(response){
 		if(response.data === "维修员"){
-			document.getElementById("register").style.display="none";
-			var text = document.getElementById("text");
-			axios({
-				method : 'get',
-				url: '/checkStatus'
-			})
-				.then(function(response1){
-					text.innerHTML = text.innerHTML + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;工作状态：" + response1.data;
-				var body = document.getElementById("con");
-				var div = document.getElementById("test_div");
-				body.appendChild(div);
-				var h1 = document.createElement("h1");
-				div.appendChild(h1);
-				h1.style.cssText = "display: inline-block;";
-				h1.innerHTML = "更改工作状态：";
-				var select = document.createElement("select");
-				select.id = "select";
-				div.appendChild(select);
-				select.name = "status";
-
-				var option1 = document.createElement("option");
-				select.appendChild(option1);
-				option1.value = "正常";
-				option1.innerHTML = "正常";
-				var option2 = document.createElement("option");
-				select.appendChild(option2);
-				option2.value = "休假";
-				option2.innerHTML = "休假";
-				var option3 = document.createElement("option");
-				select.appendChild(option3);
-				option3.value = "离职";
-				option3.innerHTML = "离职";
-				console.log(response1.data);
-				console.log(response1.data);
-				if(response1.data === "正常"){
-					option1.setAttribute("selected", true);
-				}
-				if(response1.data === "休假"){
-					option2.setAttribute("selected", true);
-				}
-				if(response1.data === "离职"){
-					option3.setAttribute("selected", true);
-				}
-
-				var button = document.createElement("button");
-				div.appendChild(button);
-				button.onclick= function () { changeStatus(); };
-				button.style.cssText = "width: 50px; height:20px";
-				button.innerHTML = "更改";
-
-				})
+			displayChangeStatus()
 		}
 	})
 }
+
 function changeStatus(){		//https://blog.csdn.net/weixin_41949511/article/details/93630346
 	axios({
 		method: 'post',
@@ -181,7 +187,7 @@ function getinfo(){
 	.then(function(response){
 		var data = response.data
 		for(var k in data ){//遍历packJson 对象的每个key/value对,k为key
-			var div = document.getElementById("info");
+			var info = document.getElementById("info");
 			info.innerHTML = info.innerHTML + "<br>" + k +": " + data[k];
 		}
 	})

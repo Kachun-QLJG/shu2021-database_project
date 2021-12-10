@@ -1,59 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"strings"
 	"time"
 )
-
-func changeUserinfo(c *gin.Context) {
-	number := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	name := c.PostForm("name")
-	property := c.PostForm("property")
-	contactPerson := c.PostForm("contact_person")
-	if group != "普通用户" {
-		c.String(http.StatusForbidden, "错误！")
-		return
-	}
-	var user User
-	database.First(&user, "contact_tel = ?", number)
-	database.Model(&user).Update("name", name)                    //更改状态为传过来的状态
-	database.Model(&user).Update("property", property)            //更改状态为传过来的状态
-	database.Model(&user).Update("contact_person", contactPerson) //更改状态为传过来的状态
-	c.String(http.StatusOK, "成功！")
-}
-
-func userinfo(c *gin.Context) {
-	number := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	if group != "普通用户" {
-		c.String(http.StatusForbidden, "错误！")
-		return
-	}
-	var user User
-	database.First(&user, "contact_tel = ?", number)
-	c.JSON(http.StatusOK, gin.H{
-		"number":         user.Number,
-		"name":           user.Name,
-		"property":       user.Property,
-		"discount_rate":  user.DiscountRate,
-		"contact_person": user.ContactPerson,
-		"contact_tel":    user.ContactTel})
-}
-
-func startChangeStatus(c *gin.Context) {
-	username := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	if group != "维修员" {
-		c.HTML(http.StatusOK, "error.html", gin.H{"data": "无权限！", "website": "/index", "webName": "主页"})
-		return
-	}
-	c.HTML(http.StatusOK, "repairman_status_change.html", gin.H{"username": username, "group": group})
-}
 
 func test(c *gin.Context) {
 	text := c.Query("text")
@@ -75,32 +28,6 @@ func test(c *gin.Context) {
 		count++
 	}
 	c.JSON(http.StatusOK, result)
-}
-
-func checkStatus(c *gin.Context) {
-	number := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	if group != "维修员" {
-		c.String(http.StatusForbidden, "错误！")
-		return
-	}
-	var repairman Repairman
-	database.First(&repairman, "number = ?", number)
-	c.String(http.StatusOK, repairman.Status)
-}
-
-func changeStatus(c *gin.Context) {
-	status := c.PostForm("status")
-	number := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	if group != "维修员" {
-		c.String(http.StatusBadRequest, "错误！")
-		return
-	}
-	var repairman Repairman
-	database.First(&repairman, "number = ?", number)
-	database.Model(&repairman).Update("status", status) //更改状态为传过来的状态
-	c.String(http.StatusOK, "修改成功！")
 }
 
 func checkGroup(c *gin.Context) {
@@ -182,24 +109,6 @@ func changePassword(c *gin.Context) {
 		} else {
 			c.HTML(http.StatusOK, "error.html", gin.H{"data": "密码错误！", "website": "/change_password", "webName": "修改密码页面"})
 		}
-	}
-}
-
-func addVehicle(c *gin.Context) {
-	number := c.Query("number")
-	licenseNumber := c.Query("license_number")
-	userId := c.Query("user_id")
-	color := c.Query("color")
-	model := c.Query("model")
-	carType := c.Query("type")
-	sTime := time.Now().Format("2006-01-02 15:04:05")
-	data := Vehicle{number, licenseNumber, userId, color, model, carType, sTime}
-	err := database.Create(&data)
-	strErr := fmt.Sprintf("%v", err.Error)
-	if strErr != "<nil>" {
-		c.HTML(http.StatusForbidden, "error.html", gin.H{"errdata": "注册失败！" + strErr, "website": "/register", "webName": "注册页面"})
-	} else {
-		c.HTML(http.StatusOK, "success.html", gin.H{"data": "注册成功！", "website": "/login", "webName": "登录页面"})
 	}
 }
 
