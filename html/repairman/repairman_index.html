@@ -11,8 +11,8 @@
 	<script src="/statics/js/script.js"></script>
 
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-	<!--<script src="/src/script/libs/bootstrap.min.js"></script>-->
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!--<script src="/src/script/libs/bootstrap.min.js"></script>-->
 	<!--<script src="/src/script/libs/jquery.min.js"></script>-->
 
 	<title>欢迎使用502汽修管理系统</title>
@@ -75,10 +75,10 @@
 					<h3 class="modal-title" id="myModalLabel">您确定要登出当前账号吗？</h3>
 					<h4 class="modal-body">当前登录状态：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}</h4>
 				</div>
-				<div class="modal-footer">
-					<button action="/logout" method="post" type="submit" value="退出登录" class="btn btn-primary">退出登录</button>
+				<form class="modal-footer" action="/logout" method="post">
+					<button type="submit" value="退出登录" class="btn btn-primary">退出登录</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>
