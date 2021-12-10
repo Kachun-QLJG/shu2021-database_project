@@ -48,18 +48,56 @@
 					功能
 				</a>
 				<a class="list-group-item" href="/changePassword">更改密码</a>
-				<a class="list-group-item">订单详情</a>
+				<a class="list-group-item" href="/check_orders">订单详情</a>
 				<a class="list-group-item" href="/change_status">设置状态</a>
 			</div>
 		</div>
 		<!--右导航栏-->
 		<div class="col-xs-10" id="con">
 			<div class="container-fluid">
-				<div id="test_div">
-					<h1>【登录可用】根据维修项目名称查询维修项目（可以输入首字母）：</h1>
-					<input id="txt" onblur="deltest()" onfocus="test()" oninput="test()" placeholder="即时查询" style="margin-left: 10%" width="100px"/>
-				</div>
+				<form class="navbar-form navbar-left" role="search">
+					<div class="form-group">
+						<lable></lable>
+						<input type="text" class="form-control" ng-change="filterchange($event)" ng-model="filtervalue" placeholder="商品编号/名称关键字">
+					</div>
+					<button type="submit" class="btn btn-default">查询维修项目</button>
+
+					<!-- Standard button -->
+					<button type="button" class="btn btn-primary">高级搜索</button>
+					<!-- Large modal -->
+					<!-- Indicates a successful or positive action -->
+					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" ng-click="addgoodbtn()">添加商品</button>
+
+					<!-- Contextual button for informational alert messages -->
+					<button type="button" class="btn btn-info">查看选中</button>
+
+					<!-- Indicates caution should be taken with this action -->
+					<button type="button" class="btn btn-warning">修改选中</button>
+
+					<!-- Indicates a dangerous or potentially negative action -->
+					<button type="button" class="btn btn-danger" ng-click="deleteAll()">全选删除</button>
+				</form>
 			</div>
+			<div class="table-responsive">
+				<table class="table  table-bordered table-hover">
+					<tr>
+						<th><input type="checkbox" ng-model="checkAll" ng-click="checkclick()"></th>
+						<th>商品id</th>
+						<th>商品编号</th>
+					</tr>
+
+					<tr>
+						<td><input type="checkbox" ng-model="checkbool"></td>
+						<td>1</td>
+						<td>2</td>
+					</tr>
+				</table>
+			</div>
+			<div id="test_div">
+				<h1>【登录可用】根据维修项目名称查询维修项目（可以输入首字母）：</h1>
+				<input id="txt" onblur="deltest()" onfocus="test()" oninput="test()" placeholder="即时查询" style="margin-left: 10%" width="100px"/>
+			</div>
+
 		</div>
 	</div>
 </div>

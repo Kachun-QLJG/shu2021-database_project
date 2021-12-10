@@ -8,7 +8,7 @@ function displayChangeStatus() {
 		.then(function(response1) {
 			text.innerHTML = text.innerHTML + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;工作状态：" + response1.data;
 			var body = document.getElementById("con");
-			var div = document.getElementById("test_div");
+			var div = document.getElementById("workStatus");
 			body.appendChild(div);
 			var h1 = document.createElement("h1");
 			div.appendChild(h1);
@@ -153,7 +153,7 @@ function test(){
 	})
 		.then(function(response) {
 			try {
-				var text = document.getElementById("res");
+				var text = document.getElementById("result");
 				text.innerHTML = JSON.stringify(response.data);
 			}catch (error)
 			{

@@ -15,6 +15,16 @@ func startChangeStatus(c *gin.Context) {
 	c.HTML(http.StatusOK, "repairman_status_change.html", gin.H{"username": username, "group": group})
 }
 
+func startCheckOrders(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	if group != "维修员" {
+		c.HTML(http.StatusOK, "error.html", gin.H{"data": "无权限！", "website": "/index", "webName": "主页"})
+		return
+	}
+	c.HTML(http.StatusOK, "repairman_check.html", gin.H{"username": username, "group": group})
+}
+
 func checkStatus(c *gin.Context) {
 	number := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)

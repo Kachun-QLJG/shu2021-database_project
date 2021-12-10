@@ -27,6 +27,7 @@ func addPath(r *gin.Engine) {
 
 	r.GET("/checkStatus", authMiddleWare(), checkPermission(), checkStatus)         //返回维修工状态
 	r.GET("/change_status", authMiddleWare(), checkPermission(), startChangeStatus) //进入更改工作状态界面
+	r.GET("/check_orders", authMiddleWare(), checkPermission(), startCheckOrders)   //进入更改工作状态界面
 
 	// 表单方式
 	r.POST("/read", authMiddleWare(), checkPermission(), read)                     //设置已读
