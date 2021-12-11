@@ -31,9 +31,9 @@ func main() {
 	r.Static("/src", "./html/src") //将相对html的路径替换成相对工程的路径
 	r.LoadHTMLFiles("./html/login.html", "./html/logout.html", "./html/register.html", "./html/error.html",
 		"./html/success.html", "./html/index.html", "./html/change_password.html",
-		"./html/user/user_index.html", "./html/user/user_check.html", "./html/user/user_change_profile.html", "./html/user/user_car_register.html",
-		"./html/salesman/salesman_index.html", "./html/salesman/salesman_check.html", "./html/salesman/salesman_take_order.html",
-		"./html/repairman/repairman_index.html", "./html/repairman/repairman_check.html", "./html/repairman/repairman_status_change.html") //加载html模板
+		"./html/user/user_index.html", "./html/user/user_check_orders.html", "./html/user/user_change_profile.html", "./html/user/user_car_register.html",
+		"./html/salesman/salesman_index.html", "./html/salesman/salesman_check_orders.html", "./html/salesman/salesman_take_orders.html",
+		"./html/repairman/repairman_index.html", "./html/repairman/repairman_check_orders.html", "./html/repairman/repairman_status_change.html") //加载html模板
 	r.Use(Session("SHU")) //验证码生成会使用SHU作为密钥生成session
 	addPath(r)
 

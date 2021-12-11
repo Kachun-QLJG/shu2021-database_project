@@ -21,13 +21,17 @@ func addPath(r *gin.Engine) {
 
 	r.GET("/test", authMiddleWare(), checkPermission(), test) //测试
 
-	r.GET("/userinfo", authMiddleWare(), checkPermission(), userinfo)                   //查询用户个人信息
-	r.GET("/change_userinfo", authMiddleWare(), checkPermission(), startChangeUserinfo) //进入更改工作状态界面
-	r.GET("/add_Vehicle", authMiddleWare(), checkPermission(), startAddVehicle)         //用户登出
+	r.GET("/u_userinfo", authMiddleWare(), checkPermission(), userinfo)                   //查询用户个人信息
+	r.GET("/u_change_userinfo", authMiddleWare(), checkPermission(), startChangeUserinfo) //进入更改工作状态界面
+	r.GET("/u_add_Vehicle", authMiddleWare(), checkPermission(), startAddVehicle)         //用户登出
+	r.GET("/u_check_orders", authMiddleWare(), checkPermission(), startUCheckOrders)      //用户登出
 
-	r.GET("/checkStatus", authMiddleWare(), checkPermission(), checkStatus)         //返回维修工状态
-	r.GET("/change_status", authMiddleWare(), checkPermission(), startChangeStatus) //进入更改工作状态界面
-	r.GET("/check_orders", authMiddleWare(), checkPermission(), startCheckOrders)   //进入更改工作状态界面
+	r.GET("/r_checkStatus", authMiddleWare(), checkPermission(), checkStatus)         //返回维修工状态
+	r.GET("/r_change_status", authMiddleWare(), checkPermission(), startChangeStatus) //进入更改工作状态界面
+	r.GET("/r_check_orders", authMiddleWare(), checkPermission(), startRCheckOrders)  //进入更改工作状态界面
+
+	r.GET("/s_check_orders", authMiddleWare(), checkPermission(), startSCheckOrders) //进入更改工作状态界面
+	r.GET("/s_take_orders", authMiddleWare(), checkPermission(), startTakeOrders)    //进入更改工作状态界面
 
 	// 表单方式
 	r.POST("/read", authMiddleWare(), checkPermission(), read)                     //设置已读
@@ -37,8 +41,8 @@ func addPath(r *gin.Engine) {
 	r.POST("/register", register)                                                  //后端处理用户注册
 	r.GET("/captcha", func(c *gin.Context) { Captcha(c, 4) })                      //随机生成一个4位数字验证码
 
-	r.POST("/changeUserinfo", authMiddleWare(), checkPermission(), changeUserinfo)
-	r.POST("/addVehicle", authMiddleWare(), checkPermission(), addVehicle) //用户登出
+	r.POST("/u_changeUserinfo", authMiddleWare(), checkPermission(), changeUserinfo)
+	r.POST("/u_addVehicle", authMiddleWare(), checkPermission(), addVehicle) //用户登出
 
-	r.POST("/changeStatus", authMiddleWare(), checkPermission(), changeStatus) //后端处理更改密码
+	r.POST("/r_changeStatus", authMiddleWare(), checkPermission(), changeStatus) //后端处理更改密码
 }

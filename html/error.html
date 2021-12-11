@@ -1,17 +1,45 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-	<head>
-		<meta charset="utf-8">
-		<link href="statics/error.css" rel="stylesheet" type="text/css">
-		<title>错误</title>
-	</head>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<link href="src/styles/bootstrap.min.css" rel="stylesheet">
+	<link href="src/styles/style.css" rel="stylesheet">
+	<title>错误</title>
+</head>
 	
-	<body>
-	<div class="div1">
-		<h1 class="errorhead">ERROR: {{.errdata}}</h1>
-		<pre style="word-wrap: break-word; white-space: pre-wrap;">【错误代码：{{.errcode}}】
-		</pre>
-		<button onClick="window.location.href='http://localhost:8080{{.website}}'">返回{{.webName}}</button>
+<body>
+
+<div class="bg-login">
+	<div class="modal fade in login" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display:block">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<!--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="false">&times;</span><span class="sr-only">Close</span></button>-->
+					<h4 class="modal-title" id="myModalLabel"><b>{{.errdata}}</b></h4>
+				</div>
+				<div class="modal-body">
+
+					<fieldset>
+						<div class="form-group">
+							<button onClick="window.location.href='http://localhost:8080{{.website}}'">返回{{.webName}}</button>
+						</div>
+						<!--
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" >退出登录</button>
+                        </div>
+                        -->
+					</fieldset>
+				</div>
+			</div>
+		</div>
 	</div>
-	</body>
+</div>
+<!--
+<div class="div1">
+	<h1 class="errorhead">ERROR: {{.errdata}}</h1>
+	<pre style="word-wrap: break-word; white-space: pre-wrap;">【错误代码：{{.errcode}}】</pre>
+	<button onClick="window.location.href='http://localhost:8080{{.website}}'">返回{{.webName}}</button>
+</div>
+-->
+</body>
 </html>

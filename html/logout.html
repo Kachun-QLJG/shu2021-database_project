@@ -1,15 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <link href="src/styles/bootstrap.min.css" rel="stylesheet">
+    <link href="src/styles/style.css" rel="stylesheet">
     <title>退出登录</title>
 </head>
+
 <body>
+
+<div class="bg-logout">
+    <div class="modal fade in login" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="false">&times;</span><span class="sr-only">Close</span></button>-->
+                    <h4 class="modal-title" id="myModalLabel"><b>登录状态：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}</b></h4>
+                </div>
+                <div class="modal-body">
+
+                    <form action="/logout" method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <label >是否退出登录？</label>
+                                <button type="submit" class="btn btn-primary" >退出登录</button>
+                            </div>
+                            <!--
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" >退出登录</button>
+                            </div>
+                            -->
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
     <font size="3"><b>登录状态：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}</b></font>
     <br><br>是否退出登录？
     <br><br>
     <form action="/logout" method="post">
         <input type="submit" value="退出登录">
     </form>
+-->
 </body>
 </html>
