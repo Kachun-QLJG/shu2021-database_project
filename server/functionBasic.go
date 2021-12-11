@@ -133,7 +133,7 @@ func welcome(c *gin.Context) {
 	result := database.First(&user, "contact_tel = ?", username)
 	if result.RowsAffected == 1 {
 		group = "普通用户"
-		c.HTML(http.StatusOK, "customer_index.html", gin.H{"username": username, "group": group})
+		c.HTML(http.StatusOK, "user_index.html", gin.H{"username": username, "group": group})
 	} else {
 		var repairman Repairman
 		result := database.First(&repairman, "number = ?", username)

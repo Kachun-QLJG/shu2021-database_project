@@ -7,6 +7,16 @@ import (
 	"time"
 )
 
+func startAddVehicle(c *gin.Context) {
+	number := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	if group != "普通用户" {
+		c.String(http.StatusForbidden, "错误！")
+		return
+	}
+	c.HTML(http.StatusOK, "user_car_register.html", gin.H{"username": number, "group": group})
+}
+
 func addVehicle(c *gin.Context) {
 	number := c.Query("number")
 	licenseNumber := c.Query("license_number")
@@ -68,5 +78,5 @@ func startChangeUserinfo(c *gin.Context) {
 		c.String(http.StatusForbidden, "错误！")
 		return
 	}
-	c.HTML(http.StatusOK, "customer_change_profile.html", gin.H{"username": number, "group": group})
+	c.HTML(http.StatusOK, "user_change_profile.html", gin.H{"username": number, "group": group})
 }

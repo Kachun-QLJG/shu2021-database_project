@@ -23,7 +23,7 @@ func addPath(r *gin.Engine) {
 
 	r.GET("/userinfo", authMiddleWare(), checkPermission(), userinfo)                   //查询用户个人信息
 	r.GET("/change_userinfo", authMiddleWare(), checkPermission(), startChangeUserinfo) //进入更改工作状态界面
-	r.GET("/addVehicle", addVehicle)                                                    //用户登出
+	r.GET("/add_Vehicle", authMiddleWare(), checkPermission(), startAddVehicle)         //用户登出
 
 	r.GET("/checkStatus", authMiddleWare(), checkPermission(), checkStatus)         //返回维修工状态
 	r.GET("/change_status", authMiddleWare(), checkPermission(), startChangeStatus) //进入更改工作状态界面
@@ -38,6 +38,7 @@ func addPath(r *gin.Engine) {
 	r.GET("/captcha", func(c *gin.Context) { Captcha(c, 4) })                      //随机生成一个4位数字验证码
 
 	r.POST("/changeUserinfo", authMiddleWare(), checkPermission(), changeUserinfo)
+	r.POST("/addVehicle", authMiddleWare(), checkPermission(), addVehicle) //用户登出
 
 	r.POST("/changeStatus", authMiddleWare(), checkPermission(), changeStatus) //后端处理更改密码
 }
