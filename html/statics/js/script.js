@@ -146,38 +146,56 @@ function checkUser(){
 }
 
 function test(){
+	deltest();
 	if(document.getElementById("txt").value === "") return;
 	axios({
 		method: 'get',
 		url: '/test?text='+document.getElementById("txt").value
 	})
 		.then(function(response) {
-			try {
-				var text = document.getElementById("result");
-				text.innerHTML = JSON.stringify(response.data);
-			}catch (error)
 			{
-				var div = document.getElementById("test_div");
-				var result_div = document.createElement("div");
-				div.appendChild(result_div);
-				result_div.id = "result";
-				result_div.style.cssText = "width: 200px; height: 200px;position: relative; text-align: left; background-color: red; margin-left:10%";
-				var text = document.createElement("p");
-				result_div.appendChild(text);
-				text.id = "res";
-				text.innerHTML = JSON.stringify(response.data);
+				var div = document.getElementById("con");//寻找定位的区块
+				var table = document.createElement("div");
+				table.id="table";
+				table.className="table-responsive";
+				div.appendChild(table);
+				var ordertable = document.createElement("table");//生成表格ordertable
+				ordertable.id = "ordertable";
+				ordertable.className="table  table-bordered table-hover";
+				table.appendChild(ordertable);
+				var tablehead = document.createElement("tr");//生成表格头tablehead
+				tablehead.id = "tablehead";
+				ordertable.appendChild(tablehead);
+				var head_1 = document.createElement("th");
+				head_1.innerHTML="维修项目名";
+				tablehead.appendChild(head_1);
+				var head_2 = document.createElement("th");
+				head_2.innerHTML="维修项目编号";
+				tablehead.appendChild(head_2);
+
+				for(var i=0;i<1;++i){
+					var temp = document.createElement("tr");
+					var t1 = document.createElement("td");
+					t1.innerHTML=JSON.stringify(response.data[i].Name);
+					temp.appendChild(t1);
+					var t2 = document.createElement("td");
+					t2.innerHTML=JSON.stringify(response.data[i].Id);
+					temp.appendChild(t2);
+					ordertable.appendChild(temp);
+				}
 			}
 		})
 }
 
 function deltest(){
 	try {
-		var div = document.getElementById("test_div");
-		var res = document.getElementById("result");
+		var div = document.getElementById("con");
+		var res = document.getElementById("table");
 		div.removeChild(res);
 	}catch (error)
 	{}
 }
+
 
 function getinfo(){
 	axios({
