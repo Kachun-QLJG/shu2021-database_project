@@ -13,11 +13,11 @@ func test(c *gin.Context) {
 	searchText := "%" + strings.ToLower(text) + "%"
 	var typeOverview []TypeOverview
 	if searchText[1] >= 'a' && searchText[1] <= 'z' {
-		database.Limit(10).Where("project_spelling LIKE ?", searchText).Find(&typeOverview)
+		database.Limit(100).Where("project_spelling LIKE ?", searchText).Find(&typeOverview)
 	} else {
-		database.Limit(10).Where("project_name LIKE ?", searchText).Find(&typeOverview)
+		database.Limit(100).Where("project_name LIKE ?", searchText).Find(&typeOverview)
 	}
-	var result [10]struct {
+	var result [101]struct {
 		Name string
 		Id   string
 	}

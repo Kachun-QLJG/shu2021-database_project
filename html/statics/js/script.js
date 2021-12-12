@@ -163,9 +163,11 @@ function test(){
 				ordertable.id = "ordertable";
 				ordertable.className="table  table-bordered table-hover";
 				table.appendChild(ordertable);
+				var tbody = document.createElement("tbody");
+				ordertable.appendChild(tbody);
 				var tablehead = document.createElement("tr");//生成表格头tablehead
 				tablehead.id = "tablehead";
-				ordertable.appendChild(tablehead);
+				tbody.appendChild(tablehead);
 				var head_1 = document.createElement("th");
 				head_1.innerHTML="维修项目名";
 				tablehead.appendChild(head_1);
@@ -173,7 +175,7 @@ function test(){
 				head_2.innerHTML="维修项目编号";
 				tablehead.appendChild(head_2);
 
-				for(var i=0;i<1;++i){
+				for(var i=0; response.data[i].Name!==""; ++i){
 					var temp = document.createElement("tr");
 					var t1 = document.createElement("td");
 					t1.innerHTML=JSON.stringify(response.data[i].Name);
@@ -181,7 +183,7 @@ function test(){
 					var t2 = document.createElement("td");
 					t2.innerHTML=JSON.stringify(response.data[i].Id);
 					temp.appendChild(t2);
-					ordertable.appendChild(temp);
+					tbody.appendChild(temp);
 				}
 			}
 		})
