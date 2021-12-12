@@ -163,7 +163,7 @@ function test(){
 				ordertable.id = "ordertable";
 				ordertable.className="table  table-bordered table-hover";
 				table.appendChild(ordertable);
-				var tbody = document.createElement("tbody");
+				var tbody = document.createElement("tbody");//不知道这是啥
 				ordertable.appendChild(tbody);
 				var tablehead = document.createElement("tr");//生成表格头tablehead
 				tablehead.id = "tablehead";
