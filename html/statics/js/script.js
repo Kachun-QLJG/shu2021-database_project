@@ -145,19 +145,104 @@ function checkUser(){
 		})
 }
 
-function test(){
-	deltest();
+function searchForProjects(){
+	delProjectResults();
+	if (document.getElementById("txt").value === "") return;
+	axios({
+		method: 'get',
+		url: '/search_for_projects?text=' + document.getElementById("txt").value + '&type=AH'
+	})
+		.then(function (response) {
+			{
+				console.log(response.data);
+				var div = document.getElementById("con");//寻找定位的区块
+				var table = document.createElement("div");
+				table.setAttribute("name", "table");
+				table.className = "table-responsive";
+				div.appendChild(table);
+				var ordertable = document.createElement("table");//生成表格ordertable
+				ordertable.id = "ordertable";
+				ordertable.className = "table  table-bordered table-hover";
+				table.appendChild(ordertable);
+				var tbody = document.createElement("tbody");//不知道这是啥
+				ordertable.appendChild(tbody);
+				var tablehead = document.createElement("tr");//生成表格头tablehead
+				tablehead.id = "tablehead";
+				tbody.appendChild(tablehead);
+				var head_1 = document.createElement("th");
+				head_1.innerHTML = "维修项目名";
+				tablehead.appendChild(head_1);
+				var head_2 = document.createElement("th");
+				head_2.innerHTML = "维修项目编号";
+				tablehead.appendChild(head_2);
+
+				for (var i = 0; response.data[i].Name !== ""; ++i) {
+					var temp = document.createElement("tr");
+					var t1 = document.createElement("td");
+					t1.innerHTML = JSON.stringify(response.data[i].Name);
+					temp.appendChild(t1);
+					var t2 = document.createElement("td");
+					t2.innerHTML = JSON.stringify(response.data[i].Id);
+					temp.appendChild(t2);
+					tbody.appendChild(temp);
+				}
+			}
+		})
+}
+
+function delProjectResults(){
+	try {
+		var div = document.getElementById("con");
+		var res = document.getElementsByName("table");
+		for(var i=0; i<res.length; i++)
+			div.removeChild(res[i]);
+	}catch (error)
+	{}
+}
+
+var flagParts = 0;
+var flagProjects = 0;
+var timerParts;
+var timerProjects;
+
+function openFlagParts () {
+	timerParts = setTimeout(function(){
+		flagParts = 1;
+		searchForParts();
+		clearTimeout(timerParts);
+		flagParts=0;
+	}, 200);
+}
+function openFlagProjects () {
+	timerProjects = setTimeout(function(){
+		flagProjects = 1;
+		searchForProjects();
+		clearTimeout(timerProjects);
+		flagProjects=0;
+	}, 200);
+}
+function closeFlagParts() {
+	clearTimeout(timerParts);// 取消定时器
+	flagParts = 0;
+}
+function closeFlagProjects() {
+	clearTimeout(timerProjects);// 取消定时器
+	flagProjects = 0;
+}
+
+function searchForParts(){
+	delPartsResults();
 	if(document.getElementById("txt").value === "") return;
 	axios({
 		method: 'get',
-		url: '/search_for_projects?text='+document.getElementById("txt").value + '&type=AH'
+		url: '/search_for_parts?text='+document.getElementById("txt").value
 	})
 		.then(function(response) {
 			{
 				console.log(response.data);
 				var div = document.getElementById("con");//寻找定位的区块
 				var table = document.createElement("div");
-				table.id="table";
+				table.setAttribute("name", "table");
 				table.className="table-responsive";
 				div.appendChild(table);
 				var ordertable = document.createElement("table");//生成表格ordertable
@@ -176,13 +261,13 @@ function test(){
 				head_2.innerHTML="维修项目编号";
 				tablehead.appendChild(head_2);
 
-				for(var i=0; response.data[i].Name!==""; ++i){
+				for(var i=0; response.data[i].Name!==""; ++i) {
 					var temp = document.createElement("tr");
 					var t1 = document.createElement("td");
-					t1.innerHTML=JSON.stringify(response.data[i].Name);
+					t1.innerHTML = JSON.stringify(response.data[i].Name);
 					temp.appendChild(t1);
 					var t2 = document.createElement("td");
-					t2.innerHTML=JSON.stringify(response.data[i].Id);
+					t2.innerHTML = JSON.stringify(response.data[i].Id);
 					temp.appendChild(t2);
 					tbody.appendChild(temp);
 				}
@@ -190,11 +275,12 @@ function test(){
 		})
 }
 
-function deltest(){
+function delPartsResults(){
 	try {
 		var div = document.getElementById("con");
-		var res = document.getElementById("table");
-		div.removeChild(res);
+		var res = document.getElementsByName("table");
+		for(var i=0; i<res.length; i++)
+			div.removeChild(res[i]);
 	}catch (error)
 	{}
 }

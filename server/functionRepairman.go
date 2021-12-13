@@ -3,7 +3,33 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strings"
 )
+
+func searchForParts(c *gin.Context) {
+	text := c.Query("text")
+	text = strings.Replace(text, " ", "%", -1)
+	searchText := "%" + strings.ToLower(text) + "%"
+	var parts []PartsOverview
+	if searchText[1] >= 'a' && searchText[1] <= 'z' || searchText[1] >= '0' && searchText[1] <= '9' {
+		database.Limit(20).Where("parts_spelling LIKE ?", searchText).Find(&parts)
+	} else {
+		database.Limit(20).Where("parts_name LIKE ?", searchText).Find(&parts)
+	}
+	var result [20]struct {
+		Name  string
+		Id    string
+		Price float64
+	}
+	count := 0
+	for row := range parts {
+		result[count].Id = parts[row].PartsNumber
+		result[count].Name = parts[row].PartsName
+		result[count].Price = parts[row].PartsCost
+		count++
+	}
+	c.JSON(http.StatusOK, result)
+}
 
 func startChangeStatus(c *gin.Context) {
 	username := c.MustGet("username").(string)

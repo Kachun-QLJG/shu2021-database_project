@@ -57,7 +57,7 @@
 			<div class="container-fluid">
 				<div id="test_div">
 					<h1>【登录可用】根据维修项目名称查询维修项目（可以输入首字母）：</h1>
-					<input id="txt" onblur="deltest()" onfocus="test()" oninput="test()" placeholder="即时查询" style="margin-left: 10%" width="100px"/>
+					<input id="txt" onblur="delProjectResults()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" placeholder="即时查询" style="margin-left: 10%" width="100px"/>
 				</div>
 			</div>
 		</div>
