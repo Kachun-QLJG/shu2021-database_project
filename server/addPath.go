@@ -19,7 +19,7 @@ func addPath(r *gin.Engine) {
 	r.GET("/checkNotification", authMiddleWare(), checkPermission(), checkNotification) //检查通知
 	r.GET("/checkGroup", authMiddleWare(), checkPermission(), checkGroup)               //返回用户组
 
-	r.GET("/test", authMiddleWare(), checkPermission(), test) //测试
+	r.GET("/search_for_projects", authMiddleWare(), checkPermission(), searchForProjects) //测试
 
 	r.GET("/userinfo", authMiddleWare(), checkPermission(), userinfo)                   //查询用户个人信息
 	r.GET("/change_userinfo", authMiddleWare(), checkPermission(), startChangeUserinfo) //进入更改工作状态界面

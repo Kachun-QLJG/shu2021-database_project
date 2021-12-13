@@ -150,7 +150,7 @@ function test(){
 	if(document.getElementById("txt").value === "") return;
 	axios({
 		method: 'get',
-		url: '/test?text='+document.getElementById("txt").value + '&type=AH'
+		url: '/search_for_projects?text='+document.getElementById("txt").value + '&type=AH'
 	})
 		.then(function(response) {
 			{

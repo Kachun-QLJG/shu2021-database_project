@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func test(c *gin.Context) {
+func searchForProjects(c *gin.Context) {
 	text := c.Query("text")
 	carType := c.Query("type")
 	dbType := strings.ToLower(carType)
