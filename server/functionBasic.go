@@ -10,21 +10,33 @@ import (
 
 func test(c *gin.Context) {
 	text := c.Query("text")
+	carType := c.Query("type")
+	dbType := strings.ToLower(carType)
+	dbType = "time_" + dbType
+	text = strings.Replace(text, " ", "%", -1)
 	searchText := "%" + strings.ToLower(text) + "%"
-	var typeOverview []TypeOverview
-	if searchText[1] >= 'a' && searchText[1] <= 'z' {
-		database.Limit(100).Where("project_spelling LIKE ?", searchText).Find(&typeOverview)
-	} else {
-		database.Limit(100).Where("project_name LIKE ?", searchText).Find(&typeOverview)
-	}
-	var result [101]struct {
+	var timeOverview []struct {
 		Name string
 		Id   string
+		Time float64
+	}
+	if searchText[1] >= 'a' && searchText[1] <= 'z' || searchText[1] >= '0' && searchText[1] <= '9' {
+		database.Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_spelling LIKE ? and ? != ''", searchText, dbType).Scan(&timeOverview)
+		//database.Limit(20).Where("project_spelling LIKE ? and time_? != ''" , searchText, dbType).Find(&timeOverview)
+	} else {
+		database.Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_name LIKE ?and ? != ''", searchText, dbType).Scan(&timeOverview)
+		//database.Limit(20).Where("project_name LIKE ?and time_? != ''" , searchText, dbType).Find(&timeOverview)
+	}
+	var result [20]struct {
+		Name string
+		Id   string
+		Time float64
 	}
 	count := 0
-	for row := range typeOverview {
-		result[count].Id = typeOverview[row].ProjectNumber
-		result[count].Name = typeOverview[row].ProjectName
+	for row := range timeOverview {
+		result[count].Id = timeOverview[row].Id
+		result[count].Name = timeOverview[row].Name
+		result[count].Time = timeOverview[row].Time
 		count++
 	}
 	c.JSON(http.StatusOK, result)

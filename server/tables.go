@@ -25,18 +25,28 @@ type Repairman struct { //维修员表
 	Status          string `gorm:"type:varchar(10);not null"`                         //工人状态
 }
 
-type TypeOverview struct { //工种总览表
-	ProjectNumber   string `gorm:"type:varchar(8);unique_index;not null;primary_key"` //维修项目编号
-	ProjectName     string `gorm:"type:varchar(100);not null"`                        //维修项目名称
-	Type            string `gorm:"type:varchar(10);not null;primary_key"`             //工种
-	ProjectSpelling string `gorm:"type:varchar(50);not null;primary_key"`             //项目名称首字母
+type TimeOverview struct { //工时总览表
+	ProjectNumber   string  `gorm:"type:varchar(10);unique_index;not null;primary_key"` //维修项目编号
+	ProjectName     string  `gorm:"type:varchar(50);not null"`                          //维修项目名称
+	ProjectSpelling string  `gorm:"type:varchar(25);not null"`                          //项目名称首字母
+	TimeAH          float64 `gorm:"type:double(5,1)"`                                   //工时A-H
+	TimeAD          float64 `gorm:"type:double(5,1)"`                                   //工时A-D
+	TimeBH          float64 `gorm:"type:double(5,1)"`                                   //工时B-H
+	TimeBD          float64 `gorm:"type:double(5,1)"`                                   //工时B-D
+	TimeCH          float64 `gorm:"type:double(5,1)"`                                   //工时C-H
+	TimeCD          float64 `gorm:"type:double(5,1)"`                                   //工时C-D
+	TimeDH          float64 `gorm:"type:double(5,1)"`                                   //工时D-H
+	TimeDD          float64 `gorm:"type:double(5,1)"`                                   //工时D-D
+	TimeEH          float64 `gorm:"type:double(5,1)"`                                   //工时E-H
+	TimeED          float64 `gorm:"type:double(5,1)"`                                   //工时E-D
+	Remark          string  `gorm:"type:varchar(20)"`                                   //备注
 }
 
 type PartsOverview struct { //零件总览表
-	PartsNumber string  `gorm:"type:varchar(8);unique_index;not null;primary_key"` //零件编号
-	PartsName   string  `gorm:"type:varchar(50);not null"`                         //零件名称
-	Unit        string  `gorm:"type:varchar(6);not null"`                          //计量单位
-	PartsCost   float64 `gorm:"type:double(8,2);not null"`                         //零件价格
+	PartsNumber   string  `gorm:"type:varchar(25);unique_index;not null;primary_key"` //零件编号
+	PartsName     string  `gorm:"type:varchar(70);not null"`                          //零件名称
+	PartsSpelling string  `gorm:"type:varchar(35);not null"`                          //零件首字母
+	PartsCost     float64 `gorm:"type:double(8,2);not null"`                          //零件价格
 }
 
 type Vehicle struct { //车辆表
@@ -81,11 +91,11 @@ type Attorney struct { //委托书表
 
 type Arrangement struct { //派工单表
 	OrderNumber     string `gorm:"type:varchar(11);not null;primary_key"` //订单号
-	ProjectNumber   string `gorm:"type:varchar(8);not null;primary_key"`  //维修项目编号
+	ProjectNumber   string `gorm:"type:varchar(10);not null;primary_key"` //维修项目编号
 	PredictTime     int    `gorm:"type:int(3);not null"`                  //预计工时
 	ActualTIme      int    `gorm:"type:int(3);not null"`                  //实际工时
 	RepairmanNumber string `gorm:"type:varchar(8);not null;primary_key"`  //维修工工号
-	PartsNumber     string `gorm:"type:varchar(8);not null"`              //零件号
+	PartsNumber     string `gorm:"type:varchar(25);not null"`             //零件号
 	PartsCount      int    `gorm:"type:int(2);not null"`                  //零件数量
 	Progress        string `gorm:"type:varchar(6);not null"`              //进展
 }

@@ -150,10 +150,11 @@ function test(){
 	if(document.getElementById("txt").value === "") return;
 	axios({
 		method: 'get',
-		url: '/test?text='+document.getElementById("txt").value
+		url: '/test?text='+document.getElementById("txt").value + '&type=AH'
 	})
 		.then(function(response) {
 			{
+				console.log(response.data);
 				var div = document.getElementById("con");//寻找定位的区块
 				var table = document.createElement("div");
 				table.id="table";
