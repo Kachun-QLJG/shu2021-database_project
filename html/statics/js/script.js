@@ -285,7 +285,6 @@ function delPartsResults(){
 	{}
 }
 
-
 function getinfo(){
 	axios({
 		method : 'get',
@@ -312,4 +311,20 @@ function changeinfo(){
 				 alert(res.data);
 				 location.reload();
 			})
+}
+
+function addVehicle(){
+	let formData = new FormData();
+	formData.append("number", document.getElementById("number").value);
+	formData.append("license_number", document.getElementById("license_number").value);
+	formData.append("color", document.getElementById("color").value);
+	formData.append("model", document.getElementById("model").value);
+	formData.append("type", document.getElementById("type").value);
+	let config = {
+		headers: {"Content-Type": "multipart/form-data"}
+	};
+	axios.post("/addVehicle", formData, config).then(res => {
+		alert(res.data);
+		location.reload();
+	})
 }

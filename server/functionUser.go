@@ -28,14 +28,16 @@ func startUCheckOrders(c *gin.Context) {
 }
 
 func addVehicle(c *gin.Context) {
-	number := c.Query("number")
-	licenseNumber := c.Query("license_number")
-	userId := c.Query("user_id")
-	color := c.Query("color")
-	model := c.Query("model")
-	carType := c.Query("type")
+	number := c.PostForm("number")
+	licenseNumber := c.PostForm("license_number")
+	phone_number := c.MustGet("username").(string)
+	var user User
+	database.First(&user, "contact_tel = ?", phone_number)
+	color := c.PostForm("color")
+	model := c.PostForm("model")
+	carType := c.PostForm("type")
 	sTime := time.Now().Format("2006-01-02 15:04:05")
-	data := Vehicle{number, licenseNumber, userId, color, model, carType, sTime}
+	data := Vehicle{number, licenseNumber, user.Number, color, model, carType, sTime}
 	err := database.Create(&data)
 	strErr := fmt.Sprintf("%v", err.Error)
 	if strErr != "<nil>" {
