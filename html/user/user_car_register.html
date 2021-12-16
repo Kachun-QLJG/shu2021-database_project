@@ -4,13 +4,16 @@
 	<script src="/statics/js/header.js"></script>
 </head>
 <body bgcolor="#f0f8ff" id="body">
+	<script src="/statics/js/universal.js"></script>
+	<script src="/statics/js/user.js"></script>
+	<!--
 <div class="navbar-header" id="head1">
 	<a class="navbar-brand">502汽修厂管理系统</a>
 </div>
 
 
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	<!--
+
 	<ul class="nav navbar-nav">
 		<li class="active"><a ui-sref="employeeParent.employee">系统首页</a></li>
 		<li><a>商品管理</a></li>
@@ -20,7 +23,7 @@
 		<li><a>系统用户管理</a></li>
 		<li><a>系统设置</a></li>
 	</ul>
-	-->
+	->
 	<ul id="navbar" class="nav navbar-nav navbar-right" >
 		<li><a id="text">用户名：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}</a></li>
 		<li><a id="register" href="/register" title="注册" >前往注册</a></li>
@@ -33,7 +36,7 @@
 
 <div class="container-fluid">
 	<div class="row">
-		<!--左导航栏-->
+		左导航栏->
 		<div class="hidden-xs  col-md-2">
 			<div class="list-group">
 				<a class="list-group-item list-group-item-success">
@@ -45,53 +48,11 @@
 				<a class="list-group-item" href="/u_check_orders">查看申请详情</a>
 			</div>
 		</div>
-		<!--右导航栏-->
+		右导航栏->
 	</div>
 </div>
 
-<button><a data-toggle="modal" data-target="#add_car">新增车辆</a></button>
-<!--新增车辆模态框（Modal）-->
-<div class="modal fade" id="add_car" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h3 class="modal-title" id="addNewVehicle">新增车辆</h3>
-			</div>
-			<div class="modal-body">
-				<img src="/statics/user/井号.png" width="20px">
-				<label style="font-size:15px;width: 80px;">车架号：</label>
-				<input id="number" type="text" onchange="check_number()" placeholder="请输入车架号"/>
-				<span id="checktext1"></span> <br></br>
-
-				<img src="/statics/user/车牌.png" width="20px">
-				<label style="font-size:15px;width: 80px;">车牌号：</label>
-				<input id="license_number" type="text" onchange="check_license_number()" placeholder="请输入车牌号"/>
-				<img src="/statics/user/问号.png" width="20px">
-				<span id="checktext2"></span> <br></br>
-
-				<img src="/statics/user/颜色.png" width="20px">
-				<label style="font-size:15px;width: 80px;">车辆颜色：</label>
-				<input id="color" type="text" placeholder="请输入车辆颜色"/><br></br>
-
-				<img src="/statics/user/车型.png" width="20px">
-				<label style="font-size:15px;width: 80px;">车型：</label>
-				<input id="model" type="text" placeholder="请输入车型"/><br></br>
-
-				<img src="/statics/user/类别.png" width="20px">
-				<label style="font-size:15px;width: 80px;">车辆类别：</label>
-				<input id="type" type="text" placeholder="请输入车辆类别"/><br></br>
-			</div>
-			<form class="modal-footer">
-				<label style="font-size:1px;width: 80px;color: red;">没有再次确认哦，真的</label>
-				<button type="button" class="btn btn-primary" onclick="addVehicle()" id="confirmAddVehicle">确认新增</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-			</form>
-		</div>
-	</div>
-</div>
-
-<!--登出模态框（Modal）-->
+登出模态框（Modal）->
 <div class="modal fade" id="log_out" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -107,14 +68,57 @@
 		</div>
 	</div>
 </div>
+-->
 
-<script>
-	window.onload= function(){
-		checkNotification();
-		checkGroup();
-		checkUser();
-	}
-</script>
+	<button><a data-toggle="modal" data-target="#add_car">新增车辆</a></button>
+	<!--新增车辆模态框（Modal）-->
+	<div class="modal fade" id="add_car" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h3 class="modal-title" id="addNewVehicle">新增车辆</h3>
+				</div>
+				<div class="modal-body">
+					<img src="/statics/user/井号.png" width="20px">
+					<label style="font-size:15px;width: 80px;">车架号：</label>
+					<input id="number" type="text" onchange="check_number()" placeholder="请输入车架号"/>
+					<span id="checktext1"></span> <br></br>
+
+					<img src="/statics/user/车牌.png" width="20px">
+					<label style="font-size:15px;width: 80px;">车牌号：</label>
+					<input id="license_number" type="text" onchange="check_license_number()" placeholder="请输入车牌号"/>
+					<img src="/statics/user/问号.png" width="20px">
+					<span id="checktext2"></span> <br></br>
+
+					<img src="/statics/user/颜色.png" width="20px">
+					<label style="font-size:15px;width: 80px;">车辆颜色：</label>
+					<input id="color" type="text" placeholder="请输入车辆颜色"/><br></br>
+
+					<img src="/statics/user/车型.png" width="20px">
+					<label style="font-size:15px;width: 80px;">车型：</label>
+					<input id="model" type="text" placeholder="请输入车型"/><br></br>
+
+					<img src="/statics/user/类别.png" width="20px">
+					<label style="font-size:15px;width: 80px;">车辆类别：</label>
+					<input id="type" type="text" placeholder="请输入车辆类别"/><br></br>
+				</div>
+				<form class="modal-footer">
+					<label style="font-size:1px;width: 80px;color: red;">没有再次确认哦，真的</label>
+					<button type="button" class="btn btn-primary" onclick="addVehicle()" id="confirmAddVehicle">确认新增</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		window.onload= function(){
+			checkNotification();
+			checkGroup();
+			checkUser();
+		}
+	</script>
 
 </body>
 </html>
