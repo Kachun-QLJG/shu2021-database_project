@@ -56,10 +56,11 @@ type Vehicle struct { //车辆表
 
 type Notification struct { //通知表
 	Number  string `gorm:"type:varchar(8);unique_index;not null;primary_key"` //通知编号
-	UserID  string `gorm:"type:varchar(8);not null"`                          //用户号
+	UserID  string `gorm:"type:varchar(11);not null"`                         //用户号
 	Title   string `gorm:"type:varchar(50);not null"`                         //通知标题
 	Content string `gorm:"type:varchar(255);not null"`                        //通知内容
 	Status  string `gorm:"type:varchar(4);not null"`                          //接收状态
+	Time    string `gorm:"type:varchar(20);not null"`                         //绑定时间
 }
 
 type Attorney struct { //委托书表
