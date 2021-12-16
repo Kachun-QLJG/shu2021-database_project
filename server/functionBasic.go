@@ -124,7 +124,7 @@ func changePassword(c *gin.Context) {
 	}
 }
 
-//localhost:8080/addVehicle?number=1&license_number=1&user_id=1&color=1&model=1&type=1
+//localhost:8080/add_vehicle?number=1&license_number=1&user_id=1&color=1&model=1&type=1
 
 func welcome(c *gin.Context) {
 	sessionId, err := c.Cookie("sessionId")

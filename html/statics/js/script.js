@@ -36,7 +36,7 @@ function displayChangeStatus() {
 	var text = document.getElementById("text");
 	axios({
 		method : 'get',
-		url: '/checkStatus'
+		url: '/check_status'
 	})
 		.then(function(response1) {
 			text.innerHTML = text.innerHTML + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;工作状态：" + response1.data;
@@ -89,7 +89,7 @@ function displayChangeStatus() {
 function checkGroup(){
 	axios({
 		method : 'get',
-		url: '/checkGroup'
+		url: '/check_group'
 	})
 	.then(function(response){
 		if(response.data === "维修员"){
@@ -99,17 +99,13 @@ function checkGroup(){
 }
 
 function changeStatus(){		//https://blog.csdn.net/weixin_41949511/article/details/93630346
-	axios({
-		method: 'post',
-		url: '/changeStatus'
-	});
 	let formData = new FormData();
 	var select = document.getElementById("select");
 	formData.append("status", select.value);
 	let config = {
 	   headers: {"Content-Type": "multipart/form-data"}
 	};
-	axios.post("/changeStatus", formData, config).then(res => {
+	axios.post("/change_status", formData, config).then(res => {
 			 alert(res.data);
 			 location.reload();
 		}).catch(error => {
@@ -121,7 +117,7 @@ function changeStatus(){		//https://blog.csdn.net/weixin_41949511/article/detail
 function checkNotification(){
 	axios({
 	  method: 'get',
-	  url: '/checkNotification'
+	  url: '/check_notification'
 	  })
 	  .then(function(response) {
 		var last = JSON.stringify(response.data);
@@ -166,7 +162,7 @@ function checkUser(){
 	document.getElementById("changePassword").style.display="none";
 	axios({
 		method : 'get',
-		url: '/checkGroup'
+		url: '/check_group'
 	})
 		.then(function(response){
 			if(response.data === "维修员"||response.data ==="业务员"||response.data ==="普通用户"){
@@ -356,7 +352,7 @@ function addVehicle(){
 	let config = {
 		headers: {"Content-Type": "multipart/form-data"}
 	};
-	axios.post("/addVehicle", formData, config).then(res => {
+	axios.post("/add_vehicle", formData, config).then(res => {
 		alert(res.data);
 		location.reload();
 	})

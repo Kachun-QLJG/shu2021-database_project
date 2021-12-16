@@ -36,7 +36,7 @@
 		<li><a id="register" href="/register" title="注册" >前往注册</a></li>
 		<li><a id="login"href="/login" title="登录">前往登录</a></li>
 		<li><a id="logout" title="退出登录" data-toggle="modal" data-target="#log_out">退出登录</a></li>
-		<li><a id="changePassword"href="/changePassword" title="更改密码">更改密码</a></li>
+		<li><a href="/change_password"id="changePassword" title="更改密码">更改密码</a></li>
 	</ul>
 </div>
 
@@ -49,7 +49,7 @@
 				<a class="list-group-item list-group-item-success">
 					功能
 				</a>
-				<a class="list-group-item" href="/changePassword">更改密码</a>
+				<a class="list-group-item" href="/change_password">更改密码</a>
 				<a class="list-group-item">订单详情</a>
 				<a class="list-group-item" href="/change_status">设置状态</a>
 			</div>
@@ -104,7 +104,7 @@
 <script>
 	window.onload= function(){
 		checkNotification();
-		//checkGroup();
+		//check_group();
 		checkUser();
 	}
 </script>
