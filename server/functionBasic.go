@@ -60,7 +60,7 @@ func checkNotification(c *gin.Context) {
 	var notification Notification
 	result := database.First(&notification, "user_id = ? and status = ?", username, "未读")
 	if result.RowsAffected == 1 {
-		c.JSON(http.StatusOK, gin.H{"title": notification.Title, "content": notification.Content})
+		c.JSON(http.StatusOK, gin.H{"title": notification.Title, "content": notification.Content, "time": notification.Time})
 	} else {
 		c.JSON(http.StatusOK, nil)
 	}
