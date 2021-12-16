@@ -10,8 +10,17 @@ function login(){
 		var response = res.data;
 		if(response.status === "失败")
 		{
-			alert(response.data);
-			document.getElementById("wrongPass").style.display = '';
+			if(response.data === '验证码'){
+				alert("验证码错误！");
+				document.getElementById("wrongPass").innerHTML = '请输入正确的验证码！';
+				document.getElementById("wrongPass").style.display = '';
+				document.getElementById('ver_pic').click();
+			}else{
+				alert("用户名或密码错误！");
+				document.getElementById("wrongPass").innerHTML = '请输入正确的账号和密码！';
+				document.getElementById("wrongPass").style.display = '';
+				document.getElementById('ver_pic').click();
+			}
 		}
 		else{
 			if(response.data === '已登录') {
