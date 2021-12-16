@@ -48,9 +48,9 @@ func startRegister(c *gin.Context) {
 }
 
 func register(c *gin.Context) {
-	phoneNumber := c.PostForm("phone_number")
-	password := c.PostForm("password")
-	value := c.PostForm("ver_code")
+	phoneNumber := c.PostForm("phone")
+	password := c.PostForm("pswd")
+	value := c.PostForm("ver")
 	if CaptchaVerify(c, value) { //验证码通过
 		var user User
 		number := database.Find(&user).RowsAffected + 1
@@ -60,12 +60,12 @@ func register(c *gin.Context) {
 		err := database.Create(&data)
 		strErr := fmt.Sprintf("%v", err.Error)
 		if strErr != "<nil>" {
-			c.HTML(http.StatusForbidden, "error.html", gin.H{"errdata": "注册失败！" + strErr, "website": "/register", "webName": "注册页面"})
+			c.JSON(http.StatusOK, gin.H{"status": "失败", "data": strErr})
 		} else {
-			c.HTML(http.StatusOK, "success.html", gin.H{"data": "注册成功！", "website": "/login", "webName": "登录页面"})
+			c.JSON(http.StatusOK, gin.H{"status": "成功", "data": "注册成功！"})
 		}
 	} else { //验证码错误
-		c.HTML(http.StatusBadRequest, "error.html", gin.H{"errdata": "验证码错误！", "website": "/login", "webName": "登录页面"})
+		c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "验证码错误！"})
 	}
 }
 

@@ -39,7 +39,26 @@ function logout() {
 	alert("成功");
 	window.open("/index", "_self");
 }
-
+function register(){
+	let formData = new FormData();
+	formData.append("phone", document.getElementById("phone").value);
+	formData.append("pswd", document.getElementById("pswd").value);
+	formData.append("ver", document.getElementById("ver").value);
+	let config = {
+		headers: {"Content-Type": "multipart/form-data"}
+	};
+	axios.post("/register", formData, config).then(res => {
+		var response = res.data;
+		if(response.status === "失败")
+		{
+			alert(response.data);
+			document.getElementById("wrongPass").style.display = '';
+		}
+		else{
+			window.open("/index", "_self");
+		}
+	})
+}
 function displayChangeStatus() {
 	document.getElementById("register").style.display="none";
 	var text = document.getElementById("text");
@@ -106,7 +125,6 @@ function checkGroup(){
 		}
 	})
 }
-
 function changeStatus(){		//https://blog.csdn.net/weixin_41949511/article/details/93630346
 	let formData = new FormData();
 	var select = document.getElementById("select");
