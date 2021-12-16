@@ -79,8 +79,8 @@
 					<h3 class="modal-title" id="myModalLabel">您确定要登出当前账号吗？</h3>
 					<h4 class="modal-body">当前登录状态：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}</h4>
 				</div>
-				<form class="modal-footer" action="/logout" method="post">
-					<button type="submit" value="退出登录" class="btn btn-primary">退出登录</button>
+				<form class="modal-footer">
+					<button type="submit" value="退出登录" class="btn btn-primary" onclick="logout()">退出登录</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 				</form>
 			</div>

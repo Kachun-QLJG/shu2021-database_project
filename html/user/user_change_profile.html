@@ -38,7 +38,7 @@
 		<li><a id="text">用户名：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}</a></li>
 		<li><a id="register" href="/register" title="注册" >前往注册</a></li>
 		<li><a id="login"href="/login" title="登录">前往登录</a></li>
-		<li><a id="logout"href="/logout" title="退出登录">退出登录</a></li>
+		<li><a id="logout" title="退出登录" data-toggle="modal" data-target="#log_out">退出登录</a></li>
 		<li><a href="/change_password"id="changePassword" title="更改密码">更改密码</a></li>
 	</ul>
 </div>
@@ -76,7 +76,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h3 class="modal-title" id="myModalLabel">更改个人信息</h3>
+				<h3 class="modal-title" id="changeUserInfo">更改个人信息</h3>
 			</div>
 			<div class="modal-body">
 				<img src="/statics/user/真实姓名.png" width="20px">
@@ -98,6 +98,22 @@
 			<form class="modal-footer">
 				<label style="font-size:1px;width: 80px;color: red;">没有再次确认哦，真的</label>
 				<button type="button" class="btn btn-primary" onclick="changeinfo()" id="confirmChangeInfo">确认更改</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="log_out" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3 class="modal-title" id="myModalLabel">您确定要登出当前账号吗？</h3>
+				<h4 class="modal-body">当前登录状态：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}</h4>
+			</div>
+			<form class="modal-footer">
+				<button type="submit" value="退出登录" class="btn btn-primary" onclick="logout()">退出登录</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 			</form>
 		</div>
