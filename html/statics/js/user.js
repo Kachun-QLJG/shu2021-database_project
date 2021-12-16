@@ -153,7 +153,7 @@ document.writeln("                <input id=\'type\' type=\'text\' placeholder=\
 document.writeln("            </div>");
 document.writeln("            <form class=\'modal-footer\'>");
 document.writeln("                <label style=\'font-size:1px;width: 80px;color: red;\'>没有再次确认哦，真的</label>");
-document.writeln("                <button type=\'button\' class=\'btn btn-primary\' onclick=\'addVehicle()\' id=\'confirmAddVehicle\'>确认新增</button>");
+document.writeln("                <button type=\'button\' class=\'btn btn-primary\' onclick=\'checkVehicle()\' id=\'confirmAddVehicle\'>确认新增</button>");
 document.writeln("                <button type=\'button\' class=\'btn btn-default\' data-dismiss=\'modal\'>取消</button>");
 document.writeln("            </form>");
 document.writeln("        </div>");

@@ -169,18 +169,24 @@ function checkNotification(){
 	  .then(function(response) {
 		var last = JSON.stringify(response.data);
 		var notification = window.eval(response.data);
-		var title =  notification.title;
-		var content = notification.content;
-		var time = notification.time;
+		var title1 =  notification.title;
+		var content1 = notification.content;
+		var time1 = notification.time;
 		if(last !== "null"){
 			var body = document.getElementById("body");
 			var div = document.createElement("div");
 			body.appendChild(div);
 			div.style.cssText = "width: 50%; height: 50%;position: absolute; top: 25%; left: 25%; text-align: center; background-color: white;";
 			div.id = "alert";
-			var title = document.createElement("h1");
+			var title = document.createElement("p");
 			div.appendChild(title);
-			title.innerHTML = last;
+			title.innerHTML = title1;
+			var content = document.createElement("p");
+			div.appendChild(content);
+			content.innerHTML = content1;
+			var time = document.createElement("p");
+			div.appendChild(time);
+			time.innerHTML = time1;
 			var button = document.createElement("button");
 			div.appendChild(button);
 			button.onclick= function () { read(); };
@@ -406,7 +412,14 @@ function addVehicle(){
 		headers: {"Content-Type": "multipart/form-data"}
 	};
 	axios.post("/add_vehicle", formData, config).then(res => {
-		alert(res.data);
+		var response = res.data;
+		if(response.status === "失败")
+		{
+			alert(response.data);
+		}
+		else{
+			alert("添加成功！");
+		}
 		location.reload();
 	})
 	document.getElementById("confirmAddVehicle").innerHTML="新增成功";
@@ -414,35 +427,21 @@ function addVehicle(){
 }
 
 function checkVehicle() {
-	axios({
-		method: 'get',
-		url: '/check_vehicle'
+	axios.get('/check_vehicle',{
+		params:{
+			number: document.getElementById("number").value
+		}
 	})
 		.then(function(response) {
-			var last = JSON.stringify(response.data);
-			var notification = window.eval(response.data);
-			var title =  notification.title;
-			var content = notification.content;
-			var time = notification.time;
-			if(last !== "null"){
-				var body = document.getElementById("body");
-				var div = document.createElement("div");
-				body.appendChild(div);
-				div.style.cssText = "width: 50%; height: 50%;position: absolute; top: 25%; left: 25%; text-align: center; background-color: white;";
-				div.id = "alert";
-				var title = document.createElement("h1");
-				div.appendChild(title);
-				title.innerHTML = last;
-				var button = document.createElement("button");
-				div.appendChild(button);
-				button.onclick= function () { read(); };
-				button.style.cssText = "width: 50px; height:30px";
-				button.innerHTML = "已读";
-				var button1 = document.createElement("button");
-				div.appendChild(button1);
-				button1.onclick= function () { closeNotification(); };
-				button1.style.cssText = "width: 100px; height:30px";
-				button1.innerHTML = "暂时忽略";
+			var last = response.data;
+			if(last === 1){
+				var r = confirm("该车辆已被绑定，是否覆盖？");
+				if(r===true){
+					addVehicle();
+				}
+			}
+			else{
+				addVehicle();
 			}
 		});
 }
