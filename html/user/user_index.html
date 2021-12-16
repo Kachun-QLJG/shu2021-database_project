@@ -1,15 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="AngularStore">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link href="/src/styles/bootstrap.min.css" rel="stylesheet">
-	<link href="/src/styles/style.css" rel="stylesheet">
-	<script src="/statics/js/axios.js"></script>
-	<script src="/statics/js/axios.min.js"></script>
-	<script src="/statics/js/script.js"></script>
-	<title>欢迎使用502汽修管理系统</title>
+	<script src="/statics/js/header.js"></script>
 </head>
 <body bgcolor="#f0f8ff" id="body">
 <div class="navbar-header" id="head1">
@@ -18,17 +10,6 @@
 
 
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	<!--
-	<ul class="nav navbar-nav">
-		<li class="active"><a ui-sref="employeeParent.employee">系统首页</a></li>
-		<li><a>商品管理</a></li>
-		<li><a>订单管理</a></li>
-		<li><a>物流管理</a></li>
-		<li><a>商城会员管理</a></li>
-		<li><a>系统用户管理</a></li>
-		<li><a>系统设置</a></li>
-	</ul>
-	-->
 	<ul id="navbar" class="nav navbar-nav navbar-right" >
 		<li><a id="text">用户名：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}</a></li>
 		<li><a id="register" href="/register" title="注册" >前往注册</a></li>
