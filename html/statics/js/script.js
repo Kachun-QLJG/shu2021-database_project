@@ -140,13 +140,13 @@ function checkGroup(){
 	})
 	.then(function(response){
 		if(response.data === "维修员"){
-			displayChangeStatus()
+			//displayChangeStatus()
 		}
 	})
 }
 function changeStatus(){		//https://blog.csdn.net/weixin_41949511/article/details/93630346
 	let formData = new FormData();
-	var select = document.getElementById("select");
+	var select = document.getElementById("confirmStatusChange");
 	formData.append("status", select.value);
 	let config = {
 	   headers: {"Content-Type": "multipart/form-data"}
