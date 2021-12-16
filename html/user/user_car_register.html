@@ -61,12 +61,14 @@
 			<div class="modal-body">
 				<img src="/statics/user/井号.png" width="20px">
 				<label style="font-size:15px;width: 80px;">车架号：</label>
-				<input id="number" type="text" placeholder="请输入车架号"/><br></br>
+				<input id="number" type="text" onchange="check_number()" placeholder="请输入车架号"/>
+				<span id="checktext1"></span> <br></br>
 
 				<img src="/statics/user/车牌.png" width="20px">
 				<label style="font-size:15px;width: 80px;">车牌号：</label>
-				<input id="license_number" type="text" placeholder="请输入车牌号"/>
-				<img src="/statics/user/问号.png" width="20px"><br></br>
+				<input id="license_number" type="text" onchange="check_license_number()" placeholder="请输入车牌号"/>
+				<img src="/statics/user/问号.png" width="20px">
+				<span id="checktext2"></span> <br></br>
 
 				<img src="/statics/user/颜色.png" width="20px">
 				<label style="font-size:15px;width: 80px;">车辆颜色：</label>
@@ -117,3 +119,31 @@
 </body>
 </html>
 
+<script type="text/javascript">
+	function check_number(){
+		var check = false;
+		var license_number = document.getElementById("number").value;
+		if(license_number.length != 17){
+			document.getElementById("checktext1").innerHTML = " × 请输入正确的车架号";
+			check = false;
+		}
+		else {
+			document.getElementById("checktext1").innerHTML = " √";
+			check = true;
+		}
+		return check;
+	}
+	function check_license_number(){
+		var check = false;
+		var license_number = document.getElementById("license_number").value;
+		if(license_number.length < 7 || license_number.length > 8){
+			document.getElementById("checktext2").innerHTML = " × 请输入正确的车牌号";
+			check = false;
+		}
+		else {
+			document.getElementById("checktext2").innerHTML = " √";
+			check = true;
+		}
+		return check;
+	}
+</script>
