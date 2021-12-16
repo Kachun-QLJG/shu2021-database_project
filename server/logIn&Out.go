@@ -83,6 +83,15 @@ func startLogin(c *gin.Context) {
 }
 
 func login(c *gin.Context) {
+	sessionId, err := c.Cookie("sessionId")
+	if err == nil { //已登录
+		var session AuthSession
+		result := database.First(&session, "time_hash=?", sessionId)
+		if result.RowsAffected == 1 { //找到了信息
+			c.JSON(http.StatusOK, gin.H{"status": "成功", "data": "已登录"})
+			return
+		}
+	}
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 	value := c.PostForm("ver_code")

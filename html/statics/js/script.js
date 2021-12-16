@@ -14,9 +14,11 @@ function login(){
 			document.getElementById("wrongPass").style.display = '';
 		}
 		else{
-			window.open("http://127.0.0.1:8080/index");
+			if(response.data === '已登录') {
+				alert("已登录，请勿重复登录！");
+			}
+			window.open("/index", "_self");
 		}
-
 	})
 }
 
