@@ -72,8 +72,8 @@ func startChangePassword(c *gin.Context) {
 }
 
 func changePassword(c *gin.Context) {
-	oldPassword := c.PostForm("old_password")
-	newPassword := c.PostForm("new_password")
+	oldPassword := c.PostForm("oldpswd")
+	newPassword := c.PostForm("pswd")
 	username := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	if group == "普通用户" {

@@ -59,6 +59,25 @@ function register(){
 		}
 	})
 }
+function change(){
+	let formData = new FormData();
+	formData.append("oldpswd", document.getElementById("oldpswd").value);
+	formData.append("pswd", document.getElementById("pswd").value);
+	let config = {
+		headers: {"Content-Type": "multipart/form-data"}
+	};
+	axios.post("/change", formData, config).then(res => {
+		var response = res.data;
+		if(response.status === "失败")
+		{
+			alert(response.data);
+			document.getElementById("wrongPass").style.display = '';
+		}
+		else{
+			window.open("/index", "_self");
+		}
+	})
+}
 function displayChangeStatus() {
 	document.getElementById("register").style.display="none";
 	var text = document.getElementById("text");
