@@ -9,6 +9,15 @@ import (
 	"time"
 )
 
+func getUsername(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	c.String(http.StatusOK, username)
+}
+func getGroup(c *gin.Context) {
+	group := c.MustGet("group").(string)
+	c.String(http.StatusOK, group)
+}
+
 func searchForProjects(c *gin.Context) {
 	text := c.Query("text")
 	carType := c.Query("type")

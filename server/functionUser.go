@@ -7,6 +7,10 @@ import (
 	"time"
 )
 
+/*
+func checkVehicle(c *gin.Context) {
+	carNumber := c.Query("number")
+}*/
 func startAddVehicle(c *gin.Context) {
 	number := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
