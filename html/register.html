@@ -24,26 +24,25 @@
                 <div class="modal-body">
                             <div id="wrongPass" class="alert alert-danger" role="alert" style="display:none">请输入正确的账号和密码！ </div>
                             <div class="form-group">
-                                <label>用户名：</label>
-                                <input type="text" id="phone" name="phone" onKeyUp="value=value.replace(\[/D],'')" onchange="checkphone()" class="form-control" placeholder="请输入用户名"/>
+                                <label>用户名：</label><br></br>
+                                <input type="text" id="phone" name="phone" onKeyUp="value=value.replace(\[/D],'')" onchange="checkphone()" class="form-control" style="width:60%;display:inline;" placeholder="请输入用户名"/>
                                 <span id="checktext1"></span>
                             </div>
                             <div class="form-group">
-                                <label >密码</label>
-                                <input type="password" id="pswd" name="pswd" onchange="checkpwd()" onpaste="return false" onkeydown="if(event.keyCode==32) return false" class="form-control"  placeholder="请输入密码"/>
+                                <label >密码</label><br></br>
+                                <input type="password" id="pswd" name="pswd" onchange="checkpwd()" onpaste="return false" onkeydown="if(event.keyCode==32) return false" class="form-control" style="width:60%;display:inline;"  placeholder="请输入密码"/>
                                 <span id="checktext2"></span>
                             </div>
                             <div class="form-group">
-                                <label >确认密码：</label>
-                                <input type="password" id="pswdc" name="pswd" onchange="checkpwdc()" onpaste="return false" onkeydown="if(event.keyCode==32) return false" class="form-control"  placeholder="请再次输入密码"/>
+                                <label >确认密码：</label><br></br>
+                                <input type="password" id="pswdc" name="pswd" onchange="checkpwdc()" onpaste="return false" onkeydown="if(event.keyCode==32) return false" class="form-control" style="width:60%;display:inline;"  placeholder="请再次输入密码"/>
                                 <span id="checktext3"></span>
                             </div>
                             <div class="form-group">
-                                <label >验证码</label>
+                                <label >验证码</label><br></br>
                                 <div>
-                                    <input type="text" id="ver" name="ver" class="form-control" placeholder="请输入验证码" />
+                                    <input type="text" id="ver" name="ver" class="form-control" style="width:60%;display:inline;" placeholder="请输入验证码" /><br></br>
                                     <img src="/captcha" onclick="this.src='/captcha?v='+Math.random()">
-                                    </br></br>
                                 </div>
                             </div>
                             <div class="modal-footer">
