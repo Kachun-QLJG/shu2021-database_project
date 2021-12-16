@@ -8,14 +8,15 @@ function login(){
 	};
 	axios.post("/login", formData, config).then(res => {
 		var response = res.data;
-		//alert(res.data.status);
 		if(response.status === "失败")
 		{
-			alert(res.data.data);
-			document.getElementById("wrongPass").style.display = 'inline-block';
+			alert(response.data);
+			document.getElementById("wrongPass").style.display = '';
+		}
+		else{
+			window.open("http://127.0.0.1:8080/index");
 		}
 
-		//location.reload();
 	})
 }
 
