@@ -19,7 +19,7 @@ func main() {
 	defer func(database *gorm.DB) {
 		err := database.Close()
 		if err != nil {
-
+			//zlf
 		}
 	}(database)
 	connectToSql(database)

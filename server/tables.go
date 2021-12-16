@@ -29,16 +29,11 @@ type TimeOverview struct { //工时总览表
 	ProjectNumber   string  `gorm:"type:varchar(10);unique_index;not null;primary_key"` //维修项目编号
 	ProjectName     string  `gorm:"type:varchar(50);not null"`                          //维修项目名称
 	ProjectSpelling string  `gorm:"type:varchar(25);not null"`                          //项目名称首字母
-	TimeAH          float64 `gorm:"type:double(5,1)"`                                   //工时A-H
-	TimeAD          float64 `gorm:"type:double(5,1)"`                                   //工时A-D
-	TimeBH          float64 `gorm:"type:double(5,1)"`                                   //工时B-H
-	TimeBD          float64 `gorm:"type:double(5,1)"`                                   //工时B-D
-	TimeCH          float64 `gorm:"type:double(5,1)"`                                   //工时C-H
-	TimeCD          float64 `gorm:"type:double(5,1)"`                                   //工时C-D
-	TimeDH          float64 `gorm:"type:double(5,1)"`                                   //工时D-H
-	TimeDD          float64 `gorm:"type:double(5,1)"`                                   //工时D-D
-	TimeEH          float64 `gorm:"type:double(5,1)"`                                   //工时E-H
-	TimeED          float64 `gorm:"type:double(5,1)"`                                   //工时E-D
+	TimeA           float64 `gorm:"type:double(5,1)"`                                   //工时A
+	TimeB           float64 `gorm:"type:double(5,1)"`                                   //工时B
+	TimeC           float64 `gorm:"type:double(5,1)"`                                   //工时C
+	TimeD           float64 `gorm:"type:double(5,1)"`                                   //工时D
+	TimeE           float64 `gorm:"type:double(5,1)"`                                   //工时E
 	Remark          string  `gorm:"type:varchar(20)"`                                   //备注
 }
 
