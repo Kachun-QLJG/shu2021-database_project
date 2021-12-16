@@ -93,7 +93,7 @@ func login(c *gin.Context) {
 			if CheckPasswordHash(password, user.Password) { //密码比对通过
 				goto CORRECT
 			} else { //密码比对不通过
-				c.HTML(http.StatusBadRequest, "error.html", gin.H{"errdata": "登录失败！", "website": "/login", "webName": "登录页面"})
+				c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "用户名或密码错误！"})
 				return
 			}
 		} else { //不是用户表里的，找业务员表和维修员表
@@ -103,7 +103,7 @@ func login(c *gin.Context) {
 				if CheckPasswordHash(password, repairMan.Password) { //密码比对通过
 					goto CORRECT
 				} else { //密码比对不通过
-					c.HTML(http.StatusBadRequest, "error.html", gin.H{"errdata": "登录失败！", "website": "/login", "webName": "登录页面"})
+					c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "用户名或密码错误！"})
 					return
 				}
 			} else { //不是用户表和维修员表里的，找业务员表
@@ -113,11 +113,11 @@ func login(c *gin.Context) {
 					if CheckPasswordHash(password, salesman.Password) { //密码比对通过
 						goto CORRECT
 					} else { //密码比对不通过
-						c.HTML(http.StatusBadRequest, "error.html", gin.H{"errdata": "登录失败！", "website": "/login", "webName": "登录页面"})
+						c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "用户名或密码错误！"})
 						return
 					}
 				} else {
-					c.HTML(http.StatusBadRequest, "error.html", gin.H{"errdata": "登录失败！", "website": "/login", "webName": "登录页面"})
+					c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "用户名或密码错误！"})
 					return
 				}
 			}
@@ -147,10 +147,10 @@ func login(c *gin.Context) {
 				Secure:   false,
 				HttpOnly: true,
 			})
-			c.Redirect(http.StatusMovedPermanently, "/index")
+			c.JSON(http.StatusOK, gin.H{"status": "成功", "data": "/index"})
 		}
 	} else { //验证码错误
-		c.HTML(http.StatusBadRequest, "error.html", gin.H{"errdata": "验证码错误！", "website": "/login", "webName": "登录页面"})
+		c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "验证码错误！"})
 	}
 }
 func authMiddleWare() gin.HandlerFunc { //检查登录状态

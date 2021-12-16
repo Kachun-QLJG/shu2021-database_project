@@ -5,6 +5,9 @@
 	<meta charset="UTF-8">
 	<link href="src/styles/bootstrap.min.css" rel="stylesheet">
 	<link href="src/styles/style.css" rel="stylesheet">
+	<script src="/statics/js/axios.js"></script>
+	<script src="/statics/js/axios.min.js"></script>
+	<script src="/statics/js/script.js"></script>
 	<title>登录</title>
 </head>
 
@@ -19,31 +22,26 @@
 					<h4 class="modal-title" id="myModalLabel">用户登录</h4>
 				</div>
 				<div class="modal-body">
-
-					<form action="/login" method="post">
-						<fieldset>
-							<div id="wrongPass" class="alert alert-danger" role="alert" style="display:none">请输入正确的账号和密码！ </div>
-							<div class="form-group">
-								<label>用户名（手机号/工号）：</label>
-								<input type="text"  name="username" class="form-control" placeholder="请输入账号"/>
-							</div>
-							<div class="form-group">
-								<label >密码</label>
-								<input type="password" name="password" onpaste="return false"  onkeydown="if(event.keyCode==32) return false" class="form-control"  placeholder="请输入密码" />
-							</div>
-							<div class="form-group">
-								<label >验证码</label>
-								<div>
-									<input type="text" name="ver_code" class="form-control" placeholder="请输入验证码" />
-									<img src="/captcha" onclick="this.src='/captcha?v='+Math.random()">
-									</br></br>
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="submit" class="btn btn-primary" >登录</button>
-							</div>
-						</fieldset>
-					</form>
+					<div class="alert alert-danger" id="wrongPass" role="alert" style="display:none">请输入正确的账号和密码！ </div>
+					<div class="form-group">
+						<label>用户名（手机号/工号）：</label>
+						<input class="form-control" id="username" name="username" placeholder="请输入账号" type="text"/>
+					</div>
+					<div class="form-group">
+						<label >密码</label>
+						<input class="form-control" id="password" name="password" onkeydown="if(event.keyCode==32) return false"  onpaste="return false" placeholder="请输入密码"  type="password" />
+					</div>
+					<div class="form-group">
+						<label >验证码</label>
+						<div>
+							<input class="form-control" id="ver_code" name="ver_code" placeholder="请输入验证码" type="text" />
+							<img onclick="this.src='/captcha?v='+Math.random()" src="/captcha">
+							</br></br>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary" onclick="login()">登录</button>
+					</div>
 				</div>
 			</div>
 		</div>

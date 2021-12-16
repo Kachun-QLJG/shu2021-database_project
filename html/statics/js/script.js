@@ -1,3 +1,24 @@
+function login(){
+	let formData = new FormData();
+	formData.append("username", document.getElementById("username").value);
+	formData.append("password", document.getElementById("password").value);
+	formData.append("ver_code", document.getElementById("ver_code").value);
+	let config = {
+		headers: {"Content-Type": "multipart/form-data"}
+	};
+	axios.post("/login", formData, config).then(res => {
+		var response = res.data;
+		//alert(res.data.status);
+		if(response.status === "失败")
+		{
+			alert(res.data.data);
+			document.getElementById("wrongPass").style.display = 'inline-block';
+		}
+
+		//location.reload();
+	})
+}
+
 function displayChangeStatus() {
 	document.getElementById("register").style.display="none";
 	var text = document.getElementById("text");
