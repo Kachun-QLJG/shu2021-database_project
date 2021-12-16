@@ -52,28 +52,29 @@ function register(){
 		if(response.status === "失败")
 		{
 			alert(response.data);
-			document.getElementById("wrongPass").style.display = '';
+			document.getElementById('ver_pic').click();
 		}
 		else{
+			alert("注册成功！");
 			window.open("/index", "_self");
 		}
 	})
 }
-function change(){
+function changePswd(){
 	let formData = new FormData();
 	formData.append("oldpswd", document.getElementById("oldpswd").value);
 	formData.append("pswd", document.getElementById("pswd").value);
 	let config = {
 		headers: {"Content-Type": "multipart/form-data"}
 	};
-	axios.post("/change", formData, config).then(res => {
+	axios.post("/change_password", formData, config).then(res => {
 		var response = res.data;
 		if(response.status === "失败")
 		{
 			alert(response.data);
-			document.getElementById("wrongPass").style.display = '';
 		}
 		else{
+			alert("密码更改成功！请重新登录！");
 			window.open("/index", "_self");
 		}
 	})

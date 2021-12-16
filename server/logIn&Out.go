@@ -95,6 +95,7 @@ func login(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 	value := c.PostForm("ver_code")
+	fmt.Println(username, password)
 	if CaptchaVerify(c, value) { //验证码正确
 		var user User
 		result := database.First(&user, "contact_tel=?", username)
@@ -102,6 +103,7 @@ func login(c *gin.Context) {
 			if CheckPasswordHash(password, user.Password) { //密码比对通过
 				goto CORRECT
 			} else { //密码比对不通过
+				fmt.Println("1")
 				c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "用户名或密码错误！"})
 				return
 			}
@@ -112,6 +114,7 @@ func login(c *gin.Context) {
 				if CheckPasswordHash(password, repairMan.Password) { //密码比对通过
 					goto CORRECT
 				} else { //密码比对不通过
+					fmt.Println("@2")
 					c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "用户名或密码错误！"})
 					return
 				}
@@ -122,10 +125,12 @@ func login(c *gin.Context) {
 					if CheckPasswordHash(password, salesman.Password) { //密码比对通过
 						goto CORRECT
 					} else { //密码比对不通过
+						fmt.Println()
 						c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "用户名或密码错误！"})
 						return
 					}
 				} else {
+					fmt.Println("4")
 					c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "用户名或密码错误！"})
 					return
 				}

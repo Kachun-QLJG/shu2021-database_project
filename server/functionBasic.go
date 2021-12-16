@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
@@ -76,51 +77,45 @@ func changePassword(c *gin.Context) {
 	newPassword := c.PostForm("pswd")
 	username := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
+	fmt.Println(oldPassword, newPassword)
+	if oldPassword == "" {
+		fmt.Println("empty!")
+	}
+	var passwordChange struct {
+		OldPassword string
+		Username    string
+	}
 	if group == "普通用户" {
-		var user User
-		database.First(&user, "contact_tel = ?", username)
-		if CheckPasswordHash(oldPassword, user.Password) { //密码比对通过
-			secretPassword, _ := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
-			database.Model(&user).Update("password", secretPassword) //用一次session，更新一次时间。
-			username1 := "[out]" + username
-			var session AuthSession
-			database.First(&session, "username = ?", username)
-			database.Model(&session).Update("username", username1) //在session表中将用户的账号前加入[out]标识
-			c.SetCookie("sessionId", "", 0, "", "", false, true)   //清除浏览器中的cookie
-			c.HTML(http.StatusOK, "success.html", gin.H{"data": "密码更改成功！", "website": "/login", "webName": "登录页面"})
-		} else {
-			c.HTML(http.StatusOK, "error.html", gin.H{"data": "密码错误！", "website": "/change_password", "webName": "修改密码页面"})
-		}
+		database.Table("user").Select("contact_tel as username, password as old_password").Where("contact_tel = ?", username).Scan(&passwordChange).Limit(1)
 	} else if group == "业务员" {
-		var user Salesman
-		database.First(&user, "number = ?", username)
-		if CheckPasswordHash(oldPassword, user.Password) { //密码比对通过
-			secretPassword, _ := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
-			database.Model(&user).Update("password", secretPassword) //用一次session，更新一次时间。
-			username1 := "[out]" + username
-			var session AuthSession
-			database.First(&session, "username = ?", username)
-			database.Model(&session).Update("username", username1) //在session表中将用户的账号前加入[out]标识
-			c.SetCookie("sessionId", "", 0, "", "", false, true)   //清除浏览器中的cookie
-			c.HTML(http.StatusOK, "success.html", gin.H{"data": "密码更改成功！", "website": "/login", "webName": "登录页面"})
-		} else {
-			c.HTML(http.StatusOK, "error.html", gin.H{"data": "密码错误！", "website": "/change_password", "webName": "修改密码页面"})
-		}
+		database.Table("salesman").Select("number as username, password as old_password").Where("number = ?", username).Scan(&passwordChange).Limit(1)
 	} else {
-		var user Repairman
-		database.First(&user, "number = ?", username)
-		if CheckPasswordHash(oldPassword, user.Password) { //密码比对通过
-			secretPassword, _ := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
-			database.Model(&user).Update("password", secretPassword) //用一次session，更新一次时间。
-			username1 := "[out]" + username
-			var session AuthSession
-			database.First(&session, "username = ?", username)
-			database.Model(&session).Update("username", username1) //在session表中将用户的账号前加入[out]标识
-			c.SetCookie("sessionId", "", 0, "", "", false, true)   //清除浏览器中的cookie
-			c.HTML(http.StatusOK, "success.html", gin.H{"data": "密码更改成功！", "website": "/login", "webName": "登录页面"})
+		database.Table("repairman").Select("number as username, password as old_password").Where("number = ?", username).Scan(&passwordChange).Limit(1)
+	}
+	fmt.Println(passwordChange)
+	if CheckPasswordHash(oldPassword, passwordChange.OldPassword) { //密码比对通过
+		secretPassword, _ := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
+		if group == "普通用户" {
+			var user User
+			database.First(&user, "contact_tel = ?", username)
+			database.Model(&user).Update("password", secretPassword)
+		} else if group == "业务员" {
+			var salesman Salesman
+			database.First(&salesman, "number = ?", username)
+			database.Model(&salesman).Update("password", secretPassword)
 		} else {
-			c.HTML(http.StatusOK, "error.html", gin.H{"data": "密码错误！", "website": "/change_password", "webName": "修改密码页面"})
+			var repairman Repairman
+			database.First(&repairman, "number = ?", username)
+			database.Model(&repairman).Update("password", secretPassword)
 		}
+		username1 := "[out]" + username
+		var session AuthSession
+		database.First(&session, "username = ?", username)
+		database.Model(&session).Update("username", username1) //在session表中将用户的账号前加入[out]标识
+		c.SetCookie("sessionId", "", 0, "", "", false, true)   //清除浏览器中的cookie
+		c.JSON(http.StatusOK, gin.H{"status": "成功", "data": "/index"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "密码错误！"})
 	}
 }
 
