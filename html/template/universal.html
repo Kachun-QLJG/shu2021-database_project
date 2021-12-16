@@ -1,0 +1,31 @@
+<div class="navbar-header" id="head1">
+    <a class="navbar-brand">502汽修厂管理系统</a>
+</div>
+
+<!--右上区块-->
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right" id="navbar" >
+        <li><a id="text">用户名：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}</a></li>
+        <li><a href="/register" id="register" title="注册" >前往注册</a></li>
+        <li><a href="/login"id="login" title="登录" >前往登录</a></li>
+        <li><a data-target="#log_out" data-toggle="modal" id="logout" title="退出登录">退出登录</a></li>
+        <li><a href="/change_password"id="changePassword" title="更改密码">更改密码</a></li>
+    </ul>
+</div>
+
+<!--登出模态框（Modal）-->
+<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="log_out" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+                <h3 class="modal-title" id="myModalLabel">您确定要登出当前账号吗？</h3>
+                <h4 class="modal-body">当前登录状态：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}</h4>
+            </div>
+            <form class="modal-footer">
+                <button class="btn btn-primary" onclick="logout()" type="submit" value="退出登录">退出登录</button>
+                <button class="btn btn-default" data-dismiss="modal" type="button">取消</button>
+            </form>
+        </div>
+    </div>
+</div>
