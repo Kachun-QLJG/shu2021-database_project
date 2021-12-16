@@ -4,13 +4,16 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 	"time"
 )
 
-/*
 func checkVehicle(c *gin.Context) {
 	carNumber := c.Query("number")
-}*/
+	var vehicle Vehicle
+	c.String(http.StatusOK, strconv.FormatInt(database.First(&vehicle, "number = ?", carNumber).RowsAffected, 10))
+}
+
 func startAddVehicle(c *gin.Context) {
 	number := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
