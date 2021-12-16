@@ -384,7 +384,6 @@ function changeinfo(){
 	formData.append("name", document.getElementById("name").value);
 	formData.append("property", document.getElementById("property").value);
 	formData.append("contact_person", document.getElementById("contact_person").value);
-	formData.append("contact_tel", document.getElementById("contact_tel").value);
 	let config = {
 	   headers: {"Content-Type": "multipart/form-data"}
 	};

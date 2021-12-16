@@ -6,65 +6,13 @@
 <body bgcolor="#f0f8ff" id="body">
 	<script src="/statics/js/universal.js"></script>
 	<script src="/statics/js/salesman.js"></script>
-	<!--
-<div class="navbar-header" id="head1">
-	<a class="navbar-brand">502汽修厂管理系统</a>
-</div>
-
-
-<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	<!-
-	<ul class="nav navbar-nav">
-		<li class="active"><a ui-sref="employeeParent.employee">系统首页</a></li>
-		<li><a>商品管理</a></li>
-		<li><a>订单管理</a></li>
-		<li><a>物流管理</a></li>
-		<li><a>商城会员管理</a></li>
-		<li><a>系统用户管理</a></li>
-		<li><a>系统设置</a></li>
-	</ul>
-	->
-	<ul id="navbar" class="nav navbar-nav navbar-right" >
-		<li><a id="text">用户名：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}</a></li>
-		<li><a id="register" href="/register" title="注册" >前往注册</a></li>
-		<li><a id="login"href="/login" title="登录">前往登录</a></li>
-		<li><a id="logout"href="/logout" title="退出登录">退出登录</a></li>
-		<li><a href="/change_password"id="changePassword" title="更改密码">更改密码</a></li>
-	</ul>
-</div>
-
-
-<div class="container-fluid">
-	<div class="row">
-		<!-左导航栏->
-		<div class="hidden-xs  col-md-2">
-			<div class="list-group">
-				<a class="list-group-item list-group-item-success">
-					功能
-				</a>
-				<a class="list-group-item" href="/change_password">更改密码</a>
-				<a class="list-group-item" href="/take_orders">接单</a>
-				<a class="list-group-item" href="/s_check_orders">查看接单记录</a>
-			</div>
-		</div>
-		<!-右导航栏->
-		<div class="col-xs-10" id="con">
-			<div class="container-fluid">
-				<div id="test_div">
-
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
--->
-<script>
-	window.onload= function(){
-		checkNotification();
-		checkGroup();
-		checkUser();
-	}
-</script>
+	<script>
+		window.onload= function(){
+			checkNotification();
+			checkGroup();
+			checkUser();
+		}
+	</script>
 
 </body>
 </html>
