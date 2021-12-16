@@ -26,7 +26,7 @@ func logout(c *gin.Context) {
 		database.Model(&session).Update("username", username1) //在session表中将用户的账号前加入[out]标识
 		c.SetCookie("sessionId", "", 0, "", "", false, true)   //清除浏览器中的cookie
 	}
-	c.HTML(http.StatusOK, "success.html", gin.H{"data": "用户" + username + "退出登录成功！", "website": "/index", "webName": "主页"})
+	c.HTML(http.StatusOK, "index.html", nil)
 }
 
 func CheckPasswordHash(password, hash string) bool { //bcrypt比对密钥函数，用以比对两个字符串中的明文是否一致

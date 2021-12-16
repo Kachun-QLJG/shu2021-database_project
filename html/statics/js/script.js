@@ -31,6 +31,15 @@ function login(){
 	})
 }
 
+function logout() {
+	axios({
+		method: 'post',
+		url: '/logout'
+	});
+	alert("成功");
+	window.open("/index", "_self");
+}
+
 function displayChangeStatus() {
 	document.getElementById("register").style.display="none";
 	var text = document.getElementById("text");
@@ -330,16 +339,19 @@ function getinfo(){
 
 function changeinfo(){
 	let formData = new FormData();
-	formData.append("name", "郑宇");
-	formData.append("property", "个人");
-	formData.append("contact_person", "郑宇");
+	formData.append("name", document.getElementById("name").value);
+	formData.append("property", document.getElementById("property").value);
+	formData.append("contact_person", document.getElementById("contact_person").value);
+	formData.append("contact_tel", document.getElementById("contact_tel").value);
 	let config = {
 	   headers: {"Content-Type": "multipart/form-data"}
 	};
 	axios.post("/change_userinfo", formData, config).then(res => {
-				 alert(res.data);
-				 location.reload();
-			})
+		alert(res.data);
+		location.reload();
+	})
+	document.getElementById("confirmChangeInfo").innerHTML="更改成功";
+	window.setTimeout("window.location.reload()", 2000);
 }
 
 function addVehicle(){
@@ -356,4 +368,6 @@ function addVehicle(){
 		alert(res.data);
 		location.reload();
 	})
+	document.getElementById("confirmAddVehicle").innerHTML="新增成功";
+	window.setTimeout("window.location.reload()", 2000);
 }

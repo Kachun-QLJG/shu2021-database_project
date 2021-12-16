@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <link href="src/styles/bootstrap.min.css" rel="stylesheet">
     <link href="src/styles/style.css" rel="stylesheet">
+    <script src="/statics/js/axios.js"></script>
+    <script src="/statics/js/axios.min.js"></script>
+    <script src="/statics/js/script.js"></script>
     <title>退出登录</title>
 </head>
 
@@ -19,20 +22,15 @@
                     <h4 class="modal-title" id="myModalLabel"><b>登录状态：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}</b></h4>
                 </div>
                 <div class="modal-body">
-
-                    <form action="/logout" method="post">
-                        <fieldset>
-                            <div class="form-group">
-                                <label >是否退出登录？</label>
-                                <button type="submit" class="btn btn-primary" >退出登录</button>
-                            </div>
+                    <div class="form-group">
+                        <label >是否退出登录？</label>
+                        <button type="submit" class="btn btn-primary" onclick="logout()">退出登录</button>
+                    </div>
                             <!--
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary" >退出登录</button>
                             </div>
                             -->
-                        </fieldset>
-                    </form>
                 </div>
             </div>
         </div>
