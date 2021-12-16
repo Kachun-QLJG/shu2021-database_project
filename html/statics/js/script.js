@@ -168,6 +168,10 @@ function checkNotification(){
 	  })
 	  .then(function(response) {
 		var last = JSON.stringify(response.data);
+		var notification = window.eval(response.data);
+		var title =  notification.title;
+		var content = notification.content;
+		var time = notification.time;
 		if(last !== "null"){
 			var body = document.getElementById("body");
 			var div = document.createElement("div");
@@ -408,4 +412,38 @@ function addVehicle(){
 	})
 	document.getElementById("confirmAddVehicle").innerHTML="新增成功";
 	window.setTimeout("window.location.reload()", 2000);
+}
+
+function checkVehicle() {
+	axios({
+		method: 'get',
+		url: '/check_vehicle'
+	})
+		.then(function(response) {
+			var last = JSON.stringify(response.data);
+			var notification = window.eval(response.data);
+			var title =  notification.title;
+			var content = notification.content;
+			var time = notification.time;
+			if(last !== "null"){
+				var body = document.getElementById("body");
+				var div = document.createElement("div");
+				body.appendChild(div);
+				div.style.cssText = "width: 50%; height: 50%;position: absolute; top: 25%; left: 25%; text-align: center; background-color: white;";
+				div.id = "alert";
+				var title = document.createElement("h1");
+				div.appendChild(title);
+				title.innerHTML = last;
+				var button = document.createElement("button");
+				div.appendChild(button);
+				button.onclick= function () { read(); };
+				button.style.cssText = "width: 50px; height:30px";
+				button.innerHTML = "已读";
+				var button1 = document.createElement("button");
+				div.appendChild(button1);
+				button1.onclick= function () { closeNotification(); };
+				button1.style.cssText = "width: 100px; height:30px";
+				button1.innerHTML = "暂时忽略";
+			}
+		});
 }
