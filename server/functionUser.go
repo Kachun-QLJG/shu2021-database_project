@@ -1,13 +1,53 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"os/exec"
 	"strconv"
 	"time"
 )
 
+func generateLicensePlate(licenseNumber string) {
+	color := "blue"
+	count := 0
+	for _, char := range licenseNumber {
+		if count == 0 && char >= 'A' && char <= 'Z' {
+			color = "white"
+		}
+		if count == 0 && string(char) == "使" {
+			color = "black"
+		}
+		if count == 6 && string(char) == "警" {
+			color = "white"
+		}
+		if count == 6 && string(char) == "领" || string(char) == "港" {
+			color = "black"
+		}
+		if count == 6 && string(char) == "学" {
+			color = "yellow"
+		}
+		count++
+	}
+	if count == 8 {
+		color = "green_car"
+	}
+	args := []string{"--plate-number", licenseNumber, "--bg-color", color}
+	cmd := exec.Command("generate_special_plate.exe", args...)
+	fmt.Println(cmd.Args)
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
+		return
+	}
+	fmt.Println("Result: " + out.String())
+}
 func checkVehicle(c *gin.Context) {
 	carNumber := c.Query("number")
 	var vehicle Vehicle
@@ -35,15 +75,16 @@ func startUCheckOrders(c *gin.Context) {
 }
 
 func addVehicle(c *gin.Context) {
-	number := c.PostForm("number")                 //获取车架号
-	licenseNumber := c.PostForm("license_number")  //获取车牌号
-	phone_number := c.MustGet("username").(string) //获取用户名
+	number := c.PostForm("number")                //获取车架号
+	licenseNumber := c.PostForm("license_number") //获取车牌号
+	phoneNumber := c.MustGet("username").(string) //获取用户名
 	color := c.PostForm("color")
 	model := c.PostForm("model")
 	carType := c.PostForm("type")
 	sTime := time.Now().Format("2006-01-02 15:04:05")
+	generateLicensePlate(licenseNumber)
 	var user User
-	database.First(&user, "contact_tel = ?", phone_number) //查找用户
+	database.First(&user, "contact_tel = ?", phoneNumber) //查找用户
 	var vehicle Vehicle
 	res := database.First(&vehicle, "number = ?", number) //根据输入的车架号，查这辆车是否已被绑定
 	if res.RowsAffected == 0 {                            //如果没有被绑定
@@ -66,7 +107,7 @@ func addVehicle(c *gin.Context) {
 			strNumber,
 			oldUser.ContactTel,
 			"【通知】您的车辆" + vehicle.LicenseNumber + "已被他人绑定",
-			"尊敬的用户" + oldUser.Name + "您好，您的车辆" + vehicle.LicenseNumber + "已被手机尾号为" + phone_number[7:] + "的用户绑定。",
+			"尊敬的用户" + oldUser.Name + "您好，您的车辆" + vehicle.LicenseNumber + "已被手机尾号为" + phoneNumber[7:] + "的用户绑定。",
 			"未读",
 			sTime,
 		}
