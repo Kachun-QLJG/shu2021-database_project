@@ -61,13 +61,13 @@ function register(){
 	})
 }
 function checkregister() {
-	var check1 = true;
 	axios.get('/check_register',{
 		params:{
 			contact_tel: document.getElementById("phone").value
 		}
 	})
 		.then(function(response) {
+			var check1 = true;
 			var last = response.data;
 			if(last === 1){
 				document.getElementById("checktext1").innerHTML = " × 该账号已被注册过";
