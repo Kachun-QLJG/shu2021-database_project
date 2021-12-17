@@ -9,6 +9,7 @@ func addPath(r *gin.Engine) {
 	//	checkPermission也是一个中间件，用以判断已登录用户所处的组别。并将用户名与组别提交给下一个匿名函数。
 	r.GET("/index", welcome)                                                             //根据登录状态返回不同主页
 	r.GET("/register", startRegister)                                                    //用户注册
+	r.GET("/check_register", checkRegister)                                              //用户注册
 	r.GET("/login", startLogin)                                                          //用户登录
 	r.GET("/logout", authMiddleWare(), checkPermission(), startLogout)                   //用户登出
 	r.GET("/change_password", authMiddleWare(), checkPermission(), startChangePassword)  //更改密码

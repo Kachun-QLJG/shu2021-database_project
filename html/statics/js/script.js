@@ -60,6 +60,22 @@ function register(){
 		}
 	})
 }
+function checkregister() {
+	var check1 = true;
+	axios.get('/check_register',{
+		params:{
+			contact_tel: document.getElementById("phone").value
+		}
+	})
+		.then(function(response) {
+			var last = response.data;
+			if(last === 1){
+				document.getElementById("checktext1").innerHTML = " × 该账号已被注册过";
+				check1 = false;
+			}
+		});
+	return check1;
+}
 function changePswd(){
 	let formData = new FormData();
 	formData.append("oldpswd", document.getElementById("oldpswd").value);

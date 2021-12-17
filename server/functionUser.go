@@ -10,6 +10,12 @@ import (
 	"time"
 )
 
+func checkRegister(c *gin.Context) {
+	phoneNumber := c.Query("contact_tel")
+	var user User
+	c.String(http.StatusOK, strconv.FormatInt(database.First(&user, "contact_tel = ?", phoneNumber).RowsAffected, 10))
+}
+
 func generateLicensePlate(licenseNumber string) {
 	color := "blue"
 	count := 0

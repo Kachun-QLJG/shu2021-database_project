@@ -25,7 +25,7 @@
                             <div id="wrongPass" class="alert alert-danger" role="alert" style="display:none">请输入正确的账号和密码！ </div>
                             <div class="form-group">
                                 <label>用户名：</label><br></br>
-                                <input type="text" id="phone" name="phone" onKeyUp="value=value.replace(\[/D],'')" onchange="checkphone()" class="form-control" style="width:60%;display:inline;" placeholder="请输入用户名"/>
+                                <input type="text" id="phone" name="phone" onKeyUp="value=value.replace(\[/D],'')" onblur="checkphone()" class="form-control" style="width:60%;display:inline;" placeholder="请输入用户名"/>
                                 <span id="checktext1"></span>
                             </div>
                             <div class="form-group">
@@ -64,7 +64,8 @@
         if(phone.length !== 11){
             document.getElementById("checktext1").innerHTML = " × 请输入正确的手机号";
             check = false;
-        } else {
+        }
+        else if(checkregister() === true) {
             document.getElementById("checktext1").innerHTML = " √";
             check = true;
         }
