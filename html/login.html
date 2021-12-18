@@ -11,7 +11,7 @@
 	<title>登录</title>
 </head>
 
-<body>
+<body onkeydown="keylogin()">
 
 <div class="bg-login">
 	<div class="modal fade in login" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display:block">
@@ -40,7 +40,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-primary" onclick="login()">登录</button>
+						<button id="loginbutton" class="btn btn-primary" onclick="login()">登录</button>
 					</div>
 				</div>
 			</div>
@@ -51,3 +51,10 @@
 </body>
 </html>
 
+<script>
+	function keylogin(){
+		if(event.keyCode == 13){
+			document.getElementById('loginbutton').click();
+		}
+	}
+</script>

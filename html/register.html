@@ -11,7 +11,7 @@
     <title>注册</title>
 </head>
 
-<body>
+<body onkeydown="keyregister()">
 
 <div class="bg-login">
     <div class="modal fade in login" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display:block">
@@ -42,14 +42,14 @@
                                 <label >验证码</label><br></br>
                                 <div>
                                     <input type="text" id="ver" name="ver" class="form-control" style="width:60%;display:inline;" placeholder="请输入验证码" /><br></br>
-                                    <img src="/captcha" onclick="this.src='/captcha?v='+Math.random()">
+                                    <img id="ver_pic1" src="/captcha" onclick="this.src='/captcha?v='+Math.random()">
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <input type="hidden" id="phone_number" name="phone_number" />
                                 <input type="hidden" id="password" name="password" />
                                 <input type="hidden" id="ver_code" name="ver_code"/>
-                                <button type="submit" class="btn btn-primary" value="注册" onclick="check()">注册</button>
+                                <button id="registerbutton" type="submit" class="btn btn-primary" value="注册" onclick="check()">注册</button>
                             </div>
                 </div>
             </div>
@@ -58,21 +58,35 @@
 </div>
 
 <script type="text/javascript">
-    function checkphone(){
+    async function checkphone(){
         var check = false;
         var phone = document.getElementById("phone").value;
         if(phone.length !== 11){
             document.getElementById("checktext1").innerHTML = " × 请输入正确的手机号";
             check = false;
+            return check;
         }
         else{
             document.getElementById("checktext1").innerHTML = " √";
             check = true;
         }
-        if(checkregister() === true) {
-            document.getElementById("checktext1").innerHTML = " √";
-            check = true;
-        }
+        await axios.get('/check_register',{
+            params:{
+                contact_tel: document.getElementById("phone").value
+            }
+        })
+            .then(function(response) {
+                var last = response.data;
+                if(last === 1){
+                    document.getElementById("checktext1").innerHTML = " × 该账号已被注册过";
+                    check = false;
+                    return check;
+                }
+                else{
+                    document.getElementById("checktext1").innerHTML = " √";
+                    check = true;
+                }
+            });
         return check;
     }
     function checkpwd(){
@@ -103,9 +117,14 @@
         return check;
     }
     function check() {
-        if (checkphone() && checkregister() && checkpwd() && checkpwdc()){
-
+        if (checkphone() && checkpwd() && checkpwdc()){
             register();
+            document.getElementById('ver_pic1').click();
+        }
+    }
+    function keyregister(){
+        if(event.keyCode == 13){
+            document.getElementById('registerbutton').click();
         }
     }
 </script>

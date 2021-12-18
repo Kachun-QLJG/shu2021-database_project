@@ -51,8 +51,9 @@ function register(){
 		var response = res.data;
 		if(response.status === "失败")
 		{
-			alert(response.data);
-			document.getElementById('ver_pic').click();
+			if(response.data === '验证码'){
+				alert("验证码错误！");
+			}
 		}
 		else{
 			alert("注册成功！");
@@ -60,22 +61,7 @@ function register(){
 		}
 	})
 }
-function checkregister() {
-	axios.get('/check_register',{
-		params:{
-			contact_tel: document.getElementById("phone").value
-		}
-	})
-		.then(function(response) {
-			var check1 = true;
-			var last = response.data;
-			if(last === 1){
-				document.getElementById("checktext1").innerHTML = " × 该账号已被注册过";
-				check1 = false;
-			}
-		});
-	return check1;
-}
+
 function changePswd(){
 	let formData = new FormData();
 	formData.append("oldpswd", document.getElementById("oldpswd").value);
