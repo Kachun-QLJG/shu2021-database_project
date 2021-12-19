@@ -3,7 +3,7 @@
 <head>
 	<script src="/statics/js/header.js"></script>
 </head>
-<body bgcolor="#f0f8ff" id="body">
+<body onkeydown="keycarregister()" bgcolor="#f0f8ff" id="body">
 	<script src="/statics/js/universal.js"></script>
 	<script src="/statics/js/user.js"></script>
 	<!--
@@ -149,5 +149,10 @@
 			check = true;
 		}
 		return check;
+	}
+	function keycarregister(){
+		if(event.keyCode == 13){
+			document.getElementById('confirmAddVehicle').click();
+		}
 	}
 </script>
