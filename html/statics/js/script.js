@@ -447,3 +447,48 @@ function checkVehicle() {
 			}
 		});
 }
+function getUserName(){
+	axios({
+		method : 'get',
+		url: "/get_username"
+	})
+		.then(function(response){
+			var text = document.getElementById("text");
+			if(response.data==null){
+				text.innerHTML ="用户名：未登录";
+			}
+			else{
+				text.innerHTML ="用户名：" + response.data;
+			}
+		})
+}
+function getUsername(){
+	axios({
+		method : 'get',
+		url: "/get_username"
+	})
+		.then(function(response){
+			var text1 = document.getElementById("text1");
+			if(response.data===null){
+				text1.innerHTML ="用户名：未登录";
+			}
+			else{
+				text1.innerHTML ="当前用户名：" + response.data;
+			}
+		})
+}
+function getusername(){
+	axios({
+		method : 'get',
+		url: "/get_username"
+	})
+		.then(function(response){
+			var text2 = document.getElementById("navbar").getElementsByTagName("li");
+			if(response.data===null){
+				text2[0].innerHTML ="用户名：未登录";
+			}
+			else{
+				text2[0].innerHTML ="用户名：" + response.data;
+			}
+		})
+}

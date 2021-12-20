@@ -6,7 +6,7 @@ document.writeln("            <div class=\'list-group\'>");
 document.writeln("                <a class=\'list-group-item list-group-item-success\'>");
 document.writeln("                    功能");
 document.writeln("                </a>");
-document.writeln("                <a class=\'list-group-item\' data-toggle=\'modal\' data-target=\'#change_info\' style=\'cursor:pointer\'>更改个人信息</a>")
+document.writeln("                <a class=\'list-group-item\' data-toggle=\'modal\' data-target=\'#change_info\' style=\'cursor:pointer\' onclick=\'userinfo()\'>更改个人信息</a>")
 document.writeln("                <a class=\'list-group-item\' href=\'/change_password\'>更改密码</a>");
 document.writeln("                <a class=\'list-group-item\' href=\'/u_check_orders\' style=\'cursor:pointer\'>查看申请详情</a>");
 document.writeln("            </div>");
@@ -24,7 +24,7 @@ document.writeln("				</div>");
 document.writeln("			</div>");
 document.writeln("");
 document.writeln("			<!--第一辆车-->");
-document.writeln("			<div class=\'col-md-9\' style=\'background-color: #FFFF00;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 20px\'>");
+document.writeln("			<div class=\'col-md-9\' style=\'background-color: #dad4fa;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 20px\'>");
 document.writeln("				<div class=\'col-md-2\' align=\'center\'>");
 document.writeln("					<img src=\'/statics/user/汽车.png\' width=\'210px\' >");
 document.writeln("				</div>");
@@ -35,15 +35,15 @@ document.writeln("					<h4 style=\'display:inline;font-size: 25px\'>车架号：
 document.writeln("				</div>");
 document.writeln("				<div class=\'col-md-6\' align=\'right\' height=\'100px\'>");
 document.writeln("					<br></br><br></br>");
-document.writeln("					<a class=\'col-md-5\' type=\'button\' data-toggle=\'modal\' data-target=\'#add_car\' data-backdrop=\'static\' style=\'font-size: 40px;color: white;background-color: #FF9900;display:inline-block;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;\'>历史维修记录</a>");
-document.writeln("					<a class=\'col-md-5 col-md-offset-1\' type=\'button\' data-toggle=\'modal\' data-target=\'#add_car\' data-backdrop=\'static\' style=\'font-size: 40px;color: white;background-color: #FF9900;display:inline-block;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;\'>新增维修委托</a>s");
+document.writeln("					<a class=\'col-md-5\' align=\'center\' type=\'button\' data-toggle=\'modal\' data-target=\'#add_car\' data-backdrop=\'static\' style=\'font-size: 40px;color: white;background-color: #f3b1a9;display:inline-block;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;\'>历史维修记录</a>");
+document.writeln("					<a class=\'col-md-5 col-md-offset-1\' align=\'center\' type=\'button\' data-toggle=\'modal\' data-target=\'#add_car\' data-backdrop=\'static\' style=\'font-size: 40px;color: white;background-color: #f3b1a9;display:inline-block;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;\'>新增维修委托</a>");
 document.writeln("				</div>");
 document.writeln("			</div>");
 document.writeln("");
 document.writeln("			<div class=\'col-md-9\' ><br></br></div>");
 document.writeln("");
 document.writeln("			<!--第二辆车-->");
-document.writeln("			<div class=\'col-md-9 col-md-offset-2\' style=\'background-color: #FFFF00;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 20px\'>");
+document.writeln("			<div class=\'col-md-9 col-md-offset-2\' style=\'background-color: #dad4fa;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 20px\'>");
 document.writeln("				<div class=\'col-md-2\' align=\'center\'>");
 document.writeln("					<img src=\'/statics/user/汽车.png\' width=\'210px\' >");
 document.writeln("				</div>");
@@ -54,8 +54,8 @@ document.writeln("					<h4 style=\'display:inline;font-size: 25px\'>车架号：
 document.writeln("				</div>");
 document.writeln("				<div class=\'col-md-6\' align=\'right\' height=\'100px\'>");
 document.writeln("					<br></br><br></br>");
-document.writeln("					<a class=\'col-md-5\' type=\'button\' data-toggle=\'modal\' data-target=\'#add_car\' data-backdrop=\'static\' style=\'font-size: 40px;color: white;background-color: #FF9900;display:inline-block;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;\'>历史维修记录</a>");
-document.writeln("					<a class=\'col-md-5 col-md-offset-1\' type=\'button\' data-toggle=\'modal\' data-target=\'#add_car\' data-backdrop=\'static\' style=\'font-size: 40px;color: white;background-color: #FF9900;display:inline-block;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;\'>新增维修委托</a>s");
+document.writeln("					<a class=\'col-md-5\' align=\'center\' type=\'button\' data-toggle=\'modal\' data-target=\'#add_car\' data-backdrop=\'static\' style=\'font-size: 40px;color: white;background-color: #f3b1a9;display:inline-block;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;\'>历史维修记录</a>");
+document.writeln("					<a class=\'col-md-5 col-md-offset-1\' align=\'center\'  type=\'button\' data-toggle=\'modal\' data-target=\'#add_car\' data-backdrop=\'static\' style=\'font-size: 40px;color: white;background-color: #f3b1a9;display:inline-block;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;\'>新增维修委托</a>");
 document.writeln("				</div>");
 document.writeln("			</div>");
 document.writeln("<!-- 更改个人信息 -->");
@@ -63,7 +63,7 @@ document.writeln("<div class=\'modal fade\' id=\'change_info\' tabindex=\'-1\' r
 document.writeln("    <div class=\'modal-dialog\'>");
 document.writeln("        <div class=\'modal-content\'>");
 document.writeln("            <div class=\'modal-header\'>");
-document.writeln("                <button type=\'button\' class=\'close\' data-dismiss=\'modal\' aria-hidden=\'true\'>&times;</button>");
+document.writeln("                <button type=\'button\' class=\'close\' data-dismiss=\'modal\' aria-hidden=\'true\' >&times;</button>");
 document.writeln("                <h3 class=\'modal-title\' id=\'changeUserInfo\'>更改个人信息</h3>");
 document.writeln("            </div>");
 document.writeln("            <div class=\'modal-body\'>");
@@ -84,11 +84,12 @@ document.writeln("                <input id=\'contact_person\' type=\'text\' pla
 document.writeln("");
 document.writeln("                <img src=\'/statics/user/联系人.png\' width=\'20px\'>");
 document.writeln("                <label style=\'font-size:15px;width: 100px;\'>联系电话：</label>");
-document.writeln("                <input id=\'contact_person\' type=\'text\' readonly=\'readonly\' value=\'13472413472\'/><br></br>");
+document.writeln("                <input id=\'contact_tel\' type=\'text\' readonly=\'readonly\' value=\'13472413472\'/><br></br>");
 document.writeln("");
 document.writeln("                <img src=\'/statics/user/联系人.png\' width=\'20px\'>");
 document.writeln("                <label style=\'font-size:15px;width: 100px;\'>折扣率：</label>");
-document.writeln("                <input id=\'contact_person\' type=\'text\' readonly=\'readonly\' value=\'100%\'/><br></br>");
+document.writeln("                <input id=\'contact_person\' type=\'text\' readonly=\'readonly\' " +
+    "value=\'100%\'/><br></br>");
 document.writeln("");
 document.writeln("            </div>");
 document.writeln("            <form class=\'modal-footer\'>");

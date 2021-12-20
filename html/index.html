@@ -2,6 +2,9 @@
 <html lang="en" ng-app="AngularStore">
 <head>
 	<script src="/statics/js/header.js"></script>
+	<script src="/statics/js/axios.js"></script>
+	<script src="/statics/js/axios.min.js"></script>
+	<script src="/statics/js/script.js"></script>
 	<!--
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,7 +36,7 @@
 	</ul>
 	-->
 	<ul id="navbar" class="nav navbar-nav navbar-right" >
-		<li><a id="text">用户名：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}</a></li>
+		<li><a id='text2'>用户名：</a></li>
 		<li><a id="register" href="/register" title="注册" >前往注册</a></li>
 		<li><a id="login"href="/login" title="登录">前往登录</a></li>
 		<li><a id="logout"href="/logout" title="退出登录">退出登录</a></li>
@@ -146,15 +149,14 @@
 	<h1>【登录可用】根据维修项目名称查询维修项目（可以输入首字母）：</h1>
 	<input id="txt" onblur="delPartsResults()" onkeydown="closeFlagParts()" onkeyup="openFlagParts()" placeholder="即时查询" style="margin-left: 10%" width="100px"/>
 </div>
+</body>
+</html>
 
 <script>
 	window.onload= function(){
 		checkNotification();
 		checkGroup();
 		checkUser();
+		getusername();
 	}
 </script>
-
-</body>
-</html>
-

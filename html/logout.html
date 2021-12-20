@@ -12,14 +12,14 @@
 </head>
 
 <body>
-
+window.onload()
 <div class="bg-logout">
     <div class="modal fade in login" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display:block">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <!--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="false">&times;</span><span class="sr-only">Close</span></button>-->
-                    <h4 class="modal-title" id="myModalLabel"><b>登录状态：{{.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户组别：{{.group}}</b></h4>
+                    <h4 class="modal-title" id="text"><b>登录状态：</b></h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -46,3 +46,11 @@
 -->
 </body>
 </html>
+<script>
+    window.onload= function(){
+        checkNotification();
+        checkGroup();
+        checkUser();
+        getUserName();
+    }
+</script>

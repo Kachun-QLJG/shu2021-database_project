@@ -9,6 +9,7 @@
 	<script src="/statics/js/user.js"></script>
 	<script>
 		window.onload= function(){
+			getUserName();
 			checkNotification();
 			checkGroup();
 			checkUser();
@@ -39,6 +40,18 @@
 				check = true;
 			}
 			return check;
+		}
+		function userinfo(){
+			axios({
+				method : 'get',
+				url: "/userinfo"
+			})
+					.then(function(response){
+						var last = response.data;
+						document.getElementById("name").value = last.name;
+						document.getElementById("property").value = last.property;
+						document.getElementById("contact_person").value = last.contact_person;
+					})
 		}
 	</script>
 	</script>

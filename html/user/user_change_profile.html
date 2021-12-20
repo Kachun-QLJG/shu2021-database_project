@@ -3,7 +3,7 @@
 <head>
 	<script src="/statics/js/header.js"></script>
 </head>
-<body bgcolor="#f0f8ff" id="body">
+<body onkeydown="keyuserchange()" bgcolor="#f0f8ff" id="body">
 	<script src="/statics/js/universal.js"></script>
 	<script src="/statics/js/user.js"></script>
 	<!--
@@ -87,7 +87,7 @@
 				<div class="modal-body">
 					<img src="/statics/user/真实姓名.png" width="20px">
 					<label style="font-size:15px;width: 100px;">姓名：</label>
-					<input id="name" type="text" placeholder="请输入姓名"/><br></br>
+					<input id="name" type="text" placeholder="请输入姓名"/>{{.name}}<br></br>
 
 					<img src="/statics/user/公司.png" width="20px">
 					<label style="font-size:15px;width: 100px;">性质：</label>
@@ -116,6 +116,26 @@
 			checkGroup();
 			checkUser();
 			getinfo()
+			getUserName();
+			userinfo();
+		}
+		function keyuserchange(){
+			if(event.keyCode == 13){
+				document.getElementById('confirmChangeInfo').click();
+			}
+		}
+		function userinfo(){
+			axios({
+				method : 'get',
+				url: "/get_username"
+			})
+					.then(function(response){
+						var last = response.data;
+						alert(last);
+						document.getElementById("name").innerHTML=last.name;
+						document.getElementById("property").placeholder=last.property;
+						document.getElementById("contact_person").placeholder=last.contact_person;
+					})
 		}
 	</script>
 
