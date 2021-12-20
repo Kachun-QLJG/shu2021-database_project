@@ -82,6 +82,14 @@ document.writeln("                <img src=\'/statics/user/联系人.png\' width
 document.writeln("                <label style=\'font-size:15px;width: 100px;\'>联系人：</label>");
 document.writeln("                <input id=\'contact_person\' type=\'text\' placeholder=\'请输入联系人\'/><br></br>");
 document.writeln("");
+document.writeln("                <img src=\'/statics/user/联系人.png\' width=\'20px\'>");
+document.writeln("                <label style=\'font-size:15px;width: 100px;\'>联系电话：</label>");
+document.writeln("                <input id=\'contact_person\' type=\'text\' readonly=\'readonly\' value=\'13472413472\'/><br></br>");
+document.writeln("");
+document.writeln("                <img src=\'/statics/user/联系人.png\' width=\'20px\'>");
+document.writeln("                <label style=\'font-size:15px;width: 100px;\'>折扣率：</label>");
+document.writeln("                <input id=\'contact_person\' type=\'text\' readonly=\'readonly\' value=\'100%\'/><br></br>");
+document.writeln("");
 document.writeln("            </div>");
 document.writeln("            <form class=\'modal-footer\'>");
 document.writeln("                <label style=\'font-size:1px;width: 80px;color: red;\'>没有再次确认哦，真的</label>");
