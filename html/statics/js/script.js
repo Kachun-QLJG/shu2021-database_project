@@ -53,7 +53,13 @@ function register(){
 		{
 			if(response.data === '验证码'){
 				alert("验证码错误！");
+				document.getElementById("wrongPass").innerHTML = '验证码错误！';
+			}else{
+				alert(response.data);
+				document.getElementById("wrongPass").innerHTML = response.data;
 			}
+			document.getElementById("wrongPass").style.display = '';
+			document.getElementById('ver_pic').click();
 		}
 		else{
 			alert("注册成功！");

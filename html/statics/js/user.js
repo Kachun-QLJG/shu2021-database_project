@@ -29,7 +29,7 @@ document.writeln("				<div class=\'col-md-2\' align=\'center\'>");
 document.writeln("					<img src=\'/statics/user/汽车.png\' width=\'210px\' >");
 document.writeln("				</div>");
 document.writeln("				<div class=\'col-md-4\' style=\'box-shadow: inset 1px -1px 0px #444;\'>");
-document.writeln("					<img src=\'/statics/license plates/沪A6666警.jpg\' height=\'100px\'  >");
+document.writeln("					<img src=\'/show_plate?license_number=沪SHU502\' height=\'100px\'  >");
 document.writeln("					<h4 style=\'font-size: 25px\'>很土的黄·很贵的车·很敞的篷</h4>");
 document.writeln("					<h4 style=\'display:inline;font-size: 25px\'>车架号：11111111111111111</h4>");
 document.writeln("				</div>");
