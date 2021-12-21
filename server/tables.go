@@ -88,8 +88,8 @@ type Arrangement struct { //派工单表
 	OrderNumber     string `gorm:"type:varchar(11);not null;primary_key"` //订单号
 	ProjectNumber   string `gorm:"type:varchar(10);not null;primary_key"` //维修项目编号
 	RepairmanNumber string `gorm:"type:varchar(8);not null"`              //维修工工号
-	PartsNumber     string `gorm:"type:varchar(25);not null;primary_key"` //零件号
-	PartsCount      int    `gorm:"type:int(2);not null"`                  //零件数量
+	PartsNumber     string `gorm:"type:varchar(25);primary_key"`          //零件号
+	PartsCount      int    `gorm:"type:int(2)"`                           //零件数量
 	Progress        string `gorm:"type:varchar(6);not null"`              //进展
 }
 

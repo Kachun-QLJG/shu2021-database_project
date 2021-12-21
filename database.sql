@@ -1,5 +1,5 @@
 ﻿# Host: 127.0.0.1  (Version: 5.7.26)
-# Date: 2021-12-21 11:14:48
+# Date: 2021-12-21 12:48:53
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
@@ -21,7 +21,7 @@ CREATE TABLE `auth_session` (
 # Data for table "auth_session"
 #
 
-INSERT INTO `auth_session` VALUES ('9053c32a13f349d4764150baa9df2c683b6f5152344f6608d1e7ab194b617497','2021-12-21 11:14:14','12345678901');
+INSERT INTO `auth_session` VALUES ('9053c32a13f349d4764150baa9df2c683b6f5152344f6608d1e7ab194b617497','2021-12-21 12:41:00','12345678901');
 
 #
 # Structure for table "notification"

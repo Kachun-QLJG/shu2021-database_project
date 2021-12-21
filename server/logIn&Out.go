@@ -65,7 +65,7 @@ func register(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{"status": "成功", "data": "注册成功！"})
 		}
 	} else { //验证码错误
-		c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "验证码错误！"})
+		c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "验证码"})
 	}
 }
 
