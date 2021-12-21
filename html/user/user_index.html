@@ -3,14 +3,13 @@
 <head>
 	<script src="/statics/js/header.js"></script>
 </head>
-<body bgcolor="#f0f8ff" id="body">
+<body bgcolor="#f0f8ff" id="body" onkeydown="keychangeprofile()">
 
 <div style="margin-top: 5%;">
 		<div style="margin-left: 10%; margin-right: 10%; text-align: center;">
 			<embed height="1080px" src="/show_pdf?attorney_no=00000001" width="90%"/>
 		</div> <!-- /.mb-4 -->
 </div> <!-- /.row -->
-
 	<script src="/statics/js/universal.js"></script>
 	<script src="/statics/js/user.js"></script>
 	<script>
@@ -23,8 +22,8 @@
 		}
 		function check_number(){
 			var check = false;
-			var license_number = document.getElementById("number").value;
-			if(license_number.length != 17){
+			var number = document.getElementById("number").value;
+			if(number.length != 17){
 				document.getElementById("checktext1").innerHTML = " × 请输入正确的车架号";
 				check = false;
 			}
@@ -58,6 +57,16 @@
 						document.getElementById("property").value = last.property;
 						document.getElementById("contact_person").value = last.contact_person;
 					})
+		}
+		function keychangeprofile(){
+				if(event.keyCode == 13){
+					document.getElementById('confirmChangeInfo').click();
+				}
+		}
+		function keycarregister(){
+			if(event.keyCode == 13){
+				document.getElementById('confirmAddVehicle').click();
+			}
 		}
 	</script>
 	</script>
