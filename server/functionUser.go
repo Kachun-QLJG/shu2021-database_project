@@ -180,7 +180,8 @@ func getVehicle(c *gin.Context) {
 	var user User
 	database.First(&user, "contact_tel = ?", number)
 	var vehicle []Vehicle
-	database.Find(&vehicle, "user_id = ?", user.Number).Limit(3).Offset(3 * (numPage - 1))
+	database.Limit(3).Offset(3*(numPage-1)).Find(&vehicle, "user_id = ?", user.Number)
+	fmt.Println(vehicle)
 	var result [3]struct {
 		Number        string
 		LicenseNumber string
