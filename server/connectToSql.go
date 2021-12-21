@@ -16,6 +16,7 @@ func connectToSql(database *gorm.DB) {
 	database.AutoMigrate(&Attorney{})
 	database.AutoMigrate(&Arrangement{})
 	database.AutoMigrate(&AuthSession{})
+	database.AutoMigrate(&Remark{})
 	database.AutoMigrate(&Notification{})
 
 	// 构建表格
@@ -27,7 +28,7 @@ func connectToSql(database *gorm.DB) {
 	database.Model(&Arrangement{}).AddForeignKey("repairman_number", "repairman(number)", "RESTRICT", "RESTRICT")
 	database.Model(&Arrangement{}).AddForeignKey("project_number", "time_overview(project_number)", "RESTRICT", "RESTRICT")
 	database.Model(&Arrangement{}).AddForeignKey("parts_number", "parts_overview(parts_number)", "RESTRICT", "RESTRICT")
-	//database.Model(&Notification{}).AddForeignKey("user_id", "user(number)", "RESTRICT", "RESTRICT")
+	database.Model(&TimeOverview{}).AddForeignKey("remark", "remark(remark_number)", "RESTRICT", "RESTRICT")
 	//database.Model(&Notification{}).AddForeignKey("user_id", "repairman(number)", "RESTRICT", "RESTRICT")
 	//database.Model(&Notification{}).AddForeignKey("user_id", "salesman(number)", "RESTRICT", "RESTRICT")
 }

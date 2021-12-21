@@ -7,17 +7,20 @@ func addPath(r *gin.Engine) {
 	// 	当客户端以GET方法请求/index路径时，会执行后面的匿名函数
 	//	authMiddleWare是一个中间件，用以检查cookie来判断用户是否登录。并将用户名提交给下一个中间件checkPermission。
 	//	checkPermission也是一个中间件，用以判断已登录用户所处的组别。并将用户名与组别提交给下一个匿名函数。
-	r.GET("/index", welcome)                                                             //根据登录状态返回不同主页
-	r.GET("/register", startRegister)                                                    //用户注册
-	r.GET("/check_register", checkRegister)                                              //用户注册
-	r.GET("/login", startLogin)                                                          //用户登录
-	r.GET("/logout", authMiddleWare(), checkPermission(), startLogout)                   //用户登出
-	r.GET("/change_password", authMiddleWare(), checkPermission(), startChangePassword)  //更改密码
-	r.GET("/check_notification", authMiddleWare(), checkPermission(), checkNotification) //检查通知
-	r.GET("/check_group", authMiddleWare(), checkPermission(), checkGroup)               //返回用户组
-	r.GET("/get_username", authMiddleWare(), checkPermission(), getUsername)             //返回用户名
-	r.GET("/get_group", authMiddleWare(), checkPermission(), getGroup)                   //返回用户组
-
+	r.GET("/index", welcome)                                                              //根据登录状态返回不同主页
+	r.GET("/register", startRegister)                                                     //用户注册
+	r.GET("/check_register", checkRegister)                                               //用户注册
+	r.GET("/login", startLogin)                                                           //用户登录
+	r.GET("/logout", authMiddleWare(), checkPermission(), startLogout)                    //用户登出
+	r.GET("/change_password", authMiddleWare(), checkPermission(), startChangePassword)   //更改密码
+	r.GET("/check_notification", authMiddleWare(), checkPermission(), checkNotification)  //检查通知
+	r.GET("/check_group", authMiddleWare(), checkPermission(), checkGroup)                //返回用户组
+	r.GET("/get_username", authMiddleWare(), checkPermission(), getUsername)              //返回用户名
+	r.GET("/get_group", authMiddleWare(), checkPermission(), getGroup)                    //返回用户组
+	r.GET("/get_pdf", authMiddleWare(), checkPermission(), getPdf)                        //生成并获取PDF文档
+	r.GET("/show_pdf", authMiddleWare(), checkPermission(), showPdf)                      //生成并获取PDF文档
+	r.GET("/show_plate", authMiddleWare(), checkPermission(), showPlate)                  //生成并获取PDF文档
+	r.GET("/get_vehicle", authMiddleWare(), checkPermission(), getVehicle)                //生成并获取PDF文档
 	r.GET("/search_for_projects", authMiddleWare(), checkPermission(), searchForProjects) //寻找维修项目
 	r.GET("/search_for_parts", authMiddleWare(), checkPermission(), searchForParts)       //寻找零件
 

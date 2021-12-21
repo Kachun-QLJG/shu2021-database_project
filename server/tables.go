@@ -77,7 +77,6 @@ type Attorney struct { //委托书表
 	RoughProblem      string  `gorm:"type:varchar(255);not null"`                         //粗略故障描述
 	SpecificProblem   string  `gorm:"type:varchar(255);not null"`                         //详细故障描述
 	Progress          string  `gorm:"type:varchar(10);not null"`                          //进展
-	TotalCost         float64 `gorm:"type:double(6,2);not null"`                          //总价
 	StartPetrol       float64 `gorm:"type:double(5,2);not null"`                          //进厂油量
 	StartMile         float64 `gorm:"type:double(8,2);not null"`                          //进厂里程
 	EndPetrol         float64 `gorm:"type:double(5,2)"`                                   //出厂油量
@@ -88,12 +87,15 @@ type Attorney struct { //委托书表
 type Arrangement struct { //派工单表
 	OrderNumber     string `gorm:"type:varchar(11);not null;primary_key"` //订单号
 	ProjectNumber   string `gorm:"type:varchar(10);not null;primary_key"` //维修项目编号
-	PredictTime     int    `gorm:"type:int(3);not null"`                  //预计工时
-	ActualTIme      int    `gorm:"type:int(3);not null"`                  //实际工时
-	RepairmanNumber string `gorm:"type:varchar(8);not null;primary_key"`  //维修工工号
-	PartsNumber     string `gorm:"type:varchar(25);not null"`             //零件号
+	RepairmanNumber string `gorm:"type:varchar(8);not null"`              //维修工工号
+	PartsNumber     string `gorm:"type:varchar(25);not null;primary_key"` //零件号
 	PartsCount      int    `gorm:"type:int(2);not null"`                  //零件数量
 	Progress        string `gorm:"type:varchar(6);not null"`              //进展
+}
+
+type Remark struct { //登录表
+	RemarkNumber string `gorm:"type:varchar(20);not null;unique_index;primary_key"` //备注编号
+	Content      string `gorm:"type:varchar(255);not null"`                         //备注信息
 }
 
 type AuthSession struct { //登录表

@@ -147,6 +147,59 @@ func userinfo(c *gin.Context) {
 		"contact_tel":    user.ContactTel})
 }
 
+func showPlate(c *gin.Context) {
+	number := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	licenseNumber := c.Query("license_number")
+	if group != "普通用户" {
+		c.JSON(http.StatusForbidden, gin.H{"data": "错误!"})
+		return
+	}
+	var user User
+	database.First(&user, "contact_tel = ?", number)
+	var vehicle Vehicle
+	database.First(&vehicle, "license_number = ?", licenseNumber).Order("time desc")
+	if vehicle.UserID == user.Number {
+		c.File("./html/statics/license plates/" + licenseNumber + ".jpg")
+		return
+	} else {
+		c.String(http.StatusForbidden, "无权查看车牌")
+		return
+	}
+}
+
+func getVehicle(c *gin.Context) {
+	number := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	page := c.Query("pg")
+	numPage, _ := strconv.Atoi(page)
+	if group != "普通用户" {
+		c.JSON(http.StatusForbidden, gin.H{"data": "错误!"})
+		return
+	}
+	var user User
+	database.First(&user, "contact_tel = ?", number)
+	var vehicle []Vehicle
+	database.Find(&vehicle, "user_id = ?", user.Number).Limit(3).Offset(3 * (numPage - 1))
+	var result [3]struct {
+		Number        string
+		LicenseNumber string
+		Color         string
+		Model         string
+		Type          string
+	}
+	count := 0
+	for row := range vehicle {
+		result[count].Number = vehicle[row].Number
+		result[count].LicenseNumber = vehicle[row].LicenseNumber
+		result[count].Color = vehicle[row].Color
+		result[count].Model = vehicle[row].Model
+		result[count].Type = vehicle[row].Type
+		count++
+	}
+	c.JSON(http.StatusOK, result)
+}
+
 func changeUserinfo(c *gin.Context) {
 	number := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
