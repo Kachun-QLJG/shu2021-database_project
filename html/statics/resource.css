@@ -39,3 +39,9 @@ div.examineform .examineform_button {
 	border: 1px dotted gray;
 	cursor: pointer;
 }
+
+.transform-center {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
