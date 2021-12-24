@@ -7,7 +7,8 @@ require (
 	github.com/gin-contrib/sessions v0.0.4
 	github.com/gin-gonic/gin v1.7.7
 	github.com/jinzhu/gorm v1.9.16
-	golang.org/x/crypto v0.0.0-20211117183948-ae814b36b871
+	github.com/tiechui1994/gopdf v0.0.0-20210906105035-7cce3d921a5a
+	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3
 )
 
 require (
@@ -30,10 +31,8 @@ require (
 	github.com/phpdave11/gofpdi v1.0.8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/signintech/gopdf v0.9.16 // indirect
-	github.com/tiechui1994/gopdf v0.0.0-20210906105035-7cce3d921a5a // indirect
 	github.com/ugorji/go/codec v1.1.7 // indirect
 	golang.org/x/image v0.0.0-20200801110659-972c09e46d76 // indirect
 	golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1 // indirect
-	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 )
