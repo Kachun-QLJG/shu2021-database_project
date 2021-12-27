@@ -8,6 +8,7 @@ import (
 	"os"
 	"sort"
 	"strconv"
+	"strings"
 )
 
 const (
@@ -77,8 +78,17 @@ func ComplexReportExecutor(report *core.Report) {
 	var vehicle Vehicle
 	database.First(&vehicle, "number = ? and user_id = ?", attorney.VehicleNumber, attorney.UserID)
 	var arrangement []Arrangement
-	result := database.Find(&arrangement, "order_number = ?", attorney.Number)
-	resultNum := int(result.RowsAffected)
+	database.Find(&arrangement, "order_number = ?", attorney.Number) //查这个订单有多少维修项目
+	columnCount := 0
+	for _, data := range arrangement {
+		var repairParts []RepairParts
+		result := database.Find(&repairParts, "order_number = ? and project_number = ?", data.OrderNumber, data.ProjectNumber)
+		if result.RowsAffected == 0 {
+			columnCount++
+		} else {
+			columnCount += int(result.RowsAffected)
+		}
+	}
 	var remarks []string
 	lineSpace := 1.0
 	lineHeight := 16.0
@@ -93,7 +103,7 @@ func ComplexReportExecutor(report *core.Report) {
 	time.SetMarign(core.Scope{Top: lineHeight * -1})
 	time.SetFont(textFont).RightAlign().SetContent("登记日期：2021年12月20日").GenerateAtomicCell()
 	border := core.NewScope(4.0, 4.0, 4.0, 0) //表格内的margin
-	rows, cols := 21+resultNum, 23
+	rows, cols := 21+columnCount, 23
 	table := gopdf.NewTable(cols, int(rows), 450, lineHeight, report)
 
 	userinfo := table.NewCellByRange(3, 2)
@@ -346,8 +356,14 @@ func ComplexReportExecutor(report *core.Report) {
 	var project []Project
 	database.Select("distinct(project_number) as project_num").Table("arrangement").Where("order_number = ?", attorney.Number).Scan(&project)
 	for projectNum := range project {
-		result = database.Find(&arrangement, "order_number = ? and project_number = ?", attorney.Number, project[projectNum].ProjectNum)
-		resultNum = int(result.RowsAffected)
+		var repairParts []RepairParts
+		result := database.Find(&repairParts, "order_number = ? and project_number = ?", attorney.Number, project[projectNum].ProjectNum) //查每一个维修项目的零件
+		resultNum := int(result.RowsAffected)
+		noParts := false
+		if resultNum == 0 {
+			resultNum = 1
+			noParts = true
+		}
 		var timeOverview TimeOverview
 		database.Find(&timeOverview, "project_number = ?", project[projectNum].ProjectNum)
 		repairNumber = table.NewCellByRange(3, resultNum)
@@ -378,39 +394,82 @@ func ComplexReportExecutor(report *core.Report) {
 		}
 		repairTime.SetElement(cell)
 		flag := true
-		for line := range arrangement {
+		if noParts {
 			partsNumber = table.NewCellByRange(3, 1)
 			cell = gopdf.NewTextCell(table.GetColWidth(currentRow, 9), lineHeight, lineSpace, report)
-			cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent(arrangement[line].PartsNumber) //填零件号
+			cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent("") //填零件号
 			partsNumber.SetElement(cell)
-			var parts PartsOverview
-			database.First(&parts, "parts_number = ?", arrangement[line].PartsNumber)
 			partsName = table.NewCellByRange(4, 1)
 			cell = gopdf.NewTextCell(table.GetColWidth(currentRow, 12), lineHeight, lineSpace, report)
-			cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent(parts.PartsName) //填零件名
+			cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent("") //填零件名
 			partsName.SetElement(cell)
 			num = table.NewCellByRange(1, 1)
 			cell = gopdf.NewTextCell(table.GetColWidth(currentRow, 16), lineHeight, lineSpace, report)
-			cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent(strconv.Itoa(arrangement[line].PartsCount)) //填数量
+			cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent("") //填数量
 			num.SetElement(cell)
 			price = table.NewCellByRange(2, 1)
 			cell = gopdf.NewTextCell(table.GetColWidth(currentRow, 17), lineHeight, lineSpace, report)
-			cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent(strconv.FormatFloat(parts.PartsCost, 'f', -1, 64)) //填单价
+			cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent("") //填单价
 			price.SetElement(cell)
 			totalPrice = table.NewCellByRange(2, 1)
 			cell = gopdf.NewTextCell(table.GetColWidth(currentRow, 19), lineHeight, lineSpace, report)
-			cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent(strconv.FormatFloat(float64(arrangement[line].PartsCount)*parts.PartsCost, 'f', -1, 64)) //填总价
-			priceCount += float64(arrangement[line].PartsCount) * parts.PartsCost
+			cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent("") //填总价
 			totalPrice.SetElement(cell)
-			if flag {
-				remark = table.NewCellByRange(2, resultNum)
-				cell = gopdf.NewTextCell(table.GetColWidth(currentRow, 21), lineHeight, lineSpace, report)
-				cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent(timeOverview.Remark) //填备注
-				remark.SetElement(cell)
-				remarks = append(remarks, timeOverview.Remark)
-				flag = false
+			remark = table.NewCellByRange(2, resultNum)
+			cell = gopdf.NewTextCell(table.GetColWidth(currentRow, 21), lineHeight, lineSpace, report)
+			remarkList := strings.Split(timeOverview.Remark, "*")
+			remarkOnTable := ""
+			if len(remarkList) > 1 { //备注不为空
+				for i := 1; i < len(remarkList); i++ { //0是空，1开始有值
+					remarkOnTable += "*" + remarkList[i] + "\n"
+					remarks = append(remarks, "*"+remarkList[i])
+				}
 			}
+			cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent(remarkOnTable) //填备注
+			remark.SetElement(cell)
 			currentRow++
+		} else {
+			for _, line := range repairParts {
+				partsNumber = table.NewCellByRange(3, 1)
+				cell = gopdf.NewTextCell(table.GetColWidth(currentRow, 9), lineHeight, lineSpace, report)
+				cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent(line.PartsNumber) //填零件号
+				partsNumber.SetElement(cell)
+				var parts PartsOverview
+				database.First(&parts, "parts_number = ?", line.PartsNumber)
+				partsName = table.NewCellByRange(4, 1)
+				cell = gopdf.NewTextCell(table.GetColWidth(currentRow, 12), lineHeight, lineSpace, report)
+				cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent(parts.PartsName) //填零件名
+				partsName.SetElement(cell)
+				num = table.NewCellByRange(1, 1)
+				cell = gopdf.NewTextCell(table.GetColWidth(currentRow, 16), lineHeight, lineSpace, report)
+				cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent(strconv.Itoa(line.PartsCount)) //填数量
+				num.SetElement(cell)
+				price = table.NewCellByRange(2, 1)
+				cell = gopdf.NewTextCell(table.GetColWidth(currentRow, 17), lineHeight, lineSpace, report)
+				cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent(strconv.FormatFloat(parts.PartsCost, 'f', -1, 64)) //填单价
+				price.SetElement(cell)
+				totalPrice = table.NewCellByRange(2, 1)
+				cell = gopdf.NewTextCell(table.GetColWidth(currentRow, 19), lineHeight, lineSpace, report)
+				cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent(strconv.FormatFloat(float64(line.PartsCount)*parts.PartsCost, 'f', -1, 64)) //填总价
+				priceCount += float64(line.PartsCount) * parts.PartsCost
+				totalPrice.SetElement(cell)
+				if flag {
+					remark = table.NewCellByRange(2, resultNum)
+					cell = gopdf.NewTextCell(table.GetColWidth(currentRow, 21), lineHeight, lineSpace, report)
+					remarkList := strings.Split(timeOverview.Remark, "*")
+					remarkOnTable := ""
+					if len(remarkList) > 1 { //备注不为空
+						for i := 1; i < len(remarkList); i++ { //0是空，1开始有值
+							remarkOnTable += "*" + remarkList[i] + "\n"
+							remarks = append(remarks, "*"+remarkList[i])
+						}
+					}
+					cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent(remarkOnTable) //填备注
+					remark.SetElement(cell)
+					flag = false
+				}
+				currentRow++
+			}
 		}
 	}
 
@@ -450,14 +509,16 @@ func ComplexReportExecutor(report *core.Report) {
 	allRemark.SetElement(cell)
 	currentRow++
 
-	sort.Strings(remarks)
-	var strRemark string
-	for _, value := range remarks {
-		var remarkDatabase Remark
-		database.First(&remarkDatabase, "remark_number = ?", value)
-		strRemark += remarkDatabase.RemarkNumber + " " + remarkDatabase.Content + "\n"
+	strRemark := ""
+	if len(remarks) != 0 {
+		sort.Strings(remarks)
+		for _, value := range remarks {
+			var remarkDatabase Remark
+			database.First(&remarkDatabase, "remark_number = ?", value)
+			strRemark += remarkDatabase.RemarkNumber + " " + remarkDatabase.Content + "\n"
+		}
+		strRemark = strRemark[:len(strRemark)-1]
 	}
-	strRemark = strRemark[:len(strRemark)-1]
 	allRemarkBlank := table.NewCellByRange(23, 2)
 	cell = gopdf.NewTextCell(table.GetColWidth(currentRow, 0), lineHeight, lineSpace, report)
 	cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent(strRemark) //填备注
