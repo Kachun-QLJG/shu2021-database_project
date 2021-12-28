@@ -68,7 +68,7 @@
 	<!--右上区块-->
 	<div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
 		<ul id='navbar' class='nav navbar-nav navbar-right' >
-			<li><a id='text'></a></li>
+			<li><a id='text' href='/change_userinfo'></a></li>
 			<li><a id='register' href='/register' title='注册' >前往注册</a></li>
 			<li><a id='login'href='/login' title='登录' >前往登录</a></li>
 			<li><a id='logout' title='退出登录' data-toggle='modal' data-target='#log_out' onclick='getUsername()'>退出登录</a></li>
@@ -101,8 +101,8 @@
 					<a class='list-group-item list-group-item-success'>
 						功能
 					</a>
-					<a class='list-group-item' data-toggle='modal' data-target='#change_info' style='cursor:pointer' onclick='userinfo()'>更改个人信息</a>
 					<a class='list-group-item' href='/change_password'>更改密码</a>
+                    <a class='list-group-item' href='/change_userinfo'>个人信息</a>
 					<a class='list-group-item' href='/u_check_orders' style='cursor:pointer'>查看申请详情</a>
 				</div>
 			</div>
@@ -338,6 +338,11 @@
 		<img src="/statics/user/添加.png" data-toggle='modal' data-target='#add_car' data-backdrop='static' style='position:fixed;top:70%;right:1%;cursor: pointer'/>
 	</div>
 
+	<div style="margin-top: 5%;">
+		<div style="margin-left: 10%; margin-right: 10%; text-align: center;">
+			<embed height="1080px" src="/show_pdf?attorney_no=00000001" width="90%"/>
+		</div>
+	</div>
 	<script>
 		window.onload= function(){
 			getUserName();
