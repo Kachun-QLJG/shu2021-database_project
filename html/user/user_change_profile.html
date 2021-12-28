@@ -82,6 +82,11 @@
 						<label style='color: #77bbe2;font-size:50px;text-align: center'>个人信息</label>
 					</div>
 				</div>
+				<！--
+
+				记得把这里也做成传参！！！
+
+				-->
 				<div class='row text-center' style='box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;'>
 					<div class='col-md-3' style='box-shadow: inset 0px 0px 0px #444, inset -1px 0px 1px #444;height: 400px'>
 						<img src='/statics/user/真实姓名.png' width='70%'>
@@ -89,7 +94,7 @@
 					<div class='col-md-9' >
 						<div class='row' >
 							<div class='col-md-3 col-md-offset-1' style='text-align: left'>
-								<label style='color: black;font-size:50px;'>Tintin2</label>
+								<label style='color: black;font-size:50px;'></label>
 							</div>
 							<div class='col-md-7' style='text-align: right;margin-top: 1%;'>
 								<button><a data-toggle='modal' data-target='#change_info' onclick='userinfo()' style="font-size: 40px;">更改个人信息</a></button>
@@ -149,17 +154,22 @@
 					<option value='公司'>公司</option>
 				</select><br></br>
 
+				<！--
+
+				记得把这里做成传参！！！
+
+				-->
 				<img src='/statics/user/联系人.png' width='20px'>
 				<label style='font-size:15px;width: 100px;'>联系人：</label>
 				<input id='contact_person' type='text' placeholder='请输入联系人'/><br></br>
 
 				<img src='/statics/user/联系人.png' width='20px'>
 				<label style='font-size:15px;width: 100px;'>联系电话：</label>
-				<input id='contact_tel' type='text' readonly='readonly' value='13472413472'/><br></br>
+				<input id='contact_tel' type='text' readonly='readonly' value='13472413472' style="color: #b2b2b2"/><br></br>
 
 				<img src='/statics/user/联系人.png' width='20px'>
 				<label style='font-size:15px;width: 100px;'>折扣率：</label>
-				<input id='discount_rate' type='text' readonly='readonly' value='100%'/><br></br>
+				<input id='discount_rate' type='text' readonly='readonly' value='100%' style="color: #b2b2b2"/><br></br>
 
 			</div>
 			<form class='modal-footer'>

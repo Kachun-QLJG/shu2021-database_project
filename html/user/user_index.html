@@ -41,6 +41,45 @@
 			float: none;
 		}*/
 	</style>
+	<script type="text/javascript">
+		function checkpwd(){
+			var check = false;
+			var pswd = document.getElementById("pswd").value;
+			if(pswd.length < 6){
+				document.getElementById("checktext2").innerHTML = " × 不要少于6位";
+				check = false;
+			}
+			else {
+				document.getElementById("checktext2").innerHTML = " √";
+				check = true;
+			}
+			return check;
+		}
+		function checkpwdc() {
+			var check = false;
+			var password = document.getElementById("pswd").value;
+			var pwdc = document.getElementById("pwdc").value;
+			if (password !== pwdc) {
+				document.getElementById("checktext3").innerHTML = " × 两次输入密码不一致";
+				check = false;
+			}
+			else {
+				document.getElementById("checktext3").innerHTML = " √";
+				check = true;
+			}
+			return check;
+		}
+		function check() {
+			if(checkpwd() && checkpwdc()){
+				changePswd();
+			}
+		}
+		function keychangepassword(){
+			if(event.keyCode === 13){
+				document.getElementById('changepasswordbutton').click();
+			}
+		}
+	</script>
 </head>
 <body bgcolor="#f0f8ff" id="body" onkeydown="keychangeprofile()">
 	<!--
@@ -68,7 +107,7 @@
 	<!--右上区块-->
 	<div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
 		<ul id='navbar' class='nav navbar-nav navbar-right' >
-			<li><a id='text' href='/change_userinfo'></a></li>
+			<li><a id='text'></a></li>
 			<li><a id='register' href='/register' title='注册' >前往注册</a></li>
 			<li><a id='login'href='/login' title='登录' >前往登录</a></li>
 			<li><a id='logout' title='退出登录' data-toggle='modal' data-target='#log_out' onclick='getUsername()'>退出登录</a></li>
@@ -97,12 +136,29 @@
 		<div class='row'>
 			<!--左导航栏-->
 			<div class='col-md-2'>
+				<div class="list-group">
+					<a class="list-group-item list-group-item-info">
+						个人信息
+					</a>
+					<！--
+
+					这里记得改成传参！！！
+
+					-->
+					<a class="list-group-item">用户名:18001723206</a>
+					<a class="list-group-item">性　　质:个人</a>
+					<a class="list-group-item">联系电话:13472413472</a>
+					<a class="list-group-item">联 系 人:Baitian2</a>
+					<a class="list-group-item">折扣率:100%</a>
+					<a class="list-group-item" data-toggle='modal' data-target='#change_info' onclick='userinfo()' style="cursor: pointer">更改个人信息</a>
+				</div>
+
 				<div class='list-group'>
 					<a class='list-group-item list-group-item-success'>
 						功能
 					</a>
-					<a class='list-group-item' href='/change_password'>更改密码</a>
-                    <a class='list-group-item' href='/change_userinfo'>个人信息</a>
+					<a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a>
+                    <!--<a class='list-group-item' href='/change_userinfo'>个人信息</a>-->
 					<a class='list-group-item' href='/u_check_orders' style='cursor:pointer'>查看申请详情</a>
 				</div>
 			</div>
@@ -120,6 +176,14 @@
 					-->
 				</div>
 
+				<!--
+
+				车辆信息
+
+				-->
+				<！--
+				这里记得做成传参！！！
+				-->
 				<!--第一辆车-->
 				<div class='col-md-5' style='background-color: #dff0d8;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 20px;padding: 10px;margin: 1% 3% 1% 2%;'>
 
@@ -330,19 +394,60 @@
 					</div>
 				</div>
 			</div>
+
+
+	<!--
+	更改密码——试运行
+	-->
+	<div class='modal fade' id='change_password' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' onkeydown="keychangepassword()">
+		<div class='modal-dialog'>
+			<div class='modal-content'>
+				<div class='modal-header'>
+					<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+					<h3 class='modal-title' id='changePSWD'>更改密码</h3>
+				</div>
+				<div class='modal-body'>
+					<img src='/statics/user/井号.png' width='20px'>
+					<label style='font-size:15px;width: 80px;'>原密码：</label>
+					<input id='oldpswd' type='password' name="oldpswd" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+					<span id='checktext3'></span> <br></br>
+
+					<img src='/statics/user/车牌.png' width='20px'>
+					<label style='font-size:15px;width: 80px;'>密码：</label>
+					<input id='pswd' type='password' name="pswd" onchange="checkpwd()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+					<span id='checktext4'></span> <br></br>
+
+					<img src='/statics/user/颜色.png' width='20px'>
+					<label style='font-size:15px;width: 80px;'>确认密码：</label>
+					<input id='pwdc' type='password' name="pwdc" onchange="checkpwdc()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+
+					<input type="hidden" id="old_password" name="old_password" />
+					<input type="hidden" id="new_password" name="new_password" />
+				<form class='modal-footer'>
+					<button type='button' class='btn btn-primary' onclick='check()' id='changepasswordbutton'>确认更改</button>
+					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+				</form>
+				</div>
+			</div>
 		</div>
 	</div>
 
-	<!-- 添加车辆按钮 -->
-	<div class='col-md-3'>
+	<!--
+	添加车辆按钮
+	-->
+	<div class='col-md-3' >
 		<img src="/statics/user/添加.png" data-toggle='modal' data-target='#add_car' data-backdrop='static' style='position:fixed;top:70%;right:1%;cursor: pointer'/>
 	</div>
 
+	<!--
+	pdf显示
+	-->
 	<div style="margin-top: 5%;">
 		<div style="margin-left: 10%; margin-right: 10%; text-align: center;">
 			<embed height="1080px" src="/show_pdf?attorney_no=00000001" width="90%"/>
 		</div>
 	</div>
+
 	<script>
 		window.onload= function(){
 			getUserName();
@@ -355,7 +460,7 @@
 		function check_number(){
 			var check = false;
 			var number = document.getElementById("number").value;
-			if(number.length != 17){
+			if(number.length !== 17){
 				document.getElementById("checktext1").innerHTML = " × 请输入正确的车架号";
 				check = false;
 			}
@@ -391,12 +496,12 @@
 					})
 		}
 		function keychangeprofile(){
-				if(event.keyCode == 13){
+				if(event.keyCode === 13){
 					document.getElementById('confirmChangeInfo').click();
 				}
 		}
 		function keycarregister(){
-			if(event.keyCode == 13){
+			if(event.keyCode === 13){
 				document.getElementById('confirmAddVehicle').click();
 			}
 		}
@@ -455,10 +560,8 @@
 
 		});
 		function  content()  {
-			var  data  =  $("<h4>轿车A：排量 < 1.6升</h4>"+ "<h4>轿车B：1.6升 ≤ 排量 ≤ 1.8升</h4>"+ "<h4>轿车C：1.8升 < 排量 ≤ 2.3升</h4>"+ "<h4>轿车D：2.3升 < 排量 ≤ 3升</h4>"+ "<h4>轿车E：3升 ≤ 排量 ≤ 4升</h4>");
-			return  data;
+			return  $("<h4>轿车A：排量 < 1.6升</h4>" + "<h4>轿车B：1.6升 ≤ 排量 ≤ 1.8升</h4>" + "<h4>轿车C：1.8升 < 排量 ≤ 2.3升</h4>" + "<h4>轿车D：2.3升 < 排量 ≤ 3升</h4>" + "<h4>轿车E：3升 ≤ 排量 ≤ 4升</h4>");
 		}
-	</script>
 	</script>
 </body>
 </html>

@@ -483,7 +483,8 @@ function getUsername(){
 			}
 		})
 }
-function getusername(){
+
+/*function getusername(){
 	axios({
 		method : 'get',
 		url: "/get_username"
@@ -497,4 +498,4 @@ function getusername(){
 				text2[0].innerHTML ="用户名：" + response.data;
 			}
 		})
-}
+}*/
