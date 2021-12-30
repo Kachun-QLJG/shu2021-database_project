@@ -4,6 +4,10 @@
 	<script src="/statics/js/header.js"></script>
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
 	<style>
 		/*web background*/
 		.container{
@@ -78,6 +82,13 @@
 				document.getElementById('changepasswordbutton').click();
 			}
 		}
+		let date = new Date()
+		let yyyy = date.getFullYear()
+		let MM = (date.getMonth() + 1) < 10 ? ("0" + (date.getMonth() + 1)) : (date.getMonth() + 1)
+		let dd = date.getDate() < 10 ? ("0" + date.getDate()) : date.getDate()
+		let curDay = yyyy + '-' + MM + '-' + dd ;
+		$('.measureDate').val(curDay)
+		console.log(date)
 	</script>
 </head>
 <body bgcolor="#f0f8ff" id="body" onkeydown="keychangeprofile()">
@@ -196,11 +207,11 @@
 
 					<img src='/statics/user/联系人.png' width='20px'>
 					<label style='font-size:15px;width: 100px;'>联系电话：</label>
-					<input id='contact_tel' type='text' readonly='readonly' value='13472413472'/><br></br>
+					<input id='contact_tel' type='text' readonly='readonly' value='13472413472' style="color: #9d9d9d"/><br></br>
 
 					<img src='/statics/user/联系人.png' width='20px'>
 					<label style='font-size:15px;width: 100px;'>折扣率：</label>
-					<input id='discount_rate' type='text' readonly='readonly' value='100%'/><br></br>
+					<input id='discount_rate' type='text' readonly='readonly' value='100%' style="color: #9d9d9d"/><br></br>
 
 				</div>
 				<form class='modal-footer'>
@@ -291,6 +302,68 @@
 					<button type='button' class='btn btn-primary' onclick='changeinfo()' id='confirmChangeInfo'>确认更改</button>
 					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 					-->
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- 新增委托 -->
+	<div class='modal fade' id='add_attorney' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' onkeydown="keycarregister()">
+		<div class='modal-dialog'>
+			<div class='modal-content'>
+				<div class='modal-header'>
+					<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+					<h3 class='modal-title' id='addAttorney'>新增委托</h3>
+				</div>
+				<div class='modal-body'>
+					<img src='/statics/user/井号.png' width='20px'>
+					<label style='font-size:15px;width: 80px;'>车架号：</label>
+					<input id='VehicleNumber' type='text' onchange='check_number()' readonly="readonly" value="1111111111111" style="color: #9d9d9d"/>
+					<!-- <span id='checktext1'></span> -->
+					<br>
+
+					<img src='/statics/user/车牌.png' width='20px'>
+					<label style='font-size:15px;width: 80px;'>结算方式：</label>
+					<input id='PayMethod1' name="PayMethod" type='radio' value="现金" />
+					<label for="PayMethod1">现金</label>
+					<input id='PayMethod2' name="PayMethod" type='radio' value="保险" />
+					<label for="PayMethod2">保险</label>
+					<input id='PayMethod3' name="PayMethod" type='radio' value="信用卡" />
+					<label for="PayMethod3">信用卡</label>
+					<!-- <span id='checktext2'></span> -->
+					<br>
+
+					<img src='/statics/user/颜色.png' width='20px'>
+					<label style='font-size:15px;width: 80px;'>进场时间：</label>
+					<input id="StartTime" type="date" class="measureDate" placeholder="请选择日期">
+					<!-- <label for='StartTime'></label><input id='StartTime' type='text'/> -->
+					<br>
+					<br>
+
+					<div>
+						<img src='/statics/user/车型.png' width='20px' style="vertical-align: top">
+						<label  for='RoughProblem' style='font-size:15px;width: 80px;vertical-align: top'>粗略故障：</label>
+						<textarea id='RoughProblem' placeholder='请粗略描述您车辆的故障（字数在255以下）' style="width: 300px;height: 100px;"></textarea>
+					</div>
+					<br>
+
+					<img src='/statics/user/颜色.png' width='20px'>
+					<label style='font-size:15px;width: 80px;'>进场油量：</label>
+					<input id='StartPetrol' type='number' min="0" max="100" step="0.1" placeholder='进场时车辆所剩油量' style="width: 130px"/> L
+					<br>
+					<br>
+
+					<img src='/statics/user/颜色.png' width='20px'>
+					<label style='font-size:15px;width: 80px;'>进场里程：</label>
+					<input id='StartMile' type='number' min="0" step="0.1" placeholder='进场时车辆里程数' style="width: 130px"/> km
+					<br>
+					<br>
+
+				</div>
+				<form class='modal-footer'>
+					<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
+					<button type='button' class='btn btn-primary' onclick='' id='confirmAddAttorney'>提交委托</button>
+					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 				</form>
 			</div>
 		</div>
@@ -449,7 +522,7 @@
 						div1122.appendChild(button2);
 						button2.type = "button";
 						button2.id = "attorney"+i;
-						button2.setAttribute("data-target","#add_car");
+						button2.setAttribute("data-target","#add_attorney");
 						button2.setAttribute("data-backdrop","static");
 						button2.setAttribute("data-toggle","modal");
 						button2.innerHTML = "新增维修委托";
@@ -497,6 +570,10 @@
 			});
 
 		});
+		// 日期选择器
+		//$(function() {
+		//	$( "#StartTime" ).datepicker();
+		//});
 		function  content()  {
 			return  $("<h4>轿车A：排量 < 1.6升</h4>" + "<h4>轿车B：1.6升 ≤ 排量 ≤ 1.8升</h4>" + "<h4>轿车C：1.8升 < 排量 ≤ 2.3升</h4>" + "<h4>轿车D：2.3升 < 排量 ≤ 3升</h4>" + "<h4>轿车E：3升 ≤ 排量 ≤ 4升</h4>");
 		}
