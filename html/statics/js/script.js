@@ -224,7 +224,6 @@ function closeNotification(){
 
 function checkUser(){
 	document.getElementById("logout").style.display="none";
-	document.getElementById("changePassword").style.display="none";
 	axios({
 		method : 'get',
 		url: '/check_group'
@@ -234,7 +233,6 @@ function checkUser(){
 				document.getElementById("register").style.display="none";
 				document.getElementById("login").style.display="none";
 				document.getElementById("logout").style.display="";
-				document.getElementById("changePassword").style.display="";
 			}
 		})
 }

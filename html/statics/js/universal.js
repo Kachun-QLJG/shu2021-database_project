@@ -9,7 +9,6 @@ document.writeln("        <li><a id=\'text\'></a></li>");
 document.writeln("        <li><a id=\'register\' href=\'/register\' title=\'注册\' >前往注册</a></li>");
 document.writeln("        <li><a id=\'login\'href=\'/login\' title=\'登录\' >前往登录</a></li>");
 document.writeln("        <li><a id=\'logout\' title=\'退出登录\' data-toggle=\'modal\' data-target=\'#log_out\' onclick='getUsername()'>退出登录</a></li>");
-document.writeln("        <li><a href=\'/change_password\'id=\'changePassword\' title=\'更改密码\'>更改密码</a></li>");
 document.writeln("    </ul>");
 document.writeln("</div>");
 document.writeln("");
