@@ -44,6 +44,7 @@ func addPath(r *gin.Engine) {
 	r.POST("/logout", logout)                                                       //后端处理用户登出
 	r.POST("/login", login)                                                         //后端处理用户登陆
 	r.POST("/register", register)                                                   //后端处理用户注册
+	r.POST("/create_attorney", authMiddleWare(), checkPermission(), createAttorney) //设置已读
 	r.GET("/captcha", func(c *gin.Context) { Captcha(c, 4) })                       //随机生成一个4位数字验证码
 
 	r.POST("/change_userinfo", authMiddleWare(), checkPermission(), changeUserinfo) //后端处理更改用户个人信息

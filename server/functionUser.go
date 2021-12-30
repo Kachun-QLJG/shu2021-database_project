@@ -11,6 +11,40 @@ import (
 	"time"
 )
 
+func createAttorney(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	if group != "普通用户" {
+		c.String(http.StatusForbidden, "错误!")
+		return
+	}
+	var user User
+	database.First(&user, "contact_tel = ?", username)
+	var attorney Attorney
+	number := database.Find(&attorney).RowsAffected + 1
+	strNumber := fmt.Sprintf("%08d", number)
+	vin := c.PostForm("vin")
+	payMethod := c.PostForm("pay_method")
+	startTime := c.PostForm("start_time")
+	roughProblem := c.PostForm("rough_problem")
+	startPetrol, _ := strconv.ParseFloat(c.PostForm("start_petrol"), 64)
+	startMile, _ := strconv.ParseFloat(c.PostForm("start_mile"), 64)
+	type temp struct {
+		Number        string
+		UserID        string
+		VehicleNumber string
+		PayMethod     string
+		StartTime     string
+		RoughProblem  string
+		Progress      string
+		StartPetrol   float64
+		StartMile     float64
+	}
+	data := temp{strNumber, user.Number, vin, payMethod, startTime, roughProblem, "待处理", startPetrol, startMile}
+	database.Table("attorney").Create(&data)
+	c.String(http.StatusOK, "成功")
+}
+
 func getRepairHistory(c *gin.Context) {
 	number := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
