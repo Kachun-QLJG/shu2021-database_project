@@ -95,7 +95,7 @@
 		<div style="margin-left: 10%; margin-right: 10%; text-align: center;">
 			<embed height="1080px" src="/show_pdf?attorney_no=00000001" width="90%"/>
 		</div> <! -- /.mb-4 -->
-</div> <!-- /.row -->
+ <!-- /.row -->
 	<!--
 	<script src="/statics/js/universal.js"></script>
 	<script src="/statics/js/user.js"></script>
@@ -165,139 +165,11 @@
 
 			<!--右区域-->
 			<div class="col-md-10">
-				<div class='col-md-10' id='con' >
-					<div class='col-md-4 col-md-offset-5'>
-						<label style='color: #77bbe2;font-size:50px;text-align: center'>车辆信息</label>
-					</div>
-					<!--
-					<div class='col-md-3'>
-						<a type='button' data-toggle='modal' data-target='#add_car' data-backdrop='static' style='font-size: 40px;background-color: #0099CC;color: white;display:inline-block;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;'>新增车辆</a>
-					</div>
-					-->
+				<div class='col-md-10' id='con'  style='text-align: center'>
+					<label style='color: #77bbe2;font-size:50px;'>　　　车辆信息</label>
 				</div>
 
-				<!--
-
-				车辆信息
-
-				-->
-				<！--
-				这里记得做成传参！！！
-				-->
-				<!--第一辆车-->
-				<div class='col-md-5' style='background-color: #dff0d8;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 20px;padding: 10px;margin: 1% 3% 1% 2%;'>
-
-					<div class="row vcenter-item" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;margin: 10px;background-color: white">
-						<div class='col-md-5 col-md-push-0 vcenter-item' style="vertical-align: middle">
-							<img id='licensephoto1' src='show_plate?license_number=' style="width: 130%" class="middle">
-						</div>
-
-						<div class='col-md-5 col-md-push-1' style="margin: 7px 7px">
-							<div class='row-md-4 text-center' style=" background-color: #bce8f1;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 5px;margin-top: 2%">
-								<a type="button" style='font-size: 17px;color: black;cursor: pointer' data-toggle='modal' data-target='#add_car' data-backdrop='static' >历史维修记录</a>
-							</div>
-							<br>
-							<div class='row-md-4 text-center' style=" background-color: #bce8f1;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 5px;margin-top: 2%">
-								<a type="button" style='font-size: 17px;color: black;cursor: pointer' data-toggle='modal' data-target='#add_car' data-backdrop='static' >新增维修委托</a>
-							</div>
-						</div>
-
-					</div>
-
-
-					<div class="row align-items-end" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px;border-radius: 10px;background-color: white;margin: 7px 7px">
-						<h4 id='description1' style='font-size: 15px;display:inline-block;margin-left: 5%'>很土的黄·很贵的车·很敞的篷</h4>
-						<br>
-						<h4 id='number1' style='font-size: 15px;display:inline-block;margin-left: 5%'>车架号：11111111111111111</h4>
-					</div>
-
-				</div>
-
-				<!--第二辆车-->
-				<div class='col-md-5' style='background-color: #dff0d8;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 20px;padding: 10px;margin: 1% 3% 1% 2%;'>
-
-					<div class="row vcenter-item" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;margin: 10px;background-color: white">
-						<div class='col-md-5 col-md-push-0 vcenter-item' style="vertical-align: middle">
-							<img id='licensephoto2' src='show_plate?license_number=' style="width: 130%" class="middle">
-						</div>
-
-						<div class='col-md-5 col-md-push-1' style="margin: 7px 7px">
-							<div class='row-md-4 text-center' style=" background-color: #bce8f1;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 5px;margin-top: 2%">
-								<a type="button" style='font-size: 17px;color: black;cursor: pointer' data-toggle='modal' data-target='#add_car' data-backdrop='static' >历史维修记录</a>
-							</div>
-							<br>
-							<div class='row-md-4 text-center' style=" background-color: #bce8f1;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 5px;margin-top: 2%">
-								<a type="button" style='font-size: 17px;color: black;cursor: pointer' data-toggle='modal' data-target='#add_car' data-backdrop='static' >新增维修委托</a>
-							</div>
-						</div>
-
-					</div>
-
-
-					<div class="row align-items-end" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px;border-radius: 10px;background-color: white;margin: 7px 7px">
-						<h4 id='description2' style='font-size: 15px;display:inline-block;margin-left: 5%'>很土的黄·很贵的车·很敞的篷</h4>
-						<br>
-						<h4 id='number2' style='font-size: 15px;display:inline-block;margin-left: 5%'>车架号：11111111111111111</h4>
-					</div>
-
-				</div>
-
-				<!--第三辆车-->
-				<div class='col-md-5' style='background-color: #dff0d8;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 20px;padding: 10px;margin: 1% 3% 1% 2%;'>
-
-					<div class="row vcenter-item" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;margin: 10px;background-color: white">
-						<div class='col-md-5 col-md-push-0 vcenter-item' style="vertical-align: middle">
-							<img id='licensephoto3' src='show_plate?license_number=' style="width: 130%" class="middle">
-						</div>
-
-						<div class='col-md-5 col-md-push-1' style="margin: 7px 7px">
-							<div class='row-md-4 text-center' style=" background-color: #bce8f1;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 5px;margin-top: 2%">
-								<a type="button" style='font-size: 17px;color: black;cursor: pointer' data-toggle='modal' data-target='#add_car' data-backdrop='static' >历史维修记录</a>
-							</div>
-							<br>
-							<div class='row-md-4 text-center' style=" background-color: #bce8f1;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 5px;margin-top: 2%">
-								<a type="button" style='font-size: 17px;color: black;cursor: pointer' data-toggle='modal' data-target='#add_car' data-backdrop='static' >新增维修委托</a>
-							</div>
-						</div>
-
-					</div>
-
-
-					<div class="row align-items-end" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px;border-radius: 10px;background-color: white;margin: 7px 7px">
-						<h4 id='description3' style='font-size: 15px;display:inline-block;margin-left: 5%'>很土的黄·很贵的车·很敞的篷</h4>
-						<br>
-						<h4 id='number3' style='font-size: 15px;display:inline-block;margin-left: 5%'>车架号：11111111111111111</h4>
-					</div>
-
-				</div>
-
-				<!--第四辆车-->
-				<div class='col-md-5' style='background-color: #dff0d8;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 20px;padding: 10px;margin: 1% 3% 1% 2%;'>
-
-					<div class="row vcenter-item" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;margin: 10px;background-color: white">
-						<div class='col-md-5 col-md-push-0 vcenter-item' style="vertical-align: middle">
-							<img id='licensephoto4' src='show_plate?license_number=' style="width: 130%" class="middle">
-						</div>
-
-						<div class='col-md-5 col-md-push-1' style="margin: 7px 7px">
-							<div class='row-md-4 text-center' style=" background-color: #bce8f1;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 5px;margin-top: 2%">
-								<a type="button" style='font-size: 17px;color: black;cursor: pointer' data-toggle='modal' data-target='#add_car' data-backdrop='static' >历史维修记录</a>
-							</div>
-							<br>
-							<div class='row-md-4 text-center' style=" background-color: #bce8f1;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 5px;margin-top: 2%">
-								<a type="button" style='font-size: 17px;color: black;cursor: pointer' data-toggle='modal' data-target='#add_car' data-backdrop='static' >新增维修委托</a>
-							</div>
-						</div>
-
-					</div>
-
-
-					<div class="row align-items-end" style="box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px;border-radius: 10px;background-color: white;margin: 7px 7px">
-						<h4 id='description4' style='font-size: 15px;display:inline-block;margin-left: 5%'>很土的黄·很贵的车·很敞的篷</h4>
-						<br>
-						<h4 id='number4' style='font-size: 15px;display:inline-block;margin-left: 5%'>车架号：11111111111111111</h4>
-					</div>
-
+				<div class='row' id="right">
 				</div>
 
 			</div>

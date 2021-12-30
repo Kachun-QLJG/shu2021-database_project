@@ -7,8 +7,39 @@ import (
 	"net/http"
 	"os/exec"
 	"strconv"
+	"strings"
 	"time"
 )
+
+func getVehicle(c *gin.Context) {
+	number := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	if group != "普通用户" {
+		c.JSON(http.StatusForbidden, gin.H{"data": "错误!"})
+		return
+	}
+	var user User
+	database.First(&user, "contact_tel = ?", number)
+	var vehicle []Vehicle
+	database.Order("time desc").Find(&vehicle, "user_id = ?", user.Number)
+	//var result struct {
+	//	Number        string
+	//	LicenseNumber string
+	//	Color         string
+	//	Model         string
+	//	Type          string
+	//}
+	//count := 0
+	//for row := range vehicle {
+	//	result.Number = vehicle[row].Number
+	//	result.LicenseNumber = vehicle[row].LicenseNumber
+	//	result.Color = vehicle[row].Color
+	//	result.Model = vehicle[row].Model
+	//	result.Type = vehicle[row].Type
+	//	count++
+	//}
+	c.JSON(http.StatusOK, vehicle)
+}
 
 func checkRegister(c *gin.Context) {
 	phoneNumber := c.Query("contact_tel")
@@ -81,9 +112,10 @@ func startUCheckOrders(c *gin.Context) {
 }
 
 func addVehicle(c *gin.Context) {
-	number := c.PostForm("number")                //获取车架号
-	licenseNumber := c.PostForm("license_number") //获取车牌号
-	phoneNumber := c.MustGet("username").(string) //获取用户名
+	number := c.PostForm("number")                 //获取车架号
+	licenseNumber := c.PostForm("license_number")  //获取车牌号
+	licenseNumber = strings.ToUpper(licenseNumber) //车牌号改大写
+	phoneNumber := c.MustGet("username").(string)  //获取用户名
 	color := c.PostForm("color")
 	model := c.PostForm("model")
 	carType := c.PostForm("type")
@@ -166,39 +198,6 @@ func showPlate(c *gin.Context) {
 		c.String(http.StatusForbidden, "无权查看车牌")
 		return
 	}
-}
-
-func getVehicle(c *gin.Context) {
-	number := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	page := c.Query("pg")
-	numPage, _ := strconv.Atoi(page)
-	if group != "普通用户" {
-		c.JSON(http.StatusForbidden, gin.H{"data": "错误!"})
-		return
-	}
-	var user User
-	database.First(&user, "contact_tel = ?", number)
-	var vehicle []Vehicle
-	database.Limit(4).Offset(4*(numPage-1)).Find(&vehicle, "user_id = ?", user.Number)
-	fmt.Println(vehicle)
-	var result [4]struct {
-		Number        string
-		LicenseNumber string
-		Color         string
-		Model         string
-		Type          string
-	}
-	count := 0
-	for row := range vehicle {
-		result[count].Number = vehicle[row].Number
-		result[count].LicenseNumber = vehicle[row].LicenseNumber
-		result[count].Color = vehicle[row].Color
-		result[count].Model = vehicle[row].Model
-		result[count].Type = vehicle[row].Type
-		count++
-	}
-	c.JSON(http.StatusOK, result)
 }
 
 func changeUserinfo(c *gin.Context) {
