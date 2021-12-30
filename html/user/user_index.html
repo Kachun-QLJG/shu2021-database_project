@@ -365,7 +365,7 @@
 				</div>
 				<form class='modal-footer'>
 					<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
-					<button type='button' class='btn btn-primary' onclick='' id='confirmAddAttorney'>提交委托</button>
+					<button type='button' class='btn btn-primary' onclick='addAttorney(this.id)' id='confirmAddAttorney'>提交委托</button>
 					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 				</form>
 			</div>
@@ -606,7 +606,41 @@
 			$('#maintenance_record').modal();
 		}
 		function addAttorney(param){
-			$('#add_attorney').modal();
+			if(param !== "confirmAddAttorney"){
+				num = param.replace(/[^0-9]/ig,"");
+				$('#add_attorney').modal();
+			}
+			else{
+				let formData = new FormData();
+				formData.append("vin", document.getElementById("number"+num).innerHTML);
+				var paymethod = document.getElementsByName("PayMethod");
+				var payvalue;
+				for(var i = 0; i < 3; i++){
+					if(paymethod[i].checked === true){
+						payvalue = paymethod[i].value;
+						break;
+					}
+				}
+				formData.append("pay_method", payvalue);
+				formData.append("start_time", document.getElementById("StartTime").value);
+				formData.append("rough_problem", document.getElementById("RoughProblem").value);
+				formData.append("start_petrol", document.getElementById("StartPetrol").value);
+				formData.append("start_mile", document.getElementById("StartMile").value);
+				let config = {
+					headers: {"Content-Type": "multipart/form-data"}
+				};
+				axios.post("/create_attorney", formData, config).then(res => {
+					var last = res.data;
+					if(last === "成功"){
+						alert("提交成功！");
+						location.reload();
+					}
+					else{
+						alert("提交失败，请再审核提交的数据!");
+						location.reload();
+					}
+				})
+			}
 
 		}
 		$(function() {
