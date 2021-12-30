@@ -11,6 +11,31 @@ import (
 	"time"
 )
 
+func getRepairHistory(c *gin.Context) {
+	number := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	vin := c.Query("vin")
+	fmt.Println(vin)
+	if group != "普通用户" {
+		c.String(http.StatusForbidden, "错误!")
+		return
+	}
+	var user User
+	database.First(&user, "contact_tel = ?", number)
+	var vehicle Vehicle
+	result := database.First(&vehicle, "user_id = ? and number = ?", user.Number, vin)
+	if result.RowsAffected == 0 {
+		c.String(http.StatusForbidden, "车辆不绑定于您！无权限查看！")
+		return
+	}
+	var data []struct {
+		Time    string
+		Problem string
+	}
+	database.Order("time desc").Table("attorney").Select("start_time as time, specific_problem as problem").Where("vehicle_number = ?", vin).Scan(&data)
+	c.JSON(http.StatusOK, data)
+}
+
 func getVehicle(c *gin.Context) {
 	number := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
@@ -22,22 +47,6 @@ func getVehicle(c *gin.Context) {
 	database.First(&user, "contact_tel = ?", number)
 	var vehicle []Vehicle
 	database.Order("time desc").Find(&vehicle, "user_id = ?", user.Number)
-	//var result struct {
-	//	Number        string
-	//	LicenseNumber string
-	//	Color         string
-	//	Model         string
-	//	Type          string
-	//}
-	//count := 0
-	//for row := range vehicle {
-	//	result.Number = vehicle[row].Number
-	//	result.LicenseNumber = vehicle[row].LicenseNumber
-	//	result.Color = vehicle[row].Color
-	//	result.Model = vehicle[row].Model
-	//	result.Type = vehicle[row].Type
-	//	count++
-	//}
 	c.JSON(http.StatusOK, vehicle)
 }
 
