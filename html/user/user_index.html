@@ -288,18 +288,15 @@
 					<h3 class='modal-title' id="plate">车牌号：</h3>
 					<h3 class='modal-title' id="VIN">车架号：</h3>
 				</div>
-				<div class='modal-body'>
-					<table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">
+				<div class='modal-body' id="repair_table_father">
+					<table border="1" id="repair_table" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">
 						<!-- 表头 -->
 						<tr style="height: 30px">
 							<th style="text-align: center; width: 120px">时间</th>
-							<th style="text-align: center">维修详情</th>
+							<th id="detail" style="text-align: center">维修详情</th>
 						</tr>
 						<!-- 传参处 -->
-						<tr>
-							<td>2021/12/30</td>
-							<td>轮毂断裂</td>
-						</tr>
+
 					</table>
 				</div>
 			</div>
@@ -534,6 +531,60 @@
 						h42.innerHTML = last.Number;
 				}
 			})
+		}
+		function historyRecord(param){
+			var num= param.replace(/[^0-9]/ig,"");
+			var url = decodeURI(document.getElementById("licensephoto"+num).src);
+			var platestart = url.indexOf('=');
+			var plate = url.substring(platestart+1,url.length).toUpperCase();
+			document.getElementById("plate").innerHTML = "车牌号：" + plate;
+			document.getElementById("VIN").innerHTML = "车架号：" + document.getElementById("number"+num).innerHTML;
+			//删除表格
+			try {document.getElementById("repair_table_father").removeChild(document.getElementById("repair_table"));}
+			catch(error){}
+			//新建表格和标题
+			var table = document.createElement("table");
+			document.getElementById("repair_table_father").appendChild(table);
+			table.id = "repair_table";
+			table.style = "margin: auto; width: 560px; text-align: center; font-size: 17px;";
+			table.setAttribute("border","1");
+			var tr = document.createElement("tr");
+			table.appendChild(tr);
+			tr.style= "height: 30px";
+			var th1 = document.createElement("th");
+			tr.appendChild(th1);
+			th1.style="text-align: center; width: 120px";
+			th1.innerHTML = "时间";
+			var th2 = document.createElement("th");
+			tr.appendChild(th2);
+			th2.style="text-align: center";
+			th2.innerHTML="维修详情";
+			axios.get('/repair_history', {
+				params: {
+					vin: document.getElementById("number"+num).innerHTML
+				}
+			})
+				.then(function(response) {
+					var data = response.data;
+					var length = data.length;
+					for(var i = 1; i <= length; i++){
+						var tr = document.createElement("tr");
+						document.getElementById("repair_table").appendChild(tr);
+						var td1 = document.createElement("td");
+						tr.appendChild(td1);
+						td1.innerHTML = data[i-1].Time;
+						td1.style = "text-align: center; width: 120px;font-size: 15px;";
+						var td2 = document.createElement("td");
+						tr.appendChild(td2);
+						td2.innerHTML = data[i-1].Problem;
+						td2.setAttribute("style", "text-align: center;font-size: 15px;");
+					}
+				})
+			$('#maintenance_record').modal();
+		}
+		function addAttorney(param){
+			$('#add_car').modal();
+
 		}
 		$(function() {
 			$("[data-toggle='popover']").each(function() {

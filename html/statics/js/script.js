@@ -412,7 +412,7 @@ function changeinfo(){
 function addVehicle(){
 	let formData = new FormData();
 	formData.append("number", document.getElementById("number").value);
-	formData.append("license_number", document.getElementById("license_number").value);
+	formData.append("license_number", document.getElementById("license_number").value.toUpperCase());
 	formData.append("color", document.getElementById("color").value);
 	formData.append("model", document.getElementById("model").value);
 	formData.append("type", document.getElementById("type").value);
