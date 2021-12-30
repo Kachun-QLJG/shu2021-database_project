@@ -285,8 +285,8 @@
 				<div class='modal-header'>
 					<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
 					<h3 class='modal-title' id='maintenanceRecord' style="text-align: center">历史维修信息</h3>
-					<h3 class='modal-title'>车牌号：</h3>
-					<h3 class='modal-title'>车架号：</h3>
+					<h3 class='modal-title' id="plate">车牌号：</h3>
+					<h3 class='modal-title' id="VIN">车架号：</h3>
 				</div>
 				<div class='modal-body'>
 					<table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">
@@ -413,7 +413,6 @@
 			<embed height="1080px" src="/show_pdf?attorney_no=00000001" width="90%"/>
 		</div>
 	</div>
-
 	<script>
 		window.onload= function(){
 			getUserName();
@@ -509,9 +508,7 @@
 						div1121.appendChild(button1);
 						button1.type = "button";
 						button1.id = "history"+i;
-						button1.setAttribute("data-target","#maintenance_record");
-						button1.setAttribute("data-backdrop","static");
-						button1.setAttribute("data-toggle","modal");
+						button1.setAttribute("onclick","historyRecord(this.id)");
 						button1.innerHTML = "历史维修记录";
 						div112.innerHTML = div112.innerHTML+"<br>";
 						var div1122 = document.createElement("div");
@@ -521,9 +518,7 @@
 						div1122.appendChild(button2);
 						button2.type = "button";
 						button2.id = "attorney"+i;
-						button2.setAttribute("data-target","#add_attorney");
-						button2.setAttribute("data-backdrop","static");
-						button2.setAttribute("data-toggle","modal");
+						button2.setAttribute("onclick","addAttorney(this.id)");
 						button2.innerHTML = "新增维修委托";
 						var div12 = document.createElement("div");
 						div1.appendChild(div12);

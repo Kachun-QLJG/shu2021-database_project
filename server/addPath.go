@@ -20,7 +20,8 @@ func addPath(r *gin.Engine) {
 	r.GET("/get_pdf", authMiddleWare(), checkPermission(), getPdf)                        //生成并获取PDF文档
 	r.GET("/show_pdf", authMiddleWare(), checkPermission(), showPdf)                      //打印车牌
 	r.GET("/show_plate", authMiddleWare(), checkPermission(), showPlate)                  //返回车牌
-	r.GET("/get_vehicle", authMiddleWare(), checkPermission(), getVehicle)                //获取车辆（一辆）
+	r.GET("/get_vehicle", authMiddleWare(), checkPermission(), getVehicle)                //获取车辆（所有）
+	r.GET("/repair_history", authMiddleWare(), checkPermission(), getRepairHistory)       //获取某一车辆历史维修记录
 	r.GET("/search_for_projects", authMiddleWare(), checkPermission(), searchForProjects) //寻找维修项目
 	r.GET("/search_for_parts", authMiddleWare(), checkPermission(), searchForParts)       //寻找零件
 
