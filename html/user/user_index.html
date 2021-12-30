@@ -286,16 +286,16 @@
 					<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
 					<h3 class='modal-title' id='maintenanceRecord' style="text-align: center">历史维修信息</h3>
 				</div>
-				<div class='modal-body' id="repair_table" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">
+				<div class='modal-body' id="repair_table_father" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">
 					<table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">
 						<tr>
 							<th style="text-align: center; width: 70px">车牌号</th>
-							<th style="text-align: center; width: 210px">沪SHU502</th>
+							<th id="plate" style="text-align: center; width: 210px">沪SHU502</th>
 							<th style="text-align: center; width: 70px">车架号</th>
-							<th style="text-align: center; width: 210px">11111111111111111</th>
+							<th id="VIN"style="text-align: center; width: 210px">11111111111111111</th>
 						</tr>
 					</table>
-					<table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; border-top: white">
+					<table id="repair_table" border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; border-top: white">
 						<!-- 表头 -->
 						<tr style="height: 30px">
 							<th style="text-align: center; width: 120px">时间</th>
@@ -546,8 +546,8 @@
 			var url = decodeURI(document.getElementById("licensephoto"+num).src);
 			var platestart = url.indexOf('=');
 			var plate = url.substring(platestart+1,url.length).toUpperCase();
-			document.getElementById("plate").innerHTML = "车牌号：" + plate;
-			document.getElementById("VIN").innerHTML = "车架号：" + document.getElementById("number"+num).innerHTML;
+			document.getElementById("plate").innerHTML =plate;
+			document.getElementById("VIN").innerHTML =document.getElementById("number"+num).innerHTML;
 			//删除表格
 			try {document.getElementById("repair_table_father").removeChild(document.getElementById("repair_table"));}
 			catch(error){}
@@ -555,7 +555,7 @@
 			var table = document.createElement("table");
 			document.getElementById("repair_table_father").appendChild(table);
 			table.id = "repair_table";
-			table.style = "margin: auto; width: 560px; text-align: center; font-size: 17px;";
+			table.style = "margin: auto; width: 560px; text-align: center; font-size: 17px; border-top: white";
 			table.setAttribute("border","1");
 			var tr = document.createElement("tr");
 			table.appendChild(tr);
