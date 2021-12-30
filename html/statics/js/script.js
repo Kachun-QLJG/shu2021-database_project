@@ -428,8 +428,8 @@ function addVehicle(){
 		}
 		location.reload();
 	})
-	document.getElementById("confirmAddVehicle").innerHTML="新增成功";
-	window.setTimeout("window.location.reload()", 2000);
+	//document.getElementById("confirmAddVehicle").innerHTML="新增成功";
+	//window.setTimeout("window.location.reload()", 2000);
 }
 
 function checkVehicle() {

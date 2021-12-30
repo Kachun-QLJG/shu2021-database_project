@@ -47,7 +47,7 @@ type PartsOverview struct { //零件总览表
 type Vehicle struct { //车辆表
 	Number        string `gorm:"type:varchar(17);not null;primary_key"` //车架号
 	LicenseNumber string `gorm:"type:varchar(10);not null"`             //车牌号
-	UserID        string `gorm:"type:varchar(8);not null;primary_key"`  //客户编号
+	UserID        string `gorm:"type:varchar(8);not null;"`             //客户编号
 	Color         string `gorm:"type:varchar(10);not null"`             //车辆颜色
 	Model         string `gorm:"type:varchar(40);not null"`             //车型
 	Type          string `gorm:"type:varchar(10);not null"`             //车辆类别
@@ -107,4 +107,10 @@ type AuthSession struct { //登录表
 	TimeHash  string `gorm:"type:varchar(64);not null;unique_index;primary_key"` //时间戳的哈希值
 	LastVisit string `gorm:"type:varchar(30);not null"`                          //最后一次访问的时间戳（精确到秒）
 	Username  string `gorm:"type:varchar(20);not null"`                          //当前session对应的用户信息
+}
+
+type Finished struct { //已完成订单表
+	OrderNumber   string `gorm:"type:varchar(11);not null;unique_index;primary_key"` //订单号
+	VehicleNumber string `gorm:"type:varchar(17);not null;primary_key"`              //车架号
+	UserId        string `gorm:"type:varchar(8);unique_index;not null;primary_key"`  //客户编号
 }

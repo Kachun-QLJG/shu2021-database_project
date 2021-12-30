@@ -132,7 +132,7 @@ func changePassword(c *gin.Context) {
 
 func welcome(c *gin.Context) {
 	sessionId, err := c.Cookie("sessionId")
-	var username, group string
+	var username string
 	var session AuthSession
 	if err == nil {
 		result := database.First(&session, "time_hash=?", sessionId)
@@ -148,23 +148,19 @@ func welcome(c *gin.Context) {
 	var user User
 	result := database.First(&user, "contact_tel = ?", username)
 	if result.RowsAffected == 1 {
-		group = "普通用户"
-		c.HTML(http.StatusOK, "user_index.html", gin.H{"username": username, "group": group})
+		c.HTML(http.StatusOK, "user_index.html", nil)
 	} else {
 		var repairman Repairman
 		result := database.First(&repairman, "number = ?", username)
 		if result.RowsAffected == 1 {
-			group = "维修员"
-			c.HTML(http.StatusOK, "repairman_index.html", gin.H{"username": username, "group": group})
+			c.HTML(http.StatusOK, "repairman_index.html", nil)
 		} else {
 			var salesman Salesman
 			result := database.First(&salesman, "number = ?", username)
 			if result.RowsAffected == 1 {
-				group = "业务员"
-				c.HTML(http.StatusOK, "salesman_index.html", gin.H{"username": username, "group": group})
+				c.HTML(http.StatusOK, "salesman_index.html", nil)
 			} else {
-				group = "未登录"
-				c.HTML(http.StatusOK, "index.html", gin.H{"username": username, "group": group})
+				c.HTML(http.StatusOK, "index.html", nil)
 			}
 		}
 	}

@@ -15,7 +15,6 @@ func getRepairHistory(c *gin.Context) {
 	number := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	vin := c.Query("vin")
-	fmt.Println(vin)
 	if group != "普通用户" {
 		c.String(http.StatusForbidden, "错误!")
 		return
@@ -146,8 +145,8 @@ func addVehicle(c *gin.Context) {
 	} else { //这辆车已经被绑定
 		//通知原车主
 		var notification Notification
-		number := database.Find(&notification).RowsAffected + 1
-		strNumber := fmt.Sprintf("%08d", number) //获取通知序号
+		notificationNumber := database.Find(&notification).RowsAffected + 1
+		strNumber := fmt.Sprintf("%08d", notificationNumber) //获取通知序号
 		var oldUser User
 		database.First(&oldUser, "number = ?", vehicle.UserID) //找到原车主信息
 		data := Notification{
@@ -161,11 +160,11 @@ func addVehicle(c *gin.Context) {
 		database.Create(&data) //添加到通知表
 		//更新
 		database.Model(&vehicle).Update("license_number", licenseNumber) //更改车牌号为传过来的车牌号
-		database.Model(&vehicle).Update("user_id", user.Number)          //更改用户id为传过来的用户id
 		database.Model(&vehicle).Update("color", color)                  //更改颜色为传过来的颜色
 		database.Model(&vehicle).Update("model", model)                  //更改车型为传过来的车型
-		database.Model(&vehicle).Update("car_type", carType)             //更改类别为传过来的类别
+		database.Model(&vehicle).Update("type", carType)                 //更改类别为传过来的类别
 		database.Model(&vehicle).Update("time", sTime)                   //更改时间为传过来的时间
+		database.Model(&vehicle).Update("user_id", user.Number)          //更改用户id为传过来的用户id
 		c.JSON(http.StatusOK, gin.H{"status": "成功", "data": "成功"})
 	}
 }
