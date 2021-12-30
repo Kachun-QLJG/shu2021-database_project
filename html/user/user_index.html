@@ -126,15 +126,14 @@
 			<!--左导航栏-->
 			<div class='col-md-2'>
 				<div class="list-group">
-					<！--这里记得做成传参!!!-->
 					<a class="list-group-item list-group-item-info">
 						个人信息
 					</a>
-					<a class="list-group-item">用户名:18001723206</a>
-					<a class="list-group-item">性　　质:个人</a>
-					<a class="list-group-item">联系电话:13472413472</a>
-					<a class="list-group-item">联 系 人:Baitian2</a>
-					<a class="list-group-item">折扣率:100%</a>
+					<a id="user_name" class="list-group-item">用户名:18001723206</a>
+					<a id="user_property" class="list-group-item">性　　质:个人</a>
+					<a id="user_tel" class="list-group-item">联系电话:13472413472</a>
+					<a id="user_contact" class="list-group-item">联 系 人:Baitian2</a>
+					<a id="user_discount" class="list-group-item">折扣率:100%</a>
 					<a class="list-group-item" data-toggle='modal' data-target='#change_info' onclick='userinfo()' style="cursor: pointer">更改个人信息</a>
 				</div>
 
@@ -426,6 +425,7 @@
 			checkUser();
 			getinfo();
 			getVehicle();
+			userInfo();
 		}
 		function check_number(){
 			var check = false;
@@ -474,6 +474,21 @@
 			if(event.keyCode === 13){
 				document.getElementById('confirmAddVehicle').click();
 			}
+		}
+
+		function userInfo(){
+			axios({
+				method : 'get',
+				url: "/userinfo"
+			})
+					.then(function(response){
+						var last = response.data;
+						document.getElementById("user_name").innerHTML = "用户名：" + last.number;
+						document.getElementById("user_property").innerHTML = "性　　质：" + last.property;
+						document.getElementById("user_tel").innerHTML = "联系电话：" + last.contact_tel;
+						document.getElementById("user_contact").innerHTML = "联 系 人：" + last.contact_person;
+						document.getElementById("user_discount").innerHTML = "折扣率；" + last.discount_rate;
+					})
 		}
 		// 车辆信息块
 		function getVehicle(){
