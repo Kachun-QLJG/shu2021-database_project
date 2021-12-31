@@ -19,7 +19,6 @@ func connectToSql(database *gorm.DB) {
 	database.AutoMigrate(&AuthSession{})
 	database.AutoMigrate(&Remark{})
 	database.AutoMigrate(&Notification{})
-	database.AutoMigrate(&Finished{})
 	// 构建表格
 	database.Model(&Vehicle{}).AddForeignKey("user_id", "user(number)", "RESTRICT", "RESTRICT")
 	database.Model(&Attorney{}).AddForeignKey("user_id", "user(number)", "RESTRICT", "RESTRICT")
@@ -32,7 +31,4 @@ func connectToSql(database *gorm.DB) {
 	database.Model(&RepairParts{}).AddForeignKey("project_number", "arrangement(project_number)", "RESTRICT", "RESTRICT")
 	database.Model(&RepairParts{}).AddForeignKey("parts_number", "parts_overview(parts_number)", "RESTRICT", "RESTRICT")
 	database.Model(&TimeOverview{}).AddForeignKey("remark", "remark(remark_number)", "RESTRICT", "RESTRICT")
-	database.Model(&Finished{}).AddForeignKey("order_number", "attorney(number)", "RESTRICT", "RESTRICT")
-	database.Model(&Finished{}).AddForeignKey("vehicle_number", "vehicle(number)", "RESTRICT", "RESTRICT")
-	database.Model(&Finished{}).AddForeignKey("user_id", "user(number)", "RESTRICT", "RESTRICT")
 }

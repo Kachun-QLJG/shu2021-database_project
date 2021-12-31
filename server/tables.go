@@ -108,9 +108,3 @@ type AuthSession struct { //登录表
 	LastVisit string `gorm:"type:varchar(30);not null"`                          //最后一次访问的时间戳（精确到秒）
 	Username  string `gorm:"type:varchar(20);not null"`                          //当前session对应的用户信息
 }
-
-type Finished struct { //已完成订单表
-	OrderNumber   string `gorm:"type:varchar(11);not null;unique_index;primary_key"` //订单号
-	VehicleNumber string `gorm:"type:varchar(17);not null;primary_key"`              //车架号
-	UserId        string `gorm:"type:varchar(8);unique_index;not null;primary_key"`  //客户编号
-}

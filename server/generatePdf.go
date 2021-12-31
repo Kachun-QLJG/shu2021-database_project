@@ -25,13 +25,12 @@ var (
 )
 
 func showPdf(c *gin.Context) {
-	usernameForPdfGen = c.MustGet("username").(string)
-	attorneyNoForPdfGen = c.Query("attorney_no")
-	filename := genPdf(usernameForPdfGen, attorneyNoForPdfGen)
-	c.File(filename)
+	username := c.MustGet("username").(string)
+	attorneyNo := c.Query("attorney_no")
+	c.File("./files/generatedPDF/" + username + "/" + attorneyNo + "/" + attorneyNo + ".pdf")
 }
 
-func getPdf(c *gin.Context) {
+func downloadPdf(c *gin.Context) {
 	usernameForPdfGen = c.MustGet("username").(string)
 	attorneyNoForPdfGen = c.Query("attorney_no")
 	filename := genPdf(usernameForPdfGen, attorneyNoForPdfGen)
