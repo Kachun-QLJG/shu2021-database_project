@@ -322,7 +322,7 @@ func showPlate(c *gin.Context) {
 	var user User
 	database.First(&user, "contact_tel = ?", number)
 	var vehicle Vehicle
-	result := database.First(&vehicle, "license_number = ? and user_id = ?", licenseNumber, user.Number).Order("time desc")
+	result := database.First(&vehicle, "license_number = ? and user_id = ?", licenseNumber, user.Number)
 	if result.RowsAffected == 1 {
 		c.File("./html/statics/license plates/" + licenseNumber + ".jpg")
 		return
