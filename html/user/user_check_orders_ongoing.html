@@ -2,343 +2,249 @@
 <html lang="en" ng-app="AngularStore">
 <head>
 	<script src="/statics/js/header.js"></script>
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body bgcolor="#f0f8ff" id="body">
-	<!--
-	<script src="/statics/js/universal.js"></script>
-	<script src="/statics/js/user.js"></script>
-	-->
 
-	<div class='navbar-header' id='head1'>
-		<a class='navbar-brand'>502汽修厂管理系统</a>
-	</div>
+<div class='navbar-header' id='head1'>
+	<a class='navbar-brand'>502汽修厂管理系统</a>
+</div>
 
-	<!-- 右上区块 -->
-	<div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
-		<ul id='navbar' class='nav navbar-nav navbar-right' >
-			<li><a id='text'></a></li>
-			<li><a id='register' href='/register' title='注册' >前往注册</a></li>
-			<li><a id='login' href='/login' title='登录' >前往登录</a></li>
-			<li><a id='logout' title='退出登录' data-toggle='modal' data-target='#log_out' onclick='getUsername()'>退出登录</a></li>
-		</ul>
-	</div>
+<!-- 右上区块 -->
+<div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
+	<ul id='navbar' class='nav navbar-nav navbar-right' >
+		<li><a id='text'></a></li>
+		<li><a id='register' href='/register' title='注册' >前往注册</a></li>
+		<li><a id='login' href='/login' title='登录' >前往登录</a></li>
+		<li><a id='logout' title='退出登录' data-toggle='modal' data-target='#log_out' onclick='getUsername()'>退出登录</a></li>
+	</ul>
+</div>
 
-	<!-- 主体部分 -->
-	<div class='container-fluid'>
-		<div class='row'>
-			<!--左导航栏-->
-			<div class='col-md-2'>
-				<div class="list-group">
-					<a class="list-group-item list-group-item-info">
-						个人信息
-					</a>
-					<a id="user_name" class="list-group-item">用户名:18001723206</a>
-					<a id="user_property" class="list-group-item">性　　质:个人</a>
-					<a id="user_tel" class="list-group-item">联系电话:13472413472</a>
-					<a id="user_contact" class="list-group-item">联 系 人:Baitian2</a>
-					<a id="user_discount" class="list-group-item">折扣率:100%</a>
-					<a class="list-group-item" data-toggle='modal' data-target='#change_info' onclick='userinfo()' style="cursor: pointer">更改个人信息</a>
-					<a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a>
-				</div>
-
-				<div class='list-group'>
-					<a class='list-group-item list-group-item-success'>
-						查看申请详情
-					</a>
-					<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
-					<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
-					<a class='list-group-item' href='/u_check_orders_ongoing' style='cursor:pointer'>进行中(3)</a>
-					<a class='list-group-item' href='/u_check_orders_finished' style='cursor:pointer'>已完成</a>
-				</div>
+<!-- 主体部分 -->
+<div class='container-fluid'>
+	<div class='row'>
+		<!--左导航栏-->
+		<div class='col-md-2'>
+			<div class="list-group">
+				<a class="list-group-item list-group-item-info">
+					个人信息
+				</a>
+				<a id="user_name" class="list-group-item">用户名:18001723206</a>
+				<a id="user_property" class="list-group-item">性　　质:个人</a>
+				<a id="user_tel" class="list-group-item">联系电话:13472413472</a>
+				<a id="user_contact" class="list-group-item">联 系 人:Baitian2</a>
+				<a id="user_discount" class="list-group-item">折扣率:100%</a>
+				<a class="list-group-item" data-toggle='modal' data-target='#change_info' onclick='userinfo()' style="cursor: pointer">更改个人信息</a>
+				<a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a>
 			</div>
 
-			<!--右区域-->
-			<div class="col-md-10">
-				<div class="alert alert-warning alert-dismissible" role="alert">
-					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()">立即查看</a>
-				</div>
-				<div class='col-md-10' id='con'  style='text-align: center'>
-					<label style='color: #77bbe2;font-size:50px;'>　　　车辆信息</label>
-				</div>
+			<div class='list-group'>
+				<a class='list-group-item list-group-item-success'>
+					查看申请详情
+				</a>
+				<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
+				<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
+				<a class='list-group-item' href='/u_check_orders_ongoing' style='cursor:pointer'>进行中(3)</a>
+				<a class='list-group-item' href='/u_check_orders_finished' style='cursor:pointer'>已完成</a>
+			</div>
+		</div>
 
-				<div class='row' id="right">
-				</div>
+		<!--右区域-->
+		<div class="col-md-10">
+			<div class='col-md-10' id='con'  style='text-align: center'>
+				<label style='color: #77bbe2;font-size:50px;'>　　　维修申请详情</label>
+			</div>
+			<div class="container-fluid">
+				<form class="navbar-form navbar-left" role="search">
+					<div class="form-group">
+						<lable></lable>
+						<input type="text" class="form-control" ng-change="filterchange($event)" ng-model="filtervalue" placeholder="按车牌号查找">
+					</div>
+					<button type="button" class="btn btn-default" onclick="">搜索</button>
+					<select >
+						<option value='车牌号' selected>车牌号</option>
+						<option value='公司'>公司</option>
+					</select>
+				</form>
+			</div>
+
+			<div class="table-responsive">
+				<table class="table  table-bordered table-hover">
+					<tr>
+						<th>车牌号</th>
+						<th>车架号</th>
+						<th>申请时间</th>
+						<th>进度</th>
+						<th></th>
+					</tr>
+
+					<tr ng-repeat="item in list | filter:listfilter">
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+						<td style="text-align:center;">
+							<a ng-click="changegood($event)" id="修改1" data-toggle="modal" data-target="#myModal">详情</a>
+						</td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<!--通知信息框
-	<div id="alert" style="width: 35%; position: absolute; top: 10%; left: 36%; text-align: center; background-color: white;">
-		<div class="modal-dialog modal-content" style="width: 100%;">
-			<div class="modal-header">
-				<h3 class="modal-title">【通知】您的车辆沪SHU504已被他人绑定</h3>
+<!--通知信息框
+<div id="alert" style="width: 35%; position: absolute; top: 10%; left: 36%; text-align: center; background-color: white;">
+    <div class="modal-dialog modal-content" style="width: 100%;">
+        <div class="modal-header">
+            <h3 class="modal-title">【通知】您的车辆沪SHU504已被他人绑定</h3>
+        </div>
+        <h4 class="modal-body" style="text-align: left;">　　尊敬的用户您好，您的车辆沪SHU504已被手机尾号为3472的用户绑定。</h4>
+        <h4 class="modal-body" style="text-align: right;">2021-12-30 16:38:26</h4>
+        <form class="modal-footer">
+            <button class="btn btn-primary" type="submit">已读</button>
+            <button class="btn btn-default">暂时忽略</button>
+        </form>
+    </div>
+</div>
+-->
+
+<!-- 登出模态框（Modal）-->
+<div class='modal fade' id='log_out' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h3 class='modal-title' id='myModalLabel'>您确定要登出当前账号吗？</h3>
+				<h4 class='modal-body' id='text1'></h4>
 			</div>
-			<h4 class="modal-body" style="text-align: left;">　　尊敬的用户您好，您的车辆沪SHU504已被手机尾号为3472的用户绑定。</h4>
-			<h4 class="modal-body" style="text-align: right;">2021-12-30 16:38:26</h4>
-			<form class="modal-footer">
-				<button class="btn btn-primary" type="submit">已读</button>
-				<button class="btn btn-default">暂时忽略</button>
+			<form class='modal-footer'>
+				<button type='submit' value='退出登录' class='btn btn-primary' onclick='logout()'>退出登录</button>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 			</form>
 		</div>
 	</div>
-	-->
+</div>
 
-	<!-- 登出模态框（Modal）-->
-	<div class='modal fade' id='log_out' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-		<div class='modal-dialog'>
-			<div class='modal-content'>
-				<div class='modal-header'>
-					<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-					<h3 class='modal-title' id='myModalLabel'>您确定要登出当前账号吗？</h3>
-					<h4 class='modal-body' id='text1'></h4>
-				</div>
+<!-- 更改个人信息 -->
+<div class='modal fade' id='change_info' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
+				<h3 class='modal-title' id='changeUserInfo'>更改个人信息</h3>
+			</div>
+			<div class='modal-body'>
+				<img src='/statics/user/真实姓名.png' width='20px' alt="正在加载图片">
+				<label for="name" style='font-size:15px;width: 100px;'>姓名：</label>
+				<input id='name' type='text' placeholder='请输入姓名'/>
+				<br>
+
+				<img src='/statics/user/公司.png' width='20px' alt="正在加载图片">
+				<label for="property" style='font-size:15px;width: 100px;'>性质：</label>
+				<select id='property'>
+					<option value='个人' selected>个人</option>
+					<option value='公司'>公司</option>
+				</select>
+				<br>
+
+				<img src='/statics/user/联系人.png' width='20px' alt="正在加载图片">
+				<label for="contact_person" style='font-size:15px;width: 100px;'>联系人：</label>
+				<input id='contact_person' type='text' placeholder='请输入联系人'/>
+				<br>
+
+				<img src='/statics/user/联系人.png' width='20px' alt="正在加载图片">
+				<label for="contact_tel" style='font-size:15px;width: 100px;'>联系电话：</label>
+				<input id='contact_tel' type='text' readonly='readonly' value='13472413472' style="color: #9d9d9d"/>
+				<br>
+
+				<img src='/statics/user/联系人.png' width='20px' alt="正在加载图片">
+				<label for="discount_rate" style='font-size:15px;width: 100px;'>折扣率：</label>
+				<input id='discount_rate' type='text' readonly='readonly' value='100%' style="color: #9d9d9d"/>
+				<br>
+
+			</div>
+			<form class='modal-footer'>
+				<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
+				<button type='button' class='btn btn-primary' onclick='changeinfo()' id='confirmChangeInfo'>确认更改</button>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- 更改密码 -->
+<div class='modal fade' id='change_password' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' onkeydown="keychangepassword()">
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h3 class='modal-title' id='changePSWD'>更改密码</h3>
+			</div>
+			<div class='modal-body'>
+				<img src='/statics/user/井号.png' width='20px' alt="正在加载图片">
+				<label for="oldpswd" style='font-size:15px;width: 80px;'>原密码：</label>
+				<input id='oldpswd' type='password' name="oldpswd" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+				<span id='checktext3'></span> <br></br>
+
+				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
+				<label for="pswd" style='font-size:15px;width: 80px;'>密码：</label>
+				<input id='pswd' type='password' name="pswd" onchange="checkpwd()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+				<span id='checktext4'></span> <br></br>
+
+				<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
+				<label for="pwdc" style='font-size:15px;width: 80px;'>确认密码：</label>
+				<input id='pwdc' type='password' name="pwdc" onchange="checkpwdc()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+
+				<input type="hidden" id="old_password" name="old_password" />
+				<input type="hidden" id="new_password" name="new_password" />
 				<form class='modal-footer'>
-					<button type='submit' value='退出登录' class='btn btn-primary' onclick='logout()'>退出登录</button>
+					<button type='button' class='btn btn-primary' onclick='check()' id='changepasswordbutton'>确认更改</button>
 					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 				</form>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<!-- 更改个人信息 -->
-	<div class='modal fade' id='change_info' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-		<div class='modal-dialog'>
-			<div class='modal-content'>
-				<div class='modal-header'>
-					<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
-					<h3 class='modal-title' id='changeUserInfo'>更改个人信息</h3>
-				</div>
-				<div class='modal-body'>
-					<img src='/statics/user/真实姓名.png' width='20px' alt="正在加载图片">
-					<label for="name" style='font-size:15px;width: 100px;'>姓名：</label>
-					<input id='name' type='text' placeholder='请输入姓名'/>
-					<br>
+<script>
+	window.onload= function(){
+		getUserName();
+		checkGroup();
+		checkUser();
+		getinfo();
+		getVehicle();
+		userInfo();
+	}
+	function userinfo(){
+		axios({
+			method : 'get',
+			url: "/userinfo"
+		})
+				.then(function(response){
+					var last = response.data;
+					document.getElementById("name").value = last.name;
+					document.getElementById("property").value = last.property;
+					document.getElementById("contact_person").value = last.contact_person;
+				})
+	}
+	function userInfo(){
+		axios({
+			method : 'get',
+			url: "/userinfo"
+		})
+				.then(function(response){
+					var last = response.data;
+					document.getElementById("user_name").innerHTML = "用户名：" + last.number;
+					document.getElementById("user_property").innerHTML = "性　　质：" + last.property;
+					document.getElementById("user_tel").innerHTML = "联系电话：" + last.contact_tel;
+					document.getElementById("user_contact").innerHTML = "联 系 人：" + last.contact_person;
+					document.getElementById("user_discount").innerHTML = "折扣率；" + last.discount_rate;
+				})
+	}
 
-					<img src='/statics/user/公司.png' width='20px' alt="正在加载图片">
-					<label for="property" style='font-size:15px;width: 100px;'>性质：</label>
-					<select id='property'>
-						<option value='个人' selected>个人</option>
-						<option value='公司'>公司</option>
-					</select>
-					<br>
-
-					<img src='/statics/user/联系人.png' width='20px' alt="正在加载图片">
-					<label for="contact_person" style='font-size:15px;width: 100px;'>联系人：</label>
-					<input id='contact_person' type='text' placeholder='请输入联系人'/>
-					<br>
-
-					<img src='/statics/user/联系人.png' width='20px' alt="正在加载图片">
-					<label for="contact_tel" style='font-size:15px;width: 100px;'>联系电话：</label>
-					<input id='contact_tel' type='text' readonly='readonly' value='13472413472' style="color: #9d9d9d"/>
-					<br>
-
-					<img src='/statics/user/联系人.png' width='20px' alt="正在加载图片">
-					<label for="discount_rate" style='font-size:15px;width: 100px;'>折扣率：</label>
-					<input id='discount_rate' type='text' readonly='readonly' value='100%' style="color: #9d9d9d"/>
-					<br>
-
-				</div>
-				<form class='modal-footer'>
-					<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
-					<button type='button' class='btn btn-primary' onclick='changeinfo()' id='confirmChangeInfo'>确认更改</button>
-					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<!-- 新增车辆 -->
-	<div class='modal fade' id='add_car' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' onkeydown="keycarregister()">
-		<div class='modal-dialog'>
-			<div class='modal-content'>
-				<div class='modal-header'>
-					<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-					<h3 class='modal-title' id='addNewVehicle'>新增车辆</h3>
-				</div>
-				<div class='modal-body'>
-					<img src='/statics/user/井号.png' width='20px' alt="正在加载图片">
-					<label for="number" style='font-size:15px;width: 80px;'>车架号：</label>
-					<input id='number' type='text' onchange='check_number()' placeholder='请输入车架号'/>
-					<span id='checktext1'></span>
-					<br>
-
-					<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
-					<label for="license_number" style='font-size:15px;width: 80px;'>车牌号：</label>
-					<input id='license_number' type='text' onchange='check_license_number()' placeholder='请输入车牌号'/>
-					<img src='/statics/user/问号.png' width='20px' alt="正在加载图片">
-					<span id='checktext2'></span>
-					<br>
-
-					<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
-					<label for="color" style='font-size:15px;width: 80px;'>车辆颜色：</label>
-					<input id='color' type='text' placeholder='请输入车辆颜色'/>
-					<br>
-
-					<img src='/statics/user/车型.png' width='20px' alt="正在加载图片">
-					<label for="model" style='font-size:15px;width: 80px;'>车型：</label>
-					<input id='model' type='text' placeholder='请输入车型'/>
-					<br>
-
-					<img src='/statics/user/类别.png' width='20px' alt="正在加载图片">
-					<label for="type" style='font-size:15px;width: 80px;'>车辆类别：</label>
-					<select id='type'>
-						<option value='轿车-A' selected>轿车-A</option>
-						<option value='轿车-B' >轿车-B</option>
-						<option value='轿车-C' >轿车-C</option>
-						<option value='轿车-D' >轿车-D</option>
-						<option value='轿车-E' >轿车-E</option>
-					</select>
-					<img src='/statics/user/问号.png' width='20px' class="popover-toggle" data-toggle="popover" alt="正在加载图片"/>
-
-				</div>
-				<form class='modal-footer'>
-					<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
-					<button type='button' class='btn btn-primary' onclick='checkVehicle()' id='confirmAddVehicle'>确认新增</button>
-					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<!-- 历史维修信息 -->
-	<div class='modal fade' id='maintenance_record' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-		<div class='modal-dialog'>
-			<div class='modal-content'>
-				<div class='modal-header'>
-					<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
-					<h3 class='modal-title' id='maintenanceRecord' style="text-align: center">历史维修信息</h3>
-				</div>
-				<div class='modal-body' id="repair_table_father" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">
-					<table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">
-						<tr>
-							<th style="text-align: center; width: 70px">车牌号</th>
-							<th id="plate" style="text-align: center; width: 210px">沪SHU502</th>
-							<th style="text-align: center; width: 70px">车架号</th>
-							<th id="VIN"style="text-align: center; width: 210px">11111111111111111</th>
-						</tr>
-					</table>
-					<table id="repair_table" border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; border-top: white">
-						<!-- 表头 -->
-						<tr style="height: 30px">
-							<th style="text-align: center; width: 120px">时间</th>
-							<th id="detail" style="text-align: center">维修详情</th>
-						</tr>
-						<!-- 传参处 -->
-						<tr>
-							<td >2021/12/30</td>
-							<td >轮毂断裂</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- 新增委托 -->
-	<div class='modal fade' id='add_attorney' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' onkeydown="keycarregister()">
-		<div class='modal-dialog'>
-			<div class='modal-content'>
-				<div class='modal-header'>
-					<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-					<h3 class='modal-title' id='addAttorney'>新增委托</h3>
-				</div>
-				<div class='modal-body'>
-					<img src='/statics/user/井号.png' width='20px' alt="正在加载图片">
-					<label for="VehicleNumber" style='font-size:15px;width: 80px;'>车架号：</label>
-					<input id='VehicleNumber' type='text' onchange='check_number()' readonly="readonly" value="1111111111111" style="color: #9d9d9d"/>
-					<!-- <span id='checktext1'></span> -->
-					<br>
-
-					<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
-					<label style='font-size:15px;width: 80px;'>结算方式：</label>
-					<input id='PayMethod1' name="PayMethod" type='radio' value="现金" />
-					<label for="PayMethod1">现金</label>
-					<input id='PayMethod2' name="PayMethod" type='radio' value="保险" checked="checked"/>
-					<label for="PayMethod2">保险</label>
-					<input id='PayMethod3' name="PayMethod" type='radio' value="信用卡" />
-					<label for="PayMethod3">信用卡</label>
-					<!-- <span id='checktext2'></span> -->
-					<br>
-
-					<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
-					<label for="StartTime" style='font-size:15px;width: 80px;'>进场时间：</label>
-					<input id="StartTime" type="date" class="measureDate" placeholder="请选择日期">
-					<!-- <label for='StartTime'></label><input id='StartTime' type='text'/> -->
-					<br>
-					<br>
-
-					<div>
-						<img src='/statics/user/车型.png' width='20px' style="vertical-align: top" alt="正在加载图片">
-						<label  for='RoughProblem' style='font-size:15px;width: 80px;vertical-align: top'>粗略故障：</label>
-						<textarea id='RoughProblem' placeholder='请粗略描述您车辆的故障（字数在255以下）' style="width: 300px;height: 100px;"></textarea>
-					</div>
-					<br>
-
-					<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
-					<label for="StartPetrol" style='font-size:15px;width: 80px;'>进场油量：</label>
-					<input id='StartPetrol' type='number' min="0" max="100" step="0.1" placeholder='进场时车辆所剩油量' style="width: 130px"/> L
-					<br>
-					<br>
-
-					<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
-					<label for="StartMile" style='font-size:15px;width: 80px;'>进场里程：</label>
-					<input id='StartMile' type='number' min="0" step="0.1" placeholder='进场时车辆里程数' style="width: 130px"/> km
-					<br>
-					<br>
-
-				</div>
-				<form class='modal-footer'>
-					<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
-					<button type='button' class='btn btn-primary' onclick='addAttorney(this.id)' id='confirmAddAttorney'>提交委托</button>
-					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<!-- 更改密码 -->
-	<div class='modal fade' id='change_password' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' onkeydown="keychangepassword()">
-		<div class='modal-dialog'>
-			<div class='modal-content'>
-				<div class='modal-header'>
-					<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-					<h3 class='modal-title' id='changePSWD'>更改密码</h3>
-				</div>
-				<div class='modal-body'>
-					<img src='/statics/user/井号.png' width='20px' alt="正在加载图片">
-					<label for="oldpswd" style='font-size:15px;width: 80px;'>原密码：</label>
-					<input id='oldpswd' type='password' name="oldpswd" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
-					<span id='checktext3'></span> <br></br>
-
-					<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
-					<label for="pswd" style='font-size:15px;width: 80px;'>密码：</label>
-					<input id='pswd' type='password' name="pswd" onchange="checkpwd()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
-					<span id='checktext4'></span> <br></br>
-
-					<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
-					<label for="pwdc" style='font-size:15px;width: 80px;'>确认密码：</label>
-					<input id='pwdc' type='password' name="pwdc" onchange="checkpwdc()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
-
-					<input type="hidden" id="old_password" name="old_password" />
-					<input type="hidden" id="new_password" name="new_password" />
-					<form class='modal-footer'>
-						<button type='button' class='btn btn-primary' onclick='check()' id='changepasswordbutton'>确认更改</button>
-						<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<script>
-		window.onload= function(){
-			checkNotification();
-			checkGroup();
-			checkUser();
-			getUserName();
-		}
-	</script>
+</script>
 
 </body>
 </html>
