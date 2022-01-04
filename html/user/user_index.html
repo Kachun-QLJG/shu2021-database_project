@@ -12,6 +12,7 @@
 			height:100%;
 		}
 
+
 		/* centered columns styles */
 		.row-centered {
 			text-align:center;
@@ -46,11 +47,11 @@
 			var check = false;
 			var pswd = document.getElementById("pswd").value;
 			if(pswd.length < 6){
-				document.getElementById("checktext2").innerHTML = " × 不要少于6位";
+				document.getElementById("checktext4").innerHTML = " × 不要少于6位";
 				check = false;
 			}
 			else {
-				document.getElementById("checktext2").innerHTML = " √";
+				document.getElementById("checktext4").innerHTML = " √";
 				check = true;
 			}
 			return check;
@@ -60,11 +61,11 @@
 			var password = document.getElementById("pswd").value;
 			var pwdc = document.getElementById("pwdc").value;
 			if (password !== pwdc) {
-				document.getElementById("checktext3").innerHTML = " × 两次输入密码不一致";
+				document.getElementById("checktext5").innerHTML = " × 两次输入密码不一致";
 				check = false;
 			}
 			else {
-				document.getElementById("checktext3").innerHTML = " √";
+				document.getElementById("checktext5").innerHTML = " √";
 				check = true;
 			}
 			return check;
@@ -416,6 +417,7 @@
 				<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
 				<label for="pwdc" style='font-size:15px;width: 80px;'>确认密码：</label>
 				<input id='pwdc' type='password' name="pwdc" onchange="checkpwdc()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+				<span id='checktext5'></span> <br></br>
 
 				<input type="hidden" id="old_password" name="old_password" />
 				<input type="hidden" id="new_password" name="new_password" />
