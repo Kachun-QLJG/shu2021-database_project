@@ -206,15 +206,15 @@ func checkVehicle(c *gin.Context) {
 	c.String(http.StatusOK, strconv.FormatInt(database.First(&vehicle, "number = ?", carNumber).RowsAffected, 10))
 }
 
-func startAddVehicle(c *gin.Context) {
-	number := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	if group != "普通用户" {
-		c.String(http.StatusForbidden, "错误！")
-		return
-	}
-	c.HTML(http.StatusOK, "user_car_register.html", gin.H{"username": number, "group": group})
-}
+//func startAddVehicle(c *gin.Context) {
+//	number := c.MustGet("username").(string)
+//	group := c.MustGet("group").(string)
+//	if group != "普通用户" {
+//		c.String(http.StatusForbidden, "错误！")
+//		return
+//	}
+//	c.HTML(http.StatusOK, "user_car_register.html", gin.H{"username": number, "group": group})
+//}
 
 func startUCheckOrdersOngoing(c *gin.Context) {
 	number := c.MustGet("username").(string)
@@ -350,12 +350,12 @@ func changeUserinfo(c *gin.Context) {
 	c.String(http.StatusOK, "成功！")
 }
 
-func startChangeUserinfo(c *gin.Context) {
-	number := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	if group != "普通用户" {
-		c.String(http.StatusForbidden, "错误！")
-		return
-	}
-	c.HTML(http.StatusOK, "user_change_profile.html", gin.H{"username": number, "group": group})
-}
+//func startChangeUserinfo(c *gin.Context) {
+//	number := c.MustGet("username").(string)
+//	group := c.MustGet("group").(string)
+//	if group != "普通用户" {
+//		c.String(http.StatusForbidden, "错误！")
+//		return
+//	}
+//	c.HTML(http.StatusOK, "user_change_profile.html", gin.H{"username": number, "group": group})
+//}
