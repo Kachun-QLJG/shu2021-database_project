@@ -1,20 +1,379 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="AngularStore">
 <head>
+	<title>主页</title>
 	<script src="/statics/js/header.js"></script>
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style>
+		/*web background*/
+		.container{
+			display:table;
+			height:100%;
+		}
+
+		/* centered columns styles */
+		.row-centered {
+			text-align:center;
+		}
+		.col-centered {
+			display:inline-block;
+			float:none;
+			text-align:left;
+			margin-right:-4px;
+		}
+
+		.middle {float: none;display: inline-block;vertical-align: middle;width: 130%;}
+		.outer-col{background-color: #dff0d8;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 20px;padding: 10px;margin: 1% 3% 1% 2%;}
+		.inner-row-1{display: flex;align-items: center;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;margin: 10px;background-color: white}
+		.inner-col-1{display: flex;align-items: center;vertical-align: middle;}
+		.inner-row-2{margin: 7px 7px;}
+		.inner-button{background-color: #bce8f1;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 5px;margin-top: 2%;}
+		.inner-button a{font-size: 17px;color: black;cursor: pointer;}
+		.inner-row-3{box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px;border-radius: 10px;background-color: white;margin: 7px 7px;}
+		.inner-row-3 h4{font-size: 15px;display:inline-block;margin-left: 5%}
+		.outer-png{margin-top:12px;margin-left: 12px;}
+
+		/*
+		.row > div {
+			display: inline-block;
+			vertical-align: middle;
+			float: none;
+		}*/
+	</style>
+	<script type="text/javascript">
+		function checkpwd(){
+			var check = false;
+			var pswd = document.getElementById("pswd").value;
+			if(pswd.length < 6){
+				document.getElementById("checktext2").innerHTML = " × 不要少于6位";
+				check = false;
+			}
+			else {
+				document.getElementById("checktext2").innerHTML = " √";
+				check = true;
+			}
+			return check;
+		}
+		function checkpwdc() {
+			var check = false;
+			var password = document.getElementById("pswd").value;
+			var pwdc = document.getElementById("pwdc").value;
+			if (password !== pwdc) {
+				document.getElementById("checktext3").innerHTML = " × 两次输入密码不一致";
+				check = false;
+			}
+			else {
+				document.getElementById("checktext3").innerHTML = " √";
+				check = true;
+			}
+			return check;
+		}
+		function check() {
+			if(checkpwd() && checkpwdc()){
+				changePswd();
+			}
+		}
+		function keychangepassword(){
+			if(event.keyCode === 13){
+				document.getElementById('changepasswordbutton').click();
+			}
+		}
+		let date = new Date()
+		let yyyy = date.getFullYear()
+		let MM = (date.getMonth() + 1) < 10 ? ("0" + (date.getMonth() + 1)) : (date.getMonth() + 1)
+		let dd = date.getDate() < 10 ? ("0" + date.getDate()) : date.getDate()
+		let curDay = yyyy + '-' + MM + '-' + dd ;
+		$('.measureDate').val(curDay)
+		console.log(date)
+	</script>
 </head>
 <body bgcolor="#f0f8ff" id="body">
-	<script src="/statics/js/universal.js"></script>
-	<script src="/statics/js/salesman.js"></script>
-	<script>
-		window.onload= function(){
-			checkNotification();
-			checkGroup();
-			checkUser();
-			getUserName();
-		}
-	</script>
+<!--
+<script src="/statics/js/universal.js"></script>
+<script src="/statics/js/salesman.js"></script>
+-->
 
+<!-- 标题 -->
+<div class='navbar-header' id='head1'>
+	<a class='navbar-brand'>502汽修厂管理系统</a>
+</div>
+
+<!-- 右上区块 -->
+<div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
+	<ul id='navbar' class='nav navbar-nav navbar-right' >
+		<li><a id='text'></a></li>
+		<li><a id='register' href='/register' title='注册' >前往注册</a></li>
+		<li><a id='login' href='/login' title='登录' >前往登录</a></li>
+		<li><a id='logout' title='退出登录' data-toggle='modal' data-target='#log_out' onclick='getUsername()'>退出登录</a></li>
+	</ul>
+</div>
+
+<!-- 主体部分 -->
+<div class='container-fluid'>
+	<div class='row'>
+		<!--左导航栏-->
+		<div class='col-md-2'>
+			<div class="list-group">
+				<a class="list-group-item list-group-item-info">
+					员工信息
+				</a>
+				<a id="number" class="list-group-item" style="cursor: default">工　　号：</a>
+				<a id="salesman_name" class="list-group-item" style="cursor: default">姓　　名：</a>
+				<a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer; text-decoration-line: underline">更改密码</a>
+			</div>
+
+			<div class='list-group'>
+				<a class='list-group-item list-group-item-success'>
+					查看订单详情
+				</a>
+				<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
+				<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
+				<a class='list-group-item' data-toggle='modal' data-target='#take_order' style='cursor:pointer; text-decoration-line: underline'>接单</a>
+				<a class='list-group-item' data-toggle='modal' data-target='#finished_order' style='cursor:pointer; text-decoration-line: underline'>已完成</a>
+			</div>
+		</div>
+
+		<!--右区域-->
+		<div class="col-md-10">
+			<div class="alert alert-warning alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
+			</div>
+			<!--
+			<div class='col-md-10' id='con'  style='text-align: center'>
+				<label style='color: #77bbe2;font-size:50px;'>　　　车辆信息</label>
+			</div>
+			-->
+
+			<div class='row' id="right">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 登出模态框（Modal）-->
+<div class='modal fade' id='log_out' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h3 class='modal-title' id='myModalLabel'>您确定要登出当前账号吗？</h3>
+				<h4 class='modal-body' id='text1'></h4>
+			</div>
+			<form class='modal-footer'>
+				<button type='submit' value='退出登录' class='btn btn-primary' onclick='logout()'>退出登录</button>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- 接单 -->
+<div class='modal fade' id='take_order' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+	<div class='modal-dialog' style="width: 70%;height: 80%;">
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h3 class='modal-title' id='takeOrder'>新增车辆</h3>
+			</div>
+			<div class='modal-body'>
+				<img src='/statics/user/井号.png' width='20px' alt="正在加载图片">
+				<label for="order_number" style='font-size:15px;width: 80px;'>订单号：</label>
+				<select id='order_number'>
+					<option>0000001</option>
+					<option>0000002</option>
+					<option>0000003</option>
+				</select>
+				<span id='checktext1'></span>
+				<br>
+
+				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
+				<label style='font-size:15px;width: 80px;'>维修类型：</label>
+				<input id='repair_type1' name="repair_type" type='radio' value="小型" />
+				<label for="repair_type1">小型</label>
+				<input id='repair_type2' name="repair_type" type='radio' value="中型" checked="checked"/>
+				<label for="repair_type2">中型</label>
+				<input id='repair_type3' name="repair_type" type='radio' value="大型" />
+				<label for="repair_type3">大型</label>
+				<br>
+
+				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
+				<label style='font-size:15px;width: 90px;'>详情：</label>
+				<br>
+
+<!--				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">-->
+				<label for="detail1" style='font-size:15px;width: 90px;'>具体问题：</label>
+				<input id='detail1' type='text' placeholder='具体故障部位'/>
+<!--				<img src='/statics/user/问号.png' width='20px' alt="正在加载图片">-->
+<!--				<span id='checktext2'></span>-->
+<!--				<br>-->
+
+<!--				<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">-->
+				<label for="classification1" style='font-size:15px;width: 60px;'>　工种：</label>
+				<select id='classification1'>
+					<option>机修工</option>
+					<option>电工</option>
+					<option>钣金工</option>
+					<option>喷漆工</option>
+				</select>
+
+<!--				<img src='/statics/user/车型.png' width='20px' alt="正在加载图片">-->
+				<label for="repairman_name1" style='font-size:15px;width: 115px;'>　维修工姓名：</label>
+				<select id='repairman_name1'>
+					<option>奚嘉骏</option>
+					<option>伍慕庭</option>
+					<option>夏逸凡</option>
+					<option>张霖锋</option>
+				</select>
+
+<!--				<img src='/statics/user/类别.png' width='20px' alt="正在加载图片">-->
+				<label for="predict_finish_time1" style='font-size:15px;width: 120px;'>　预计所需时间：</label>
+				<input id="predict_finish_time1" type='number' min="0" max="10000" step="0.5" placeholder='预计所需时间' style="width: 130px"/>
+<!--				<select id='type'>-->
+<!--					<option value='轿车-A' selected>轿车-A</option>-->
+<!--					<option value='轿车-B' >轿车-B</option>-->
+<!--					<option value='轿车-C' >轿车-C</option>-->
+<!--					<option value='轿车-D' >轿车-D</option>-->
+<!--					<option value='轿车-E' >轿车-E</option>-->
+<!--				</select>-->
+<!--				<img src='/statics/user/问号.png' width='20px' class="popover-toggle" data-toggle="popover" alt="正在加载图片"/>-->
+
+				<label for="detail2" style='font-size:15px;width: 90px;'>具体问题：</label>
+				<input id='detail2' type='text' placeholder='具体故障部位'/>
+				<!--				<img src='/statics/user/问号.png' width='20px' alt="正在加载图片">-->
+				<!--				<span id='checktext2'></span>-->
+				<!--				<br>-->
+
+				<!--				<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">-->
+				<label for="classification2" style='font-size:15px;width: 60px;'>　工种：</label>
+				<select id='classification2'>
+					<option>机修工</option>
+					<option>电工</option>
+					<option>钣金工</option>
+					<option>喷漆工</option>
+				</select>
+
+				<!--				<img src='/statics/user/车型.png' width='20px' alt="正在加载图片">-->
+				<label for="repairman_name2" style='font-size:15px;width: 115px;'>　维修工姓名：</label>
+				<select id='repairman_name2'>
+					<option>奚嘉骏</option>
+					<option>伍慕庭</option>
+					<option>夏逸凡</option>
+					<option>张霖锋</option>
+				</select>
+
+				<!--				<img src='/statics/user/类别.png' width='20px' alt="正在加载图片">-->
+				<label for="predict_finish_time2" style='font-size:15px;width: 120px;'>　预计所需时间：</label>
+				<input id="predict_finish_time2" type='number' min="0" max="10000" step="0.5" placeholder='预计所需时间' style="width: 130px"/>
+				<br>
+
+				<img src="/statics/user/添加.png" style="margin-left: 50%">
+
+			</div>
+			<form class='modal-footer'>
+				<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
+				<button type='button' class='btn btn-primary' onclick='checkVehicle()' id='confirmAddVehicle'>确认新增</button>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- 已完成订单 -->
+<div class='modal fade' id='finished_order' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
+				<h3 class='modal-title' id='finishedOrder' style="text-align: center">已完成订单</h3>
+			</div>
+			<div class='modal-body' id="finished_table_father" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">
+				<!--
+				<table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">
+					<tr>
+						<th style="text-align: center; width: 70px">车牌号</th>
+						<th id="finished_plate" style="text-align: center; width: 210px">沪SHU502</th>
+						<th style="text-align: center; width: 70px">车架号</th>
+						<th id="finsihed_VIN"style="text-align: center; width: 210px">11111111111111111</th>
+					</tr>
+				</table>
+				-->
+				<table id="finished_table" border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">
+					<!-- 表头 -->
+					<tr style="height: 30px">
+						<th id="number_finished" style="text-align: center; width: 120px">订单号</th>
+						<th id="vehicle_number_finished" style="text-align: center">车架号</th>
+						<th id="parts_number_finished" style="text-align: center">零件号</th>
+						<th id="parts_name_finished" style="text-align: center">零件名</th>
+						<th id="parts_count_finished" style="text-align: center">数量</th>
+						<th id="finished_detail" style="text-align: center">详情</th>
+					</tr>
+					<!-- 传参处 -->
+					<tr>
+						<td rowspan="2">0000001</td>
+						<td rowspan="2">12345678901234567</td>
+
+						<td>001</td>
+						<td>轮毂</td>
+						<td>1</td>
+
+						<!-- <td rowspan="2"><a href="/show_pdf?attorney_no=00000002" target="_blank">查看pdf</a></td> -->
+						<td rowspan="2"><a data-toggle='modal' data-target='#detail' style="cursor: pointer; text-decoration-line: underline">查看pdf</a></td>
+					</tr>
+					<tr>
+						<td>002</td>
+						<td>后视镜</td>
+						<td>2</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 更改密码 -->
+<div class='modal fade' id='change_password' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' onkeydown="keychangepassword()">
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h3 class='modal-title' id='changePSWD'>更改密码</h3>
+			</div>
+			<div class='modal-body'>
+				<img src='/statics/user/井号.png' width='20px' alt="正在加载图片">
+				<label for="oldpswd" style='font-size:15px;width: 80px;'>原密码：</label>
+				<input id='oldpswd' type='password' name="oldpswd" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+				<span id='checktext3'></span> <br></br>
+
+				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
+				<label for="pswd" style='font-size:15px;width: 80px;'>密码：</label>
+				<input id='pswd' type='password' name="pswd" onchange="checkpwd()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+				<span id='checktext4'></span> <br></br>
+
+				<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
+				<label for="pwdc" style='font-size:15px;width: 80px;'>确认密码：</label>
+				<input id='pwdc' type='password' name="pwdc" onchange="checkpwdc()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+
+				<input type="hidden" id="old_password" name="old_password" />
+				<input type="hidden" id="new_password" name="new_password" />
+				<form class='modal-footer'>
+					<button type='button' class='btn btn-primary' onclick='check()' id='changepasswordbutton'>确认更改</button>
+					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	window.onload= function(){
+		checkNotification();
+		checkGroup();
+		checkUser();
+		getUserName();
+	}
+</script>
 </body>
 </html>
 

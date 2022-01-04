@@ -33,8 +33,8 @@ func addPath(r *gin.Engine) {
 	r.GET("/u_check_orders_ongoing", authMiddleWare(), checkPermission(), startUCheckOrdersOngoing)   //进入用户查看订单页面
 	r.GET("/u_check_orders_finished", authMiddleWare(), checkPermission(), startUCheckOrdersFinished) //进入用户查看订单页面
 
-	r.GET("/check_status", authMiddleWare(), checkPermission(), checkStatus)        //返回维修工状态
-	r.GET("/change_status", authMiddleWare(), checkPermission(), startChangeStatus) //进入更改工作状态界面
+	r.GET("/check_status", authMiddleWare(), checkPermission(), checkStatus) //返回维修工状态
+	//r.GET("/change_status", authMiddleWare(), checkPermission(), startChangeStatus) //进入更改工作状态界面
 	//r.GET("/r_check_orders", authMiddleWare(), checkPermission(), startRCheckOrders) //进入维修员查看订单页面
 
 	r.GET("/s_check_orders", authMiddleWare(), checkPermission(), startSCheckOrders) //进入业务员查看订单页面

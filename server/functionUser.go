@@ -200,6 +200,7 @@ func generateLicensePlate(licenseNumber string) {
 	}
 	fmt.Println("Result: " + out.String())
 }
+
 func checkVehicle(c *gin.Context) {
 	carNumber := c.Query("number")
 	var vehicle Vehicle
