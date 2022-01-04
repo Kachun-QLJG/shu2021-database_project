@@ -13,7 +13,7 @@
 
 		/* centered columns styles */
 		.row-centered {
-			text-align:center;
+			//text-align:center;
 		}
 		.col-centered {
 			display:inline-block;
@@ -88,633 +88,633 @@
 	</script>
 </head>
 <body bgcolor="#f0f8ff" id="body" onkeydown="keychangeprofile()">
-	<!--
-	<div style="margin-top: 5%;">
-			<div style="margin-left: 10%; margin-right: 10%; text-align: center;">
-				<embed height="1080px" src="/show_pdf?attorney_no=00000001" width="90%"/>
-			</div> /.mb-4 -->
-	<!--</div> /.row -->
-	<!--
-<body bgcolor="#f0f8ff" id="body" onkeydown="keychangeprofile()">
-
+<!--
 <div style="margin-top: 5%;">
 		<div style="margin-left: 10%; margin-right: 10%; text-align: center;">
 			<embed height="1080px" src="/show_pdf?attorney_no=00000001" width="90%"/>
-		</div> <! -- /.mb-4 -->
- 	<!-- /.row -->
-	<!--
-	<script src="/statics/js/universal.js"></script>
-	<script src="/statics/js/user.js"></script>
-	-->
-	<div class='navbar-header' id='head1'>
-		<a class='navbar-brand'>502汽修厂管理系统</a>
-	</div>
+		</div> /.mb-4 -->
+<!--</div> /.row -->
+<!--
 
-	<!-- 右上区块 -->
-	<div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
-		<ul id='navbar' class='nav navbar-nav navbar-right' >
-			<li><a id='text'></a></li>
-			<li><a id='register' href='/register' title='注册' >前往注册</a></li>
-			<li><a id='login' href='/login' title='登录' >前往登录</a></li>
-			<li><a id='logout' title='退出登录' data-toggle='modal' data-target='#log_out' onclick='getUsername()'>退出登录</a></li>
-		</ul>
-	</div>
+<div style="margin-top: 5%;">
+	<div style="margin-left: 10%; margin-right: 10%; text-align: center;">
+		<embed height="1080px" src="/show_pdf?attorney_no=00000001" width="90%"/>
+	</div> <! -- /.mb-4 -->
+<!-- /.row -->
+<!--
+<script src="/statics/js/universal.js"></script>
+<script src="/statics/js/user.js"></script>
+-->
+<div class='navbar-header' id='head1'>
+	<a class='navbar-brand'>502汽修厂管理系统</a>
+</div>
 
-	<!-- 主体部分 -->
-	<div class='container-fluid'>
-		<div class='row'>
-			<!--左导航栏-->
-			<div class='col-md-2'>
-				<div class="list-group">
-					<a class="list-group-item list-group-item-info">
-						个人信息
-					</a>
-					<a id="user_name" class="list-group-item">用户名:18001723206</a>
-					<a id="user_property" class="list-group-item">性　　质:个人</a>
-					<a id="user_tel" class="list-group-item">联系电话:13472413472</a>
-					<a id="user_contact" class="list-group-item">联 系 人:Baitian2</a>
-					<a id="user_discount" class="list-group-item">折扣率:100%</a>
-					<a class="list-group-item" data-toggle='modal' data-target='#change_info' onclick='userinfo()' style="cursor: pointer">更改个人信息</a>
-					<a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a>
-				</div>
+<!-- 右上区块 -->
+<div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
+	<ul id='navbar' class='nav navbar-nav navbar-right' >
+		<li><a id='text'></a></li>
+		<li><a id='register' href='/register' title='注册' style="cursor: pointer">前往注册</a></li>
+		<li><a id='login' href='/login' title='登录' style="cursor: pointer">前往登录</a></li>
+		<li><a id='logout' title='退出登录' data-toggle='modal' data-target='#log_out' onclick='getUsername()' style="cursor: pointer">退出登录</a></li>
+	</ul>
+</div>
 
-				<div class='list-group'>
-					<a class='list-group-item list-group-item-success'>
-						查看申请详情
-					</a>
-					<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
-                    <!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
-					<a class='list-group-item' href='/u_check_orders_ongoing' style='cursor:pointer'>进行中(3)</a>
-					<a class='list-group-item' href='/u_check_orders_finished' style='cursor:pointer'>已完成</a>
-				</div>
+<!-- 主体部分 -->
+<div class='container-fluid'>
+	<div class='row'>
+		<!--左导航栏-->
+		<div class='col-md-2'>
+			<div class="list-group">
+				<a class="list-group-item list-group-item-info" style="cursor: default">
+					个人信息
+				</a>
+				<a id="user_name" class="list-group-item" style="cursor: default">用户名:18001723206</a>
+				<a id="user_property" class="list-group-item" style="cursor: default">性　　质:个人</a>
+				<a id="user_tel" class="list-group-item" style="cursor: default">联系电话:13472413472</a>
+				<a id="user_contact" class="list-group-item" style="cursor: default">联 系 人:Baitian2</a>
+				<a id="user_discount" class="list-group-item" style="cursor: default">折扣率:100%</a>
+				<a class="list-group-item" data-toggle='modal' data-target='#change_info' onclick='userinfo()' style="cursor: pointer; text-decoration-line: underline">更改个人信息</a>
+				<a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer; text-decoration-line: underline">更改密码</a>
 			</div>
 
-			<!--右区域-->
-			<div class="col-md-10">
-				<div class="alert alert-warning alert-dismissible" role="alert">
-					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()">立即查看</a>
-				</div>
-				<div class='col-md-10' id='con'  style='text-align: center'>
-					<label style='color: #77bbe2;font-size:50px;'>　　　车辆信息</label>
-				</div>
+			<div class='list-group'>
+				<a class='list-group-item list-group-item-success' style="cursor: default">
+					查看申请详情
+				</a>
+				<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
+				<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
+				<a class='list-group-item' href='/u_check_orders_ongoing' style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>
+				<a class='list-group-item' href='/u_check_orders_finished' style='cursor:pointer; text-decoration-line: underline'>已完成</a>
+			</div>
+		</div>
 
-				<div class='row' id="right">
-				</div>
+		<!--右区域-->
+		<div class="col-md-10">
+			<div class="alert alert-warning alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
+			</div>
+			<div class='col-md-10' id='con'  style='text-align: center'>
+				<label style='color: #77bbe2;font-size:50px;'>　　　车辆信息</label>
+			</div>
+
+			<div class='row' id="right">
 			</div>
 		</div>
 	</div>
+</div>
 
-	<!--通知信息框
-	<div id="alert" style="width: 35%; position: absolute; top: 10%; left: 36%; text-align: center; background-color: white;">
-		<div class="modal-dialog modal-content" style="width: 100%;">
-			<div class="modal-header">
-				<h3 class="modal-title">【通知】您的车辆沪SHU504已被他人绑定</h3>
+<!--通知信息框
+<div id="alert" style="width: 35%; position: absolute; top: 10%; left: 36%; text-align: center; background-color: white;">
+	<div class="modal-dialog modal-content" style="width: 100%;">
+		<div class="modal-header">
+			<h3 class="modal-title">【通知】您的车辆沪SHU504已被他人绑定</h3>
+		</div>
+		<h4 class="modal-body" style="text-align: left;">　　尊敬的用户您好，您的车辆沪SHU504已被手机尾号为3472的用户绑定。</h4>
+		<h4 class="modal-body" style="text-align: right;">2021-12-30 16:38:26</h4>
+		<form class="modal-footer">
+			<button class="btn btn-primary" type="submit">已读</button>
+			<button class="btn btn-default">暂时忽略</button>
+		</form>
+	</div>
+</div>
+-->
+
+<!-- 登出模态框（Modal）-->
+<div class='modal fade' id='log_out' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h3 class='modal-title' id='myModalLabel'>您确定要登出当前账号吗？</h3>
+				<h4 class='modal-body' id='text1'></h4>
 			</div>
-			<h4 class="modal-body" style="text-align: left;">　　尊敬的用户您好，您的车辆沪SHU504已被手机尾号为3472的用户绑定。</h4>
-			<h4 class="modal-body" style="text-align: right;">2021-12-30 16:38:26</h4>
-			<form class="modal-footer">
-				<button class="btn btn-primary" type="submit">已读</button>
-				<button class="btn btn-default">暂时忽略</button>
+			<form class='modal-footer'>
+				<button type='submit' value='退出登录' class='btn btn-primary' onclick='logout()'>退出登录</button>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 			</form>
 		</div>
 	</div>
-	-->
+</div>
 
-	<!-- 登出模态框（Modal）-->
-	<div class='modal fade' id='log_out' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-		<div class='modal-dialog'>
-			<div class='modal-content'>
-				<div class='modal-header'>
-					<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-					<h3 class='modal-title' id='myModalLabel'>您确定要登出当前账号吗？</h3>
-					<h4 class='modal-body' id='text1'></h4>
-				</div>
-				<form class='modal-footer'>
-					<button type='submit' value='退出登录' class='btn btn-primary' onclick='logout()'>退出登录</button>
-					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
-				</form>
+<!-- 更改个人信息 -->
+<div class='modal fade' id='change_info' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
+				<h3 class='modal-title' id='changeUserInfo'>更改个人信息</h3>
+			</div>
+			<div class='modal-body'>
+				<img src='/statics/user/真实姓名.png' width='20px' alt="正在加载图片">
+				<label for="name" style='font-size:15px;width: 100px;'>姓名：</label>
+				<input id='name' type='text' placeholder='请输入姓名'/>
+				<br>
+
+				<img src='/statics/user/公司.png' width='20px' alt="正在加载图片">
+				<label for="property" style='font-size:15px;width: 100px;'>性质：</label>
+				<select id='property'>
+					<option value='个人' selected>个人</option>
+					<option value='公司'>公司</option>
+				</select>
+				<br>
+
+				<img src='/statics/user/联系人.png' width='20px' alt="正在加载图片">
+				<label for="contact_person" style='font-size:15px;width: 100px;'>联系人：</label>
+				<input id='contact_person' type='text' placeholder='请输入联系人'/>
+				<br>
+
+				<img src='/statics/user/联系人.png' width='20px' alt="正在加载图片">
+				<label for="contact_tel" style='font-size:15px;width: 100px;'>联系电话：</label>
+				<input id='contact_tel' type='text' readonly='readonly' value='13472413472' style="color: #9d9d9d"/>
+				<br>
+
+				<img src='/statics/user/联系人.png' width='20px' alt="正在加载图片">
+				<label for="discount_rate" style='font-size:15px;width: 100px;'>折扣率：</label>
+				<input id='discount_rate' type='text' readonly='readonly' value='100%' style="color: #9d9d9d"/>
+				<br>
+
+			</div>
+			<form class='modal-footer'>
+				<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
+				<button type='button' class='btn btn-primary' onclick='changeinfo()' id='confirmChangeInfo'>确认更改</button>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- 新增车辆 -->
+<div class='modal fade' id='add_car' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' onkeydown="keycarregister()">
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h3 class='modal-title' id='addNewVehicle'>新增车辆</h3>
+			</div>
+			<div class='modal-body'>
+				<img src='/statics/user/井号.png' width='20px' alt="正在加载图片">
+				<label for="number" style='font-size:15px;width: 80px;'>车架号：</label>
+				<input id='number' type='text' onchange='check_number()' placeholder='请输入车架号'/>
+				<span id='checktext1'></span>
+				<br>
+
+				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
+				<label for="license_number" style='font-size:15px;width: 80px;'>车牌号：</label>
+				<input id='license_number' type='text' onchange='check_license_number()' placeholder='请输入车牌号'/>
+				<img src='/statics/user/问号.png' width='20px' alt="正在加载图片">
+				<span id='checktext2'></span>
+				<br>
+
+				<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
+				<label for="color" style='font-size:15px;width: 80px;'>车辆颜色：</label>
+				<input id='color' type='text' placeholder='请输入车辆颜色'/>
+				<br>
+
+				<img src='/statics/user/车型.png' width='20px' alt="正在加载图片">
+				<label for="model" style='font-size:15px;width: 80px;'>车型：</label>
+				<input id='model' type='text' placeholder='请输入车型'/>
+				<br>
+
+				<img src='/statics/user/类别.png' width='20px' alt="正在加载图片">
+				<label for="type" style='font-size:15px;width: 80px;'>车辆类别：</label>
+				<select id='type'>
+					<option value='轿车-A' selected>轿车-A</option>
+					<option value='轿车-B' >轿车-B</option>
+					<option value='轿车-C' >轿车-C</option>
+					<option value='轿车-D' >轿车-D</option>
+					<option value='轿车-E' >轿车-E</option>
+				</select>
+				<img src='/statics/user/问号.png' width='20px' class="popover-toggle" data-toggle="popover" alt="正在加载图片"/>
+
+			</div>
+			<form class='modal-footer'>
+				<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
+				<button type='button' class='btn btn-primary' onclick='checkVehicle()' id='confirmAddVehicle'>确认新增</button>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- 历史维修信息 -->
+<div class='modal fade' id='maintenance_record' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
+				<h3 class='modal-title' id='maintenanceRecord' style="text-align: center">历史维修信息</h3>
+			</div>
+			<div class='modal-body' id="repair_table_father" style="width: 560px; text-align: center; font-size: 17px;">
+				<table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">
+					<tr>
+						<th style="text-align: center; width: 70px">车牌号</th>
+						<th id="plate" style="text-align: center; width: 210px">沪SHU502</th>
+						<th style="text-align: center; width: 70px">车架号</th>
+						<th id="VIN"style="text-align: center; width: 210px">11111111111111111</th>
+					</tr>
+				</table>
+				<table id="repair_table" border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; border-top: white">
+					<!-- 表头 -->
+					<tr style="height: 30px">
+						<th style="text-align: center; width: 120px">时间</th>
+						<th id="detail" style="text-align: center">维修详情</th>
+					</tr>
+					<!-- 传参处 -->
+					<tr>
+						<td >2021/12/30</td>
+						<td >轮毂断裂</td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<!-- 更改个人信息 -->
-	<div class='modal fade' id='change_info' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-		<div class='modal-dialog'>
-			<div class='modal-content'>
-				<div class='modal-header'>
-					<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
-					<h3 class='modal-title' id='changeUserInfo'>更改个人信息</h3>
+<!-- 新增委托 -->
+<div class='modal fade' id='add_attorney' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' onkeydown="keycarregister()">
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h3 class='modal-title' id='addAttorney'>新增委托</h3>
+			</div>
+			<div class='modal-body'>
+				<img src='/statics/user/井号.png' width='20px' alt="正在加载图片">
+				<label for="VehicleNumber" style='font-size:15px;width: 80px;'>车架号：</label>
+				<input id='VehicleNumber' type='text' onchange='check_number()' readonly="readonly" value="1111111111111" style="color: #9d9d9d"/>
+				<!-- <span id='checktext1'></span> -->
+				<br>
+
+				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
+				<label style='font-size:15px;width: 80px;'>结算方式：</label>
+				<input id='PayMethod1' name="PayMethod" type='radio' value="现金" />
+				<label for="PayMethod1">现金</label>
+				<input id='PayMethod2' name="PayMethod" type='radio' value="保险" checked="checked"/>
+				<label for="PayMethod2">保险</label>
+				<input id='PayMethod3' name="PayMethod" type='radio' value="信用卡" />
+				<label for="PayMethod3">信用卡</label>
+				<!-- <span id='checktext2'></span> -->
+				<br>
+
+				<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
+				<label for="StartTime" style='font-size:15px;width: 80px;'>进场时间：</label>
+				<input id="StartTime" type="date" class="measureDate" placeholder="请选择日期">
+				<!-- <label for='StartTime'></label><input id='StartTime' type='text'/> -->
+				<br>
+				<br>
+
+				<div>
+					<img src='/statics/user/车型.png' width='20px' style="vertical-align: top" alt="正在加载图片">
+					<label  for='RoughProblem' style='font-size:15px;width: 80px;vertical-align: top'>粗略故障：</label>
+					<textarea id='RoughProblem' placeholder='请粗略描述您车辆的故障（字数在255以下）' style="width: 300px;height: 100px;"></textarea>
 				</div>
-				<div class='modal-body'>
-					<img src='/statics/user/真实姓名.png' width='20px' alt="正在加载图片">
-					<label for="name" style='font-size:15px;width: 100px;'>姓名：</label>
-					<input id='name' type='text' placeholder='请输入姓名'/>
-					<br>
+				<br>
 
-					<img src='/statics/user/公司.png' width='20px' alt="正在加载图片">
-					<label for="property" style='font-size:15px;width: 100px;'>性质：</label>
-					<select id='property'>
-						<option value='个人' selected>个人</option>
-						<option value='公司'>公司</option>
-					</select>
-					<br>
+				<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
+				<label for="StartPetrol" style='font-size:15px;width: 80px;'>进场油量：</label>
+				<input id='StartPetrol' type='number' min="0" max="100" step="0.1" placeholder='进场时车辆所剩油量' style="width: 130px"/> L
+				<br>
+				<br>
 
-					<img src='/statics/user/联系人.png' width='20px' alt="正在加载图片">
-					<label for="contact_person" style='font-size:15px;width: 100px;'>联系人：</label>
-					<input id='contact_person' type='text' placeholder='请输入联系人'/>
-					<br>
+				<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
+				<label for="StartMile" style='font-size:15px;width: 80px;'>进场里程：</label>
+				<input id='StartMile' type='number' min="0" step="0.1" placeholder='进场时车辆里程数' style="width: 130px"/> km
+				<br>
+				<br>
 
-					<img src='/statics/user/联系人.png' width='20px' alt="正在加载图片">
-					<label for="contact_tel" style='font-size:15px;width: 100px;'>联系电话：</label>
-					<input id='contact_tel' type='text' readonly='readonly' value='13472413472' style="color: #9d9d9d"/>
-					<br>
+			</div>
+			<form class='modal-footer'>
+				<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
+				<button type='button' class='btn btn-primary' onclick='addAttorney(this.id)' id='confirmAddAttorney'>提交委托</button>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+			</form>
+		</div>
+	</div>
+</div>
 
-					<img src='/statics/user/联系人.png' width='20px' alt="正在加载图片">
-					<label for="discount_rate" style='font-size:15px;width: 100px;'>折扣率：</label>
-					<input id='discount_rate' type='text' readonly='readonly' value='100%' style="color: #9d9d9d"/>
-					<br>
+<!-- 更改密码 -->
+<div class='modal fade' id='change_password' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' onkeydown="keychangepassword()">
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h3 class='modal-title' id='changePSWD'>更改密码</h3>
+			</div>
+			<div class='modal-body'>
+				<img src='/statics/user/井号.png' width='20px' alt="正在加载图片">
+				<label for="oldpswd" style='font-size:15px;width: 80px;'>原密码：</label>
+				<input id='oldpswd' type='password' name="oldpswd" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+				<span id='checktext3'></span> <br></br>
 
-				</div>
-				<form class='modal-footer'>
-					<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
-					<button type='button' class='btn btn-primary' onclick='changeinfo()' id='confirmChangeInfo'>确认更改</button>
-					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
-				</form>
+				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
+				<label for="pswd" style='font-size:15px;width: 80px;'>密码：</label>
+				<input id='pswd' type='password' name="pswd" onchange="checkpwd()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+				<span id='checktext4'></span> <br></br>
+
+				<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
+				<label for="pwdc" style='font-size:15px;width: 80px;'>确认密码：</label>
+				<input id='pwdc' type='password' name="pwdc" onchange="checkpwdc()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+
+				<input type="hidden" id="old_password" name="old_password" />
+				<input type="hidden" id="new_password" name="new_password" />
+			<form class='modal-footer'>
+				<button type='button' class='btn btn-primary' onclick='check()' id='changepasswordbutton'>确认更改</button>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+			</form>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<!-- 新增车辆 -->
-	<div class='modal fade' id='add_car' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' onkeydown="keycarregister()">
-		<div class='modal-dialog'>
-			<div class='modal-content'>
-				<div class='modal-header'>
-					<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-					<h3 class='modal-title' id='addNewVehicle'>新增车辆</h3>
-				</div>
-				<div class='modal-body'>
-					<img src='/statics/user/井号.png' width='20px' alt="正在加载图片">
-					<label for="number" style='font-size:15px;width: 80px;'>车架号：</label>
-					<input id='number' type='text' onchange='check_number()' placeholder='请输入车架号'/>
-					<span id='checktext1'></span>
-					<br>
+<!-- 添加车辆按钮 -->
+<div class='col-md-3' >
+	<img src="/statics/user/添加.png" data-toggle='modal' data-target='#add_car' data-backdrop='static' style='position:fixed;top:70%;right:1%;cursor: pointer' alt="正在加载图片"/>
+</div>
 
-					<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
-					<label for="license_number" style='font-size:15px;width: 80px;'>车牌号：</label>
-					<input id='license_number' type='text' onchange='check_license_number()' placeholder='请输入车牌号'/>
-					<img src='/statics/user/问号.png' width='20px' alt="正在加载图片">
-					<span id='checktext2'></span>
-					<br>
-
-					<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
-					<label for="color" style='font-size:15px;width: 80px;'>车辆颜色：</label>
-					<input id='color' type='text' placeholder='请输入车辆颜色'/>
-					<br>
-
-					<img src='/statics/user/车型.png' width='20px' alt="正在加载图片">
-					<label for="model" style='font-size:15px;width: 80px;'>车型：</label>
-					<input id='model' type='text' placeholder='请输入车型'/>
-					<br>
-
-					<img src='/statics/user/类别.png' width='20px' alt="正在加载图片">
-					<label for="type" style='font-size:15px;width: 80px;'>车辆类别：</label>
-					<select id='type'>
-						<option value='轿车-A' selected>轿车-A</option>
-						<option value='轿车-B' >轿车-B</option>
-						<option value='轿车-C' >轿车-C</option>
-						<option value='轿车-D' >轿车-D</option>
-						<option value='轿车-E' >轿车-E</option>
-					</select>
-					<img src='/statics/user/问号.png' width='20px' class="popover-toggle" data-toggle="popover" alt="正在加载图片"/>
-
-				</div>
-				<form class='modal-footer'>
-					<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
-					<button type='button' class='btn btn-primary' onclick='checkVehicle()' id='confirmAddVehicle'>确认新增</button>
-					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
-				</form>
-			</div>
-		</div>
+<!-- pdf显示
+<div style="margin-top: 5%;">
+	<div style="margin-left: 10%; margin-right: 10%; text-align: center;">
+		<embed height="1080px" src="/show_pdf?attorney_no=00000001" width="90%"/>
 	</div>
+</div>
+-->
 
-	<!-- 历史维修信息 -->
-	<div class='modal fade' id='maintenance_record' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-		<div class='modal-dialog'>
-			<div class='modal-content'>
-				<div class='modal-header'>
-					<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
-					<h3 class='modal-title' id='maintenanceRecord' style="text-align: center">历史维修信息</h3>
-				</div>
-				<div class='modal-body' id="repair_table_father" style="width: 560px; text-align: center; font-size: 17px;">
-					<table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">
-						<tr>
-							<th style="text-align: center; width: 70px">车牌号</th>
-							<th id="plate" style="text-align: center; width: 210px">沪SHU502</th>
-							<th style="text-align: center; width: 70px">车架号</th>
-							<th id="VIN"style="text-align: center; width: 210px">11111111111111111</th>
-						</tr>
-					</table>
-					<table id="repair_table" border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; border-top: white">
-						<!-- 表头 -->
-						<tr style="height: 30px">
-							<th style="text-align: center; width: 120px">时间</th>
-							<th id="detail" style="text-align: center">维修详情</th>
-						</tr>
-						<!-- 传参处 -->
-						<tr>
-							<td >2021/12/30</td>
-							<td >轮毂断裂</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- 新增委托 -->
-	<div class='modal fade' id='add_attorney' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' onkeydown="keycarregister()">
-		<div class='modal-dialog'>
-			<div class='modal-content'>
-				<div class='modal-header'>
-					<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-					<h3 class='modal-title' id='addAttorney'>新增委托</h3>
-				</div>
-				<div class='modal-body'>
-					<img src='/statics/user/井号.png' width='20px' alt="正在加载图片">
-					<label for="VehicleNumber" style='font-size:15px;width: 80px;'>车架号：</label>
-					<input id='VehicleNumber' type='text' onchange='check_number()' readonly="readonly" value="1111111111111" style="color: #9d9d9d"/>
-					<!-- <span id='checktext1'></span> -->
-					<br>
-
-					<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
-					<label style='font-size:15px;width: 80px;'>结算方式：</label>
-					<input id='PayMethod1' name="PayMethod" type='radio' value="现金" />
-					<label for="PayMethod1">现金</label>
-					<input id='PayMethod2' name="PayMethod" type='radio' value="保险" checked="checked"/>
-					<label for="PayMethod2">保险</label>
-					<input id='PayMethod3' name="PayMethod" type='radio' value="信用卡" />
-					<label for="PayMethod3">信用卡</label>
-					<!-- <span id='checktext2'></span> -->
-					<br>
-
-					<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
-					<label for="StartTime" style='font-size:15px;width: 80px;'>进场时间：</label>
-					<input id="StartTime" type="date" class="measureDate" placeholder="请选择日期">
-					<!-- <label for='StartTime'></label><input id='StartTime' type='text'/> -->
-					<br>
-					<br>
-
-					<div>
-						<img src='/statics/user/车型.png' width='20px' style="vertical-align: top" alt="正在加载图片">
-						<label  for='RoughProblem' style='font-size:15px;width: 80px;vertical-align: top'>粗略故障：</label>
-						<textarea id='RoughProblem' placeholder='请粗略描述您车辆的故障（字数在255以下）' style="width: 300px;height: 100px;"></textarea>
-					</div>
-					<br>
-
-					<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
-					<label for="StartPetrol" style='font-size:15px;width: 80px;'>进场油量：</label>
-					<input id='StartPetrol' type='number' min="0" max="100" step="0.1" placeholder='进场时车辆所剩油量' style="width: 130px"/> L
-					<br>
-					<br>
-
-					<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
-					<label for="StartMile" style='font-size:15px;width: 80px;'>进场里程：</label>
-					<input id='StartMile' type='number' min="0" step="0.1" placeholder='进场时车辆里程数' style="width: 130px"/> km
-					<br>
-					<br>
-
-				</div>
-				<form class='modal-footer'>
-					<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
-					<button type='button' class='btn btn-primary' onclick='addAttorney(this.id)' id='confirmAddAttorney'>提交委托</button>
-					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<!-- 更改密码 -->
-	<div class='modal fade' id='change_password' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' onkeydown="keychangepassword()">
-		<div class='modal-dialog'>
-			<div class='modal-content'>
-				<div class='modal-header'>
-					<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-					<h3 class='modal-title' id='changePSWD'>更改密码</h3>
-				</div>
-				<div class='modal-body'>
-					<img src='/statics/user/井号.png' width='20px' alt="正在加载图片">
-					<label for="oldpswd" style='font-size:15px;width: 80px;'>原密码：</label>
-					<input id='oldpswd' type='password' name="oldpswd" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
-					<span id='checktext3'></span> <br></br>
-
-					<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
-					<label for="pswd" style='font-size:15px;width: 80px;'>密码：</label>
-					<input id='pswd' type='password' name="pswd" onchange="checkpwd()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
-					<span id='checktext4'></span> <br></br>
-
-					<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
-					<label for="pwdc" style='font-size:15px;width: 80px;'>确认密码：</label>
-					<input id='pwdc' type='password' name="pwdc" onchange="checkpwdc()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
-
-					<input type="hidden" id="old_password" name="old_password" />
-					<input type="hidden" id="new_password" name="new_password" />
-				<form class='modal-footer'>
-					<button type='button' class='btn btn-primary' onclick='check()' id='changepasswordbutton'>确认更改</button>
-					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
-				</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- 添加车辆按钮 -->
-	<div class='col-md-3' >
-		<img src="/statics/user/添加.png" data-toggle='modal' data-target='#add_car' data-backdrop='static' style='position:fixed;top:70%;right:1%;cursor: pointer' alt="正在加载图片"/>
-	</div>
-
-	<!-- pdf显示 -->
-	<div style="margin-top: 5%;">
-		<div style="margin-left: 10%; margin-right: 10%; text-align: center;">
-			<embed height="1080px" src="/show_pdf?attorney_no=00000001" width="90%"/>
-		</div>
-	</div>
-
-	<script>
-		window.onload= function(){
-			getUserName();
-			checkGroup();
-			checkUser();
-			getinfo();
-			getVehicle();
-			userInfo();
+<script>
+	window.onload= function(){
+		getUserName();
+		checkGroup();
+		checkUser();
+		getinfo();
+		getVehicle();
+		userInfo();
+	}
+	function check_number(){
+		var check = false;
+		var number = document.getElementById("number").value;
+		if(number.length !== 17){
+			document.getElementById("checktext1").innerHTML = " × 请输入正确的车架号";
+			check = false;
 		}
-		function check_number(){
-			var check = false;
-			var number = document.getElementById("number").value;
-			if(number.length !== 17){
-				document.getElementById("checktext1").innerHTML = " × 请输入正确的车架号";
-				check = false;
-			}
-			else {
-				document.getElementById("checktext1").innerHTML = " √";
-				check = true;
-			}
-			return check;
+		else {
+			document.getElementById("checktext1").innerHTML = " √";
+			check = true;
 		}
-		function check_license_number(){
-			var check = false;
-			var license_number = document.getElementById("license_number").value;
-			if(license_number.length < 7 || license_number.length > 8){
-				document.getElementById("checktext2").innerHTML = " × 请输入正确的车牌号";
-				check = false;
-			}
-			else {
-				document.getElementById("checktext2").innerHTML = " √";
-				check = true;
-			}
-			return check;
+		return check;
+	}
+	function check_license_number(){
+		var check = false;
+		var license_number = document.getElementById("license_number").value;
+		if(license_number.length < 7 || license_number.length > 8){
+			document.getElementById("checktext2").innerHTML = " × 请输入正确的车牌号";
+			check = false;
 		}
-		function userinfo(){
-			axios({
-				method : 'get',
-				url: "/userinfo"
-			})
-					.then(function(response){
-						var last = response.data;
-						document.getElementById("name").value = last.name;
-						document.getElementById("property").value = last.property;
-						document.getElementById("contact_person").value = last.contact_person;
-					})
+		else {
+			document.getElementById("checktext2").innerHTML = " √";
+			check = true;
 		}
-		function keychangeprofile(){
-				if(event.keyCode === 13){
-					document.getElementById('confirmChangeInfo').click();
-				}
-		}
-		function keycarregister(){
+		return check;
+	}
+	function userinfo(){
+		axios({
+			method : 'get',
+			url: "/userinfo"
+		})
+				.then(function(response){
+					var last = response.data;
+					document.getElementById("name").value = last.name;
+					document.getElementById("property").value = last.property;
+					document.getElementById("contact_person").value = last.contact_person;
+				})
+	}
+	function keychangeprofile(){
 			if(event.keyCode === 13){
-				document.getElementById('confirmAddVehicle').click();
+				document.getElementById('confirmChangeInfo').click();
 			}
+	}
+	function keycarregister(){
+		if(event.keyCode === 13){
+			document.getElementById('confirmAddVehicle').click();
 		}
+	}
 
-		function userInfo(){
-			axios({
-				method : 'get',
-				url: "/userinfo"
-			})
-					.then(function(response){
-						var last = response.data;
-						document.getElementById("user_name").innerHTML = "客户名称：" + last.name;
-						document.getElementById("user_property").innerHTML = "客户性质：" + last.property;
-						document.getElementById("user_tel").innerHTML = "联系电话：" + last.contact_tel;
-						document.getElementById("user_contact").innerHTML = "联 系 人：" + last.contact_person;
-						document.getElementById("user_discount").innerHTML = "折 扣 率；" + last.discount_rate;
-					})
-		}
-		// 车辆信息块
-		function getVehicle(){
-			axios({
-				method: 'get',
-				url: '/get_vehicle'
-			})
-			.then(function(response){
+	function userInfo(){
+		axios({
+			method : 'get',
+			url: "/userinfo"
+		})
+				.then(function(response){
+					var last = response.data;
+					document.getElementById("user_name").innerHTML = "客户名称：" + last.name;
+					document.getElementById("user_property").innerHTML = "客户性质：" + last.property;
+					document.getElementById("user_tel").innerHTML = "联系电话：" + last.contact_tel;
+					document.getElementById("user_contact").innerHTML = "联 系 人：" + last.contact_person;
+					document.getElementById("user_discount").innerHTML = "折 扣 率：" + last.discount_rate;
+				})
+	}
+	// 车辆信息块
+	function getVehicle(){
+		axios({
+			method: 'get',
+			url: '/get_vehicle'
+		})
+		.then(function(response){
+			var data = response.data;
+			var num = data.length;
+			for(var i = 1; i <= num; i++){
+					var last = data[i-1];
+					var body = document.getElementById("right");
+					var div1 = document.createElement("div");
+					body.appendChild(div1);
+					div1.className = "col-md-5 outer-col";
+					var div11 = document.createElement("div");
+					div1.appendChild(div11);
+					div11.className = "row inner-row-1";
+					var div111 = document.createElement("div");
+					div11.appendChild(div111);
+					div111.className = "col-md-5 col-md-push-0 inner-col-1";
+					var photo1 = document.createElement("img");
+					div111.appendChild(photo1);
+					photo1.id = "licensephoto"+i;
+					photo1.src = "show_plate?license_number=" + last.LicenseNumber;
+					photo1.className = "middle";
+					photo1.width="10%";
+					photo1.setAttribute("width","10%");
+					var div112 = document.createElement("div");
+					div11.appendChild(div112);
+					div112.className = "col-md-5 col-md-push-1 inner-row-2";
+					var div1121 = document.createElement("div");
+					div112.appendChild(div1121);
+					div1121.className = "row-md-4 text-center inner-button";
+					var button1 = document.createElement("a");
+					div1121.appendChild(button1);
+					button1.type = "button";
+					button1.id = "history"+i;
+					button1.setAttribute("onclick","historyRecord(this.id)");
+					button1.innerHTML = "历史维修记录";
+					div112.innerHTML = div112.innerHTML+"<br>";
+					var div1122 = document.createElement("div");
+					div112.appendChild(div1122);
+					div1122.className = "row-md-4 text-center inner-button";
+					var button2 = document.createElement("a");
+					div1122.appendChild(button2);
+					button2.type = "button";
+					button2.id = "attorney"+i;
+					button2.setAttribute("onclick","addAttorney(this.id)");
+					button2.innerHTML = "新增维修委托";
+					var div12 = document.createElement("div");
+					div1.appendChild(div12);
+					div12.className = "row align-items-end inner-row-3";
+					var h41 = document.createElement("h4");
+					div12.appendChild(h41);
+					h41.id = "description"+i;
+					h41.innerHTML = last.Color + "·" + last.Model+ "·" + last.Type;
+					div12.innerHTML = div12.innerHTML + "<br>";
+					var h42 = document.createElement("h4");
+					div12.appendChild(h42);
+					h42.id = "number"+i;
+					h42.innerHTML = last.Number;
+			}
+		})
+	}
+	function historyRecord(param){
+		var num= param.replace(/[^0-9]/ig,"");
+		var url = decodeURI(document.getElementById("licensephoto"+num).src);
+		var platestart = url.indexOf('=');
+		var plate = url.substring(platestart+1,url.length).toUpperCase();
+		document.getElementById("plate").innerHTML =plate;
+		document.getElementById("VIN").innerHTML =document.getElementById("number"+num).innerHTML;
+		//删除表格
+		try {document.getElementById("repair_table_father").removeChild(document.getElementById("repair_table"));}
+		catch(error){}
+		//新建表格和标题
+		var table = document.createElement("table");
+		document.getElementById("repair_table_father").appendChild(table);
+		table.id = "repair_table";
+		table.setAttribute("style","margin: auto; width: 560px; text-align: center; font-size: 17px; border-top: white");
+		table.setAttribute("border","1");
+		var tr = document.createElement("tr");
+		table.appendChild(tr);
+		tr.setAttribute("style","height: 30px");
+		var th1 = document.createElement("th");
+		tr.appendChild(th1);
+		th1.setAttribute("style","text-align: center; width: 120px");
+		th1.innerHTML = "时间";
+		var th2 = document.createElement("th");
+		tr.appendChild(th2);
+		th2.setAttribute("style","text-align: center");
+		th2.innerHTML="维修详情";
+		axios.get('/repair_history', {
+			params: {
+				vin: document.getElementById("number"+num).innerHTML
+			}
+		})
+			.then(function(response) {
 				var data = response.data;
-				var num = data.length;
-				for(var i = 1; i <= num; i++){
-						var last = data[i-1];
-						var body = document.getElementById("right");
-						var div1 = document.createElement("div");
-						body.appendChild(div1);
-						div1.className = "col-md-5 outer-col";
-						var div11 = document.createElement("div");
-						div1.appendChild(div11);
-						div11.className = "row inner-row-1";
-						var div111 = document.createElement("div");
-						div11.appendChild(div111);
-						div111.className = "col-md-5 col-md-push-0 inner-col-1";
-						var photo1 = document.createElement("img");
-						div111.appendChild(photo1);
-						photo1.id = "licensephoto"+i;
-						photo1.src = "show_plate?license_number=" + last.LicenseNumber;
-						photo1.className = "middle";
-						photo1.width="10%";
-						photo1.setAttribute("width","10%");
-						var div112 = document.createElement("div");
-						div11.appendChild(div112);
-						div112.className = "col-md-5 col-md-push-1 inner-row-2";
-						var div1121 = document.createElement("div");
-						div112.appendChild(div1121);
-						div1121.className = "row-md-4 text-center inner-button";
-						var button1 = document.createElement("a");
-						div1121.appendChild(button1);
-						button1.type = "button";
-						button1.id = "history"+i;
-						button1.setAttribute("onclick","historyRecord(this.id)");
-						button1.innerHTML = "历史维修记录";
-						div112.innerHTML = div112.innerHTML+"<br>";
-						var div1122 = document.createElement("div");
-						div112.appendChild(div1122);
-						div1122.className = "row-md-4 text-center inner-button";
-						var button2 = document.createElement("a");
-						div1122.appendChild(button2);
-						button2.type = "button";
-						button2.id = "attorney"+i;
-						button2.setAttribute("onclick","addAttorney(this.id)");
-						button2.innerHTML = "新增维修委托";
-						var div12 = document.createElement("div");
-						div1.appendChild(div12);
-						div12.className = "row align-items-end inner-row-3";
-						var h41 = document.createElement("h4");
-						div12.appendChild(h41);
-						h41.id = "description"+i;
-						h41.innerHTML = last.Color + "·" + last.Model+ "·" + last.Type;
-						div12.innerHTML = div12.innerHTML + "<br>";
-						var h42 = document.createElement("h4");
-						div12.appendChild(h42);
-						h42.id = "number"+i;
-						h42.innerHTML = last.Number;
+				var length = data.length;
+				if(length === 0){
+					var tr = document.createElement("tr");
+					document.getElementById("repair_table").appendChild(tr);
+					var td1 = document.createElement("td");
+					tr.appendChild(td1);
+					td1.innerHTML = "暂无维修记录";
+					td1.setAttribute("colspan","2");
+					td1.setAttribute("style","text-align: center; width: 120px;font-size: 15px;");
 				}
-			})
-		}
-		function historyRecord(param){
-			var num= param.replace(/[^0-9]/ig,"");
-			var url = decodeURI(document.getElementById("licensephoto"+num).src);
-			var platestart = url.indexOf('=');
-			var plate = url.substring(platestart+1,url.length).toUpperCase();
-			document.getElementById("plate").innerHTML =plate;
-			document.getElementById("VIN").innerHTML =document.getElementById("number"+num).innerHTML;
-			//删除表格
-			try {document.getElementById("repair_table_father").removeChild(document.getElementById("repair_table"));}
-			catch(error){}
-			//新建表格和标题
-			var table = document.createElement("table");
-			document.getElementById("repair_table_father").appendChild(table);
-			table.id = "repair_table";
-			table.setAttribute("style","margin: auto; width: 560px; text-align: center; font-size: 17px; border-top: white");
-			table.setAttribute("border","1");
-			var tr = document.createElement("tr");
-			table.appendChild(tr);
-			tr.setAttribute("style","height: 30px");
-			var th1 = document.createElement("th");
-			tr.appendChild(th1);
-			th1.setAttribute("style","text-align: center; width: 120px");
-			th1.innerHTML = "时间";
-			var th2 = document.createElement("th");
-			tr.appendChild(th2);
-			th2.setAttribute("style","text-align: center");
-			th2.innerHTML="维修详情";
-			axios.get('/repair_history', {
-				params: {
-					vin: document.getElementById("number"+num).innerHTML
-				}
-			})
-				.then(function(response) {
-					var data = response.data;
-					var length = data.length;
-					if(length === 0){
+				else{
+					for(var i = 1; i <= length; i++){
 						var tr = document.createElement("tr");
 						document.getElementById("repair_table").appendChild(tr);
 						var td1 = document.createElement("td");
 						tr.appendChild(td1);
-						td1.innerHTML = "暂无维修记录";
-						td1.setAttribute("colspan","2");
+						td1.innerHTML = data[i-1].Time;
 						td1.setAttribute("style","text-align: center; width: 120px;font-size: 15px;");
-					}
-					else{
-						for(var i = 1; i <= length; i++){
-							var tr = document.createElement("tr");
-							document.getElementById("repair_table").appendChild(tr);
-							var td1 = document.createElement("td");
-							tr.appendChild(td1);
-							td1.innerHTML = data[i-1].Time;
-							td1.setAttribute("style","text-align: center; width: 120px;font-size: 15px;");
-							var td2 = document.createElement("td");
-							tr.appendChild(td2);
-							if(data[i-1].Problem === ""){
-								td2.innerHTML = "检修中..."
-							}
-							else{
-								td2.innerHTML = data[i-1].Problem;
-							}
-							td2.setAttribute("style", "text-align: center;font-size: 15px;");
+						var td2 = document.createElement("td");
+						tr.appendChild(td2);
+						if(data[i-1].Problem === ""){
+							td2.innerHTML = "检修中..."
 						}
-					}
-				})
-			$('#maintenance_record').modal();
-		}
-		function addAttorney(param){
-			if(param !== "confirmAddAttorney"){
-				num = param.replace(/[^0-9]/ig,"");
-				document.getElementById("VehicleNumber").value = document.getElementById("number"+num).innerHTML
-				$('#add_attorney').modal();
-			}
-			else{
-				let formData = new FormData();
-				formData.append("vin", document.getElementById("number"+num).innerHTML);
-				var paymethod = document.getElementsByName("PayMethod");
-				var payvalue;
-				for(var i = 0; i < 3; i++){
-					if(paymethod[i].checked === true){
-						payvalue = paymethod[i].value;
-						break;
+						else{
+							td2.innerHTML = data[i-1].Problem;
+						}
+						td2.setAttribute("style", "text-align: center;font-size: 15px;");
 					}
 				}
-				formData.append("pay_method", payvalue);
-				formData.append("start_time", document.getElementById("StartTime").value);
-				formData.append("rough_problem", document.getElementById("RoughProblem").value);
-				formData.append("start_petrol", document.getElementById("StartPetrol").value);
-				formData.append("start_mile", document.getElementById("StartMile").value);
-				let config = {
-					headers: {"Content-Type": "multipart/form-data"}
-				};
-				axios.post("/create_attorney", formData, config).then(res => {
-					var last = res.data;
-					if(last === "成功"){
-						alert("提交成功！");
-						location.reload();
-					}
-					else{
-						alert("提交失败，请再审核提交的数据!");
-						location.reload();
-					}
-				})
-			}
-
+			})
+		$('#maintenance_record').modal();
+	}
+	function addAttorney(param){
+		if(param !== "confirmAddAttorney"){
+			num = param.replace(/[^0-9]/ig,"");
+			document.getElementById("VehicleNumber").value = document.getElementById("number"+num).innerHTML
+			$('#add_attorney').modal();
 		}
-		$(function() {
-			$("[data-toggle='popover']").each(function() {
-				var element = $(this);
-				element.popover({
-					trigger: 'manual',
-					html: true,
-					title: '轿车类别',
-					placement: 'right',
-					content: function() {
-						return content();
-					}
-				}).on("mouseenter", function() {
-					var _this = this;
-					$(this).popover("show");
-					$(this).siblings(".popover").on("mouseleave", function() {
-						$(_this).popover('hide');
-					});
-				}).on("mouseleave", function() {
-					var _this = this;
-					setTimeout(function() {
-						if(!$(".popover:hover").length) {
-							$(_this).popover("hide")
-						}
-					}, 100);
-				});
+		else{
+			let formData = new FormData();
+			formData.append("vin", document.getElementById("number"+num).innerHTML);
+			var paymethod = document.getElementsByName("PayMethod");
+			var payvalue;
+			for(var i = 0; i < 3; i++){
+				if(paymethod[i].checked === true){
+					payvalue = paymethod[i].value;
+					break;
+				}
+			}
+			formData.append("pay_method", payvalue);
+			formData.append("start_time", document.getElementById("StartTime").value);
+			formData.append("rough_problem", document.getElementById("RoughProblem").value);
+			formData.append("start_petrol", document.getElementById("StartPetrol").value);
+			formData.append("start_mile", document.getElementById("StartMile").value);
+			let config = {
+				headers: {"Content-Type": "multipart/form-data"}
+			};
+			axios.post("/create_attorney", formData, config).then(res => {
+				var last = res.data;
+				if(last === "成功"){
+					alert("提交成功！");
+					location.reload();
+				}
+				else{
+					alert("提交失败，请再审核提交的数据!");
+					location.reload();
+				}
+			})
+		}
 
+	}
+	$(function() {
+		$("[data-toggle='popover']").each(function() {
+			var element = $(this);
+			element.popover({
+				trigger: 'manual',
+				html: true,
+				title: '轿车类别',
+				placement: 'right',
+				content: function() {
+					return content();
+				}
+			}).on("mouseenter", function() {
+				var _this = this;
+				$(this).popover("show");
+				$(this).siblings(".popover").on("mouseleave", function() {
+					$(_this).popover('hide');
+				});
+			}).on("mouseleave", function() {
+				var _this = this;
+				setTimeout(function() {
+					if(!$(".popover:hover").length) {
+						$(_this).popover("hide")
+					}
+				}, 100);
 			});
 
 		});
-		function  content()  {
-			return  $("<h4>轿车A：排量 < 1.6升</h4>" + "<h4>轿车B：1.6升 ≤ 排量 ≤ 1.8升</h4>" + "<h4>轿车C：1.8升 < 排量 ≤ 2.3升</h4>" + "<h4>轿车D：2.3升 < 排量 ≤ 3升</h4>" + "<h4>轿车E：3升 ≤ 排量 ≤ 4升</h4>");
-		}
-	</script>
+
+	});
+	function  content()  {
+		return  $("<h4>轿车A：排量 < 1.6升</h4>" + "<h4>轿车B：1.6升 ≤ 排量 ≤ 1.8升</h4>" + "<h4>轿车C：1.8升 < 排量 ≤ 2.3升</h4>" + "<h4>轿车D：2.3升 < 排量 ≤ 3升</h4>" + "<h4>轿车E：3升 ≤ 排量 ≤ 4升</h4>");
+	}
+</script>
 </body>
 </html>
 
