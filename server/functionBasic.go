@@ -13,10 +13,6 @@ func getUsername(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	c.String(http.StatusOK, username)
 }
-func getGroup(c *gin.Context) {
-	group := c.MustGet("group").(string)
-	c.String(http.StatusOK, group)
-}
 
 func searchForProjects(c *gin.Context) {
 	text := c.Query("text")
@@ -50,11 +46,6 @@ func searchForProjects(c *gin.Context) {
 		count++
 	}
 	c.JSON(http.StatusOK, result)
-}
-
-func checkGroup(c *gin.Context) {
-	group := c.MustGet("group").(string)
-	c.String(http.StatusOK, group)
 }
 
 func read(c *gin.Context) {

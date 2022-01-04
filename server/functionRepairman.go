@@ -3,8 +3,42 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 	"strings"
 )
+
+func addPartsForProject(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	attorneyNo := c.PostForm("attorney_no")
+	projectNo := c.PostForm("project_no")
+	partsNo := c.PostForm("parts_no")
+	partsCount, _ := strconv.Atoi(c.PostForm("number"))
+	if group != "维修员" {
+		c.String(http.StatusForbidden, "无权限！")
+		return
+	}
+	var arrangement Arrangement
+	result := database.First(&arrangement, "order_number = ? and project_number = ? and repairman_number = ?", attorneyNo, projectNo, username)
+	if result.RowsAffected == 0 {
+		c.String(http.StatusForbidden, "无权限！")
+		return
+	}
+	var repairParts RepairParts
+	partsResult := database.First(&repairParts, "order_number = ? and project_number = ? and parts_number = ?", attorneyNo, projectNo, partsNo)
+	if partsResult.RowsAffected == 0 { //新建零件
+		data := RepairParts{attorneyNo, projectNo, partsNo, partsCount}
+		createPartsResult := database.Create(&data)
+		if createPartsResult.Error != nil {
+			c.JSON(http.StatusOK, gin.H{"status": "错误", "data": createPartsResult.Error})
+		} else {
+			c.JSON(http.StatusOK, gin.H{"status": "成功", "data": ""})
+		}
+	} else { //更改数量
+		database.Model(&repairParts).Update("parts_count", partsCount)
+		c.JSON(http.StatusOK, gin.H{"status": "成功", "data": ""})
+	}
+}
 
 func searchForParts(c *gin.Context) {
 	text := c.Query("text")
