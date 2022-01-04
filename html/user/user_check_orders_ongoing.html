@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="AngularStore">
 <head>
+	<title>进行中订单</title>
 	<script src="/statics/js/header.js"></script>
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -15,9 +16,9 @@
 <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
 	<ul id='navbar' class='nav navbar-nav navbar-right' >
 		<li><a id='text'></a></li>
-		<li><a id='register' href='/register' title='注册' >前往注册</a></li>
-		<li><a id='login' href='/login' title='登录' >前往登录</a></li>
-		<li><a id='logout' title='退出登录' data-toggle='modal' data-target='#log_out' onclick='getUsername()'>退出登录</a></li>
+		<li><a id='register' href='/register' title='注册' style="cursor: pointer">前往注册</a></li>
+		<li><a id='login' href='/login' title='登录' style="cursor: pointer">前往登录</a></li>
+		<li><a id='logout' title='退出登录' data-toggle='modal' data-target='#log_out' onclick='getUsername()' style="cursor: pointer">退出登录</a></li>
 	</ul>
 </div>
 
@@ -27,55 +28,41 @@
 		<!--左导航栏-->
 		<div class='col-md-2'>
 			<div class="list-group">
-				<a class="list-group-item list-group-item-info">
+				<a class="list-group-item list-group-item-info" style="cursor: default">
 					个人信息
 				</a>
-				<a id="user_name" class="list-group-item">用户名:18001723206</a>
-				<a id="user_property" class="list-group-item">性　　质:个人</a>
-				<a id="user_tel" class="list-group-item">联系电话:13472413472</a>
-				<a id="user_contact" class="list-group-item">联 系 人:Baitian2</a>
-				<a id="user_discount" class="list-group-item">折扣率:100%</a>
-				<a class="list-group-item" data-toggle='modal' data-target='#change_info' onclick='userinfo()' style="cursor: pointer">更改个人信息</a>
-				<a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a>
+				<a id="user_name" class="list-group-item" style="cursor: default">用户名:18001723206</a>
+				<a id="user_property" class="list-group-item" style="cursor: default">性　　质:个人</a>
+				<a id="user_tel" class="list-group-item" style="cursor: default">联系电话:13472413472</a>
+				<a id="user_contact" class="list-group-item" style="cursor: default">联 系 人:Baitian2</a>
+				<a id="user_discount" class="list-group-item" style="cursor: default">折扣率:100%</a>
+				<a class="list-group-item" data-toggle='modal' data-target='#change_info' onclick='userinfo()' style="cursor: pointer; text-decoration-line: underline">更改个人信息</a>
+				<a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer; text-decoration-line: underline">更改密码</a>
 			</div>
 
 			<div class='list-group'>
-				<a class='list-group-item list-group-item-success'>
+				<a class='list-group-item list-group-item-success' style="cursor: default">
 					查看申请详情
 				</a>
 				<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
 				<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
-				<a class='list-group-item' href='/u_check_orders_ongoing' style='cursor:pointer'>进行中(3)</a>
-				<a class='list-group-item' href='/u_check_orders_finished' style='cursor:pointer'>已完成</a>
+				<a class='list-group-item' href='/u_check_orders_ongoing' style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>
+				<a class='list-group-item' href='/u_check_orders_finished' style='cursor:pointer; text-decoration-line: underline'>已完成</a>
 			</div>
 		</div>
 
 		<!--右区域-->
 		<div class="col-md-10">
-			<div class='col-md-10' id='con'  style='text-align: center'>
-				<label style='color: #77bbe2;font-size:50px;'>　　　维修申请详情</label>
+			<!--
+			<div class="alert alert-warning alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
 			</div>
-
-			<div class="table-responsive col-md-12">
-				<table class="table  table-bordered table-hover">
-					<tr>
-						<th width="10%"><h5 style="font-weight: 900;">订单号</h5></th>
-						<th width="12%"><h5 style="font-weight: 900;">车架号</h5></th>
-						<th width="20%"><h5 style="font-weight: 900;">粗略故障描述</h5></th>
-						<th width="40%"><h5 style="font-weight: 900;">详细故障描述</h5></th>
-						<th width="10%"><h5 style="font-weight: 900;">预计维修完成时间</h5></th>
-						<th width="8%"><h5 style="font-weight: 900;">维修进度</h5></th>
-					</tr>
-
-					<tr ng-repeat="item in list | filter:listfilter">
-						<td>00000001</td>
-						<td>12345678901234567</td>
-						<td>车坏了</td>
-						<td>右后轮爆胎</td>
-						<td>2022-1-20</td>
-						<td>处理中</td>
-					</tr>
-				</table>
+			<div class='col-md-10' id='con'  style='text-align: center'>
+				<label style='color: #77bbe2;font-size:50px;'>　　　车辆信息</label>
+			</div>
+			-->
+			<div class='row' id="right">
 			</div>
 		</div>
 	</div>

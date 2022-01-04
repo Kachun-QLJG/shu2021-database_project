@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="AngularStore">
 <head>
+	<title>主页</title>
     <script src="/statics/js/header.js"></script>
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -117,12 +118,12 @@
 				<a class="list-group-item list-group-item-info">
 					员工信息
 				</a>
-				<a id="repairman_name" class="list-group-item">姓　　名：</a>
-				<a id="repairman_type" class="list-group-item">工　　种：</a>
-				<a id="repairman_work_hours" class="list-group-item">当前工时：</a>
-				<a id="repairman_work_status" class="list-group-item">工作状态：</a>
-				<a class="list-group-item" data-toggle="modal" data-target="#workStatus" style="cursor: pointer">更改工作状态</a>
-				<a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a>
+				<a id="repairman_name" class="list-group-item" style="cursor: default">姓　　名：</a>
+				<a id="repairman_type" class="list-group-item" style="cursor: default">工　　种：</a>
+				<a id="repairman_work_hours" class="list-group-item" style="cursor: default">当前工时：</a>
+				<a id="repairman_work_status" class="list-group-item" style="cursor: default">工作状态：</a>
+				<a class="list-group-item" data-toggle="modal" data-target="#workStatus" style="cursor: pointer; text-decoration-line: underline">更改工作状态</a>
+				<a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer; text-decoration-line: underline">更改密码</a>
 			</div>
 
 			<div class='list-group'>
@@ -131,8 +132,8 @@
 				</a>
 				<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
 				<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
-				<a class='list-group-item' data-toggle='modal' data-target='#ongoing_order' style='cursor:pointer'>进行中(3)</a>
-				<a class='list-group-item' data-toggle='modal' data-target='#finished_order' style='cursor:pointer'>已完成</a>
+				<a class='list-group-item' data-toggle='modal' data-target='#ongoing_order' style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>
+				<a class='list-group-item' data-toggle='modal' data-target='#finished_order' style='cursor:pointer; text-decoration-line: underline'>已完成</a>
 			</div>
 		</div>
 
@@ -142,9 +143,11 @@
 				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
 			</div>
+			<!--
 			<div class='col-md-10' id='con'  style='text-align: center'>
 				<label style='color: #77bbe2;font-size:50px;'>　　　车辆信息</label>
 			</div>
+			-->
 
 			<div class='row' id="right">
 			</div>
@@ -177,15 +180,16 @@
 	</div>
 </div>
 
-<!-- 已完成订单 -->
+<!-- 进行中订单 -->
 <div class='modal fade' id='ongoing_order' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
 	<div class='modal-dialog'>
 		<div class='modal-content'>
 			<div class='modal-header'>
 				<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
-				<h3 class='modal-title' id='ongoingOrder' style="text-align: center">历史维修信息</h3>
+				<h3 class='modal-title' id='ongoingOrder' style="text-align: center">未完成订单</h3>
 			</div>
 			<div class='modal-body' id="ongoing_table_father" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">
+				<!--
 				<table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">
 					<tr>
 						<th style="text-align: center; width: 70px">车牌号</th>
@@ -194,16 +198,28 @@
 						<th id="ongoing_VIN"style="text-align: center; width: 210px">11111111111111111</th>
 					</tr>
 				</table>
-				<table id="ongoing_table" border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; border-top: white">
+				-->
+				<table id="ongoing_table" border="1" style="width: 560px; text-align: center; font-size: 17px;">
 					<!-- 表头 -->
 					<tr style="height: 30px">
-						<th style="text-align: center; width: 120px">时间</th>
-						<th id="ongoing_detail" style="text-align: center">维修详情</th>
+						<th id="number_ongoing" style="text-align: center; width: 120px">订单号</th>
+						<th id="vehicle_number_ongoing" style="text-align: center">车架号</th>
+						<th id="parts_number_ongoing" style="text-align: center">零件号</th>
+						<th id="parts_name_ongoing" style="text-align: center">零件名</th>
+						<th id="parts_count_ongoing" style="text-align: center">数量</th>
 					</tr>
 					<!-- 传参处 -->
 					<tr>
-						<td >2021/12/30</td>
-						<td >轮毂断裂</td>
+						<td rowspan="2">0000001</td>
+						<td rowspan="2">12345678901234567</td>
+						<td>001</td>
+						<td>轮毂</td>
+						<td>1</td>
+					</tr>
+					<tr>
+						<td>002</td>
+						<td>后视镜</td>
+						<td>2</td>
 					</tr>
 				</table>
 			</div>
@@ -217,9 +233,10 @@
 		<div class='modal-content'>
 			<div class='modal-header'>
 				<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
-				<h3 class='modal-title' id='finishedOrder' style="text-align: center">历史维修信息</h3>
+				<h3 class='modal-title' id='finishedOrder' style="text-align: center">已完成订单</h3>
 			</div>
 			<div class='modal-body' id="finished_table_father" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">
+				<!--
 				<table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">
 					<tr>
 						<th style="text-align: center; width: 70px">车牌号</th>
@@ -228,16 +245,33 @@
 						<th id="finsihed_VIN"style="text-align: center; width: 210px">11111111111111111</th>
 					</tr>
 				</table>
-				<table id="finished_table" border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; border-top: white">
+				-->
+				<table id="finished_table" border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">
 					<!-- 表头 -->
 					<tr style="height: 30px">
-						<th style="text-align: center; width: 120px">时间</th>
-						<th id="finished_detail" style="text-align: center">维修详情</th>
+						<th id="number_finished" style="text-align: center; width: 120px">订单号</th>
+						<th id="vehicle_number_finished" style="text-align: center">车架号</th>
+						<th id="parts_number_finished" style="text-align: center">零件号</th>
+						<th id="parts_name_finished" style="text-align: center">零件名</th>
+						<th id="parts_count_finished" style="text-align: center">数量</th>
+						<th id="finished_detail" style="text-align: center">详情</th>
 					</tr>
 					<!-- 传参处 -->
 					<tr>
-						<td >2021/12/30</td>
-						<td >轮毂断裂</td>
+						<td rowspan="2">0000001</td>
+						<td rowspan="2">12345678901234567</td>
+
+						<td>001</td>
+						<td>轮毂</td>
+						<td>1</td>
+
+						<!-- <td rowspan="2"><a href="/show_pdf?attorney_no=00000002" target="_blank">查看pdf</a></td> -->
+						<td rowspan="2"><a data-toggle='modal' data-target='#detail' style="cursor: pointer; text-decoration-line: underline">查看pdf</a></td>
+					</tr>
+					<tr>
+						<td>002</td>
+						<td>后视镜</td>
+						<td>2</td>
 					</tr>
 				</table>
 			</div>
@@ -245,7 +279,23 @@
 	</div>
 </div>
 
-<!-- 登出模态框（Modal）-->
+<!-- 详情——》委托书 -->
+<div class='modal fade' id='detail' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' >
+	<div class='modal-dialog' style="width: 80%;height: 80%;">
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+			</div>
+			<div class='modal-body'>
+				<div style="text-align: center;">
+					<embed height="840px" width="90%" src="/show_pdf?attorney_no=00000001" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 登出模态框 -->
 <div class='modal fade' id='log_out' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
 	<div class='modal-dialog'>
 		<div class='modal-content'>
