@@ -28,16 +28,16 @@ func addPath(r *gin.Engine) {
 	r.GET("/get_finished_attorney", authMiddleWare(), checkPermission(), getFinishedAttorney)     //寻找零件
 	r.GET("/get_attorney_detail", authMiddleWare(), checkPermission(), getAttorneyDetail)         //寻找零件
 
-	r.GET("/userinfo", authMiddleWare(), checkPermission(), userinfo)                                 //查询用户个人信息
-	r.GET("/change_userinfo", authMiddleWare(), checkPermission(), startChangeUserinfo)               //进入更改个人信息界面
-	r.GET("/add_vehicle", authMiddleWare(), checkPermission(), startAddVehicle)                       //用户添加车辆
+	r.GET("/userinfo", authMiddleWare(), checkPermission(), userinfo) //查询用户个人信息
+	//r.GET("/change_userinfo", authMiddleWare(), checkPermission(), startChangeUserinfo)               //进入更改个人信息界面
+	//r.GET("/add_vehicle", authMiddleWare(), checkPermission(), startAddVehicle)                       //用户添加车辆
 	r.GET("/check_vehicle", authMiddleWare(), checkPermission(), checkVehicle)                        //用户添加车辆
 	r.GET("/u_check_orders_ongoing", authMiddleWare(), checkPermission(), startUCheckOrdersOngoing)   //进入用户查看订单页面
 	r.GET("/u_check_orders_finished", authMiddleWare(), checkPermission(), startUCheckOrdersFinished) //进入用户查看订单页面
 
-	r.GET("/check_status", authMiddleWare(), checkPermission(), checkStatus)         //返回维修工状态
-	r.GET("/change_status", authMiddleWare(), checkPermission(), startChangeStatus)  //进入更改工作状态界面
-	r.GET("/r_check_orders", authMiddleWare(), checkPermission(), startRCheckOrders) //进入维修员查看订单页面
+	r.GET("/check_status", authMiddleWare(), checkPermission(), checkStatus)        //返回维修工状态
+	r.GET("/change_status", authMiddleWare(), checkPermission(), startChangeStatus) //进入更改工作状态界面
+	//r.GET("/r_check_orders", authMiddleWare(), checkPermission(), startRCheckOrders) //进入维修员查看订单页面
 
 	r.GET("/s_check_orders", authMiddleWare(), checkPermission(), startSCheckOrders) //进入业务员查看订单页面
 	r.GET("/take_orders", authMiddleWare(), checkPermission(), startTakeOrders)      //进入接单界面
