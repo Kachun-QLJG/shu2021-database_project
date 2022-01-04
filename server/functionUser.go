@@ -216,14 +216,24 @@ func startAddVehicle(c *gin.Context) {
 	c.HTML(http.StatusOK, "user_car_register.html", gin.H{"username": number, "group": group})
 }
 
-func startUCheckOrders(c *gin.Context) {
+func startUCheckOrdersOngoing(c *gin.Context) {
 	number := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	if group != "普通用户" {
 		c.String(http.StatusForbidden, "错误！")
 		return
 	}
-	c.HTML(http.StatusOK, "user_check_orders.html", gin.H{"username": number, "group": group})
+	c.HTML(http.StatusOK, "user_check_orders_ongoing.html", gin.H{"username": number, "group": group})
+}
+
+func startUCheckOrdersFinished(c *gin.Context) {
+	number := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	if group != "普通用户" {
+		c.String(http.StatusForbidden, "错误！")
+		return
+	}
+	c.HTML(http.StatusOK, "user_check_orders_finished.html", gin.H{"username": number, "group": group})
 }
 
 func addVehicle(c *gin.Context) {

@@ -1,111 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="AngularStore">
 <head>
 	<script src="/statics/js/header.js"></script>
-	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<style>
-		/*web background*/
-		.container{
-			display:table;
-			height:100%;
-		}
-
-		/* centered columns styles */
-		.row-centered {
-			text-align:center;
-		}
-		.col-centered {
-			display:inline-block;
-			float:none;
-			text-align:left;
-			margin-right:-4px;
-		}
-
-		.middle {float: none;display: inline-block;vertical-align: middle;width: 130%;}
-		.outer-col{background-color: #dff0d8;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 20px;padding: 10px;margin: 1% 3% 1% 2%;}
-		.inner-row-1{display: flex;align-items: center;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;margin: 10px;background-color: white}
-		.inner-col-1{display: flex;align-items: center;vertical-align: middle;}
-		.inner-row-2{margin: 7px 7px;}
-		.inner-button{background-color: #bce8f1;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 5px;margin-top: 2%;}
-		.inner-button a{font-size: 17px;color: black;cursor: pointer;}
-		.inner-row-3{box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px;border-radius: 10px;background-color: white;margin: 7px 7px;}
-		.inner-row-3 h4{font-size: 15px;display:inline-block;margin-left: 5%}
-		.outer-png{margin-top:12px;margin-left: 12px;}
-
-		/*
-		.row > div {
-			display: inline-block;
-			vertical-align: middle;
-			float: none;
-		}*/
-	</style>
-	<script type="text/javascript">
-		function checkpwd(){
-			var check = false;
-			var pswd = document.getElementById("pswd").value;
-			if(pswd.length < 6){
-				document.getElementById("checktext2").innerHTML = " × 不要少于6位";
-				check = false;
-			}
-			else {
-				document.getElementById("checktext2").innerHTML = " √";
-				check = true;
-			}
-			return check;
-		}
-		function checkpwdc() {
-			var check = false;
-			var password = document.getElementById("pswd").value;
-			var pwdc = document.getElementById("pwdc").value;
-			if (password !== pwdc) {
-				document.getElementById("checktext3").innerHTML = " × 两次输入密码不一致";
-				check = false;
-			}
-			else {
-				document.getElementById("checktext3").innerHTML = " √";
-				check = true;
-			}
-			return check;
-		}
-		function check() {
-			if(checkpwd() && checkpwdc()){
-				changePswd();
-			}
-		}
-		function keychangepassword(){
-			if(event.keyCode === 13){
-				document.getElementById('changepasswordbutton').click();
-			}
-		}
-		let date = new Date()
-		let yyyy = date.getFullYear()
-		let MM = (date.getMonth() + 1) < 10 ? ("0" + (date.getMonth() + 1)) : (date.getMonth() + 1)
-		let dd = date.getDate() < 10 ? ("0" + date.getDate()) : date.getDate()
-		let curDay = yyyy + '-' + MM + '-' + dd ;
-		$('.measureDate').val(curDay)
-		console.log(date)
-	</script>
 </head>
-<body bgcolor="#f0f8ff" id="body" onkeydown="keychangeprofile()">
-	<!--
-	<div style="margin-top: 5%;">
-			<div style="margin-left: 10%; margin-right: 10%; text-align: center;">
-				<embed height="1080px" src="/show_pdf?attorney_no=00000001" width="90%"/>
-			</div> /.mb-4 -->
-	<!--</div> /.row -->
-	<!--
-<body bgcolor="#f0f8ff" id="body" onkeydown="keychangeprofile()">
-
-<div style="margin-top: 5%;">
-		<div style="margin-left: 10%; margin-right: 10%; text-align: center;">
-			<embed height="1080px" src="/show_pdf?attorney_no=00000001" width="90%"/>
-		</div> <! -- /.mb-4 -->
- 	<!-- /.row -->
+<body bgcolor="#f0f8ff" id="body">
 	<!--
 	<script src="/statics/js/universal.js"></script>
 	<script src="/statics/js/user.js"></script>
 	-->
+
 	<div class='navbar-header' id='head1'>
 		<a class='navbar-brand'>502汽修厂管理系统</a>
 	</div>
@@ -143,7 +46,7 @@
 						查看申请详情
 					</a>
 					<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
-                    <!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
+					<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
 					<a class='list-group-item' href='/u_check_orders_ongoing' style='cursor:pointer'>进行中(3)</a>
 					<a class='list-group-item' href='/u_check_orders_finished' style='cursor:pointer'>已完成</a>
 				</div>
@@ -419,302 +322,24 @@
 
 					<input type="hidden" id="old_password" name="old_password" />
 					<input type="hidden" id="new_password" name="new_password" />
-				<form class='modal-footer'>
-					<button type='button' class='btn btn-primary' onclick='check()' id='changepasswordbutton'>确认更改</button>
-					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
-				</form>
+					<form class='modal-footer'>
+						<button type='button' class='btn btn-primary' onclick='check()' id='changepasswordbutton'>确认更改</button>
+						<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- 添加车辆按钮 -->
-	<div class='col-md-3' >
-		<img src="/statics/user/添加.png" data-toggle='modal' data-target='#add_car' data-backdrop='static' style='position:fixed;top:70%;right:1%;cursor: pointer' alt="正在加载图片"/>
-	</div>
-
-	<!-- pdf显示 -->
-	<div style="margin-top: 5%;">
-		<div style="margin-left: 10%; margin-right: 10%; text-align: center;">
-			<embed height="1080px" src="/show_pdf?attorney_no=00000002" width="90%"/>
-		</div>
-	</div>
-
 	<script>
 		window.onload= function(){
-			getUserName();
+			checkNotification();
 			checkGroup();
 			checkUser();
-			getinfo();
-			getVehicle();
-			userInfo();
-		}
-		function check_number(){
-			var check = false;
-			var number = document.getElementById("number").value;
-			if(number.length !== 17){
-				document.getElementById("checktext1").innerHTML = " × 请输入正确的车架号";
-				check = false;
-			}
-			else {
-				document.getElementById("checktext1").innerHTML = " √";
-				check = true;
-			}
-			return check;
-		}
-		function check_license_number(){
-			var check = false;
-			var license_number = document.getElementById("license_number").value;
-			if(license_number.length < 7 || license_number.length > 8){
-				document.getElementById("checktext2").innerHTML = " × 请输入正确的车牌号";
-				check = false;
-			}
-			else {
-				document.getElementById("checktext2").innerHTML = " √";
-				check = true;
-			}
-			return check;
-		}
-		function userinfo(){
-			axios({
-				method : 'get',
-				url: "/userinfo"
-			})
-					.then(function(response){
-						var last = response.data;
-						document.getElementById("name").value = last.name;
-						document.getElementById("property").value = last.property;
-						document.getElementById("contact_person").value = last.contact_person;
-					})
-		}
-		function keychangeprofile(){
-				if(event.keyCode === 13){
-					document.getElementById('confirmChangeInfo').click();
-				}
-		}
-		function keycarregister(){
-			if(event.keyCode === 13){
-				document.getElementById('confirmAddVehicle').click();
-			}
-		}
-
-		function userInfo(){
-			axios({
-				method : 'get',
-				url: "/userinfo"
-			})
-					.then(function(response){
-						var last = response.data;
-						document.getElementById("user_name").innerHTML = "客户名称：" + last.name;
-						document.getElementById("user_property").innerHTML = "客户性质：" + last.property;
-						document.getElementById("user_tel").innerHTML = "联系电话：" + last.contact_tel;
-						document.getElementById("user_contact").innerHTML = "联 系 人：" + last.contact_person;
-						document.getElementById("user_discount").innerHTML = "折 扣 率；" + last.discount_rate;
-					})
-		}
-		// 车辆信息块
-		function getVehicle(){
-			axios({
-				method: 'get',
-				url: '/get_vehicle'
-			})
-			.then(function(response){
-				var data = response.data;
-				var num = data.length;
-				for(var i = 1; i <= num; i++){
-						var last = data[i-1];
-						var body = document.getElementById("right");
-						var div1 = document.createElement("div");
-						body.appendChild(div1);
-						div1.className = "col-md-5 outer-col";
-						var div11 = document.createElement("div");
-						div1.appendChild(div11);
-						div11.className = "row inner-row-1";
-						var div111 = document.createElement("div");
-						div11.appendChild(div111);
-						div111.className = "col-md-5 col-md-push-0 inner-col-1";
-						var photo1 = document.createElement("img");
-						div111.appendChild(photo1);
-						photo1.id = "licensephoto"+i;
-						photo1.src = "show_plate?license_number=" + last.LicenseNumber;
-						photo1.className = "middle";
-						photo1.width="10%";
-						photo1.setAttribute("width","10%");
-						var div112 = document.createElement("div");
-						div11.appendChild(div112);
-						div112.className = "col-md-5 col-md-push-1 inner-row-2";
-						var div1121 = document.createElement("div");
-						div112.appendChild(div1121);
-						div1121.className = "row-md-4 text-center inner-button";
-						var button1 = document.createElement("a");
-						div1121.appendChild(button1);
-						button1.type = "button";
-						button1.id = "history"+i;
-						button1.setAttribute("onclick","historyRecord(this.id)");
-						button1.innerHTML = "历史维修记录";
-						div112.innerHTML = div112.innerHTML+"<br>";
-						var div1122 = document.createElement("div");
-						div112.appendChild(div1122);
-						div1122.className = "row-md-4 text-center inner-button";
-						var button2 = document.createElement("a");
-						div1122.appendChild(button2);
-						button2.type = "button";
-						button2.id = "attorney"+i;
-						button2.setAttribute("onclick","addAttorney(this.id)");
-						button2.innerHTML = "新增维修委托";
-						var div12 = document.createElement("div");
-						div1.appendChild(div12);
-						div12.className = "row align-items-end inner-row-3";
-						var h41 = document.createElement("h4");
-						div12.appendChild(h41);
-						h41.id = "description"+i;
-						h41.innerHTML = last.Color + "·" + last.Model+ "·" + last.Type;
-						div12.innerHTML = div12.innerHTML + "<br>";
-						var h42 = document.createElement("h4");
-						div12.appendChild(h42);
-						h42.id = "number"+i;
-						h42.innerHTML = last.Number;
-				}
-			})
-		}
-		function historyRecord(param){
-			var num= param.replace(/[^0-9]/ig,"");
-			var url = decodeURI(document.getElementById("licensephoto"+num).src);
-			var platestart = url.indexOf('=');
-			var plate = url.substring(platestart+1,url.length).toUpperCase();
-			document.getElementById("plate").innerHTML =plate;
-			document.getElementById("VIN").innerHTML =document.getElementById("number"+num).innerHTML;
-			//删除表格
-			try {document.getElementById("repair_table_father").removeChild(document.getElementById("repair_table"));}
-			catch(error){}
-			//新建表格和标题
-			var table = document.createElement("table");
-			document.getElementById("repair_table_father").appendChild(table);
-			table.id = "repair_table";
-			table.setAttribute("style","margin: auto; width: 560px; text-align: center; font-size: 17px; border-top: white");
-			table.setAttribute("border","1");
-			var tr = document.createElement("tr");
-			table.appendChild(tr);
-			tr.setAttribute("style","height: 30px");
-			var th1 = document.createElement("th");
-			tr.appendChild(th1);
-			th1.setAttribute("style","text-align: center; width: 120px");
-			th1.innerHTML = "时间";
-			var th2 = document.createElement("th");
-			tr.appendChild(th2);
-			th2.setAttribute("style","text-align: center");
-			th2.innerHTML="维修详情";
-			axios.get('/repair_history', {
-				params: {
-					vin: document.getElementById("number"+num).innerHTML
-				}
-			})
-				.then(function(response) {
-					var data = response.data;
-					var length = data.length;
-					if(length === 0){
-						var tr = document.createElement("tr");
-						document.getElementById("repair_table").appendChild(tr);
-						var td1 = document.createElement("td");
-						tr.appendChild(td1);
-						td1.innerHTML = "暂无维修记录";
-						td1.setAttribute("colspan","2");
-						td1.setAttribute("style","text-align: center; width: 120px;font-size: 15px;");
-					}
-					else{
-						for(var i = 1; i <= length; i++){
-							var tr = document.createElement("tr");
-							document.getElementById("repair_table").appendChild(tr);
-							var td1 = document.createElement("td");
-							tr.appendChild(td1);
-							td1.innerHTML = data[i-1].Time;
-							td1.setAttribute("style","text-align: center; width: 120px;font-size: 15px;");
-							var td2 = document.createElement("td");
-							tr.appendChild(td2);
-							if(data[i-1].Problem === ""){
-								td2.innerHTML = "检修中..."
-							}
-							else{
-								td2.innerHTML = data[i-1].Problem;
-							}
-							td2.setAttribute("style", "text-align: center;font-size: 15px;");
-						}
-					}
-				})
-			$('#maintenance_record').modal();
-		}
-		function addAttorney(param){
-			if(param !== "confirmAddAttorney"){
-				num = param.replace(/[^0-9]/ig,"");
-				document.getElementById("VehicleNumber").value = document.getElementById("number"+num).innerHTML
-				$('#add_attorney').modal();
-			}
-			else{
-				let formData = new FormData();
-				formData.append("vin", document.getElementById("number"+num).innerHTML);
-				var paymethod = document.getElementsByName("PayMethod");
-				var payvalue;
-				for(var i = 0; i < 3; i++){
-					if(paymethod[i].checked === true){
-						payvalue = paymethod[i].value;
-						break;
-					}
-				}
-				formData.append("pay_method", payvalue);
-				formData.append("start_time", document.getElementById("StartTime").value);
-				formData.append("rough_problem", document.getElementById("RoughProblem").value);
-				formData.append("start_petrol", document.getElementById("StartPetrol").value);
-				formData.append("start_mile", document.getElementById("StartMile").value);
-				let config = {
-					headers: {"Content-Type": "multipart/form-data"}
-				};
-				axios.post("/create_attorney", formData, config).then(res => {
-					var last = res.data;
-					if(last === "成功"){
-						alert("提交成功！");
-						location.reload();
-					}
-					else{
-						alert("提交失败，请再审核提交的数据!");
-						location.reload();
-					}
-				})
-			}
-
-		}
-		$(function() {
-			$("[data-toggle='popover']").each(function() {
-				var element = $(this);
-				element.popover({
-					trigger: 'manual',
-					html: true,
-					title: '轿车类别',
-					placement: 'right',
-					content: function() {
-						return content();
-					}
-				}).on("mouseenter", function() {
-					var _this = this;
-					$(this).popover("show");
-					$(this).siblings(".popover").on("mouseleave", function() {
-						$(_this).popover('hide');
-					});
-				}).on("mouseleave", function() {
-					var _this = this;
-					setTimeout(function() {
-						if(!$(".popover:hover").length) {
-							$(_this).popover("hide")
-						}
-					}, 100);
-				});
-
-			});
-
-		});
-		function  content()  {
-			return  $("<h4>轿车A：排量 < 1.6升</h4>" + "<h4>轿车B：1.6升 ≤ 排量 ≤ 1.8升</h4>" + "<h4>轿车C：1.8升 < 排量 ≤ 2.3升</h4>" + "<h4>轿车D：2.3升 < 排量 ≤ 3升</h4>" + "<h4>轿车E：3升 ≤ 排量 ≤ 4升</h4>");
+			getUserName();
 		}
 	</script>
+
 </body>
 </html>
 
