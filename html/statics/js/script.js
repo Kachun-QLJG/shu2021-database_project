@@ -171,42 +171,64 @@ function changeStatus(){		//https://blog.csdn.net/weixin_41949511/article/detail
 
 function checkNotification(){
 	axios({
-	  method: 'get',
-	  url: '/check_notification'
-	  })
-	  .then(function(response) {
-		var last = JSON.stringify(response.data);
-		var notification = window.eval(response.data);
-		var title1 =  notification.title;
-		var content1 = notification.content;
-		var time1 = notification.time;
-		if(last !== "null"){
-			var body = document.getElementById("body");
-			var div = document.createElement("div");
-			body.appendChild(div);
-			div.style.cssText = "width: 50%; height: 50%;position: absolute; top: 25%; left: 25%; text-align: center; background-color: white;";
-			div.id = "alert";
-			var title = document.createElement("p");
-			div.appendChild(title);
-			title.innerHTML = title1;
-			var content = document.createElement("p");
-			div.appendChild(content);
-			content.innerHTML = content1;
-			var time = document.createElement("p");
-			div.appendChild(time);
-			time.innerHTML = time1;
-			var button = document.createElement("button");
-			div.appendChild(button);
-			button.onclick= function () { read(); };
-			button.style.cssText = "width: 50px; height:30px";
-			button.innerHTML = "已读";
-			var button1 = document.createElement("button");
-			div.appendChild(button1);
-			button1.onclick= function () { closeNotification(); };
-			button1.style.cssText = "width: 100px; height:30px";
-			button1.innerHTML = "暂时忽略";
-		}
-	  });
+		method: 'get',
+		url: '/check_notification'
+	})
+		.then(function(response) {
+			var last = JSON.stringify(response.data);
+			var notification = window.eval(response.data);
+			var title1 =　notification.title;
+			var content1 ="　　" + notification.content;
+			var time1 = notification.time;
+			if(last !== "null"){
+				var body = document.getElementById("body");
+				var div = document.createElement("div");
+				body.appendChild(div);
+				div.style.cssText = "width:35%;position: fixed; top: 10%; left: 36%; text-align: center; background-color: white;"
+				div.id = "alert";
+
+				var modal= document.createElement("div");
+				div.appendChild(modal);
+				modal.className="modal-dialog modal-content"
+				modal.style.cssText="width:100%;"
+
+				var modalHeader=document.createElement("div");
+				modal.appendChild(modalHeader);
+				modalHeader.className="modal-header"
+				var title_1=document.createElement("h3");
+				modalHeader.appendChild(title_1)
+				title_1.innerHTML = title1;
+				title_1.className="modal-title"
+
+				var modalBody=document.createElement("h4");
+				modal.appendChild(modalBody);
+				modalBody.innerHTML = content1;
+				modalBody.className="modal-body"
+				modalBody.style.cssText="text-align: left;"
+
+				var time=document.createElement("h4");
+				modal.appendChild(time);
+				time.innerHTML = time1;
+				time.className="modal-body"
+				time.style.cssText="text-align: right;"
+
+				var foot=document.createElement("form");
+				foot.className ="modal-footer";
+				modal.appendChild(foot);
+				var button = document.createElement("button");
+				foot.appendChild(button);
+				button.onclick= function () { read(); };
+				button.className = "btn btn-primary";
+				button.type="button";
+				button.innerHTML = "已读";
+				var button1 = document.createElement("button");
+				foot.appendChild(button1);
+				button1.onclick= function () { closeNotification(); };
+				button1.className = "btn btn-default";
+				button1.type="button";
+				button1.innerHTML = "暂时忽略";
+			}
+		});
 }
 function read(){
 	axios({

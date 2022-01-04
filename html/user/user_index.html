@@ -149,6 +149,10 @@
 
 			<!--右区域-->
 			<div class="col-md-10">
+				<div class="alert alert-warning alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()">立即查看</a>
+				</div>
 				<div class='col-md-10' id='con'  style='text-align: center'>
 					<label style='color: #77bbe2;font-size:50px;'>　　　车辆信息</label>
 				</div>
@@ -158,6 +162,22 @@
 			</div>
 		</div>
 	</div>
+
+	<!--通知信息框
+	<div id="alert" style="width: 35%; position: absolute; top: 10%; left: 36%; text-align: center; background-color: white;">
+		<div class="modal-dialog modal-content" style="width: 100%;">
+			<div class="modal-header">
+				<h3 class="modal-title">【通知】您的车辆沪SHU504已被他人绑定</h3>
+			</div>
+			<h4 class="modal-body" style="text-align: left;">　　尊敬的用户您好，您的车辆沪SHU504已被手机尾号为3472的用户绑定。</h4>
+			<h4 class="modal-body" style="text-align: right;">2021-12-30 16:38:26</h4>
+			<form class="modal-footer">
+				<button class="btn btn-primary" type="submit">已读</button>
+				<button class="btn btn-default">暂时忽略</button>
+			</form>
+		</div>
+	</div>
+	-->
 
 	<!-- 登出模态框（Modal）-->
 	<div class='modal fade' id='log_out' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
@@ -420,7 +440,6 @@
 	<script>
 		window.onload= function(){
 			getUserName();
-			checkNotification();
 			checkGroup();
 			checkUser();
 			getinfo();
