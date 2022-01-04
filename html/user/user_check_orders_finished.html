@@ -170,6 +170,7 @@
 				<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
 				<label for="pwdc" style='font-size:15px;width: 80px;'>确认密码：</label>
 				<input id='pwdc' type='password' name="pwdc" onchange="checkpwdc()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
+				<span id='checktext5'></span> <br></br>
 
 				<input type="hidden" id="old_password" name="old_password" />
 				<input type="hidden" id="new_password" name="new_password" />
@@ -206,12 +207,49 @@
 </div>
 
 <script>
+	function checkpwd(){
+		var check = false;
+		var pswd = document.getElementById("pswd").value;
+		if(pswd.length < 6){
+			document.getElementById("checktext4").innerHTML = " × 不要少于6位";
+			check = false;
+		}
+		else {
+			document.getElementById("checktext4").innerHTML = " √";
+			check = true;
+		}
+		return check;
+	}
+	function checkpwdc() {
+		var check = false;
+		var password = document.getElementById("pswd").value;
+		var pwdc = document.getElementById("pwdc").value;
+		if (password !== pwdc) {
+			document.getElementById("checktext5").innerHTML = " × 两次输入密码不一致";
+			check = false;
+		}
+		else {
+			document.getElementById("checktext5").innerHTML = " √";
+			check = true;
+		}
+		return check;
+	}
+	function check() {
+		if(checkpwd() && checkpwdc()){
+			changePswd();
+		}
+	}
+	function keychangepassword(){
+		if(event.keyCode === 13){
+			document.getElementById('changepasswordbutton').click();
+		}
+	}
+
 	window.onload= function(){
 		getUserName();
 		checkGroup();
 		checkUser();
 		getinfo();
-		getVehicle();
 		userInfo();
 	}
 	function userinfo(){
@@ -237,7 +275,7 @@
 					document.getElementById("user_property").innerHTML = "性　　质：" + last.property;
 					document.getElementById("user_tel").innerHTML = "联系电话：" + last.contact_tel;
 					document.getElementById("user_contact").innerHTML = "联 系 人：" + last.contact_person;
-					document.getElementById("user_discount").innerHTML = "折扣率；" + last.discount_rate;
+					document.getElementById("user_discount").innerHTML = "折扣率:" + last.discount_rate + "%";
 				})
 	}
 
