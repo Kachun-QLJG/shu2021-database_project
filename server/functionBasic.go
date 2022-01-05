@@ -30,8 +30,8 @@ func searchForProjects(c *gin.Context) {
 		database.Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_spelling LIKE ? and ? != ''", searchText, dbType).Scan(&timeOverview)
 		//database.Limit(20).Where("project_spelling LIKE ? and time_? != ''" , searchText, dbType).Find(&timeOverview)
 	} else {
-		database.Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_name LIKE ?and ? != ''", searchText, dbType).Scan(&timeOverview)
-		//database.Limit(20).Where("project_name LIKE ?and time_? != ''" , searchText, dbType).Find(&timeOverview)
+		database.Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_name LIKE ? and ? != ''", searchText, dbType).Scan(&timeOverview)
+		//database.Limit(20).Where("project_name LIKE ? and time_? != ''" , searchText, dbType).Find(&timeOverview)
 	}
 	var result [20]struct {
 		Name string
