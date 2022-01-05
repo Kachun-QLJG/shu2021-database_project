@@ -15,7 +15,7 @@ func getProcessingAttorney(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	if group != "普通用户" {
-		c.String(http.StatusForbidden, "错误!")
+		c.String(http.StatusForbidden, "无权限！")
 		return
 	}
 	var user User
@@ -37,7 +37,7 @@ func getFinishedAttorney(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	if group != "普通用户" {
-		c.String(http.StatusForbidden, "错误!")
+		c.String(http.StatusForbidden, "无权限！")
 		return
 	}
 	var user User
@@ -69,7 +69,7 @@ func getAttorneyDetail(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	if group != "普通用户" {
-		c.String(http.StatusForbidden, "错误!")
+		c.String(http.StatusForbidden, "无权限！")
 		return
 	}
 	attorneyNumber := c.Query("no")
@@ -88,7 +88,7 @@ func createAttorney(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	if group != "普通用户" {
-		c.String(http.StatusForbidden, "错误!")
+		c.String(http.StatusForbidden, "无权限！")
 		return
 	}
 	var user User
@@ -123,7 +123,7 @@ func getRepairHistory(c *gin.Context) {
 	group := c.MustGet("group").(string)
 	vin := c.Query("vin")
 	if group != "普通用户" {
-		c.String(http.StatusForbidden, "错误!")
+		c.String(http.StatusForbidden, "无权限！")
 		return
 	}
 	var user User
@@ -146,7 +146,7 @@ func getVehicle(c *gin.Context) {
 	number := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	if group != "普通用户" {
-		c.JSON(http.StatusForbidden, gin.H{"data": "错误!"})
+		c.String(http.StatusForbidden, "无权限！")
 		return
 	}
 	var user User
@@ -207,34 +207,22 @@ func checkVehicle(c *gin.Context) {
 	c.String(http.StatusOK, strconv.FormatInt(database.First(&vehicle, "number = ?", carNumber).RowsAffected, 10))
 }
 
-//func startAddVehicle(c *gin.Context) {
-//	number := c.MustGet("username").(string)
-//	group := c.MustGet("group").(string)
-//	if group != "普通用户" {
-//		c.String(http.StatusForbidden, "错误！")
-//		return
-//	}
-//	c.HTML(http.StatusOK, "user_car_register.html", gin.H{"username": number, "group": group})
-//}
-
 func startUCheckOrdersOngoing(c *gin.Context) {
-	number := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	if group != "普通用户" {
-		c.String(http.StatusForbidden, "错误！")
+		c.String(http.StatusForbidden, "无权限！")
 		return
 	}
-	c.HTML(http.StatusOK, "user_check_orders_ongoing.html", gin.H{"username": number, "group": group})
+	c.HTML(http.StatusOK, "user_check_orders_ongoing.html", nil)
 }
 
 func startUCheckOrdersFinished(c *gin.Context) {
-	number := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	if group != "普通用户" {
-		c.String(http.StatusForbidden, "错误！")
+		c.String(http.StatusForbidden, "无权限！")
 		return
 	}
-	c.HTML(http.StatusOK, "user_check_orders_finished.html", gin.H{"username": number, "group": group})
+	c.HTML(http.StatusOK, "user_check_orders_finished.html", nil)
 }
 
 func addVehicle(c *gin.Context) {
@@ -298,7 +286,7 @@ func userinfo(c *gin.Context) {
 	number := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	if group != "普通用户" {
-		c.String(http.StatusForbidden, "错误！")
+		c.String(http.StatusForbidden, "无权限！")
 		return
 	}
 	var user User
@@ -317,7 +305,7 @@ func showPlate(c *gin.Context) {
 	group := c.MustGet("group").(string)
 	licenseNumber := c.Query("license_number")
 	if group != "普通用户" {
-		c.JSON(http.StatusForbidden, gin.H{"data": "错误!"})
+		c.String(http.StatusForbidden, "无权限！")
 		return
 	}
 	var user User
@@ -340,7 +328,7 @@ func changeUserinfo(c *gin.Context) {
 	property := c.PostForm("property")
 	contactPerson := c.PostForm("contact_person")
 	if group != "普通用户" {
-		c.String(http.StatusForbidden, "错误！")
+		c.String(http.StatusForbidden, "无权限！")
 		return
 	}
 	var user User
@@ -350,13 +338,3 @@ func changeUserinfo(c *gin.Context) {
 	database.Model(&user).Update("contact_person", contactPerson) //更改状态为传过来的状态
 	c.String(http.StatusOK, "成功！")
 }
-
-//func startChangeUserinfo(c *gin.Context) {
-//	number := c.MustGet("username").(string)
-//	group := c.MustGet("group").(string)
-//	if group != "普通用户" {
-//		c.String(http.StatusForbidden, "错误！")
-//		return
-//	}
-//	c.HTML(http.StatusOK, "user_change_profile.html", gin.H{"username": number, "group": group})
-//}

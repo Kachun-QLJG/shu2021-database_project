@@ -1,11 +1,30 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 	"strings"
 )
+
+func getRepairmanInfo(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	if group != "维修员" {
+		c.String(http.StatusForbidden, "无权限！")
+		return
+	}
+	var repairman struct {
+		Number          string
+		Name            string
+		Type            string
+		CurrentWorkHour float64
+		Status          string
+	}
+	database.Table("repairman").Where("number = ?", username).Select("number as number, name as name, type as type, current_work_hour as current_work_hour, status as status").Scan(&repairman)
+	c.JSON(http.StatusOK, repairman)
+}
 
 func addPartsForProject(c *gin.Context) {
 	username := c.MustGet("username").(string)
@@ -65,31 +84,11 @@ func searchForParts(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
-//func startChangeStatus(c *gin.Context) {
-//	username := c.MustGet("username").(string)
-//	group := c.MustGet("group").(string)
-//	if group != "维修员" {
-//		c.HTML(http.StatusOK, "error.html", gin.H{"data": "无权限！", "website": "/index", "webName": "主页"})
-//		return
-//	}
-//	c.HTML(http.StatusOK, "repairman_status_change.html", gin.H{"username": username, "group": group})
-//}
-
-//func startRCheckOrders(c *gin.Context) {
-//	username := c.MustGet("username").(string)
-//	group := c.MustGet("group").(string)
-//	if group != "维修员" {
-//		c.HTML(http.StatusOK, "error.html", gin.H{"data": "无权限！", "website": "/index", "webName": "主页"})
-//		return
-//	}
-//	c.HTML(http.StatusOK, "repairman_check_orders.html", gin.H{"username": username, "group": group})
-//}
-
 func checkStatus(c *gin.Context) {
 	number := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	if group != "维修员" {
-		c.String(http.StatusForbidden, "错误！")
+		c.String(http.StatusForbidden, "无权限！")
 		return
 	}
 	var repairman Repairman
@@ -102,9 +101,10 @@ func changeStatus(c *gin.Context) {
 	number := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	if group != "维修员" {
-		c.String(http.StatusBadRequest, "错误！")
+		c.String(http.StatusForbidden, "无权限！")
 		return
 	}
+	fmt.Println("status: ", status)
 	var repairman Repairman
 	database.First(&repairman, "number = ?", number)
 	database.Model(&repairman).Update("status", status) //更改状态为传过来的状态

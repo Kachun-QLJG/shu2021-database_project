@@ -165,14 +165,14 @@
 			<div class="modal-body">
 				<img src="/statics/user/井号.png" width="20px">
 				<label style="font-size:15px;width: 80px;">更改状态：</label>
-				<select name="status">
+				<select id="status">
 					<option value="正常" selected>正常</option>
 					<option value="休假">休假</option>
 					<option value="离职">离职</option>
 				</select>
 			</div>
 			<form class="modal-footer">
-				<button type="button" class="btn btn-primary" onclick="changeStatus()" id="confirmStatusChange">确认更改</button>
+				<button class="btn btn-primary" onclick="changeStatus()" type="button">确认更改</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 			</form>
 		</div>

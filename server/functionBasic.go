@@ -27,25 +27,11 @@ func searchForProjects(c *gin.Context) {
 		Time float64
 	}
 	if searchText[1] >= 'a' && searchText[1] <= 'z' || searchText[1] >= '0' && searchText[1] <= '9' {
-		database.Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_spelling LIKE ? and ? != ''", searchText, dbType).Scan(&timeOverview)
-		//database.Limit(20).Where("project_spelling LIKE ? and time_? != ''" , searchText, dbType).Find(&timeOverview)
+		database.Limit(20).Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_spelling LIKE ? and ? != ''", searchText, dbType).Scan(&timeOverview)
 	} else {
-		database.Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_name LIKE ? and ? != ''", searchText, dbType).Scan(&timeOverview)
-		//database.Limit(20).Where("project_name LIKE ? and time_? != ''" , searchText, dbType).Find(&timeOverview)
+		database.Limit(20).Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_name LIKE ? and ? != ''", searchText, dbType).Scan(&timeOverview)
 	}
-	var result [20]struct {
-		Name string
-		Id   string
-		Time float64
-	}
-	count := 0
-	for row := range timeOverview {
-		result[count].Id = timeOverview[row].Id
-		result[count].Name = timeOverview[row].Name
-		result[count].Time = timeOverview[row].Time
-		count++
-	}
-	c.JSON(http.StatusOK, result)
+	c.JSON(http.StatusOK, timeOverview)
 }
 
 func read(c *gin.Context) {
@@ -64,12 +50,6 @@ func checkNotification(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, nil)
 	}
-}
-
-func startChangePassword(c *gin.Context) {
-	username := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	c.HTML(http.StatusOK, "change_password.html", gin.H{"username": username, "group": group})
 }
 
 func changePassword(c *gin.Context) {
@@ -119,8 +99,6 @@ func changePassword(c *gin.Context) {
 	}
 }
 
-//localhost:8080/add_vehicle?number=1&license_number=1&user_id=1&color=1&model=1&type=1
-
 func welcome(c *gin.Context) {
 	sessionId, err := c.Cookie("sessionId")
 	var username string
@@ -155,5 +133,4 @@ func welcome(c *gin.Context) {
 			}
 		}
 	}
-	//c.HTML(http.StatusOK, "index.html", gin.H{"username": username, "group": group})
 }

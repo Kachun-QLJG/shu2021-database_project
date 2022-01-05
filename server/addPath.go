@@ -12,9 +12,8 @@ func addPath(r *gin.Engine) {
 	r.GET("/check_register", checkRegister)                                                       //检查用户名是否重复
 	r.GET("/login", startLogin)                                                                   //用户登录
 	r.GET("/logout", authMiddleWare(), checkPermission(), startLogout)                            //用户登出
-	r.GET("/change_password", authMiddleWare(), checkPermission(), startChangePassword)           //更改密码
 	r.GET("/check_notification", authMiddleWare(), checkPermission(), checkNotification)          //检查通知
-	r.GET("/get_username", authMiddleWare(), checkPermission(), getUsername)                      //返回用户名
+	r.GET("/get_username", authMiddleWare(), checkPermission(), getUsername)                      //返回用户的用户名
 	r.GET("/download_pdf", authMiddleWare(), checkPermission(), downloadPdf)                      //生成并下载PDF文档
 	r.GET("/show_pdf", authMiddleWare(), checkPermission(), showPdf)                              //返回pdf文档
 	r.GET("/show_plate", authMiddleWare(), checkPermission(), showPlate)                          //返回车牌
@@ -25,17 +24,16 @@ func addPath(r *gin.Engine) {
 	r.GET("/get_processing_attorney", authMiddleWare(), checkPermission(), getProcessingAttorney) //寻找进行中的委托
 	r.GET("/get_finished_attorney", authMiddleWare(), checkPermission(), getFinishedAttorney)     //寻找已完成的委托
 	r.GET("/get_attorney_detail", authMiddleWare(), checkPermission(), getAttorneyDetail)         //获取某一委托的详情
+	r.GET("/get_salesman_info", authMiddleWare(), checkPermission(), getSalesmanInfo)             //获取业务员个人信息
+	r.GET("/get_repairman_info", authMiddleWare(), checkPermission(), getRepairmanInfo)           //获取业务员个人信息
+	r.GET("/get_pending_attorney", authMiddleWare(), checkPermission(), getPendingAttorney)       //业务员获取待处理订单
 
-	r.GET("/userinfo", authMiddleWare(), checkPermission(), userinfo) //查询用户个人信息
-	//r.GET("/change_userinfo", authMiddleWare(), checkPermission(), startChangeUserinfo)               //进入更改个人信息界面
-	//r.GET("/add_vehicle", authMiddleWare(), checkPermission(), startAddVehicle)                       //用户添加车辆
+	r.GET("/userinfo", authMiddleWare(), checkPermission(), userinfo)                                 //查询用户个人信息
 	r.GET("/check_vehicle", authMiddleWare(), checkPermission(), checkVehicle)                        //用户添加车辆
-	r.GET("/u_check_orders_ongoing", authMiddleWare(), checkPermission(), startUCheckOrdersOngoing)   //进入用户查看订单页面
-	r.GET("/u_check_orders_finished", authMiddleWare(), checkPermission(), startUCheckOrdersFinished) //进入用户查看订单页面
+	r.GET("/u_check_orders_ongoing", authMiddleWare(), checkPermission(), startUCheckOrdersOngoing)   //进入用户查看进行中订单页面
+	r.GET("/u_check_orders_finished", authMiddleWare(), checkPermission(), startUCheckOrdersFinished) //进入用户查看已完成订单页面
 
 	r.GET("/check_status", authMiddleWare(), checkPermission(), checkStatus) //返回维修工状态
-	//r.GET("/change_status", authMiddleWare(), checkPermission(), startChangeStatus) //进入更改工作状态界面
-	//r.GET("/r_check_orders", authMiddleWare(), checkPermission(), startRCheckOrders) //进入维修员查看订单页面
 
 	r.GET("/s_check_orders", authMiddleWare(), checkPermission(), startSCheckOrders) //进入业务员查看订单页面
 	r.GET("/take_orders", authMiddleWare(), checkPermission(), startTakeOrders)      //进入接单界面
@@ -46,12 +44,12 @@ func addPath(r *gin.Engine) {
 	r.POST("/logout", logout)                                                       //后端处理用户登出
 	r.POST("/login", login)                                                         //后端处理用户登陆
 	r.POST("/register", register)                                                   //后端处理用户注册
-	r.POST("/create_attorney", authMiddleWare(), checkPermission(), createAttorney) //设置已读
+	r.POST("/create_attorney", authMiddleWare(), checkPermission(), createAttorney) //用户创建新的委托
 
 	r.GET("/captcha", func(c *gin.Context) { Captcha(c, 4) }) //随机生成一个4位数字验证码
 
-	r.POST("/change_userinfo", authMiddleWare(), checkPermission(), changeUserinfo) //后端处理更改用户个人信息
-	r.POST("/add_vehicle", authMiddleWare(), checkPermission(), addVehicle)         //后端处理用户添加车辆
-	r.POST("/change_status", authMiddleWare(), checkPermission(), changeStatus)     //后端处理维修员更改工作状态
-	r.POST("/add_parts_for_project", authMiddleWare(), checkPermission(), addPartsForProject)
+	r.POST("/change_userinfo", authMiddleWare(), checkPermission(), changeUserinfo)           //后端处理更改用户个人信息
+	r.POST("/add_vehicle", authMiddleWare(), checkPermission(), addVehicle)                   //后端处理用户添加车辆
+	r.POST("/change_status", authMiddleWare(), checkPermission(), changeStatus)               //后端处理维修员更改工作状态
+	r.POST("/add_parts_for_project", authMiddleWare(), checkPermission(), addPartsForProject) //维修工为项目添加零件
 }

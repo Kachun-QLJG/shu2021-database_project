@@ -155,7 +155,7 @@ function checkGroup(){
 }
 function changeStatus(){		//https://blog.csdn.net/weixin_41949511/article/details/93630346
 	let formData = new FormData();
-	var select = document.getElementById("confirmStatusChange");
+	var select = document.getElementById("status");
 	formData.append("status", select.value);
 	let config = {
 	   headers: {"Content-Type": "multipart/form-data"}
