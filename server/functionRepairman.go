@@ -110,3 +110,20 @@ func changeStatus(c *gin.Context) {
 	database.Model(&repairman).Update("status", status) //更改状态为传过来的状态
 	c.String(http.StatusOK, "修改成功！")
 }
+
+func repairmaninfo(c *gin.Context) {
+	number := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	if group != "维修员" {
+		c.String(http.StatusForbidden, "错误！")
+		return
+	}
+	var repairman Repairman
+	database.First(&repairman, "number = ?", number)
+	c.JSON(http.StatusOK, gin.H{
+		"number":            repairman.Number,
+		"name":              repairman.Name,
+		"type":              repairman.Type,
+		"current_work_hour": repairman.CurrentWorkHour,
+		"status":            repairman.Status})
+}
