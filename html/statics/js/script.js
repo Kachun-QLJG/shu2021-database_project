@@ -304,6 +304,54 @@ function searchForProjects(){
 		})
 }
 
+// function SsearchForProjects(){
+// 	delProjectResults();
+// 	if (document.getElementById("project1").value === "") return;
+// 	axios({
+// 		method: 'get',
+// 		url: '/search_for_parts?text=' + document.getElementById("project1").value + '&type=A'
+// 	})
+// 		.then(function (response) {
+// 			{
+// 				console.log(response.data);
+// 				var div = document.getElementById("fill_project1");//寻找定位的区块
+// 				var list = document.createElement("ul");
+// 				//list.setAttribute("name", "list");
+// 				// list.className = "table-responsive";
+// 				//div.appendChild(list);
+// 				// var ordertable = document.createElement("table");//生成表格ordertable
+// 				// ordertable.id = "ordertable";
+// 				// ordertable.className = "table  table-bordered table-hover";
+// 				// table.appendChild(ordertable);
+// 				//var tbody = document.createElement("tbody");//不知道这是啥
+// 				// ordertable.appendChild(tbody);
+// 				// var tablehead = document.createElement("tr");//生成表格头tablehead
+// 				// tablehead.id = "tablehead";
+// 				// tbody.appendChild(tablehead);
+// 				// var head_1 = document.createElement("th");
+// 				// head_1.innerHTML = "维修项目名";
+// 				// tablehead.appendChild(head_1);
+// 				// var head_2 = document.createElement("th");
+// 				// head_2.innerHTML = "维修项目编号";
+// 				// tablehead.appendChild(head_2);
+//
+// 				for (var i = 0; response.data[i].Name !== ""; ++i) {
+// 					var temp = document.createElement("li");
+// 					//var t1 = document.createElement("td");
+// 					temp.innerHTML = JSON.stringify(response.data[i].Name);
+// 					alert(temp.innerHTML);
+// 					//temp.appendChild(t1);
+// 					// var t2 = document.createElement("td");
+// 					// t2.innerHTML = JSON.stringify(response.data[i].Id);
+// 					// temp.appendChild(t2);
+// 					// alert(temp);
+// 					list.appendChild(temp);
+// 				}
+// 				div.appendChild(list)
+// 			}
+// 		})
+// }
+
 function delProjectResults(){
 	try {
 		var div = document.getElementById("con");
@@ -330,7 +378,7 @@ function openFlagParts () {
 function openFlagProjects () {
 	timerProjects = setTimeout(function(){
 		flagProjects = 1;
-		searchForProjects();
+		SsearchForProjects();
 		clearTimeout(timerProjects);
 		flagProjects=0;
 	}, 200);
