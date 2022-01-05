@@ -62,8 +62,8 @@
 				<label style='color: #77bbe2;font-size:50px;'>　　　车辆信息</label>
 			</div>
 
-			<div class="table-responsive col-md-12">
-				<table class="table  table-bordered table-hover">
+			<div id="ongoing_table_father" class="table-responsive col-md-12">
+				<table id="ongoing_table" class="table  table-bordered table-hover">
 					<tr>
 						<th width="10%"><h5 style="font-weight: 900;">订单号</h5></th>
 						<th width="12%"><h5 style="font-weight: 900;">车架号</h5></th>
@@ -257,6 +257,7 @@
 		checkUser();
 		getinfo();
 		userInfo();
+		getFinishedAttorney();
 	}
 	function userinfo(){
 		axios({
@@ -285,8 +286,102 @@
 				})
 	}
 
+	function getProcessingAttorney(){
+		//删除表格
+		try {document.getElementById("ongoing_table_father").removeChild(document.getElementById("ongoing_table"));
+			 document.getElementById("ongoing_table_father").removeChild(document.getElementById("right"))
+		}
+		catch(error){}
+		//新增表格
+		var table = document.createElement("table");
+		document.getElementById("ongoing_table_father").appendChild(table);
+		table.id = "ongoing_table";
+		table.className = "table  table-bordered table-hover";
+		var tbody = document.createElement("tbody");
+		document.getElementById("ongoing_table").appendChild(tbody);
+		var tr = document.createElement("tr");
+		tbody.appendChild(tr);
+		var th1 = document.createElement("th");
+		tr.appendChild(th1);
+		th1.setAttribute("width","10%");
+		var h1 = document.createElement("h5");
+		th1.appendChild(h1);
+		h1.setAttribute("style","font-weight: 900;");
+		h1.innerHTML = "订单号";
+		var th2 = document.createElement("th");
+		tr.appendChild(th2);
+		th2.setAttribute("width","12%");
+		var h2 = document.createElement("h5");
+		th2.appendChild(h2);
+		h2.setAttribute("style","font-weight: 900;");
+		h2.innerHTML = "车架号";
+		var th3 = document.createElement("th");
+		tr.appendChild(th3);
+		th3.setAttribute("width","20%");
+		var h3 = document.createElement("h5");
+		th3.appendChild(h3);
+		h3.setAttribute("style","font-weight: 900;");
+		h3.innerHTML = "粗略故障描述";
+		var th4 = document.createElement("th");
+		tr.appendChild(th4);
+		th4.setAttribute("width","40%");
+		var h4 = document.createElement("h5");
+		th4.appendChild(h4);
+		h4.setAttribute("style","font-weight: 900;");
+		h4.innerHTML = "详细故障描述";
+		var th5 = document.createElement("th");
+		tr.appendChild(th5);
+		th5.setAttribute("width","10%");
+		var h5 = document.createElement("h5");
+		th5.appendChild(h5);
+		h5.setAttribute("style","font-weight: 900;");
+		h5.innerHTML = "预计完成时间";
+		var th6 = document.createElement("th");
+		tr.appendChild(th6);
+		th6.setAttribute("width","8%");
+		var h6 = document.createElement("h5");
+		th6.appendChild(h6);
+		h6.setAttribute("style","font-weight: 900;");
+		h6.innerHTML = "维修进度";
+		axios({
+			method : 'get',
+			url: '/get_processing_attorney'
+		})
+				.then(function(response) {
+					var data = response.data;
+					var num = data.length;
+					for(var i = 1; i <= num; i++) {
+						var tr1 = document.createElement("tr");
+						tbody.appendChild(tr1);
+						tr1.setAttribute("ng-repeat","item in list | filter:listfilter");
+						var td1 = document.createElement("td");
+						tr1.appendChild(td1);
+						td1.innerHTML = data[i-1].OrderNumber;
+						var td2 = document.createElement("td");
+						tr1.appendChild(td2);
+						td2.innerHTML = data[i-1].Vin;
+						var td3 = document.createElement("td");
+						tr1.appendChild(td3);
+						td3.innerHTML = data[i-1].RoughProblem;
+						var td4 = document.createElement("td");
+						tr1.appendChild(td4);
+						td4.innerHTML = data[i-1].SpecificProblem;
+						var td5 = document.createElement("td");
+						tr1.appendChild(td5);
+						td5.innerHTML = data[i-1].PredictFinishTime;
+						var td6 = document.createElement("td");
+						tr1.appendChild(td6);
+						td6.innerHTML = data[i-1].Progress;
+					}
+					var div = document.createElement("div");
+					document.getElementById("ongoing_table_father").appendChild(div);
+					div.className = "row";
+					div.id = "right";
+					})
+	}
+
 </script>
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->
 
