@@ -175,7 +175,7 @@
 		<div class='modal-content'>
 			<div class='modal-header'>
 				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-				<h3 class='modal-title' id='takeOrder'>新增车辆</h3>
+				<h3 class='modal-title' id='takeOrder'>编辑新订单</h3>
 			</div>
 			<div class='modal-body'>
 				<img src='/statics/user/井号.png' width='20px' alt="正在加载图片">
@@ -198,13 +198,20 @@
 				<label for="repair_type3">大型</label>
 				<br>
 
+				<div>
+					<img src='/statics/user/车型.png' width='20px' style="vertical-align: top" alt="正在加载图片">
+					<label for='DetailedProblem' style='font-size:15px;width: 80px;vertical-align: top'>详细故障：</label>
+					<textarea id='DetailedProblem' placeholder='请详细描述顾客车辆的故障' style="width: 300px;height: 100px;"></textarea>
+				</div>
+				<br>
+
 				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
 				<label style='font-size:15px;width: 90px;'>详情：</label>
 				<br>
 
 <!--				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">-->
 				<label for="detail1" style='font-size:15px;width: 90px;'>具体问题：</label>
-				<input id='detail1' type='text' placeholder='具体故障部位'/>
+				<input id='detail1' type='text' onblur="delProjectResults()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" placeholder='项目名称'/>
 <!--				<img src='/statics/user/问号.png' width='20px' alt="正在加载图片">-->
 <!--				<span id='checktext2'></span>-->
 <!--				<br>-->

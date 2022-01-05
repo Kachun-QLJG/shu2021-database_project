@@ -261,10 +261,10 @@ function checkUser(){
 
 function searchForProjects(){
 	delProjectResults();
-	if (document.getElementById("txt").value === "") return;
+	if (document.getElementById("detail1").value === "") return;
 	axios({
 		method: 'get',
-		url: '/search_for_projects?text=' + document.getElementById("txt").value + '&type=A'
+		url: '/search_for_projects?text=' + document.getElementById("detail1").value + '&type=A'
 	})
 		.then(function (response) {
 			{
@@ -482,9 +482,13 @@ function getUserName(){
 			var text = document.getElementById("text");
 			if(response.data==null){
 				text.innerHTML ="用户名：未登录";
+
 			}
 			else{
 				text.innerHTML ="用户名：" + response.data;
+				document.getElementById("register").style.display="none";
+				document.getElementById("login").style.display="none";
+				document.getElementById("logout").style.display="";
 			}
 		})
 }
