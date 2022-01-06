@@ -16,6 +16,8 @@ func addPath(r *gin.Engine) {
 	r.GET("/get_username", authMiddleWare(), checkPermission(), getUsername)             //返回用户的用户名
 	r.GET("/download_pdf", authMiddleWare(), checkPermission(), downloadPdf)             //生成并下载PDF文档
 	r.GET("/show_pdf", authMiddleWare(), checkPermission(), showPdf)                     //返回pdf文档
+	r.GET("/get_full_attorney", authMiddleWare(), checkPermission(), getFullAttorney)    //返回完整委托书·所有内容
+	r.GET("/generate_pdf", authMiddleWare(), checkPermission(), generatePdf)             //【临时】生成PDF
 	r.GET("/captcha", func(c *gin.Context) { Captcha(c, 4) })                            //随机生成一个4位数字验证码
 
 	//----------用户路径----------

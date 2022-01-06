@@ -9,6 +9,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	time2 "time"
 )
 
 const (
@@ -23,6 +24,13 @@ var (
 	usernameForPdfGen   string
 	attorneyNoForPdfGen string
 )
+
+func generatePdf(c *gin.Context) {
+	usernameForPdfGen = c.MustGet("username").(string)
+	attorneyNoForPdfGen = c.Query("attorney_no")
+	filename := genPdf(usernameForPdfGen, attorneyNoForPdfGen)
+	c.File(filename)
+}
 
 func showPdf(c *gin.Context) {
 	username := c.MustGet("username").(string)
@@ -95,12 +103,13 @@ func ComplexReportExecutor(report *core.Report) {
 	title1 := gopdf.NewDiv(lineHeight, lineSpace, report)
 	title1.SetFont(largeFont)
 	title1.HorizontalCentered().SetContent("502汽车维修站\n维修委托书").GenerateAtomicCell()
+	date := time2.Now().Format("2006年1月2日")
 
 	no := gopdf.NewDiv(lineHeight, lineSpace, report)
-	no.SetFont(textFont).SetContent("No.20211220001").GenerateAtomicCell()
+	no.SetFont(textFont).SetContent("No." + attorneyNoForPdfGen).GenerateAtomicCell()
 	time := gopdf.NewDiv(lineHeight, lineSpace, report)
 	time.SetMarign(core.Scope{Top: lineHeight * -1})
-	time.SetFont(textFont).RightAlign().SetContent("登记日期：2021年12月20日").GenerateAtomicCell()
+	time.SetFont(textFont).RightAlign().SetContent("生成日期：" + date).GenerateAtomicCell()
 	border := core.NewScope(4.0, 4.0, 4.0, 0) //表格内的margin
 	rows, cols := 21+columnCount, 23
 	table := gopdf.NewTable(cols, int(rows), 450, lineHeight, report)
