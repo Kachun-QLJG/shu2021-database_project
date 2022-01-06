@@ -13,11 +13,6 @@ import (
 
 func getProcessingAttorney(c *gin.Context) {
 	username := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	if group != "普通用户" {
-		c.String(http.StatusForbidden, "无权限！")
-		return
-	}
 	var user User
 	database.First(&user, "contact_tel = ?", username)
 	type information struct {
@@ -35,11 +30,6 @@ func getProcessingAttorney(c *gin.Context) {
 
 func getFinishedAttorney(c *gin.Context) {
 	username := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	if group != "普通用户" {
-		c.String(http.StatusForbidden, "无权限！")
-		return
-	}
 	var user User
 	database.First(&user, "contact_tel = ?", username)
 	type information struct {
@@ -67,11 +57,6 @@ func getFinishedAttorney(c *gin.Context) {
 
 func getAttorneyDetail(c *gin.Context) {
 	username := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	if group != "普通用户" {
-		c.String(http.StatusForbidden, "无权限！")
-		return
-	}
 	attorneyNumber := c.Query("no")
 	var user User
 	database.First(&user, "contact_tel = ?", username)
@@ -86,11 +71,6 @@ func getAttorneyDetail(c *gin.Context) {
 
 func createAttorney(c *gin.Context) {
 	username := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	if group != "普通用户" {
-		c.String(http.StatusForbidden, "无权限！")
-		return
-	}
 	var user User
 	database.First(&user, "contact_tel = ?", username)
 	var attorney Attorney
@@ -120,12 +100,7 @@ func createAttorney(c *gin.Context) {
 
 func getRepairHistory(c *gin.Context) {
 	number := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
 	vin := c.Query("vin")
-	if group != "普通用户" {
-		c.String(http.StatusForbidden, "无权限！")
-		return
-	}
 	var user User
 	database.First(&user, "contact_tel = ?", number)
 	var vehicle Vehicle
@@ -144,11 +119,6 @@ func getRepairHistory(c *gin.Context) {
 
 func getVehicle(c *gin.Context) {
 	number := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	if group != "普通用户" {
-		c.String(http.StatusForbidden, "无权限！")
-		return
-	}
 	var user User
 	database.First(&user, "contact_tel = ?", number)
 	var vehicle []Vehicle
@@ -208,20 +178,10 @@ func checkVehicle(c *gin.Context) {
 }
 
 func startUCheckOrdersOngoing(c *gin.Context) {
-	group := c.MustGet("group").(string)
-	if group != "普通用户" {
-		c.String(http.StatusForbidden, "无权限！")
-		return
-	}
 	c.HTML(http.StatusOK, "user_check_orders_ongoing.html", nil)
 }
 
 func startUCheckOrdersFinished(c *gin.Context) {
-	group := c.MustGet("group").(string)
-	if group != "普通用户" {
-		c.String(http.StatusForbidden, "无权限！")
-		return
-	}
 	c.HTML(http.StatusOK, "user_check_orders_finished.html", nil)
 }
 
@@ -284,11 +244,6 @@ func addVehicle(c *gin.Context) {
 
 func getUserInfo(c *gin.Context) {
 	number := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	if group != "普通用户" {
-		c.String(http.StatusForbidden, "无权限！")
-		return
-	}
 	var user struct {
 		Number        string
 		Name          string
@@ -303,12 +258,7 @@ func getUserInfo(c *gin.Context) {
 
 func showPlate(c *gin.Context) {
 	number := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
 	licenseNumber := c.Query("license_number")
-	if group != "普通用户" {
-		c.String(http.StatusForbidden, "无权限！")
-		return
-	}
 	var user User
 	database.First(&user, "contact_tel = ?", number)
 	var vehicle Vehicle
@@ -324,14 +274,9 @@ func showPlate(c *gin.Context) {
 
 func changeUserinfo(c *gin.Context) {
 	number := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
 	name := c.PostForm("name")
 	property := c.PostForm("property")
 	contactPerson := c.PostForm("contact_person")
-	if group != "普通用户" {
-		c.String(http.StatusForbidden, "无权限！")
-		return
-	}
 	var user User
 	database.First(&user, "contact_tel = ?", number)
 	database.Model(&user).Update("name", name)                    //更改状态为传过来的状态

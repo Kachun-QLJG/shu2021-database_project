@@ -10,11 +10,6 @@ import (
 
 func getRepairmanInfo(c *gin.Context) {
 	username := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	if group != "维修员" {
-		c.String(http.StatusForbidden, "无权限！")
-		return
-	}
 	var repairman struct {
 		Number          string
 		Name            string
@@ -28,15 +23,10 @@ func getRepairmanInfo(c *gin.Context) {
 
 func addPartsForProject(c *gin.Context) {
 	username := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
 	attorneyNo := c.PostForm("attorney_no")
 	projectNo := c.PostForm("project_no")
 	partsNo := c.PostForm("parts_no")
 	partsCount, _ := strconv.Atoi(c.PostForm("number"))
-	if group != "维修员" {
-		c.String(http.StatusForbidden, "无权限！")
-		return
-	}
 	var arrangement Arrangement
 	result := database.First(&arrangement, "order_number = ? and project_number = ? and repairman_number = ?", attorneyNo, projectNo, username)
 	if result.RowsAffected == 0 {
@@ -86,11 +76,6 @@ func searchForParts(c *gin.Context) {
 
 func checkStatus(c *gin.Context) {
 	number := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	if group != "维修员" {
-		c.String(http.StatusForbidden, "无权限！")
-		return
-	}
 	var repairman Repairman
 	database.First(&repairman, "number = ?", number)
 	c.String(http.StatusOK, repairman.Status)
@@ -99,11 +84,6 @@ func checkStatus(c *gin.Context) {
 func changeStatus(c *gin.Context) {
 	status := c.PostForm("status")
 	number := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	if group != "维修员" {
-		c.String(http.StatusForbidden, "无权限！")
-		return
-	}
 	fmt.Println("status: ", status)
 	var repairman Repairman
 	database.First(&repairman, "number = ?", number)

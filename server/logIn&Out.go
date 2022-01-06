@@ -214,3 +214,45 @@ func checkPermission() gin.HandlerFunc {
 		}
 	}
 }
+
+func filterUser() gin.HandlerFunc { //只有用户能够通过
+	return func(c *gin.Context) {
+		group := c.MustGet("group")
+		if group == "普通用户" {
+			c.Next()
+			return
+		} else {
+			c.HTML(http.StatusUnauthorized, "error.html", gin.H{"errdata": "无权限", "website": "/index", "webName": "主页"})
+			c.Abort()
+			return
+		}
+	}
+}
+
+func filterSalesman() gin.HandlerFunc { //只有业务员能够通过
+	return func(c *gin.Context) {
+		group := c.MustGet("group")
+		if group == "业务员" {
+			c.Next()
+			return
+		} else {
+			c.HTML(http.StatusUnauthorized, "error.html", gin.H{"errdata": "无权限", "website": "/index", "webName": "主页"})
+			c.Abort()
+			return
+		}
+	}
+}
+
+func filterRepairman() gin.HandlerFunc { //只有维修员能够通过
+	return func(c *gin.Context) {
+		group := c.MustGet("group")
+		if group == "维修员" {
+			c.Next()
+			return
+		} else {
+			c.HTML(http.StatusUnauthorized, "error.html", gin.H{"errdata": "无权限", "website": "/index", "webName": "主页"})
+			c.Abort()
+			return
+		}
+	}
+}
