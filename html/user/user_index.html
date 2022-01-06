@@ -446,9 +446,6 @@
 <script>
 	window.onload= function(){
 		getUserName();
-		checkGroup();
-		checkUser();
-		getinfo();
 		getVehicle();
 		userInfo();
 	}
@@ -481,13 +478,13 @@
 	function userinfo(){
 		axios({
 			method : 'get',
-			url: "/userinfo"
+			url: "/get_user_info"
 		})
 				.then(function(response){
 					var last = response.data;
-					document.getElementById("name").value = last.name;
-					document.getElementById("property").value = last.property;
-					document.getElementById("contact_person").value = last.contact_person;
+					document.getElementById("name").value = last.Name;
+					document.getElementById("property").value = last.Property;
+					document.getElementById("contact_person").value = last.ContactPerson;
 				})
 	}
 	function keychangeprofile(){
@@ -504,15 +501,15 @@
 	function userInfo(){
 		axios({
 			method : 'get',
-			url: "/userinfo"
+			url: "/get_user_info"
 		})
 				.then(function(response){
 					var last = response.data;
-					document.getElementById("user_name").innerHTML = "客户名称：" + last.name;
-					document.getElementById("user_property").innerHTML = "客户性质：" + last.property;
-					document.getElementById("user_tel").innerHTML = "联系电话：" + last.contact_tel;
-					document.getElementById("user_contact").innerHTML = "联 系 人：" + last.contact_person;
-					document.getElementById("user_discount").innerHTML = "折 扣 率：" + last.discount_rate + "%";
+					document.getElementById("user_name").innerHTML = "客户名称：" + last.Name;
+					document.getElementById("user_property").innerHTML = "客户性质：" + last.Property;
+					document.getElementById("user_tel").innerHTML = "联系电话：" + last.ContactTel;
+					document.getElementById("user_contact").innerHTML = "联 系 人：" + last.ContactPerson;
+					document.getElementById("user_discount").innerHTML = "折 扣 率：" + last.DiscountRate + "%";
 				})
 	}
 	// 车辆信息块

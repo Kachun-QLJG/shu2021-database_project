@@ -282,22 +282,23 @@ func addVehicle(c *gin.Context) {
 	}
 }
 
-func userinfo(c *gin.Context) {
+func getUserInfo(c *gin.Context) {
 	number := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	if group != "普通用户" {
 		c.String(http.StatusForbidden, "无权限！")
 		return
 	}
-	var user User
-	database.First(&user, "contact_tel = ?", number)
-	c.JSON(http.StatusOK, gin.H{
-		"number":         user.Number,
-		"name":           user.Name,
-		"property":       user.Property,
-		"discount_rate":  user.DiscountRate,
-		"contact_person": user.ContactPerson,
-		"contact_tel":    user.ContactTel})
+	var user struct {
+		Number        string
+		Name          string
+		Property      string
+		DiscountRate  int
+		ContactPerson string
+		ContactTel    string
+	}
+	database.Table("user").Where("contact_tel = ?", number).Select("number as number, name as name, property as property, discount_rate as discount_rate, contact_person as contact_person, contact_tel as contact_tel").Scan(&user)
+	c.JSON(http.StatusOK, user)
 }
 
 func showPlate(c *gin.Context) {

@@ -142,17 +142,6 @@ function displayChangeStatus() {
 		})
 }
 
-function checkGroup(){
-	axios({
-		method : 'get',
-		url: '/check_group'
-	})
-	.then(function(response){
-		if(response.data === "维修员"){
-			//displayChangeStatus()
-		}
-	})
-}
 function changeStatus(){		//https://blog.csdn.net/weixin_41949511/article/details/93630346
 	let formData = new FormData();
 	var select = document.getElementById("StatusChange");
@@ -243,7 +232,7 @@ function closeNotification(){
 	var child = document.getElementById("alert");
 	father.removeChild(child);
 }
-
+/*
 function checkUser(){
 	document.getElementById("logout").style.display="none";
 	axios({
@@ -258,7 +247,7 @@ function checkUser(){
 			}
 		})
 }
-
+*/
 function searchForProjects(){
 	delProjectResults();
 	if (document.getElementById("detail1").value === "") return;
@@ -446,7 +435,7 @@ function delPartsResults(){
 	}catch (error)
 	{}
 }
-
+/*
 function getinfo(){
 	axios({
 		method : 'get',
@@ -460,7 +449,7 @@ function getinfo(){
 		}
 	})
 }
-
+*/
 function changeinfo(){
 	let formData = new FormData();
 	formData.append("name", document.getElementById("name").value);

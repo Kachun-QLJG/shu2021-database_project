@@ -348,25 +348,22 @@
 <script>
 	window.onload= function(){
 		checkNotification();
-		//check_group();
-		checkUser();
 		getUserName();
-		getinfo();
 		repairmanInfo();
 	}
 
 	function repairmanInfo(){
 		axios({
 			method : 'get',
-			url: "/repairmaninfo"
+			url: "/get_repairman_info"
 		})
 				.then(function(response){
 					var last = response.data;
-					document.getElementById("number").innerHTML = "工　　号：" + last.number;
-					document.getElementById("repairman_name").innerHTML = "姓　　名：" + last.name;
-					document.getElementById("repairman_type").innerHTML = "工　　种：" + last.type;
-					document.getElementById("repairman_work_hours").innerHTML = "当前工时：" + last.current_work_hour;
-					document.getElementById("repairman_work_status").innerHTML = "工作状态：" + last.status;
+					document.getElementById("number").innerHTML = "工　　号：" + last.Number;
+					document.getElementById("repairman_name").innerHTML = "姓　　名：" + last.Name;
+					document.getElementById("repairman_type").innerHTML = "工　　种：" + last.Type;
+					document.getElementById("repairman_work_hours").innerHTML = "当前工时：" + last.CurrentWorkHour;
+					document.getElementById("repairman_work_status").innerHTML = "工作状态：" + last.Status;
 				})
 	}
 
