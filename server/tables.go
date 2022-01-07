@@ -5,7 +5,7 @@ type User struct { //客户表
 	Password      string `gorm:"type:varchar(255);not null"`                        //密码
 	Name          string `gorm:"type:varchar(100)"`                                 //客户名称
 	Property      string `gorm:"type:varchar(4)"`                                   //性质
-	DiscountRate  int    `gorm:"type:int(3)"`                                       //折扣率
+	DiscountRate  int    `gorm:"type:int(3);not null"`                              //折扣率
 	ContactPerson string `gorm:"type:varchar(10)"`                                  //联系人
 	ContactTel    string `gorm:"type:varchar(20);not null;unique_index"`            //联系电话
 }

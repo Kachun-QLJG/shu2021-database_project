@@ -1,5 +1,5 @@
 ﻿# Host: 127.0.0.1  (Version: 5.7.26)
-# Date: 2021-12-27 15:37:05
+# Date: 2022-01-07 13:48:46
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
@@ -21,7 +21,7 @@ CREATE TABLE `auth_session` (
 # Data for table "auth_session"
 #
 
-INSERT INTO `auth_session` VALUES ('a76f40f0d3ffa3c080fd0f2ef5638525e37565dd100dd59c36980ddbc66036c6','2021-12-27 15:36:46','12345678901');
+INSERT INTO `auth_session` VALUES ('2b177f36e4f2da4e246fa44c374599773f8298040c9b831bd772d8ee6add1200','2022-01-07 13:46:58','[out]SA-0246'),('6a3e0a4d9bc1d15822029e64f4f8716aeb96d8e4a0c8f95bf6df9697acb2d8d8','2022-01-07 13:47:13','[out]RE-0246'),('73e74457366818dcd0e0fa8e47ddc0ea9f887d79dc10bf99aaf91bb9f54047f4','2022-01-07 13:47:39','12345678901');
 
 #
 # Structure for table "notification"
@@ -43,6 +43,7 @@ CREATE TABLE `notification` (
 # Data for table "notification"
 #
 
+INSERT INTO `notification` VALUES ('00000001','12345678901','【通知】您的车辆沪SHU503已被他人绑定','尊敬的用户郑宇您好，您的车辆沪SHU503已被手机尾号为8903的用户绑定。','已读','2021-12-30 18:57:50');
 
 #
 # Structure for table "parts_overview"
@@ -93,7 +94,7 @@ CREATE TABLE `repairman` (
   `name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `current_work_hour` int(4) NOT NULL,
+  `current_work_hour` double NOT NULL DEFAULT '0',
   `status` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`number`),
   UNIQUE KEY `uix_repairman_number` (`number`)
@@ -103,7 +104,7 @@ CREATE TABLE `repairman` (
 # Data for table "repairman"
 #
 
-INSERT INTO `repairman` VALUES ('RE-0246','奚嘉骏','$2a$10$6NBVE248Ig9/TFz9QW9vquTsTH.HLlK2y8M.z4D/FaYA8wsnAnePq','机修工',0,''),('RE-0248','伍慕庭','$2a$10$pfPLL4MczpKHpmaALWSbCO90wBz47v/Ce6ssN6YUAMVPNMWUsgHVe','电工',0,'正常'),('RE-0249','夏逸凡','$2a$10$XtptbBnCexoEUmAzLV1TCeqrJTepnKJZsiMgtpYNd76a9/ti6ti.m','钣金工',0,'正常'),('RE-0251','张霖锋','$2a$10$U159VfMPR9IzZpxlCvdLH.DbUL5Rr.ufYfReUDpWrWlV3wU57Nibi','喷漆工',0,'正常');
+INSERT INTO `repairman` VALUES ('RE-0246','奚嘉骏','$2a$10$6NBVE248Ig9/TFz9QW9vquTsTH.HLlK2y8M.z4D/FaYA8wsnAnePq','机修工',0,'正常'),('RE-0248','伍慕庭','$2a$10$pfPLL4MczpKHpmaALWSbCO90wBz47v/Ce6ssN6YUAMVPNMWUsgHVe','电工',0,'正常'),('RE-0249','夏逸凡','$2a$10$XtptbBnCexoEUmAzLV1TCeqrJTepnKJZsiMgtpYNd76a9/ti6ti.m','钣金工',0,'正常'),('RE-0251','张霖锋','$2a$10$U159VfMPR9IzZpxlCvdLH.DbUL5Rr.ufYfReUDpWrWlV3wU57Nibi','喷漆工',0,'正常');
 
 #
 # Structure for table "salesman"
@@ -161,7 +162,7 @@ CREATE TABLE `user` (
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `property` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `discount_rate` int(2) DEFAULT NULL,
+  `discount_rate` int(3) NOT NULL DEFAULT '100',
   `contact_person` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contact_tel` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`number`),
@@ -173,7 +174,7 @@ CREATE TABLE `user` (
 # Data for table "user"
 #
 
-INSERT INTO `user` VALUES ('00000001','$2a$10$yfku7Hfn2iszEu9J7.zn5.sA.lClsfBoyYpMsT8k4Gx3laH8SaJJy','郑宇','个人',100,'郑宇','12345678901'),('00000002','$2a$10$uQ2N9e3L6iU9oNNWzl92LOYM9mbAQOnaKdof7N.KPF9tWikqXCB6G',NULL,NULL,100,NULL,'12345678902'),('00000003','$2a$10$zfPwCZ/ZhUfFub3WlfzRQ.AFfHNJs507k2eQUIqBvqvkzHjBnyMaS',NULL,NULL,100,NULL,'12345678903');
+INSERT INTO `user` VALUES ('00000001','$2a$10$JpfzTUawOiR0HH4UWVq2duH8M4W5NkzuEtfViX1ZkzrEb3SdWvddW','奚霖锋','个人',100,'奚霖锋','12345678901'),('00000002','$2a$10$uQ2N9e3L6iU9oNNWzl92LOYM9mbAQOnaKdof7N.KPF9tWikqXCB6G',NULL,NULL,100,NULL,'12345678902'),('00000003','$2a$10$zfPwCZ/ZhUfFub3WlfzRQ.AFfHNJs507k2eQUIqBvqvkzHjBnyMaS',NULL,NULL,100,NULL,'12345678903');
 
 #
 # Structure for table "vehicle"
@@ -188,7 +189,7 @@ CREATE TABLE `vehicle` (
   `model` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `type` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `time` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`number`,`user_id`),
+  PRIMARY KEY (`number`),
   KEY `vehicle_user_id_user_number_foreign` (`user_id`),
   CONSTRAINT `vehicle_user_id_user_number_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -197,7 +198,7 @@ CREATE TABLE `vehicle` (
 # Data for table "vehicle"
 #
 
-INSERT INTO `vehicle` VALUES ('11111111111111111','沪SHU503','00000001','黑','奔驰G','轿车-C','2021-12-21 14:15:23'),('12345678901234567','沪SHU502','00000001','黑','奔驰G','1','2021-12-21 10:33:31'),('22222222222222222','沪SHU504','00000001','黑','奔驰G','轿车-C','2021-12-21 14:16:12');
+INSERT INTO `vehicle` VALUES ('11111111111111111','沪SHU503','00000001','绿','特斯拉 Model Y','轿车-A','2021-12-30 18:57:50'),('12345678901234567','沪SHU502','00000001','黑','奔驰G','轿车-E','2021-12-21 10:33:31');
 
 #
 # Structure for table "attorney"
@@ -210,13 +211,13 @@ CREATE TABLE `attorney` (
   `vehicle_number` varchar(17) COLLATE utf8_unicode_ci NOT NULL,
   `repair_type` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
   `classification` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `pay_method` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pay_method` varchar(4) COLLATE utf8_unicode_ci NOT NULL,
   `start_time` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `salesman_id` varchar(8) COLLATE utf8_unicode_ci DEFAULT NULL,
   `predict_finish_time` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `actual_finish_time` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `rough_problem` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `specific_problem` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `specific_problem` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `progress` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `start_petrol` double(5,2) NOT NULL,
   `start_mile` double(8,2) NOT NULL,
@@ -237,7 +238,7 @@ CREATE TABLE `attorney` (
 # Data for table "attorney"
 #
 
-INSERT INTO `attorney` VALUES ('00000001','00000001','12345678901234567','大修','加急','自费','2021-12-21','SA-0246','2022-1-20',NULL,'车坏了','右后轮爆胎','处理中',50.00,12345.00,NULL,NULL,NULL);
+INSERT INTO `attorney` VALUES ('00000001','00000001','12345678901234567','大修','加急','自费','2021-12-21','SA-0246','2022-1-20',NULL,'车坏了','右后轮爆胎','处理中',50.00,12345.00,NULL,NULL,NULL),('00000002','00000001','11111111111111111',NULL,NULL,'保险','2021-12-30',NULL,NULL,NULL,'车胎破损',NULL,'待处理',53.40,61353.15,NULL,NULL,NULL),('00000003','00000001','11111111111111111',NULL,NULL,'保险','',NULL,NULL,NULL,'111',NULL,'待处理',1.00,1.00,NULL,NULL,NULL);
 
 #
 # Structure for table "arrangement"
@@ -261,7 +262,7 @@ CREATE TABLE `arrangement` (
 # Data for table "arrangement"
 #
 
-INSERT INTO `arrangement` VALUES ('00000001','3-1-1','RE-0246','完成'),('00000001','3-2-2','RE-0246','完成');
+INSERT INTO `arrangement` VALUES ('00000001','3-1-1','RE-0246','完成'),('00000001','3-10-103','RE-0248','完成'),('00000001','3-2-2','RE-0246','完成');
 
 #
 # Structure for table "repair_parts"
@@ -286,3 +287,26 @@ CREATE TABLE `repair_parts` (
 #
 
 INSERT INTO `repair_parts` VALUES ('00000001','3-1-1','303-1521',3),('00000001','3-1-1','5300014A',2),('00000001','3-2-2','5M6Q-8509-BA',2);
+
+#
+# Structure for table "finished"
+#
+
+DROP TABLE IF EXISTS `finished`;
+CREATE TABLE `finished` (
+  `order_number` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `vehicle_number` varchar(17) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`order_number`,`vehicle_number`,`user_id`),
+  UNIQUE KEY `uix_finished_order_number` (`order_number`),
+  UNIQUE KEY `uix_finished_user_id` (`user_id`),
+  KEY `finished_vehicle_number_vehicle_number_foreign` (`vehicle_number`),
+  CONSTRAINT `finished_order_number_attorney_number_foreign` FOREIGN KEY (`order_number`) REFERENCES `attorney` (`number`),
+  CONSTRAINT `finished_user_id_user_number_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`number`),
+  CONSTRAINT `finished_vehicle_number_vehicle_number_foreign` FOREIGN KEY (`vehicle_number`) REFERENCES `vehicle` (`number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+#
+# Data for table "finished"
+#
+

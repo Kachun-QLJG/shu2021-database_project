@@ -8,6 +8,17 @@ import (
 	"strings"
 )
 
+func changeRepairProgress(c *gin.Context) {
+	attorneyNo := c.PostForm("attorney_no")
+	projectNo := c.PostForm("project_no")
+	username := c.MustGet("username").(string)
+	progress := c.PostForm("progress")
+	var arrangement Arrangement
+	database.First(&arrangement, "order_number = ? and project_number = ? and repairman_number = ?", attorneyNo, projectNo, username)
+	database.Model(&arrangement).Update("progress", progress)
+	c.JSON(http.StatusOK, gin.H{"data": "成功"})
+}
+
 func getRepairmanInfo(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	var repairman struct {

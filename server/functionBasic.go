@@ -273,12 +273,12 @@ func welcome(c *gin.Context) {
 		c.HTML(http.StatusOK, "user_index.html", nil)
 	} else {
 		var repairman Repairman
-		result := database.First(&repairman, "number = ?", username)
+		result = database.First(&repairman, "number = ?", username)
 		if result.RowsAffected == 1 {
 			c.HTML(http.StatusOK, "repairman_index.html", nil)
 		} else {
 			var salesman Salesman
-			result := database.First(&salesman, "number = ?", username)
+			result = database.First(&salesman, "number = ?", username)
 			if result.RowsAffected == 1 {
 				c.HTML(http.StatusOK, "salesman_index.html", nil)
 			} else {

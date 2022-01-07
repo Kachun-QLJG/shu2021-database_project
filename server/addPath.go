@@ -33,11 +33,12 @@ func addPath(r *gin.Engine) {
 	r.GET("/u_check_orders_finished", authMiddleWare(), checkPermission(), filterUser(), startUCheckOrdersFinished) //进入用户查看已完成订单页面
 
 	//----------业务员路径----------
-	r.GET("/search_for_projects", authMiddleWare(), checkPermission(), filterSalesman(), searchForProjects)   //寻找维修项目
-	r.GET("/get_salesman_info", authMiddleWare(), checkPermission(), filterSalesman(), getSalesmanInfo)       //获取业务员个人信息
-	r.GET("/get_pending_attorney", authMiddleWare(), checkPermission(), filterSalesman(), getPendingAttorney) //业务员获取待处理订单
-	r.GET("/s_check_orders", authMiddleWare(), checkPermission(), filterSalesman(), startSCheckOrders)        //进入业务员查看订单页面
-	r.GET("/take_orders", authMiddleWare(), checkPermission(), filterSalesman(), startTakeOrders)             //进入接单界面
+	r.GET("/search_for_projects", authMiddleWare(), checkPermission(), filterSalesman(), searchForProjects)                 //寻找维修项目
+	r.GET("/get_salesman_info", authMiddleWare(), checkPermission(), filterSalesman(), getSalesmanInfo)                     //获取业务员个人信息
+	r.GET("/get_pending_attorney", authMiddleWare(), checkPermission(), filterSalesman(), getPendingAttorney)               //业务员获取待处理订单
+	r.GET("/s_check_orders", authMiddleWare(), checkPermission(), filterSalesman(), startSCheckOrders)                      //进入业务员查看订单页面
+	r.GET("/take_orders", authMiddleWare(), checkPermission(), filterSalesman(), startTakeOrders)                           //进入接单界面
+	r.GET("/get_corresponding_repairman", authMiddleWare(), checkPermission(), filterSalesman(), getCorrespondingRepairman) //根据维修员种类返回相应种类的维修员信息
 
 	//----------维修员路径----------
 	r.GET("/search_for_parts", authMiddleWare(), checkPermission(), filterRepairman(), searchForParts)     //寻找零件
@@ -58,9 +59,10 @@ func addPath(r *gin.Engine) {
 	r.POST("/add_vehicle", authMiddleWare(), checkPermission(), filterUser(), addVehicle)         //后端处理用户添加车辆
 
 	//----------业务员路径----------
+	r.POST("/add_project_for_attorney", authMiddleWare(), checkPermission(), filterRepairman(), addProjectForAttorney) //业务员为委托添加维修项目
 
 	//----------维修员路径----------
-	r.POST("/change_status", authMiddleWare(), checkPermission(), filterRepairman(), changeStatus)               //后端处理维修员更改工作状态
-	r.POST("/add_parts_for_project", authMiddleWare(), checkPermission(), filterRepairman(), addPartsForProject) //维修工为项目添加零件
-
+	r.POST("/change_status", authMiddleWare(), checkPermission(), filterRepairman(), changeStatus)                //后端处理维修员更改工作状态
+	r.POST("/add_parts_for_project", authMiddleWare(), checkPermission(), filterRepairman(), addPartsForProject)  //维修工为项目添加零件
+	r.POST("/change_repair_status", authMiddleWare(), checkPermission(), filterRepairman(), changeRepairProgress) //后端处理维修员更改维修项目状态【开始工作、已完成等】
 }

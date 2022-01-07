@@ -73,6 +73,10 @@ func createAttorney(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	var user User
 	database.First(&user, "contact_tel = ?", username)
+	if user.Name == "" || user.ContactPerson == "" || user.Property == "" {
+		c.String(http.StatusOK, "请完善个人信息后再提交新的委托申请！")
+		return
+	}
 	var attorney Attorney
 	number := database.Find(&attorney).RowsAffected + 1
 	strNumber := fmt.Sprintf("%08d", number)
