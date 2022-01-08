@@ -130,11 +130,11 @@
 				<a class="list-group-item list-group-item-info" style="cursor: default">
 					个人信息
 				</a>
-				<a id="user_name" class="list-group-item" style="cursor: default">用户名:18001723206</a>
-				<a id="user_property" class="list-group-item" style="cursor: default">性　　质:个人</a>
-				<a id="user_tel" class="list-group-item" style="cursor: default">联系电话:13472413472</a>
-				<a id="user_contact" class="list-group-item" style="cursor: default">联 系 人:Baitian2</a>
-				<a id="user_discount" class="list-group-item" style="cursor: default">折扣率:100%</a>
+				<a id="user_name" class="list-group-item" style="cursor: default">用户名:</a>
+				<a id="user_property" class="list-group-item" style="cursor: default">性　　质:</a>
+				<a id="user_tel" class="list-group-item" style="cursor: default">联系电话:</a>
+				<a id="user_contact" class="list-group-item" style="cursor: default">联 系 人:</a>
+				<a id="user_discount" class="list-group-item" style="cursor: default">折扣率:</a>
 				<a class="list-group-item" data-toggle='modal' data-target='#change_info' onclick='userinfo()' style="cursor: pointer; text-decoration-line: underline">更改个人信息</a>
 				<a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer; text-decoration-line: underline">更改密码</a>
 			</div>
@@ -152,7 +152,7 @@
 
 		<!--右区域-->
 		<div class="col-md-10">
-			<div class="alert alert-warning alert-dismissible" role="alert">
+			<div id="notification" class="alert alert-warning alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
 			</div>
@@ -217,7 +217,7 @@
 				<label for="property" style='font-size:15px;width: 100px;'>性质：</label>
 				<select id='property'>
 					<option value='个人' selected>个人</option>
-					<option value='公司'>公司</option>
+					<option value='单位'>单位</option>
 				</select>
 				<br>
 
@@ -351,11 +351,11 @@
 				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
 				<label style='font-size:15px;width: 80px;'>结算方式：</label>
 				<input id='PayMethod1' name="PayMethod" type='radio' value="现金" />
-				<label for="PayMethod1">现金</label>
+				<label for="PayMethod1">自付</label>
 				<input id='PayMethod2' name="PayMethod" type='radio' value="保险" checked="checked"/>
-				<label for="PayMethod2">保险</label>
+				<label for="PayMethod2">三包</label>
 				<input id='PayMethod3' name="PayMethod" type='radio' value="信用卡" />
-				<label for="PayMethod3">信用卡</label>
+				<label for="PayMethod3">索赔</label>
 				<!-- <span id='checktext2'></span> -->
 				<br>
 
@@ -448,6 +448,7 @@
 		getUserName();
 		getVehicle();
 		userInfo();
+		showNotificationOrNot();
 	}
 	function check_number(){
 		var check = false;

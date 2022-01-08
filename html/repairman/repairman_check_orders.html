@@ -46,11 +46,11 @@
 			var check = false;
 			var pswd = document.getElementById("pswd").value;
 			if(pswd.length < 6){
-				document.getElementById("checktext2").innerHTML = " × 不要少于6位";
+				document.getElementById("checktext4").innerHTML = " × 不要少于6位";
 				check = false;
 			}
 			else {
-				document.getElementById("checktext2").innerHTML = " √";
+				document.getElementById("checktext4").innerHTML = " √";
 				check = true;
 			}
 			return check;
@@ -60,11 +60,11 @@
 			var password = document.getElementById("pswd").value;
 			var pwdc = document.getElementById("pwdc").value;
 			if (password !== pwdc) {
-				document.getElementById("checktext3").innerHTML = " × 两次输入密码不一致";
+				document.getElementById("checktext5").innerHTML = " × 两次输入密码不一致";
 				check = false;
 			}
 			else {
-				document.getElementById("checktext3").innerHTML = " √";
+				document.getElementById("checktext5").innerHTML = " √";
 				check = true;
 			}
 			return check;

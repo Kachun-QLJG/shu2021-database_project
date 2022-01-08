@@ -87,7 +87,7 @@ function changePswd(){
 		}
 	})
 }
-function displayChangeStatus() {
+/*function displayChangeStatus() {
 	document.getElementById("register").style.display="none";
 	var text = document.getElementById("text");
 	axios({
@@ -141,7 +141,7 @@ function displayChangeStatus() {
 			button.innerHTML = "更改";
 		})
 }
-
+*/
 function changeStatus(){		//https://blog.csdn.net/weixin_41949511/article/details/93630346
 	let formData = new FormData();
 	var select = document.getElementById("StatusChange");
@@ -219,6 +219,20 @@ function checkNotification(){
 			}
 		});
 }
+
+function showNotificationOrNot() {
+	axios({
+		method: 'get',
+		url: '/check_notification'
+	})
+		.then(function (response) {
+			var last = response.data;
+			if(last === null){
+				document.getElementById("notification").style.display = "none";
+			}
+		})
+}
+
 function read(){
 	axios({
 		method: 'post',
@@ -226,6 +240,7 @@ function read(){
 	});
 	closeNotification();
 	checkNotification();
+	showNotificationOrNot();
 }
 function closeNotification(){
 	var father = document.getElementById("body");
@@ -485,7 +500,7 @@ function addVehicle(){
 		else{
 			alert("添加成功！");
 		}
-		location.reload();
+		location.reload(true);
 	})
 	// document.getElementById("confirmAddVehicle").innerHTML="新增成功";
 	// window.setTimeout("window.location.reload()", 2000);

@@ -154,7 +154,7 @@
 
 		<!--右区域-->
 		<div class="col-md-10">
-			<div class="alert alert-warning alert-dismissible" role="alert">
+			<div id="notification" class="alert alert-warning alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
 			</div>
@@ -418,6 +418,7 @@
 		checkNotification();
 		getUserName();
 		salesmanInfo();
+		showNotificationOrNot();
 	}
 	function salesmanInfo(){
 		axios({

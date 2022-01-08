@@ -53,6 +53,11 @@
 
 		<!--右区域-->
 		<div class="col-md-10">
+
+			<div id="notification" class="alert alert-warning alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
+			</div>
 			<div class='col-md-10' id='con'  style='text-align: center'>
 				<label style='color: #77bbe2;font-size:50px;'>　　　历史维修记录</label>
 			</div>
@@ -262,6 +267,7 @@
 		getUserName();
 		userInfo();
 		getFinishedAttorney();
+		showNotificationOrNot();
 	}
 	function userinfo(){
 		axios({
