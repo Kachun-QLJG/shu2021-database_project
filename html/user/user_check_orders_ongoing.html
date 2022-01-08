@@ -11,7 +11,13 @@
 <div class='navbar-header' id='head1'>
 	<a class='navbar-brand'>502汽修厂管理系统</a>
 </div>
-
+<style>
+	/*委托书&表格类のstyle*/
+	table{table-layout: fixed;word-break: keep-all;}
+	.cntr-7{}
+	.cntr-7 td{text-align: center;align-items: center;font-size: 17px;width: 100px;height: 30px;}
+	.cntr-7 th{text-align: center;align-items: center;font-size: 17px;width: 100px;height: 30px;}
+</style>
 <!-- 右上区块 -->
 <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
 	<ul id='navbar' class='nav navbar-nav navbar-right' >
@@ -106,6 +112,175 @@
     </div>
 </div>
 -->
+
+<!--委托书表格（我将以模态框形态出击）-->
+<div class="modal fade" id="table" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+	<div class='modal-dialog'  style="width: 1000px;">
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
+				<h3 class='modal-title' style="text-align: center">502汽车维修站维修委托书</h3>
+				<h5 style="float: left">No.20211220001</h5>
+				<h5 style="float: right">登记日期：2021年12月20日</h5>
+				<br>
+			</div>
+			<div class='modal-body'>
+				<table border="1">
+					<tbody class="cntr-7">
+					<!--row-1-->
+					<tr>
+						<th rowspan="2" colspan="2">客户信息</th>
+						<th>客户编号</th>
+						<th>联系人</th>
+						<th>联系方式</th>
+						<th rowspan="2" colspan="2">业务员信息</th>
+						<th>编号</th>
+						<th>姓名</th>
+					</tr>
+					<tr>
+						<td id="1">00000001</td>
+						<td id="2">郑宇</td>
+						<td id="3">12345678901</td>
+						<td id="4">SA-0246</td>
+						<td id="5">奚嘉骏</td>
+					</tr>
+
+					<!--row-2-->
+					<tr>
+						<th rowspan="4" colspan="2">车辆信息</th>
+						<th colspan="2">车牌号</th>
+						<th colspan="3">车架号</th>
+						<th colspan="2">车型</th>
+					</tr>
+					<tr>
+						<td id="6" colspan="2">沪SHU502 </td>
+						<td id="7" colspan="3">12345678901234567</td>
+						<td id="8" colspan="2">奔驰G</td>
+					</tr>
+					<tr>
+						<th colspan="2">车辆类型</th>
+						<th colspan="3">进场里程数</th>
+						<th colspan="2">进场油量</th>
+					</tr>
+					<tr>
+						<td id="9" colspan="2">1</td>
+						<td id="10" colspan="3">12345</td>
+						<td id="11" colspan="2">50</td>
+					</tr>
+
+					<!--row-3-->
+					<tr>
+						<th rowspan="2" colspan="2">结算信息</th>
+						<th>结算方式</th>
+						<th>折扣率</th>
+						<th>预计完工时间</th>
+						<th rowspan="2" colspan="2">作业信息</th>
+						<th>维修类型</th>
+						<th>作业分类</th>
+					</tr>
+					<tr>
+						<td id="12">自费</td>
+						<td id="13">100%</td>
+						<td id="14">2022-1-20</td>
+						<td id="15">大修</td>
+						<td id="16">加急</td>
+					</tr>
+
+					<!--row-4&5&6&7-->
+					<tr>
+						<th colspan="6">客户报障描述</th>
+						<th colspan="3">非维修范围</th>
+					</tr>
+					<tr>
+						<td id="17" colspan="6">车坏了</td>
+						<td id="18" colspan="3">车丢了</td>
+					</tr>
+					<tr>
+						<th colspan="9">检修故障描述</th>
+					</tr>
+					<tr>
+						<td id="19" colspan="9">右后轮爆胎</td>
+					</tr>
+
+					<!--row-8-->
+					<tr>
+						<th>项目编号</th>
+						<th>维修项目名称</th>
+						<th>工时</th>
+						<th>零件号</th>
+						<th>零件名</th>
+						<th>数量</th>
+						<th>单价</th>
+						<th>总价</th>
+						<th>备注</th>
+					</tr>
+
+					<!--row-8.1-->
+					<tr>
+						<td rowspan="2">3-1-1</td>
+						<td rowspan="2">二级维护</td>
+						<td rowspan="2">90</td>
+						<td>303-1521</td>
+						<td>U375曲轴位置传感器定位工具</td>
+						<td>3</td>
+						<td>347</td>
+						<td>1041</td>
+						<td rowspan="2">*1-1</td>
+					</tr>
+					<tr>
+						<td>5300014A</td>
+						<td>螺母座</td>
+						<td>2</td>
+						<td>1</td>
+						<td>2</td>
+					</tr>
+
+					<!--row-8.2-->
+					<tr>
+						<td>3-2-2</td>
+						<td>发动机大修</td>
+						<td>270</td>
+						<td>5M6Q-8509-BA</td>
+						<td>水泵皮带轮</td>
+						<td>2</td>
+						<td>28</td>
+						<td>56</td>
+						<td>*2-1</td>
+					</tr>
+
+					<!--row-8.∞-->
+					<tr>
+						<th colspan="2">总工时</th>
+						<td id="20">360</td>
+						<td colspan="2">客官o->(*￣▽￣*)o->先埋单哦</td>
+						<th colspan="2">总计</th>
+						<td id="21">1099</td>
+						<td></td>
+					</tr>
+					<!--row-9-->
+					<tr>
+						<th colspan="2">备注</th>
+						<td id="22" colspan="7">
+							*1-1 含综合性能检测作业<br>
+							*2-1 含综合性能检测作业<br>
+						</td>
+					</tr>
+					<!--row-10&11-->
+					<tr>
+						<th colspan="2">维修总价</th>
+						<td id="23" colspan="7">(360*24+1099)*100%=9739</td>
+					</tr>
+					<tr>
+						<th colspan="2">计价方式</th>
+						<td colspan="7">（总工时*工时单价(24)+材料费）*折扣率</td>
+					</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- 登出模态框（Modal）-->
 <div class='modal fade' id='log_out' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
@@ -370,7 +545,11 @@
 						td5.innerHTML = data[i-1].PredictFinishTime;
 						var td6 = document.createElement("td");
 						tr1.appendChild(td6);
-						td6.innerHTML = data[i-1].Progress;
+						var a = document.createElement("a");
+						td6.appendChild(a);
+						a.setAttribute("data-toggle","modal");
+						a.setAttribute("data-target","#table");
+						a.innerHTML = data[i-1].Progress;
 					}
 					var div = document.createElement("div");
 					document.getElementById("ongoing_table_father").appendChild(div);
@@ -380,7 +559,6 @@
 	}
 
 </script>
-
 </body>
 </html>
 
