@@ -31,8 +31,8 @@ function login(){
 	})
 }
 
-function logout() {
-	axios({
+async function logout() {
+	await axios({
 		method: 'post',
 		url: '/logout'
 	});
