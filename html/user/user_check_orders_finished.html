@@ -31,11 +31,11 @@
 				<a class="list-group-item list-group-item-info" style="cursor: default">
 					个人信息
 				</a>
-				<a id="user_name" class="list-group-item" style="cursor: default">用户名:18001723206</a>
-				<a id="user_property" class="list-group-item" style="cursor: default">性　　质:个人</a>
-				<a id="user_tel" class="list-group-item" style="cursor: default">联系电话:13472413472</a>
-				<a id="user_contact" class="list-group-item" style="cursor: default">联 系 人:Baitian2</a>
-				<a id="user_discount" class="list-group-item" style="cursor: default">折扣率:100%</a>
+				<a id="user_name" class="list-group-item" style="cursor: default">用 户 名:</a>
+				<a id="user_property" class="list-group-item" style="cursor: default">性　　质:</a>
+				<a id="user_tel" class="list-group-item" style="cursor: default">联系电话:</a>
+				<a id="user_contact" class="list-group-item" style="cursor: default">联 系 人:</a>
+				<a id="user_discount" class="list-group-item" style="cursor: default">折 扣 率:</a>
 				<a class="list-group-item" data-toggle='modal' data-target='#change_info' onclick='userinfo()' style="cursor: pointer; text-decoration-line: underline">更改个人信息</a>
 				<a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer; text-decoration-line: underline">更改密码</a>
 			</div>
@@ -54,7 +54,7 @@
 		<!--右区域-->
 		<div class="col-md-10">
 
-			<div id="notification" class="alert alert-warning alert-dismissible" role="alert">
+			<div id="notification" class="alert alert-warning alert-dismissible" role="alert" style="display: none">
 				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
 			</div>
@@ -256,6 +256,12 @@
 		if(checkpwd() && checkpwdc()){
 			changePswd();
 		}
+		else if(checkpwd() === false){
+			alert("密码不要少于6位！");
+		}
+		else{
+			alert("两次输入的密码不一致！");
+		}
 	}
 	function keychangepassword(){
 		if(event.keyCode === 13){
@@ -269,18 +275,6 @@
 		getFinishedAttorney();
 		showNotificationOrNot();
 	}
-	function userinfo(){
-		axios({
-			method : 'get',
-			url: "/get_user_info"
-		})
-				.then(function(response){
-					var last = response.data;
-					document.getElementById("name").value = last.Name;
-					document.getElementById("property").value = last.Property;
-					document.getElementById("contact_person").value = last.ContactPerson;
-				})
-	}
 	function userInfo(){
 		axios({
 			method : 'get',
@@ -288,11 +282,13 @@
 		})
 				.then(function(response){
 					var last = response.data;
-					document.getElementById("user_name").innerHTML = "客户名称：" + last.Name;
-					document.getElementById("user_property").innerHTML = "客户性质：" + last.Property;
+					document.getElementById("user_name").innerHTML = "用 户 名：" + last.Name;
+					document.getElementById("user_property").innerHTML = "性　　质：" + last.Property;
 					document.getElementById("user_tel").innerHTML = "联系电话：" + last.ContactTel;
 					document.getElementById("user_contact").innerHTML = "联 系 人：" + last.ContactPerson;
 					document.getElementById("user_discount").innerHTML = "折 扣 率：" + last.DiscountRate + "%";
+					document.getElementById("contact_tel").value = last.ContactTel;
+					document.getElementById("discount_rate").value = last.DiscountRate + "%";
 				})
 	}
 

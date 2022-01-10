@@ -165,11 +165,11 @@ function checkNotification(){
 	})
 		.then(function(response) {
 			var last = JSON.stringify(response.data);
-			var notification = window.eval(response.data);
-			var title1 =　notification.title;
-			var content1 ="　　" + notification.content;
-			var time1 = notification.time;
 			if(last !== "null"){
+				var notification = window.eval(response.data);
+				var title1 =　notification.title;
+				var content1 ="　　" + notification.content;
+				var time1 = notification.time;
 				var body = document.getElementById("body");
 				var div = document.createElement("div");
 				body.appendChild(div);
@@ -227,7 +227,10 @@ function showNotificationOrNot() {
 	})
 		.then(function (response) {
 			var last = response.data;
-			if(last === null){
+			if(last !== null){
+				document.getElementById("notification").style.display = "";
+			}
+			else{
 				document.getElementById("notification").style.display = "none";
 			}
 		})
@@ -238,7 +241,7 @@ function read(){
 		method: 'post',
 		url: '/read'
 	});
-	closeNotification();
+	closeNotification(1);
 	checkNotification();
 	showNotificationOrNot();
 }
