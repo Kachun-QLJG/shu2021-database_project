@@ -510,6 +510,7 @@ function addVehicle(){
 }
 
 function checkVehicle() {
+	document.getElementById("confirmAddVehicle").innerHTML="提交中...";
 	axios.get('/check_vehicle',{
 		params:{
 			number: document.getElementById("number").value
