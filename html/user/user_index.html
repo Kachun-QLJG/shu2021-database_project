@@ -136,8 +136,8 @@
 				<a class="list-group-item list-group-item-info" style="cursor: default">
 					个人信息
 				</a>
-				<a id="user_name" class="list-group-item" style="cursor: default">用 户 名:</a>
-				<a id="user_property" class="list-group-item" style="cursor: default">性　　质:</a>
+				<a id="user_name" class="list-group-item" style="cursor: default">客户名称:</a>
+				<a id="user_property" class="list-group-item" style="cursor: default">客户性质:</a>
 				<a id="user_tel" class="list-group-item" style="cursor: default">联系电话:</a>
 				<a id="user_contact" class="list-group-item" style="cursor: default">联 系 人:</a>
 				<a id="user_discount" class="list-group-item" style="cursor: default">折 扣 率:</a>
@@ -501,13 +501,16 @@
 		})
 				.then(function(response){
 					var last = response.data;
-					document.getElementById("user_name").innerHTML = "用 户 名：" + last.Name;
-					document.getElementById("user_property").innerHTML = "性　　质：" + last.Property;
+					document.getElementById("user_name").innerHTML = "客户名称：" + last.Name;
+					document.getElementById("user_property").innerHTML = "客户性质：" + last.Property;
 					document.getElementById("user_tel").innerHTML = "联系电话：" + last.ContactTel;
 					document.getElementById("user_contact").innerHTML = "联 系 人：" + last.ContactPerson;
 					document.getElementById("user_discount").innerHTML = "折 扣 率：" + last.DiscountRate + "%";
 					document.getElementById("contact_tel").value = last.ContactTel;
 					document.getElementById("discount_rate").value = last.DiscountRate + "%";
+					document.getElementById("name").value = last.Name;
+					document.getElementById("contact_person").value = last.ContactPerson;
+					document.getElementById("property").value = last.Property;
 				})
 	}
 	// 车辆信息块
