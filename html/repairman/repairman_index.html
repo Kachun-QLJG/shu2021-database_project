@@ -110,8 +110,6 @@
 <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
 	<ul id='navbar' class='nav navbar-nav navbar-right' >
 		<li><a id='text'></a></li>
-		<li><a id='register' href='/register' title='注册' >前往注册</a></li>
-		<li><a id='login' href='/login' title='登录' >前往登录</a></li>
 		<li><a id='logout' title='退出登录' data-toggle='modal' data-target='#log_out' onclick='getUsername()'>退出登录</a></li>
 	</ul>
 </div>
@@ -137,7 +135,8 @@
 				</a>
 				<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
 				<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
-				<a class='list-group-item' data-toggle='modal' data-target='#ongoing_order' id="ongoing_orders" style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>
+<!--				<a class='list-group-item' data-toggle='modal' data-target='#ongoing_order' id="ongoing_orders" style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>-->
+<!--				<a class='list-group-item' href='/index' id="ongoing_orders" style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>-->
 				<a class='list-group-item' data-toggle='modal' data-target='#finished_order' style='cursor:pointer; text-decoration-line: underline'>已完成</a>
 			</div>
 		</div>
@@ -145,27 +144,165 @@
 		<!--右区域-->
 		<div class="col-md-10">
 			<div id="notification" class="alert alert-warning alert-dismissible" role="alert" style="display: none">
-				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true" data-backdrop="static">&times;</span><span class="sr-only">Close</span></button>
 				<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
 			</div>
-			<!--
-			<div class='col-md-10' id='con'  style='text-align: center'>
-				<label style='color: #77bbe2;font-size:50px;'>　　　车辆信息</label>
-			</div>
-			-->
 
-			<div class='row' id="right">
+			<div id="ongoing">
+				<div class='col-md-10' id='ongoing_title'  style='text-align: center'>
+					<label style='color: #77bbe2;font-size:50px;' id="ongoing_orders">　进行中订单</label>
+				</div>
+
+				<div id="ongoing_table_father" style="margin: auto; text-align: center; font-size: 17px;">
+					<table id="ongoing_table" border="1" style="text-align: center; font-size: 17px;">
+						<!-- 表头 -->
+						<tr style="height: 30px">
+							<th id="number_ongoing" style="text-align: center; width: 250px">订单号</th>
+							<th id="vehicle_number_ongoing" style="text-align: center; width: 300px">车架号</th>
+							<th id="parts_number_ongoing" style="text-align: center; width: 150px">零件号</th>
+							<th id="parts_name_ongoing" style="text-align: center; width: 150px">零件名</th>
+							<th id="parts_count_ongoing" style="text-align: center; width: 100px">数量</th>
+							<th id="add_parts" style="text-align: center; width: 100px">添加零件</th>
+						</tr>
+						<!-- 传参处 -->
+						<tr>
+							<td rowspan="2">0000001</td>
+							<td rowspan="2">12345678901234567</td>
+							<td>001</td>
+							<td>轮毂</td>
+							<td>1</td>
+							<td rowspan="2"><a>添加</a></td>
+						</tr>
+						<tr>
+							<td>002</td>
+							<td>后视镜</td>
+							<td>2</td>
+						</tr>
+						<tr>
+							<td rowspan="1">0000002</td>
+							<td rowspan="1">22345678901234567</td>
+							<td>002</td>
+							<td>后视镜</td>
+							<td>1</td>
+							<td rowspan="1"><a>添加</a></td>
+						</tr>
+					</table>
+				</div>
 			</div>
+
+<!--			<div id="pbb_finished_table">-->
+<!--				<div class='col-md-10' id='finished_title'  style='text-align: center'>-->
+<!--					<label style='color: #77bbe2;font-size:50px;' id="finished_orders">　　　已完成订单</label>-->
+<!--				</div>-->
+
+<!--				<div id="pbb_finished_table_father" style="margin: auto; text-align: center; font-size: 17px;">-->
+<!--					&lt;!&ndash;-->
+<!--                    <table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">-->
+<!--                        <tr>-->
+<!--                            <th style="text-align: center; width: 70px">车牌号</th>-->
+<!--                            <th id="ongoing_plate" style="text-align: center; width: 210px">沪SHU502</th>-->
+<!--                            <th style="text-align: center; width: 70px">车架号</th>-->
+<!--                            <th id="ongoing_VIN"style="text-align: center; width: 210px">11111111111111111</th>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                    &ndash;&gt;-->
+<!--					<table id="finished_table_sub" border="1" style="text-align: center; font-size: 17px;">-->
+<!--						&lt;!&ndash; 表头 &ndash;&gt;-->
+<!--						<tr style="height: 30px">-->
+<!--							<th id="number_finished_pbb" style="text-align: center; width: 250px">订单号</th>-->
+<!--							<th id="vehicle_number_finished_pbb" style="text-align: center; width: 300px">车架号</th>-->
+<!--							<th id="parts_number_finished_pbb" style="text-align: center; width: 150px">零件号</th>-->
+<!--							<th id="parts_name_finished_pbb" style="text-align: center; width: 150px">零件名</th>-->
+<!--							<th id="parts_count_finished_pbb" style="text-align: center; width: 100px">数量</th>-->
+<!--&lt;!&ndash;							<th id="add_parts" style="text-align: center; width: 100px">添加零件</th>&ndash;&gt;-->
+<!--						</tr>-->
+<!--						&lt;!&ndash; 传参处 &ndash;&gt;-->
+<!--						<tr>-->
+<!--							<td rowspan="2">0000001</td>-->
+<!--							<td rowspan="2">12345678901234567</td>-->
+<!--							<td>001</td>-->
+<!--							<td>轮毂</td>-->
+<!--							<td>1</td>-->
+<!--&lt;!&ndash;							<td rowspan="2"><a>添加</a></td>&ndash;&gt;-->
+<!--						</tr>-->
+<!--						<tr>-->
+<!--							<td>002</td>-->
+<!--							<td>后视镜</td>-->
+<!--							<td>2</td>-->
+<!--						</tr>-->
+<!--						<tr>-->
+<!--							<td rowspan="1">0000002</td>-->
+<!--							<td rowspan="1">22345678901234567</td>-->
+<!--							<td>002</td>-->
+<!--							<td>后视镜</td>-->
+<!--							<td>1</td>-->
+<!--&lt;!&ndash;							<td rowspan="1"><a>添加</a></td>&ndash;&gt;-->
+<!--						</tr>-->
+<!--					</table>-->
+<!--				</div>-->
+<!--			</div>-->
+
+<!--			<div id="pbb_all_table">-->
+<!--				<div class='col-md-10' id='all_title'  style='text-align: center'>-->
+<!--					<label style='color: #77bbe2;font-size:50px;' id="all_orders">　　　全部订单</label>-->
+<!--				</div>-->
+
+<!--				<div id="pbb_all_table_father" style="margin: auto; text-align: center; font-size: 17px;">-->
+<!--					&lt;!&ndash;-->
+<!--                    <table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">-->
+<!--                        <tr>-->
+<!--                            <th style="text-align: center; width: 70px">车牌号</th>-->
+<!--                            <th id="ongoing_plate" style="text-align: center; width: 210px">沪SHU502</th>-->
+<!--                            <th style="text-align: center; width: 70px">车架号</th>-->
+<!--                            <th id="ongoing_VIN"style="text-align: center; width: 210px">11111111111111111</th>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                    &ndash;&gt;-->
+<!--					<table id="all_table_sub" border="1" style="text-align: center; font-size: 17px;">-->
+<!--						&lt;!&ndash; 表头 &ndash;&gt;-->
+<!--						<tr style="height: 30px">-->
+<!--							<th id="number_all_pbb" style="text-align: center; width: 250px">订单号</th>-->
+<!--							<th id="vehicle_number_all_pbb" style="text-align: center; width: 300px">车架号</th>-->
+<!--							<th id="parts_number_all_pbb" style="text-align: center; width: 150px">零件号</th>-->
+<!--							<th id="parts_name_all_pbb" style="text-align: center; width: 150px">零件名</th>-->
+<!--							<th id="parts_count_all_pbb" style="text-align: center; width: 100px">数量</th>-->
+<!--							<th id="order_status" style="text-align: center; width: 100px">订单状态</th>-->
+<!--						</tr>-->
+<!--						&lt;!&ndash; 传参处 &ndash;&gt;-->
+<!--						<tr>-->
+<!--							<td rowspan="2">0000001</td>-->
+<!--							<td rowspan="2">12345678901234567</td>-->
+<!--							<td>001</td>-->
+<!--							<td>轮毂</td>-->
+<!--							<td>1</td>-->
+<!--							<td rowspan="2"><a>已完成</a></td>-->
+<!--						</tr>-->
+<!--						<tr>-->
+<!--							<td>002</td>-->
+<!--							<td>后视镜</td>-->
+<!--							<td>2</td>-->
+<!--						</tr>-->
+<!--						<tr>-->
+<!--							<td rowspan="1">0000002</td>-->
+<!--							<td rowspan="1">22345678901234567</td>-->
+<!--							<td>002</td>-->
+<!--							<td>后视镜</td>-->
+<!--							<td>1</td>-->
+<!--							<td rowspan="1"><a>未完成</a></td>-->
+<!--						</tr>-->
+<!--					</table>-->
+<!--				</div>-->
+<!--			</div>-->
 		</div>
 	</div>
 </div>
 
 <!-- 更改工作状态 -->
-<div class="modal fade" id="workStatus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="workStatus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-backdrop="static">&times;</button>
 				<h3 class="modal-title" id="changeWorkStatus">更改状态</h3>
 			</div>
 			<div class="modal-body">
@@ -186,58 +323,24 @@
 </div>
 
 <!-- 进行中订单 -->
-<div class='modal fade' id='ongoing_order' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+<div class='modal fade' id='ongoing_order' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static">
 	<div class='modal-dialog'>
 		<div class='modal-content'>
 			<div class='modal-header'>
-				<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static" >&times;</button>
 				<h3 class='modal-title' id='ongoingOrder' style="text-align: center">未完成订单</h3>
 			</div>
-			<div class='modal-body' id="ongoing_table_father" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">
-				<!--
-				<table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">
-					<tr>
-						<th style="text-align: center; width: 70px">车牌号</th>
-						<th id="ongoing_plate" style="text-align: center; width: 210px">沪SHU502</th>
-						<th style="text-align: center; width: 70px">车架号</th>
-						<th id="ongoing_VIN"style="text-align: center; width: 210px">11111111111111111</th>
-					</tr>
-				</table>
-				-->
-				<table id="ongoing_table" border="1" style="width: 560px; text-align: center; font-size: 17px;">
-					<!-- 表头 -->
-					<tr style="height: 30px">
-						<th id="number_ongoing" style="text-align: center; width: 120px">订单号</th>
-						<th id="vehicle_number_ongoing" style="text-align: center">车架号</th>
-						<th id="parts_number_ongoing" style="text-align: center">零件号</th>
-						<th id="parts_name_ongoing" style="text-align: center">零件名</th>
-						<th id="parts_count_ongoing" style="text-align: center">数量</th>
-					</tr>
-					<!-- 传参处 -->
-					<tr>
-						<td rowspan="2">0000001</td>
-						<td rowspan="2">12345678901234567</td>
-						<td>001</td>
-						<td>轮毂</td>
-						<td>1</td>
-					</tr>
-					<tr>
-						<td>002</td>
-						<td>后视镜</td>
-						<td>2</td>
-					</tr>
-				</table>
-			</div>
+
 		</div>
 	</div>
 </div>
 
 <!-- 已完成订单 -->
-<div class='modal fade' id='finished_order' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+<div class='modal fade' id='finished_order' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static">
 	<div class='modal-dialog'>
 		<div class='modal-content'>
 			<div class='modal-header'>
-				<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static" >&times;</button>
 				<h3 class='modal-title' id='finishedOrder' style="text-align: center">已完成订单</h3>
 			</div>
 			<div class='modal-body' id="finished_table_father" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">
@@ -285,11 +388,11 @@
 </div>
 
 <!-- 详情——》委托书 -->
-<div class='modal fade' id='detail' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' >
+<div class='modal fade' id='detail' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static" >
 	<div class='modal-dialog' style="width: 80%;height: 80%;">
 		<div class='modal-content'>
 			<div class='modal-header'>
-				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static">&times;</button>
 			</div>
 			<div class='modal-body'>
 				<div style="text-align: center;">
@@ -301,11 +404,11 @@
 </div>
 
 <!-- 登出模态框 -->
-<div class='modal fade' id='log_out' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+<div class='modal fade' id='log_out' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static">
 	<div class='modal-dialog'>
 		<div class='modal-content'>
 			<div class='modal-header'>
-				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static">&times;</button>
 				<h3 class='modal-title' id='myModalLabel'>您确定要登出当前账号吗？</h3>
 				<h4 class='modal-body' id='text1'></h4>
 			</div>
@@ -318,11 +421,11 @@
 </div>
 
 <!-- 更改密码 -->
-<div class='modal fade' id='change_password' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' onkeydown="keychangepassword()">
+<div class='modal fade' id='change_password' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static" onkeydown="keychangepassword()">
 	<div class='modal-dialog'>
 		<div class='modal-content'>
 			<div class='modal-header'>
-				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static">&times;</button>
 				<h3 class='modal-title' id='changePSWD'>更改密码</h3>
 			</div>
 			<div class='modal-body'>
@@ -377,7 +480,15 @@
 				})
 	}
 	function ongoingNumber(){
-
+		axios({
+			method: 'get',
+			url: '/get_processing_arrangement'
+		})
+				.then(function (response) {
+					var data = response.data;
+					var num = data.length;
+					document.getElementById("ongoing_orders").innerHTML = "　　 进行中订单" + "(" + num + ")";
+				})
 	}
 
 </script>

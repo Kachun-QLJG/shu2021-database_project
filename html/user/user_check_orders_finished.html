@@ -16,8 +16,6 @@
 <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
 	<ul id='navbar' class='nav navbar-nav navbar-right' >
 		<li><a id='text'></a></li>
-		<li><a id='register' href='/register' title='注册' style="cursor: pointer">前往注册</a></li>
-		<li><a id='login' href='/login' title='登录' style="cursor: pointer">前往登录</a></li>
 		<li><a id='logout' title='退出登录' data-toggle='modal' data-target='#log_out' onclick='getUsername()' style="cursor: pointer">退出登录</a></li>
 	</ul>
 </div>
@@ -55,7 +53,7 @@
 		<div class="col-md-10">
 
 			<div id="notification" class="alert alert-warning alert-dismissible" role="alert" style="display: none">
-				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true" data-backdrop="static">&times;</span><span class="sr-only">Close</span></button>
 				<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
 			</div>
 			<div class='col-md-10' id='con'  style='text-align: center'>
@@ -103,11 +101,11 @@
 -->
 
 <!-- 登出模态框（Modal）-->
-<div class='modal fade' id='log_out' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+<div class='modal fade' id='log_out' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static">
 	<div class='modal-dialog'>
 		<div class='modal-content'>
 			<div class='modal-header'>
-				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static">&times;</button>
 				<h3 class='modal-title' id='myModalLabel'>您确定要登出当前账号吗？</h3>
 				<h4 class='modal-body' id='text1'></h4>
 			</div>
@@ -120,11 +118,11 @@
 </div>
 
 <!-- 更改个人信息 -->
-<div class='modal fade' id='change_info' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+<div class='modal fade' id='change_info' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static">
 	<div class='modal-dialog'>
 		<div class='modal-content'>
 			<div class='modal-header'>
-				<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static" >&times;</button>
 				<h3 class='modal-title' id='changeUserInfo'>更改个人信息</h3>
 			</div>
 			<div class='modal-body'>
@@ -167,11 +165,11 @@
 </div>
 
 <!-- 更改密码 -->
-<div class='modal fade' id='change_password' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' onkeydown="keychangepassword()">
+<div class='modal fade' id='change_password' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static" onkeydown="keychangepassword()">
 	<div class='modal-dialog'>
 		<div class='modal-content'>
 			<div class='modal-header'>
-				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static">&times;</button>
 				<h3 class='modal-title' id='changePSWD'>更改密码</h3>
 			</div>
 			<div class='modal-body'>
@@ -181,7 +179,7 @@
 				<span id='checktext3'></span> <br></br>
 
 				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
-				<label for="pswd" style='font-size:15px;width: 80px;'>密码：</label>
+				<label for="pswd" style='font-size:15px;width: 80px;'>新密码：</label>
 				<input id='pswd' type='password' name="pswd" onchange="checkpwd()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
 				<span id='checktext4'></span> <br></br>
 
@@ -209,11 +207,11 @@
 </div>
 
 <!-- 详情——》委托书 -->
-<div class='modal fade' id='detail' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' >
+<div class='modal fade' id='detail' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static" >
 	<div class='modal-dialog' style="width: 80%;height: 80%;">
 		<div class='modal-content'>
 			<div class='modal-header'>
-				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static">&times;</button>
 			</div>
 			<div class='modal-body'>
 				<div style="text-align: center;">
