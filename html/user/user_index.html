@@ -151,7 +151,7 @@
 				</a>
 				<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
 				<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
-				<a class='list-group-item' href='/u_check_orders_ongoing' style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>
+				<a class='list-group-item' href='/u_check_orders_ongoing' id="ongoing_orders" style='cursor:pointer; text-decoration-line: underline'>进行中</a>
 				<a class='list-group-item' href='/u_check_orders_finished' style='cursor:pointer; text-decoration-line: underline'>已完成</a>
 			</div>
 		</div>
@@ -414,17 +414,17 @@
 				<img src='/statics/user/旧密码.png' width='20px' alt="正在加载图片">
 				<label for="oldpswd" style='font-size:15px;width: 80px;'>原密码：</label>
 				<input id='oldpswd' type='password' name="oldpswd" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
-				<span id='checktext3'></span> <br></br>
+				<span id='checktext3'></span> <br/>
 
 				<img src='/statics/user/新密码.png' width='20px' alt="正在加载图片">
 				<label for="pswd" style='font-size:15px;width: 80px;'>密码：</label>
 				<input id='pswd' type='password' name="pswd" onchange="checkpwd()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
-				<span id='checktext4'></span> <br></br>
+				<span id='checktext4'></span> <br/>
 
 				<img src='/statics/user/重复密码.png' width='20px' alt="正在加载图片">
 				<label for="pwdc" style='font-size:15px;width: 80px;'>确认密码：</label>
 				<input id='pwdc' type='password' name="pwdc" onchange="checkpwdc()" onpaste="return false" onkeydown="if(event.keyCode==32) return false"/>
-				<span id='checktext5'></span> <br></br>
+				<span id='checktext5'></span> <br/>
 
 				<input type="hidden" id="old_password" name="old_password" />
 				<input type="hidden" id="new_password" name="new_password" />
@@ -456,6 +456,7 @@
 		getVehicle();
 		userInfo();
 		showNotificationOrNot();
+		ongoingNumber();
 	}
 	function check_number(){
 		var check = false;
@@ -681,6 +682,17 @@
 			})
 		}
 
+	}
+	function ongoingNumber() {
+		axios({
+			method: 'get',
+			url: '/get_processing_attorney'
+		})
+				.then(function (response) {
+					var data = response.data;
+					var num = data.length;
+					document.getElementById("ongoing_orders").innerHTML = "进行中" + "(" + num + ")";
+				})
 	}
 	$(function() {
 		$("[data-toggle='popover']").each(function() {

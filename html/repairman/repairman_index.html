@@ -137,7 +137,7 @@
 				</a>
 				<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
 				<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
-				<a class='list-group-item' data-toggle='modal' data-target='#ongoing_order' style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>
+				<a class='list-group-item' data-toggle='modal' data-target='#ongoing_order' id="ongoing_orders" style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>
 				<a class='list-group-item' data-toggle='modal' data-target='#finished_order' style='cursor:pointer; text-decoration-line: underline'>已完成</a>
 			</div>
 		</div>
@@ -358,6 +358,7 @@
 		getUserName();
 		repairmanInfo();
 		showNotificationOrNot();
+		ongoingNumber();
 	}
 
 	function repairmanInfo(){
@@ -374,6 +375,9 @@
 					document.getElementById("repairman_work_status").innerHTML = "工作状态：" + last.Status;
 					document.getElementById("StatusChange").value = last.Status;
 				})
+	}
+	function ongoingNumber(){
+
 	}
 
 </script>
