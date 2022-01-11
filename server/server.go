@@ -21,21 +21,21 @@ func main() {
 		if err != nil {
 		}
 	}(database)
-	go connectToSql(database)
+	connectToSql(database)
 	// database.LogMode(true)
-	go database.DB().SetConnMaxLifetime(time.Hour * 24 * 21) //设置连接数据库超时时间
+	database.DB().SetConnMaxLifetime(time.Hour * 24 * 21) //设置连接数据库超时时间
 	// 创建一个默认的路由引擎
 	r := gin.Default()
-	go r.Static("/statics", "./html/statics")
-	go r.Static("/src", "./html/src") //将相对html的路径替换成相对工程的路径
-	go r.LoadHTMLFiles("./html/login.html", "./html/logout.html", "./html/register.html", "./html/error.html",
+	r.Static("/statics", "./html/statics")
+	r.Static("/src", "./html/src") //将相对html的路径替换成相对工程的路径
+	r.LoadHTMLFiles("./html/login.html", "./html/logout.html", "./html/register.html", "./html/error.html",
 		//"./html/success.html",
 		"./html/index.html",
 		//"./html/change_password.html",
 		"./html/user/user_index.html", "./html/user/user_check_orders_ongoing.html", "./html/user/user_check_orders_finished.html",
 		"./html/salesman/salesman_index.html", "./html/salesman/salesman_check_orders.html", "./html/salesman/salesman_take_orders.html",
 		"./html/repairman/repairman_index.html") //加载html模板
-	go r.Use(Session("SHU")) //验证码生成会使用SHU作为密钥生成session
+	r.Use(Session("SHU")) //验证码生成会使用SHU作为密钥生成session
 	addPath(r)
 
 	// 启动HTTP服务，在36b1c95548.qicp.vip启动服务

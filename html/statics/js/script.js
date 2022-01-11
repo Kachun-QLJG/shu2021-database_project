@@ -36,7 +36,6 @@ async function logout() {
 		method: 'post',
 		url: '/logout'
 	});
-	alert("成功");
 	window.open("/index", "_self");
 }
 function register(){

@@ -15,7 +15,7 @@
 	/*委托书&表格类のstyle*/
 	table{table-layout: fixed;word-break: keep-all;}
 	.cntr-7{}
-	.cntr-7 td{text-align: center;align-items: center;font-size: 17px;width: 100px;height: 30px;}
+	.cntr-7 td{text-align: center;align-items: center;font-size: 15px;width: 100px;height: 30px;}
 	.cntr-7 th{text-align: center;align-items: center;font-size: 17px;width: 100px;height: 30px;}
 </style>
 <!-- 右上区块 -->
@@ -37,11 +37,11 @@
 				<a class="list-group-item list-group-item-info" style="cursor: default">
 					个人信息
 				</a>
-				<a id="user_name" class="list-group-item" style="cursor: default">客户名称:</a>
-				<a id="user_property" class="list-group-item" style="cursor: default">客户性质:</a>
-				<a id="user_tel" class="list-group-item" style="cursor: default">联系电话:</a>
-				<a id="user_contact" class="list-group-item" style="cursor: default">联 系 人:</a>
-				<a id="user_discount" class="list-group-item" style="cursor: default">折 扣 率:</a>
+				<a id="user_name" class="list-group-item" style="cursor: default">客户名称：</a>
+				<a id="user_property" class="list-group-item" style="cursor: default">客户性质：</a>
+				<a id="user_tel" class="list-group-item" style="cursor: default">联系电话：</a>
+				<a id="user_contact" class="list-group-item" style="cursor: default">联 系 人：</a>
+				<a id="user_discount" class="list-group-item" style="cursor: default">折 扣 率：</a>
 				<a class="list-group-item" data-toggle='modal' data-target='#change_info' onclick='userinfo()' style="cursor: pointer; text-decoration-line: underline">更改个人信息</a>
 				<a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer; text-decoration-line: underline">更改密码</a>
 			</div>
@@ -120,8 +120,8 @@
 			<div class='modal-header'>
 				<button type='button' class='close' data-dismiss='modal' aria-hidden='true' >&times;</button>
 				<h3 class='modal-title' style="text-align: center">502汽车维修站维修委托书</h3>
-				<h5 style="float: left">No.20211220001</h5>
-				<h5 style="float: right">登记日期：2021年12月20日</h5>
+				<h5 id="No" style="float: left">No.20211220001</h5>
+				<h5 id="date" style="float: right">登记日期：2021年12月20日</h5>
 				<br>
 			</div>
 			<div class='modal-body'>
@@ -549,12 +549,70 @@
 						a.setAttribute("data-toggle","modal");
 						a.setAttribute("data-target","#table");
 						a.innerHTML = data[i-1].Progress;
+						a.setAttribute("onclick","showAttorney('"+data[i-1].OrderNumber+"')");
 					}
 					var div = document.createElement("div");
 					document.getElementById("ongoing_table_father").appendChild(div);
 					div.className = "row";
 					div.id = "right";
 					})
+	}
+	function showAttorney(param){
+		axios.get('/get_full_attorney',{
+		params:{
+			attorney_no: param
+		}
+	})
+				.then(function(response) {
+					var last = response.data.Head;
+					document.getElementById("No").innerHTML = "No." + param;
+
+					var date = new Date();
+					document.getElementById("date").innerHTML = "生成日期：" + date.getFullYear() + "年" + (date.getMonth()+1) + "月" + date.getDate() + "日";
+					document.getElementById("1").innerHTML = last.UserNumber;
+					document.getElementById("2").innerHTML = last.UserContactPerson;
+					document.getElementById("3").innerHTML = last.UserContactTel;
+					document.getElementById("4").innerHTML = last.SalesmanNumber;
+					document.getElementById("5").innerHTML = last.SalesmanName;
+
+					document.getElementById("6").innerHTML = last.VehiclePlate;
+					document.getElementById("7").innerHTML = last.VehicleVin;
+					document.getElementById("8").innerHTML = last.VehicleModel;
+
+					document.getElementById("9").innerHTML = last.VehicleType;
+					document.getElementById("10").innerHTML = last.StartPetrol;
+					document.getElementById("11").innerHTML = last.StartMile;
+
+					document.getElementById("12").innerHTML = last.PayMethod;
+					document.getElementById("13").innerHTML = last.DiscountRate + "%";
+					document.getElementById("14").innerHTML = last.PredictFinishTime;
+					document.getElementById("15").innerHTML = last.RepairType;
+					document.getElementById("16").innerHTML = last.RepairClassification;
+
+					document.getElementById("17").innerHTML = last.RoughProblem;
+					document.getElementById("18").innerHTML = last.OutRange;
+
+					document.getElementById("19").innerHTML = last.SpecificProblem;
+
+					data = response.data.AttorneyProject;
+
+					foot = response.data.Tail;
+
+					if(i < data.Num){
+
+					}
+					for(var i = 0; i < data.Num; i++){
+
+					}
+
+					document.getElementById("20").innerHTML = data.TotalWorkHour;
+					document.getElementById("21").innerHTML = data.TotalPartsCost;
+
+					document.getElementById("22").innerHTML = data.Remark;
+
+					document.getElementById("23").innerHTML = foot.TotalPrice;
+
+				})
 	}
 
 </script>
