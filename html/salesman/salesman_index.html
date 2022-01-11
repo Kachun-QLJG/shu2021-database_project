@@ -153,7 +153,7 @@
 				</a>
 				<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
 				<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
-				<a class='list-group-item' data-toggle='modal' data-target='#take_order' style='cursor:pointer; text-decoration-line: underline'>接单</a>
+<!--				<a class='list-group-item' data-toggle='modal' data-target='#take_order' style='cursor:pointer; text-decoration-line: underline'>接单</a>-->
 				<a class='list-group-item' data-toggle='modal' data-target='#finished_order' style='cursor:pointer; text-decoration-line: underline'>已完成</a>
 			</div>
 		</div>
@@ -164,13 +164,36 @@
 				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
 			</div>
-			<!--
-			<div class='col-md-10' id='con'  style='text-align: center'>
-				<label style='color: #77bbe2;font-size:50px;'>　　　车辆信息</label>
-			</div>
-			-->
 
-			<div class='row' id="right">
+			<div id="ongoing">
+				<div class='col-md-10' id='ongoing_title'  style='text-align: center'>
+					<label style='color: #77bbe2;font-size:50px;' id="ongoing_orders">　进行中订单</label>
+				</div>
+
+				<div id="ongoing_table_father" style="margin: auto; text-align: center; font-size: 17px;">
+					<table id="ongoing_table" border="1" style="text-align: center; font-size: 17px;">
+						<!-- 表头 -->
+						<tr style="height: 30px">
+							<th id="number_ongoing" style="text-align: center; width: 300px">订 单 号：</th>
+							<th id="user_name" style="text-align: center; width: 250px">顾客姓名：</th>
+							<th id="license_number" style="text-align: center; width: 200px">车 牌 号：</th>
+							<th id="status" style="text-align: center; width: 200px">状态：</th>
+						</tr>
+						<!-- 传参处 -->
+						<tr>
+							<td>12345678901234567</td>
+							<td>夏逸凡</td>
+							<td>沪SHU502</td>
+							<td>进行中</td>
+						</tr>
+						<tr>
+							<td>22345678901234567</td>
+							<td>张霖锋</td>
+							<td>沪SHU503</td>
+							<td><a data-toggle='modal' data-target='#take_order'>编辑具体信息</a></td>
+						</tr>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -426,6 +449,10 @@
 	</div>
 </div>
 
+<div class='col-md-3' >
+	<img src="/statics/user/添加.png" data-toggle='modal' data-target='#take_order' data-backdrop='static' style='position:fixed;top:70%;right:1%;cursor: pointer' alt="正在加载图片"/>
+</div>
+
 <script type="text/javascript">
 	window.onload= function(){
 		checkNotification();
@@ -454,8 +481,10 @@
 					var data = response.data;
 					var bound_num = data.Own.length;
 					var unbound_num = data.Pending.length;
+					var num = bound_num + unbound_num;
 					document.getElementById("bound_orders").label = "已绑定订单" + "(" + bound_num + ")";
 					document.getElementById("unbound_orders").label = "未绑定订单" + "(" + unbound_num + ")";
+					document.getElementById("ongoing_orders").innerHTML = "　进行中订单" + "(" + num + ")";
 				})
 	}
 	// var EventUtil = {
