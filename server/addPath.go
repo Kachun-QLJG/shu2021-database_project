@@ -62,6 +62,7 @@ func addPath(r *gin.Engine) {
 
 	//----------业务员路径----------
 	r.POST("/add_project_for_attorney", authMiddleWare(), checkPermission(), filterRepairman(), addProjectForAttorney) //业务员为委托添加维修项目
+	r.POST("/set_attorney_finished", authMiddleWare(), checkPermission(), filterRepairman(), setAttorneyFinished)      //业务员结算委托书并设置进度为已完成
 
 	//----------维修员路径----------
 	r.POST("/change_status", authMiddleWare(), checkPermission(), filterRepairman(), changeStatus)                //后端处理维修员更改工作状态

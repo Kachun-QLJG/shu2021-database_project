@@ -71,11 +71,36 @@ func getRelatingAttorney(c *gin.Context) {
 
 func getFinishedAttorneyS(c *gin.Context) {
 	username := c.MustGet("username").(string)
-	var attorney []struct {
-		OrderNumber string
+	var result []struct {
+		OrderNumber       string
+		Vin               string
+		RoughProblem      string
+		SpecificProblem   string
+		PredictFinishTime string
+		Progress          string
 	}
-	database.Table("attorney").Select("number as order_number").Where("salesman_id = ? and progress = '已完成'", username).Scan(&attorney)
-	c.JSON(http.StatusOK, attorney)
+	database.Table("attorney").Select("number as order_number, vehicle_number as vin, rough_problem as rough_problem, specific_problem as specific_problem, predict_finish_time as predict_finish_time, progress as progress").Where("salesman_id = ? and progress = '已完成'", username).Scan(&result)
+	c.JSON(http.StatusOK, result)
+}
+
+func setAttorneyFinished(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	attorneyNo := c.PostForm("attorney_no")
+	endPetrol := c.PostForm("end_petrol")
+	endMile := c.PostForm("end_mile")
+	var attorney Attorney
+	result := database.First(&attorney, "number = ? and salesman_id = ?", attorneyNo, username)
+	if result.RowsAffected == 0 {
+		c.String(http.StatusForbidden, "无权限！")
+		return
+	}
+	sTime := time.Now().Format("2006-01-02 15:04:05")
+	database.Model(&attorney).Update("actual_finish_time", sTime)
+	database.Model(&attorney).Update("end_petrol", endPetrol)
+	database.Model(&attorney).Update("end_mile", endMile)
+	database.Model(&attorney).Update("progress", "已完成")
+	genPdf(attorney.UserID, attorneyNo)
+	c.JSON(http.StatusOK, gin.H{"url": "/show_pdf?attorney_no=" + attorneyNo + "&user_id=" + attorney.UserID})
 }
 
 func getSalesmanInfo(c *gin.Context) {

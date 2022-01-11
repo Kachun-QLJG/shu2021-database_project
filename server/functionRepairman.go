@@ -14,7 +14,7 @@ func getFinishedArrangement(c *gin.Context) {
 		OrderNumber   string
 		ProjectNumber string
 	}
-	database.Table("arrangement").Select("order_number as order_number, project_number as project_number").Where("repairman_number = ? and progress = '完成'", username).Scan(&arrangement)
+	database.Table("arrangement").Select("order_number as order_number, project_number as project_number").Where("repairman_number = ? and progress = '已完成'", username).Scan(&arrangement)
 	c.JSON(http.StatusOK, arrangement)
 }
 
@@ -36,6 +36,14 @@ func changeRepairProgress(c *gin.Context) {
 	var arrangement Arrangement
 	database.First(&arrangement, "order_number = ? and project_number = ? and repairman_number = ?", attorneyNo, projectNo, username)
 	database.Model(&arrangement).Update("progress", progress)
+	if progress == "已完成" {
+		result := database.Find(&arrangement, "order_number = ? and progress != '已完成'", attorneyNo)
+		if result.RowsAffected == 0 {
+			var attorney Attorney
+			database.First(&attorney, "number = ?", attorneyNo)
+			database.Model(&arrangement).Update("progress", "待结算")
+		}
+	}
 	c.JSON(http.StatusOK, gin.H{"data": "成功"})
 }
 
