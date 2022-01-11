@@ -123,7 +123,7 @@
 				<br>
 			</div>
 			<div class='modal-body'>
-				<table border="1">
+				<table id ="father_table" border="1">
 					<tbody class="cntr-7">
 					<!--row-1-->
 					<tr>
@@ -199,8 +199,9 @@
 					<tr>
 						<td id="19" colspan="9">右后轮爆胎</td>
 					</tr>
-
+					</tbody>
 					<!--row-8-->
+					<tbody id="son_middle" class="cntr-7">
 					<tr>
 						<th>项目编号</th>
 						<th>维修项目名称</th>
@@ -245,8 +246,9 @@
 						<td>56</td>
 						<td>*2-1</td>
 					</tr>
-
+					</tbody>
 					<!--row-8.∞-->
+					<tbody id="son_foot" class="cntr-7">
 					<tr>
 						<th colspan="2">总工时</th>
 						<td id="20">360</td>
@@ -558,7 +560,7 @@
 						a.setAttribute("data-target","#table");
 						a.innerHTML = data[i-1].Progress;
 						a.style.cursor="help";
-						a.setAttribute("onclick","showAttorney('"+data[i-1].OrderNumber+"')");
+						a.setAttribute("onclick"," 	showAttorney('"+data[i-1].OrderNumber+"')");
 					}
 					var div = document.createElement("div");
 					document.getElementById("ongoing_table_father").appendChild(div);
@@ -604,21 +606,160 @@
 					document.getElementById("19").innerHTML = last.SpecificProblem;
 
 					data = response.data.AttorneyProject;
-
 					foot = response.data.Tail;
 
-					if(i < data.Num){
-
+					//删表
+					try {document.getElementById("father_table").removeChild(document.getElementById("son_middle"));}
+					catch(error){}
+					//建表
+					var tbody = document.createElement("tbody");
+					tbody.id = "son_middle";
+					document.getElementById("father_table").insertBefore(tbody,document.getElementById("son_foot"));
+					var tr1 = document.createElement("tr");
+					tbody.appendChild(tr1);
+					var th11 = document.createElement("th");
+					tr1.appendChild(th11);
+					th11.innerHTML = "项目编号";
+					var th12 = document.createElement("th");
+					tr1.appendChild(th12);
+					th12.innerHTML = "维修项目名称";
+					var th13 = document.createElement("th");
+					tr1.appendChild(th13);
+					th13.innerHTML = "工时";
+					var th14 = document.createElement("th");
+					tr1.appendChild(th14);
+					th14.innerHTML = "零件号";
+					var th15 = document.createElement("th");
+					tr1.appendChild(th15);
+					th15.innerHTML = "零件名";
+					var th16 = document.createElement("th");
+					tr1.appendChild(th16);
+					th16.innerHTML = "数量";
+					var th17 = document.createElement("th");
+					tr1.appendChild(th17);
+					th17.innerHTML = "单价";
+					var th18 = document.createElement("th");
+					tr1.appendChild(th18);
+					th18.innerHTML = "总价";
+					var th19 = document.createElement("th");
+					tr1.appendChild(th19);
+					th19.innerHTML = "备注";
+					if(data.Num === 0){
+						var tr2 = document.createElement("tr");
+						tbody.appendChild(tr2);
+						var th21 = document.createElement("th");
+						tr2.appendChild(th21);
+						th21.innerHTML = "";
+						var th22 = document.createElement("th");
+						tr2.appendChild(th22);
+						th22.innerHTML = "";
+						var th23 = document.createElement("th");
+						tr2.appendChild(th23);
+						th23.innerHTML = "";
+						var th24 = document.createElement("th");
+						tr2.appendChild(th24);
+						th24.innerHTML = "";
+						var th25 = document.createElement("th");
+						tr2.appendChild(th25);
+						th25.innerHTML = "";
+						var th26 = document.createElement("th");
+						tr2.appendChild(th26);
+						th26.innerHTML = "";
+						var th27 = document.createElement("th");
+						tr2.appendChild(th27);
+						th27.innerHTML = "";
+						var th28 = document.createElement("th");
+						tr2.appendChild(th28);
+						th28.innerHTML = "";
+						var th29 = document.createElement("th");
+						tr2.appendChild(th29);
+						th29.innerHTML = " 　";
 					}
-					for(var i = 0; i < data.Num; i++){
-
+					else{
+						for(var i = 0; i < data.Num; i++){
+							var datason = data.Project[i];
+							var tr2 = document.createElement("tr");
+							tbody.appendChild(tr2);
+							var td21 = document.createElement("td");
+							tr2.appendChild(td21);
+							td21.innerHTML = datason.ProjectNumber;
+							var td22 = document.createElement("td");
+							tr2.appendChild(td22);
+							td22.innerHTML = datason.ProjectName;
+							var td23 = document.createElement("td");
+							tr2.appendChild(td23);
+							td23.innerHTML = datason.ProjectTime;
+							if(datason.ProjectPartsCount === 0){
+								let td24 = document.createElement("td");
+								tr2.appendChild(td24);
+								td24.innerHTML ="";
+								let td25 = document.createElement("td");
+								tr2.appendChild(td25);
+								td25.innerHTML ="";
+								let td26 = document.createElement("td");
+								tr2.appendChild(td26);
+								td26.innerHTML ="";
+								let td27 = document.createElement("td");
+								tr2.appendChild(td27);
+								td27.innerHTML ="";
+								let td28 = document.createElement("td");
+								tr2.appendChild(td28);
+								td28.innerHTML ="";
+								let td29 = document.createElement("td");
+								tr2.appendChild(td29);
+								td29.innerHTML =datason.ProjectRemark.replace(/\n/g,"<br>");
+							}
+							else{
+								td21.setAttribute("rowspan",datason.ProjectPartsCount);
+								td22.setAttribute("rowspan",datason.ProjectPartsCount);
+								td23.setAttribute("rowspan",datason.ProjectPartsCount);
+								var j = 0;
+								let datagrandson = datason.ProjectParts;
+								let td24 = document.createElement("td");
+								tr2.appendChild(td24);
+								td24.innerHTML =datagrandson[0].PartsNumber;
+								let td25 = document.createElement("td");
+								tr2.appendChild(td25);
+								td25.innerHTML =datagrandson[0].PartsName;
+								let td26 = document.createElement("td");
+								tr2.appendChild(td26);
+								td26.innerHTML =datagrandson[0].PartsCount;
+								let td27 = document.createElement("td");
+								tr2.appendChild(td27);
+								td27.innerHTML =datagrandson[0].PartsSinglePrice;
+								let td28 = document.createElement("td");
+								tr2.appendChild(td28);
+								td28.innerHTML =datagrandson[0].PartsTotalPrice;
+								let td29 = document.createElement("td");
+								tr2.appendChild(td29);
+								td29.innerHTML =datason.ProjectRemark.replace(/\n/g,"<br>");
+								td29.setAttribute("rowspan",datason.ProjectPartsCount);
+								for(j = 1; j < datason.ProjectPartsCount; j++){
+									var tr3 = document.createElement("tr");
+									tbody.appendChild(tr3);
+									let td34 = document.createElement("td");
+									tr3.appendChild(td34);
+									td34.innerHTML =datagrandson[j].PartsNumber;
+									let td35 = document.createElement("td");
+									tr3.appendChild(td35);
+									td35.innerHTML =datagrandson[j].PartsName;
+									let td36 = document.createElement("td");
+									tr3.appendChild(td36);
+									td36.innerHTML =datagrandson[j].PartsCount;
+									let td37 = document.createElement("td");
+									tr3.appendChild(td37);
+									td37.innerHTML =datagrandson[j].PartsSinglePrice;
+									let td38 = document.createElement("td");
+									tr3.appendChild(td38);
+									td38.innerHTML =datagrandson[j].PartsTotalPrice;
+								}
+							}
+						}
 					}
-
 					document.getElementById("20").innerHTML = data.TotalWorkHour;
 					document.getElementById("21").innerHTML = data.TotalPartsCost;
 
-					document.getElementById("22").innerHTML = data.Remark;
-
+					document.getElementById("22").innerHTML = data.Remark.replace(/\n/g,"<br>");
 					document.getElementById("23").innerHTML = foot.TotalPrice;
 
 				})
