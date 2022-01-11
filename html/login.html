@@ -25,21 +25,25 @@
 					<div class="alert alert-danger" id="wrongPass" role="alert" style="display:none">请输入正确的账号和密码！ </div>
 					<div class="form-group">
 						<label>用户名（手机号/工号）：</label>
+						<label for="username"></label>
 						<input class="form-control" id="username" name="username" placeholder="请输入账号" type="text"/>
 					</div>
 					<div class="form-group">
 						<label >密码</label>
-						<input class="form-control" id="password" name="password" onkeydown="if(event.keyCode==32) return false"  onpaste="return false" placeholder="请输入密码"  type="password" autocomplete="true"/>
+						<label for="password"></label>
+						<input class="form-control" id="password" name="password" onkeydown="if(event.keyCode==32) return false" onpaste="return false" placeholder="请输入密码" type="password" autocomplete="true"/>
 					</div>
 					<div class="form-group">
 						<label >验证码</label>
 						<div>
+							<label for="ver_code"></label>
 							<input class="form-control" id="ver_code" name="ver_code" placeholder="请输入验证码" type="text" />
-							<img id="ver_pic" onclick="this.src='/captcha?v='+Math.random()" src="/captcha">
-							</br></br>
+							<img id="ver_pic" onclick="this.src='/captcha?v='+Math.random()" src="/captcha" alt="图片正在加载中">
+							<br>
 						</div>
 					</div>
 					<div class="modal-footer">
+						<a href="/register" style="margin-left: 200px">还没有账号？点此注册。</a>
 						<button id="loginbutton" class="btn btn-primary" onclick="login()">登录</button>
 					</div>
 				</div>

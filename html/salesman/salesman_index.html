@@ -223,7 +223,7 @@
 				<h3 class='modal-title' id='takeOrder'>编辑新订单</h3>
 			</div>
 			<div class='modal-body'>
-				<div>
+				<div id="order_selection">
 					<img src='/statics/user/订单号.png' width='20px' alt="正在加载图片">
 					<label for="order_number" style='font-size:15px;width: 80px;'>订单号：</label>
 					<select id='order_number'>
@@ -242,7 +242,7 @@
 					<br>
 				</div>
 
-				<div>
+				<div id="type_selection">
 					<img src='/statics/user/维修类型.png' width='20px' alt="正在加载图片">
 					<label style='font-size:15px;width: 80px;'>维修类型：</label>
 					<input id='repair_type1' name="repair_type" type='radio' value="小型" />
@@ -254,20 +254,18 @@
 					<br>
 				</div>
 
-				<div>
+				<div id="malfunction_detail">
 					<img src='/statics/user/车辆故障.png' width='20px' style="vertical-align: top" alt="正在加载图片">
 					<label for='DetailedProblem' style='font-size:15px;width: 80px;vertical-align: top'>详细故障：</label>
 					<textarea id='DetailedProblem' placeholder='请详细描述顾客车辆的故障' style="width: 300px;height: 100px;"></textarea>
 					<br>
 				</div>
 
-				<div>
+				<div id="filling_details">
 					<img src='/statics/user/详情.png' width='20px' alt="正在加载图片">
 					<label style='font-size:15px;width: 90px;'>详情：</label>
 					<br>
-				</div>
 
-				<div id="filling_details">
 					<div id="detail1">
 						<div id="fill_project1" style="display: inline">
 							<!--				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">-->

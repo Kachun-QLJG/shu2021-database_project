@@ -39,14 +39,21 @@ async function logout() {
 	window.open("/index", "_self");
 }
 function register(){
-	let formData = new FormData();
-	formData.append("phone", document.getElementById("phone").value);
-	formData.append("pswd", document.getElementById("pswd").value);
-	formData.append("ver", document.getElementById("ver").value);
-	let config = {
+	let registerData = new FormData();
+	registerData.append("phone", document.getElementById("phone").value);
+	registerData.append("pswd", document.getElementById("pswd").value);
+	registerData.append("ver", document.getElementById("ver").value);
+	let configRegister = {
 		headers: {"Content-Type": "multipart/form-data"}
 	};
-	axios.post("/register", formData, config).then(res => {
+	// let loginData = new FormData();
+	// loginData.append("username", document.getElementById("phone").value);
+	// loginData.append("password", document.getElementById("pswd").value);
+	// loginData.append("ver_code", document.getElementById("ver").value);
+	// let configLogin = {
+	// 	headers: {"Content-Type": "multipart/form-data"}
+	// };
+	axios.post("/register", registerData, configRegister).then(res => {
 		var response = res.data;
 		if(response.status === "失败")
 		{
@@ -63,8 +70,32 @@ function register(){
 		else{
 			alert("注册成功！");
 			window.open("/index", "_self");
+			// axios.post("/login", loginData, configLogin).then(res => {
+			// 	var response = res.data;
+			// 	alert(response.status);
+			// 	if (response.status === "失败") {
+			// 		if (response.data === '验证码') {
+			// 			alert("验证码错误！");
+			// 			document.getElementById("wrongPass").innerHTML = '请输入正确的验证码！';
+			// 			document.getElementById("wrongPass").style.display = '';
+			// 			document.getElementById('ver_pic').click();
+			// 		} else {
+			// 			alert("用户名或密码错误！");
+			// 			document.getElementById("wrongPass").innerHTML = '请输入正确的账号和密码！';
+			// 			document.getElementById("wrongPass").style.display = '';
+			// 			document.getElementById('ver_pic').click();
+			// 		}
+			// 	} else {
+			// 		if (response.data === '已登录') {
+			// 			alert("已登录，请勿重复登录！");
+			// 		}
+			// 		window.open("/index", "_self");
+			// 	}
+			// })
 		}
 	})
+
+
 }
 
 function changePswd(){

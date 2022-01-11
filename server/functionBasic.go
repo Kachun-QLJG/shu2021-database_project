@@ -282,7 +282,7 @@ func welcome(c *gin.Context) {
 			if result.RowsAffected == 1 {
 				c.HTML(http.StatusOK, "salesman_index.html", nil)
 			} else {
-				c.HTML(http.StatusOK, "index.html", nil)
+				c.HTML(http.StatusOK, "login.html", nil)
 			}
 		}
 	}
