@@ -22,6 +22,8 @@ func addProjectForAttorney(c *gin.Context) {
 	var repairman Repairman
 	database.First(&repairman, "number = ?", repairmanNo)
 	database.Model(&repairman).Update("current_work_hour", repairman.CurrentWorkHour+workHour)
+	var project TimeOverview
+	database.First(&project, "number = ?", projectNo)
 	var notification Notification
 	notificationNumber := database.Find(&notification).RowsAffected + 1
 	strNumber := fmt.Sprintf("%08d", notificationNumber) //获取通知序号
@@ -30,7 +32,7 @@ func addProjectForAttorney(c *gin.Context) {
 		strNumber,
 		repairmanNo,
 		"【通知】您有新的任务，请查收！",
-		"维修员" + repairman.Name + "您好，您被安排了新的任务，工时定额为" + c.PostForm("work_hour") + "小时，请及时处理！\n祝您工作愉快！",
+		"维修员" + repairman.Name + "您好，您有新的任务：" + project.ProjectName + "，工时定额为" + c.PostForm("work_hour") + "小时，请及时处理！\n祝您工作愉快！",
 		"未读",
 		sTime,
 	}
@@ -48,12 +50,22 @@ func getCorrespondingRepairman(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
-func getPendingAttorney(c *gin.Context) {
-	var attorney struct {
+func getRelatingAttorney(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	type pending struct {
 		Number  string
 		CarType string
 	}
-	database.Raw("select attorney.number as number, type as car_type from attorney inner join vehicle on attorney.vehicle_number = vehicle.number where progress = '待处理'").Scan(&attorney)
+	type own struct {
+		Number  string
+		CarType string
+	}
+	var attorney struct {
+		Pending []pending
+		Own     []own
+	}
+	database.Raw("select attorney.number as number, type as car_type from attorney inner join vehicle on attorney.vehicle_number = vehicle.number where progress = '待处理'").Scan(&attorney.Pending)
+	database.Raw("select attorney.number as number, type as car_type from attorney inner join vehicle on attorney.vehicle_number = vehicle.number where salesman_id = ?", username).Scan(&attorney.Own)
 	c.JSON(http.StatusOK, attorney)
 }
 
