@@ -211,7 +211,7 @@
 							<option value="0000002">0000002</option>
 							<option value="0000003">0000003</option>
 						</optgroup>
-						<optgroup label="未绑定订单" id="unbounded_orders">
+						<optgroup label="未绑定订单" id="unbound_orders">
 							<option value="0000004">0000004</option>
 							<option value="0000005">0000005</option>
 							<option value="0000006">0000006</option>
@@ -432,6 +432,7 @@
 		getUserName();
 		salesmanInfo();
 		showNotificationOrNot();
+		ongoingNumber();
 	}
 	function salesmanInfo(){
 		axios({
@@ -442,6 +443,19 @@
 					var last = response.data;
 					document.getElementById("number").innerHTML = "工　　号：" + last.Number;
 					document.getElementById("salesman_name").innerHTML = "姓　　名：" + last.Name;
+				})
+	}
+	function ongoingNumber(){
+		axios({
+			method : 'get',
+			url: "/get_relating_attorney"
+		})
+				.then(function (response) {
+					var data = response.data;
+					var bound_num = data.Own.length;
+					var unbound_num = data.Pending.length;
+					document.getElementById("bound_orders").label = "已绑定订单" + "(" + bound_num + ")";
+					document.getElementById("unbound_orders").label = "未绑定订单" + "(" + unbound_num + ")";
 				})
 	}
 	// var EventUtil = {
