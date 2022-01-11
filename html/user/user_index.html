@@ -366,7 +366,7 @@
 
 				<img src='/statics/user/进场时间.png' width='20px' alt="正在加载图片">
 				<label for="StartTime" style='font-size:15px;width: 80px;'>进场时间：</label>
-				<input id="StartTime" type="date" class="measureDate" placeholder="请选择日期">
+				<input id="StartTime" type="date" min ="2022-01-01" max ="2999-12-31" class="measureDate" placeholder="请选择日期" onblur="dateModify(this.value)">
 				<!-- <label for='StartTime'></label><input id='StartTime' type='text'/> -->
 				<br>
 				<br>
@@ -723,6 +723,32 @@
 	});
 	function  content()  {
 		return  $("<h4>轿车A：排量 < 1.6升</h4>" + "<h4>轿车B：1.6升 ≤ 排量 ≤ 1.8升</h4>" + "<h4>轿车C：1.8升 < 排量 ≤ 2.3升</h4>" + "<h4>轿车D：2.3升 < 排量 ≤ 3升</h4>" + "<h4>轿车E：3升 ≤ 排量 ≤ 4升</h4>");
+	}
+
+	function dateModify(param){
+		if(param === ""){
+			alert("日期不合法");
+			document.getElementById("StartTime").value = "";
+		}
+		else{
+			var year = param[0] + param[1] + param[2] + param[3];
+			year = parseInt(year);
+			var month = param[5] + param[6];
+			month = parseInt(month);
+			var date = param[8] + param[9];
+			date = parseInt(date);
+			if(year < 2022 ){
+				document.getElementById("StartTime").value = "2022-01-01";
+			}
+			else if(year > 2999 ){
+				document.getElementById("StartTime").value = "2099-12-31";
+			}
+			if(month === 4 || month === 6 || month === 9 || month === 11){
+				if(date === 31){
+					document.getElementById("StartTime").value = param[0] + param[1] + param[2] + param[3] + param[4] + param[5] + param[6] + param[7] + "30";
+				}
+			}
+		}
 	}
 </script>
 </body>
