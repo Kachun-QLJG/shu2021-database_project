@@ -52,7 +52,7 @@
 				</a>
 				<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
 				<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
-				<a class='list-group-item' href='/u_check_orders_ongoing' style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>
+				<a class='list-group-item' href='/u_check_orders_ongoing' id="ongoing_orders" style='cursor:pointer; text-decoration-line: underline'>进行中</a>
 				<a class='list-group-item' href='/u_check_orders_finished' style='cursor:pointer; text-decoration-line: underline'>已完成</a>
 			</div>
 		</div>
@@ -389,6 +389,13 @@
 </div>
 
 <script>
+	window.onload= function(){
+		getUserName();
+		userInfo();
+		getProcessingAttorney();
+		showNotificationOrNot();
+		ongoingNumber()
+	}
 	function checkpwd(){
 		var check = false;
 		var pswd = document.getElementById("pswd").value;
@@ -432,12 +439,16 @@
 			document.getElementById('changepasswordbutton').click();
 		}
 	}
-
-	window.onload= function(){
-		getUserName();
-		userInfo();
-		getProcessingAttorney();
-		showNotificationOrNot();
+	function ongoingNumber() {
+		axios({
+			method: 'get',
+			url: '/get_processing_attorney'
+		})
+				.then(function (response) {
+					var data = response.data;
+					var num = data.length;
+					document.getElementById("ongoing_orders").innerHTML = "进行中" + "(" + num + ")";
+				})
 	}
 	function userInfo(){
 		axios({
@@ -458,7 +469,6 @@
 					document.getElementById("property").value = last.Property;
 				})
 	}
-
 	function getProcessingAttorney(){
 		//删除表格
 		try {document.getElementById("ongoing_table_father").removeChild(document.getElementById("ongoing_table"));
@@ -614,7 +624,6 @@
 
 				})
 	}
-
 </script>
 </body>
 </html>

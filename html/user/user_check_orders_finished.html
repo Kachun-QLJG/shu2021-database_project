@@ -46,7 +46,7 @@
 				</a>
 				<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
 				<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
-				<a class='list-group-item' href='/u_check_orders_ongoing' style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>
+				<a class='list-group-item' href='/u_check_orders_ongoing' id="ongoing_orders" style='cursor:pointer; text-decoration-line: underline'>进行中</a>
 				<a class='list-group-item' href='/u_check_orders_finished' style='cursor:pointer; text-decoration-line: underline'>已完成</a>
 			</div>
 		</div>
@@ -225,6 +225,13 @@
 </div>
 
 <script>
+	window.onload= function(){
+		getUserName();
+		userInfo();
+		getFinishedAttorney();
+		showNotificationOrNot();
+		ongoingNumber()
+	}
 	function checkpwd(){
 		var check = false;
 		var pswd = document.getElementById("pswd").value;
@@ -268,13 +275,6 @@
 			document.getElementById('changepasswordbutton').click();
 		}
 	}
-
-	window.onload= function(){
-		getUserName();
-		userInfo();
-		getFinishedAttorney();
-		showNotificationOrNot();
-	}
 	function userInfo(){
 		axios({
 			method : 'get',
@@ -292,6 +292,17 @@
 					document.getElementById("name").value = last.Name;
 					document.getElementById("contact_person").value = last.ContactPerson;
 					document.getElementById("property").value = last.Property;
+				})
+	}
+	function ongoingNumber() {
+		axios({
+			method: 'get',
+			url: '/get_processing_attorney'
+		})
+				.then(function (response) {
+					var data = response.data;
+					var num = data.length;
+					document.getElementById("ongoing_orders").innerHTML = "进行中" + "(" + num + ")";
 				})
 	}
 
