@@ -8,6 +8,26 @@ import (
 	"strings"
 )
 
+func getFinishedArrangement(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	var arrangement []struct {
+		OrderNumber   string
+		ProjectNumber string
+	}
+	database.Table("arrangement").Select("order_number as order_number, project_number as project_number").Where("repairman_number = ? and progress = '完成'", username).Scan(&arrangement)
+	c.JSON(http.StatusOK, arrangement)
+}
+
+func getProcessingArrangement(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	var arrangement []struct {
+		OrderNumber   string
+		ProjectNumber string
+	}
+	database.Table("arrangement").Select("order_number as order_number, project_number as project_number").Where("repairman_number = ? and progress = '维修中' or progress = '待确认'", username).Scan(&arrangement)
+	c.JSON(http.StatusOK, arrangement)
+}
+
 func changeRepairProgress(c *gin.Context) {
 	attorneyNo := c.PostForm("attorney_no")
 	projectNo := c.PostForm("project_no")

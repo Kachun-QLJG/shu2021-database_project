@@ -69,6 +69,15 @@ func getRelatingAttorney(c *gin.Context) {
 	c.JSON(http.StatusOK, attorney)
 }
 
+func getFinishedAttorneyS(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	var attorney []struct {
+		OrderNumber string
+	}
+	database.Table("attorney").Select("number as order_number").Where("salesman_id = ? and progress = '已完成'", username).Scan(&attorney)
+	c.JSON(http.StatusOK, attorney)
+}
+
 func getSalesmanInfo(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	var salesman struct {

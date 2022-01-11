@@ -26,7 +26,7 @@ func addPath(r *gin.Engine) {
 	r.GET("/get_vehicle", authMiddleWare(), checkPermission(), filterUser(), getVehicle)                            //获取车辆（所有）
 	r.GET("/repair_history", authMiddleWare(), checkPermission(), filterUser(), getRepairHistory)                   //获取某一车辆历史维修记录
 	r.GET("/get_processing_attorney", authMiddleWare(), checkPermission(), filterUser(), getProcessingAttorney)     //寻找进行中的委托
-	r.GET("/get_finished_attorney", authMiddleWare(), checkPermission(), filterUser(), getFinishedAttorney)         //寻找已完成的委托
+	r.GET("/get_finished_attorney", authMiddleWare(), checkPermission(), filterUser(), getFinishedAttorney)         //寻找已完成的委托（用户）
 	r.GET("/get_attorney_detail", authMiddleWare(), checkPermission(), filterUser(), getAttorneyDetail)             //获取某一委托的详情
 	r.GET("/check_vehicle", authMiddleWare(), checkPermission(), filterUser(), checkVehicle)                        //检查车辆是否已被绑定
 	r.GET("/u_check_orders_ongoing", authMiddleWare(), checkPermission(), filterUser(), startUCheckOrdersOngoing)   //进入用户查看进行中订单页面
@@ -39,11 +39,13 @@ func addPath(r *gin.Engine) {
 	r.GET("/s_check_orders", authMiddleWare(), checkPermission(), filterSalesman(), startSCheckOrders)                      //进入业务员查看订单页面
 	r.GET("/take_orders", authMiddleWare(), checkPermission(), filterSalesman(), startTakeOrders)                           //进入接单界面
 	r.GET("/get_corresponding_repairman", authMiddleWare(), checkPermission(), filterSalesman(), getCorrespondingRepairman) //根据维修员种类返回相应种类的维修员信息
-
+	r.GET("/get_finished_attorney_s", authMiddleWare(), checkPermission(), filterSalesman(), getFinishedAttorneyS)          //寻找已完成的委托（业务员）
 	//----------维修员路径----------
-	r.GET("/search_for_parts", authMiddleWare(), checkPermission(), filterRepairman(), searchForParts)     //寻找零件
-	r.GET("/get_repairman_info", authMiddleWare(), checkPermission(), filterRepairman(), getRepairmanInfo) //获取业务员个人信息
-	r.GET("/check_status", authMiddleWare(), checkPermission(), filterRepairman(), checkStatus)            //返回维修工状态
+	r.GET("/search_for_parts", authMiddleWare(), checkPermission(), filterRepairman(), searchForParts)                     //寻找零件
+	r.GET("/get_repairman_info", authMiddleWare(), checkPermission(), filterRepairman(), getRepairmanInfo)                 //获取业务员个人信息
+	r.GET("/check_status", authMiddleWare(), checkPermission(), filterRepairman(), checkStatus)                            //返回维修工状态
+	r.GET("/get_processing_arrangement", authMiddleWare(), checkPermission(), filterRepairman(), getProcessingArrangement) //返回正在处理的维修项目
+	r.GET("/get_finished_arrangement", authMiddleWare(), checkPermission(), filterRepairman(), getFinishedArrangement)     //返回已完成的维修项目
 
 	//==================================POST方法==================================
 	//----------全局路径----------
