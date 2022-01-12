@@ -80,8 +80,11 @@ func getFinishedAttorneyS(c *gin.Context) {
 		SpecificProblem   string
 		PredictFinishTime string
 		Progress          string
+		Username          string
 	}
-	database.Table("attorney").Select("number as order_number, vehicle_number as vin, rough_problem as rough_problem, specific_problem as specific_problem, predict_finish_time as predict_finish_time, progress as progress").Where("salesman_id = ? and progress = '已完成'", username).Scan(&result)
+	database.Raw("select attorney.number as order_number, vehicle_number as vin, rough_problem as rough_problem, specific_problem as specific_problem, predict_finish_time as predict_finish_time, progress as progress, contact_tel as username\n"+
+		"from attorney inner join user on attorney.user_id = user.number\n"+
+		"where salesman_id = ? and progress = '已完成'", username).Scan(&result)
 	c.JSON(http.StatusOK, result)
 }
 
