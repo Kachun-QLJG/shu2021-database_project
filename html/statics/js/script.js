@@ -572,8 +572,6 @@ function getUserName(){
 			}
 			else{
 				text.innerHTML ="用户名：" + response.data;
-				document.getElementById("register").style.display="none";
-				document.getElementById("login").style.display="none";
 				document.getElementById("logout").style.display="";
 			}
 		})

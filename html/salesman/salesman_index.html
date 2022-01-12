@@ -152,7 +152,7 @@
 				<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
 				<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
 <!--				<a class='list-group-item' data-toggle='modal' data-target='#take_order' style='cursor:pointer; text-decoration-line: underline'>接单</a>-->
-				<a class='list-group-item' data-toggle='modal' data-target='#finished_order' style='cursor:pointer; text-decoration-line: underline'>已完成</a>
+				<a class='list-group-item' data-toggle='modal' data-target='#finished_order' style='cursor:pointer; text-decoration-line: underline' onclick="getFinishedAttorneyS()">已完成</a>
 			</div>
 		</div>
 
@@ -171,15 +171,18 @@
 				<div id="ongoing_table_father" style="margin: auto; text-align: center; font-size: 17px;">
 					<table id="ongoing_table" border="1" style="text-align: center; font-size: 17px;">
 						<!-- 表头 -->
+						<tbody>
 						<tr style="height: 30px">
 							<th id="number_ongoing" style="text-align: center; width: 300px">订 单 号：</th>
 							<th id="user_name" style="text-align: center; width: 250px">顾客姓名：</th>
 							<th id="license_number" style="text-align: center; width: 200px">车 牌 号：</th>
 							<th id="status" style="text-align: center; width: 200px">状态：</th>
 						</tr>
+						</tbody>
 						<!-- 传参处 -->
+						<tbody id ="body_son">
 						<tr id="1">
-							<td>0000001</td>
+							<td id="order_number_1">0000001</td>
 							<td>夏逸凡</td>
 							<td>沪SHU502</td>
 							<td>进行中</td>
@@ -190,6 +193,7 @@
 							<td>沪SHU503</td>
 							<td><a data-toggle='modal' data-target='#take_order' onclick=addSpecificDetail()>编辑具体信息</a></td>
 						</tr>
+						</tbody>
 					</table>
 				</div>
 			</div>
@@ -379,15 +383,18 @@
 				-->
 				<table id="finished_table" border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">
 					<!-- 表头 -->
+					<tbody>
 					<tr style="height: 30px">
 						<th id="number_finished" style="text-align: center; width: 120px">订单号</th>
 						<th id="vehicle_number_finished" style="text-align: center">车架号</th>
-						<th id="parts_number_finished" style="text-align: center">零件号</th>
-						<th id="parts_name_finished" style="text-align: center">零件名</th>
-						<th id="parts_count_finished" style="text-align: center">数量</th>
-						<th id="finished_detail" style="text-align: center">详情</th>
+						<th id="parts_number_finished" style="text-align: center">粗略故障描述</th>
+						<th id="parts_name_finished" style="text-align: center">详细故障描述</th>
+						<th id="parts_count_finished" style="text-align: center">维修完成时间</th>
+						<th id="finished_detail" style="text-align: center">委托书</th>
 					</tr>
+					</tbody>
 					<!-- 传参处 -->
+					<tbody id ="body_second">
 					<tr>
 						<td rowspan="2">0000001</td>
 						<td rowspan="2">12345678901234567</td>
@@ -404,6 +411,7 @@
 						<td>后视镜</td>
 						<td>2</td>
 					</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>
@@ -488,6 +496,71 @@
 		var value = document.getElementById("order_number_2").innerHTML
 		var option = document.getElementsByName(value)[0];
 		option.setAttribute("selected", "selected");
+	}
+	function getRelatingAttorney(){
+		//删除表格
+		try {document.getElementById("ongoing_table").removeChild(document.getElementById("body_son"))}
+		catch(error){}
+		//
+		axios({
+			method : 'get',
+			url: "/get_relating_attorney"
+		})
+				.then(function (response) {
+					var data = response.data;
+					var num = data.Own.length;
+				})
+	}
+	function getFinishedAttorneyS() {
+		//删表
+		try {
+			document.getElementById("finished_table").removeChild(document.getElementById("body_second"))
+		} catch (error) {
+		}
+		//建表
+		axios({
+			method: 'get',
+			url: "/get_finished_attorney_s"
+		})
+				.then(function (response) {
+					data = response.data;
+					num = data.length;
+					var tbody = document.createElement("tbody");
+					tbody.id = "body_second";
+					document.getElementById("finished_table").appendChild(tbody);
+					if (num === 0) {
+						var tr = document.createElement("tr");
+						tbody.appendChild(tr);
+						var th1 = document.createElement("th");
+						tr.appendChild(th1);
+						th1.innerHTML = " 　";
+					} else {
+						for (var i = 0; i < num; i++) {
+							var tr = document.createElement("tr");
+							tbody.appendChild(tr);
+							var th1 = document.createElement("th");
+							tr.appendChild(th1);
+							th1.innerHTML = data[i].OrderNumber;
+							var th2 = document.createElement("th");
+							tr.appendChild(th2);
+							th2.innerHTML = data[i].Vin
+							var th3 = document.createElement("th");
+							tr.appendChild(th3);
+							th3.innerHTML = data[i].RoughProblem;
+							var th4 = document.createElement("th");
+							tr.appendChild(th4);
+							th4.innerHTML = data[i].SpecificProblem;
+							var th5 = document.createElement("th");
+							tr.appendChild(th5);
+							th5.innerHTML = data[i].PredictFinishTime;
+							var th6 = document.createElement("th");
+							tr.appendChild(th6);
+							th6.innerHTML = "<font color=#0000FF><u>查看pdf</u></font>";
+							th6.setAttribute("style", "cursor:pointer");
+							th6.setAttribute("onclick", "window.open('/show_pdf?attorney_no=" + data[i].OrderNumber + "&user_id=" + data[i].Username + "')");
+						}
+					}
+				})
 	}
 	// var EventUtil = {
 	// 	on:function(elem,type,handler){
