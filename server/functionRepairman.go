@@ -10,21 +10,51 @@ import (
 
 func getFinishedArrangement(c *gin.Context) {
 	username := c.MustGet("username").(string)
+	type parts struct {
+		PartsNumber string
+		PartsName   string
+		PartsCount  string
+	}
 	var arrangement []struct {
 		OrderNumber   string
 		ProjectNumber string
+		Parts         []parts
+		Vin           string
+		Status        string
 	}
-	database.Table("arrangement").Select("order_number as order_number, project_number as project_number").Where("repairman_number = ? and progress = '已完成'", username).Scan(&arrangement)
+	database.Raw("select order_number as order_number, project_number as project_number, vehicle_number as vin, arrangement.progress as status\n"+
+		"from arrangement inner join attorney on arrangement.order_number = attorney.number\n"+
+		"where repairman_number = ? and arrangement.progress = '已完成'", username).Scan(&arrangement)
+	for i := range arrangement {
+		database.Raw("select repair_parts.parts_number as parts_number, parts_name as parts_name, parts_count as parts_count\n"+
+			"from repair_parts inner join parts_overview on repair_parts.parts_number = parts_overview.parts_number\n"+
+			"where order_number = ? and project_number = ?", arrangement[i].OrderNumber, arrangement[i].ProjectNumber).Scan(&arrangement[i].Parts)
+	}
 	c.JSON(http.StatusOK, arrangement)
 }
 
 func getProcessingArrangement(c *gin.Context) {
 	username := c.MustGet("username").(string)
+	type parts struct {
+		PartsNumber string
+		PartsName   string
+		PartsCount  string
+	}
 	var arrangement []struct {
 		OrderNumber   string
 		ProjectNumber string
+		Parts         []parts
+		Vin           string
+		Status        string
 	}
-	database.Table("arrangement").Select("order_number as order_number, project_number as project_number").Where("repairman_number = ? and progress = '维修中' or progress = '待确认'", username).Scan(&arrangement)
+	database.Raw("select order_number as order_number, project_number as project_number, vehicle_number as vin, arrangement.progress as status\n"+
+		"from arrangement inner join attorney on arrangement.order_number = attorney.number\n"+
+		"where repairman_number = ? and arrangement.progress = '维修中' or arrangement.progress = '待确认'", username).Scan(&arrangement)
+	for i := range arrangement {
+		database.Raw("select repair_parts.parts_number as parts_number, parts_name as parts_name, parts_count as parts_count\n"+
+			"from repair_parts inner join parts_overview on repair_parts.parts_number = parts_overview.parts_number\n"+
+			"where order_number = ? and project_number = ?", arrangement[i].OrderNumber, arrangement[i].ProjectNumber).Scan(&arrangement[i].Parts)
+	}
 	c.JSON(http.StatusOK, arrangement)
 }
 

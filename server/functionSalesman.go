@@ -55,17 +55,19 @@ func getRelatingAttorney(c *gin.Context) {
 	type pending struct {
 		Number  string
 		CarType string
+		Status  string
 	}
 	type own struct {
 		Number  string
 		CarType string
+		Status  string
 	}
 	var attorney struct {
 		Pending []pending
 		Own     []own
 	}
-	database.Raw("select attorney.number as number, type as car_type from attorney inner join vehicle on attorney.vehicle_number = vehicle.number where progress = '待处理'").Scan(&attorney.Pending)
-	database.Raw("select attorney.number as number, type as car_type from attorney inner join vehicle on attorney.vehicle_number = vehicle.number where salesman_id = ?", username).Scan(&attorney.Own)
+	database.Raw("select attorney.number as number, type as car_type, progress as status from attorney inner join vehicle on attorney.vehicle_number = vehicle.number where progress = '待处理'").Scan(&attorney.Pending)
+	database.Raw("select attorney.number as number, type as car_type, progress as status from attorney inner join vehicle on attorney.vehicle_number = vehicle.number where salesman_id = ?", username).Scan(&attorney.Own)
 	c.JSON(http.StatusOK, attorney)
 }
 
