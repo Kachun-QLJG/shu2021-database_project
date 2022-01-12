@@ -174,8 +174,7 @@
 						<tbody>
 						<tr style="height: 30px">
 							<th id="number_ongoing" style="text-align: center; width: 300px">订 单 号：</th>
-							<th id="user_name" style="text-align: center; width: 250px">顾客姓名：</th>
-							<th id="license_number" style="text-align: center; width: 200px">车 牌 号：</th>
+							<th id="user_name" style="text-align: center; width: 250px">车型：</th>
 							<th id="status" style="text-align: center; width: 200px">状态：</th>
 						</tr>
 						</tbody>
@@ -184,13 +183,11 @@
 						<tr id="1">
 							<td id="order_number_1">0000001</td>
 							<td>夏逸凡</td>
-							<td>沪SHU502</td>
 							<td>进行中</td>
 						</tr>
 						<tr id="2">
 							<td id="order_number_2">0000002</td>
 							<td>张霖锋</td>
-							<td>沪SHU503</td>
 							<td><a data-toggle='modal' data-target='#take_order' onclick=addSpecificDetail()>编辑具体信息</a></td>
 						</tr>
 						</tbody>
@@ -465,6 +462,7 @@
 		salesmanInfo();
 		showNotificationOrNot();
 		ongoingNumber();
+		getRelatingAttorney();
 	}
 	function salesmanInfo(){
 		axios({
@@ -501,14 +499,51 @@
 		//删除表格
 		try {document.getElementById("ongoing_table").removeChild(document.getElementById("body_son"))}
 		catch(error){}
-		//
+		//建立表格
+		var tbody = document.createElement("tbody");
+		document.getElementById("ongoing_table").appendChild(tbody);
+		tbody.id = "body_son";
 		axios({
 			method : 'get',
 			url: "/get_relating_attorney"
 		})
 				.then(function (response) {
 					var data = response.data;
-					var num = data.Own.length;
+					var own = data.Own;
+					var num = own.length;
+					if(num === 0){
+						var tr = document.createElement("tr");
+						tbody.appendChild(tr);
+						var td = document.createElement("td");
+						tr.appendChild(td);
+						td.innerHTML = " 　";
+					}
+					else{
+						for(var i = 0; i < num; i++){
+							var tr = document.createElement("tr");
+							tbody.appendChild(tr);
+							var td1 = document.createElement("td");
+							tr.appendChild(td1);
+							td1.id = "order_number_" + i;
+							td1.innerHTML = own[i].Number;
+							var td2 = document.createElement("td");
+							tr.appendChild(td2);
+							td2.innerHTML = own[i].CarType;
+							var td3 = document.createElement("td");
+							tr.appendChild(td3);
+							if(own[i].Status === "已完成"){
+								td3.innerHTML = own[i].Status;
+							}
+							else{
+								var a = document.createElement("a");
+								td3.appendChild(a);
+								a.setAttribute("data-toggle", "modal");
+								a.setAttribute("data-target", "#take_order");
+								a.setAttribute("onclick", "addSpecificDetail()");
+								a.innerHTML = "编辑具体信息";
+							}
+						}
+					}
 				})
 	}
 	function getFinishedAttorneyS() {
