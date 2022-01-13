@@ -156,6 +156,7 @@
 				<div id="ongoing_table_father" style="margin: auto; text-align: center; font-size: 17px;">
 					<table id="ongoing_table" border="1" style="text-align: center; font-size: 17px;">
 						<!-- 表头 -->
+						<tbody>
 						<tr style="height: 30px">
 							<th id="number_ongoing" style="text-align: center; width: 250px">订单号</th>
 							<th id="vehicle_number_ongoing" style="text-align: center; width: 300px">车架号</th>
@@ -164,7 +165,9 @@
 							<th id="parts_count_ongoing" style="text-align: center; width: 100px">数量</th>
 							<th id="add_parts" style="text-align: center; width: 100px">添加零件</th>
 						</tr>
+						</tbody>
 						<!-- 传参处 -->
+						<tbody id = "body_son">
 						<tr>
 							<td rowspan="2">0000001</td>
 							<td rowspan="2">12345678901234567</td>
@@ -186,6 +189,7 @@
 							<td>1</td>
 							<td rowspan="1"><a>添加</a></td>
 						</tr>
+						</tbody>
 					</table>
 				</div>
 			</div>
@@ -462,6 +466,7 @@
 		repairmanInfo();
 		showNotificationOrNot();
 		ongoingNumber();
+		getProcessingArrangement();
 	}
 
 	function repairmanInfo(){
@@ -490,7 +495,102 @@
 					document.getElementById("ongoing_orders").innerHTML = "　　 进行中订单" + "(" + num + ")";
 				})
 	}
-	//function
+	function getProcessingArrangement(){
+		//删表
+		try {
+			document.getElementById("ongoing_table").removeChild(document.getElementById("body_son"))
+		} catch (error) {
+		}
+		//建表
+		axios({
+			method: 'get',
+			url: '/get_processing_arrangement'
+		})
+				.then(function (response) {
+					var data = response.data;
+					var num = data.length;
+					var tbody = document.createElement("tbody");
+					tbody.id = "body_son";
+					document.getElementById("ongoing_table").appendChild(tbody);
+					if(num === 0){
+						var tr = document.createElement("tr");
+						tbody.appendChild(tr);
+						var td1 = document.createElement("td");
+						tr.appendChild(td1);
+						td1.innerHTML = " 　";
+						var td2 = document.createElement("td");
+						tr.appendChild(td2);
+						var td3 = document.createElement("td");
+						tr.appendChild(td3);
+						var td4 = document.createElement("td");
+						tr.appendChild(td4);
+						var td5 = document.createElement("td");
+						tr.appendChild(td5);
+						var td6 = document.createElement("td");
+						tr.appendChild(td6);
+					}
+					else{
+						for(var i = 0; i < num; i++) {
+							var parts = data[i].Parts;
+							var number = parts.length;
+							var tr = document.createElement("tr");
+							tbody.appendChild(tr);
+							var td1 = document.createElement("td");
+							tr.appendChild(td1);
+							td1.innerHTML = data[i].OrderNumber;
+							var td2 = document.createElement("td");
+							tr.appendChild(td2);
+							td2.innerHTML = data[i].Vin
+							if(number === 0){
+								let td3 = document.createElement("td");
+								tr.appendChild(td3);
+								let td4 = document.createElement("td");
+								tr.appendChild(td4);
+								let td5 = document.createElement("td");
+								tr.appendChild(td5);
+								let td6 = document.createElement("td");
+								tr.appendChild(td6);
+								let a = document.createElement("a");
+								td6.appendChild(a);
+								a.innerHTML = "添加";
+							}
+							else{
+								td1.setAttribute("rowspan",number);
+								td2.setAttribute("rowspan",number);
+								var j = 0;
+								let td3 = document.createElement("td");
+								tr.appendChild(td3);
+								td3.innerHTML = parts[j].PartsNumber;
+								let td4 = document.createElement("td");
+								tr.appendChild(td4);
+								td4.innerHTML = parts[j].PartsName;
+								let td5 = document.createElement("td");
+								tr.appendChild(td5);
+								td5.innerHTML = parts[j].PartsCount;
+								let td6 = document.createElement("td");
+								tr.appendChild(td6);
+								let a = document.createElement("a");
+								td6.appendChild(a);
+								a.innerHTML = "添加";
+								td6.setAttribute("rowspan",number);
+								for(j = 1; j < number; j++){
+									let tr1 = document.createElement("tr");
+									tbody.appendChild(tr1);
+									let td3 = document.createElement("td");
+									tr1.appendChild(td3);
+									td3.innerHTML = parts[j].PartsNumber;
+									let td4 = document.createElement("td");
+									tr1.appendChild(td4);
+									td4.innerHTML = parts[j].PartsName;
+									let td5 = document.createElement("td");
+									tr1.appendChild(td5);
+									td5.innerHTML = parts[j].PartsCount;
+								}
+							}
+						}
+					}
+				})
+	}
 
 </script>
 </body>

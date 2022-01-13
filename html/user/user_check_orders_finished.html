@@ -367,32 +367,52 @@
 				.then(function(response) {
 					var data = response.data;
 					var num = data.length;
-					for(var i = 1; i <= num; i++) {
+					if(num === 0){
 						var tr1 = document.createElement("tr");
 						tbody.appendChild(tr1);
 						tr1.setAttribute("ng-repeat","item in list | filter:listfilter");
 						var td1 = document.createElement("td");
 						tr1.appendChild(td1);
-						td1.innerHTML = data[i-1].OrderNumber;
+						td1.innerHTML = " 　";
 						var td2 = document.createElement("td");
 						tr1.appendChild(td2);
-						td2.innerHTML = data[i-1].Vin;
 						var td3 = document.createElement("td");
 						tr1.appendChild(td3);
-						td3.innerHTML = data[i-1].RoughProblem;
 						var td4 = document.createElement("td");
 						tr1.appendChild(td4);
-						td4.innerHTML = data[i-1].SpecificProblem;
 						var td5 = document.createElement("td");
 						tr1.appendChild(td5);
-						td5.innerHTML = data[i-1].PredictFinishTime;
 						var td6 = document.createElement("td");
 						tr1.appendChild(td6);
-						var a = document.createElement("a");
-						td6.appendChild(a);
-						a.setAttribute("data-toggle","modal");
-						a.setAttribute("data-target","#detail");
-						a.innerHTML = "详情";
+					}
+					else{
+						for(var i = 1; i <= num; i++) {
+							var tr1 = document.createElement("tr");
+							tbody.appendChild(tr1);
+							tr1.setAttribute("ng-repeat","item in list | filter:listfilter");
+							var td1 = document.createElement("td");
+							tr1.appendChild(td1);
+							td1.innerHTML = data[i-1].OrderNumber;
+							var td2 = document.createElement("td");
+							tr1.appendChild(td2);
+							td2.innerHTML = data[i-1].Vin;
+							var td3 = document.createElement("td");
+							tr1.appendChild(td3);
+							td3.innerHTML = data[i-1].RoughProblem;
+							var td4 = document.createElement("td");
+							tr1.appendChild(td4);
+							td4.innerHTML = data[i-1].SpecificProblem;
+							var td5 = document.createElement("td");
+							tr1.appendChild(td5);
+							td5.innerHTML = data[i-1].PredictFinishTime;
+							var td6 = document.createElement("td");
+							tr1.appendChild(td6);
+							var a = document.createElement("a");
+							td6.appendChild(a);
+							a.setAttribute("data-toggle","modal");
+							a.setAttribute("data-target","#detail");
+							a.innerHTML = "详情";
+						}
 					}
 				})
 	}

@@ -517,6 +517,10 @@
 						var td = document.createElement("td");
 						tr.appendChild(td);
 						td.innerHTML = " 　";
+						var td1 = document.createElement("td");
+						tr.appendChild(td1);
+						var td2 = document.createElement("td");
+						tr.appendChild(td2);
 					}
 					else{
 						for(var i = 0; i < num; i++){
@@ -566,33 +570,44 @@
 					if (num === 0) {
 						var tr = document.createElement("tr");
 						tbody.appendChild(tr);
-						var th1 = document.createElement("th");
-						tr.appendChild(th1);
-						th1.innerHTML = " 　";
-					} else {
+						var td1 = document.createElement("td");
+						tr.appendChild(td1);
+						td1.innerHTML = " 　";
+						var td2 = document.createElement("td");
+						tr.appendChild(td2);
+						var td3 = document.createElement("td");
+						tr.appendChild(td3);
+						var td4 = document.createElement("td");
+						tr.appendChild(td4);
+						var td5 = document.createElement("td");
+						tr.appendChild(td5);
+						var td6 = document.createElement("td");
+						tr.appendChild(td6);
+					}
+					else {
 						for (var i = 0; i < num; i++) {
 							var tr = document.createElement("tr");
 							tbody.appendChild(tr);
-							var th1 = document.createElement("th");
-							tr.appendChild(th1);
-							th1.innerHTML = data[i].OrderNumber;
-							var th2 = document.createElement("th");
-							tr.appendChild(th2);
-							th2.innerHTML = data[i].Vin
-							var th3 = document.createElement("th");
-							tr.appendChild(th3);
-							th3.innerHTML = data[i].RoughProblem;
-							var th4 = document.createElement("th");
-							tr.appendChild(th4);
-							th4.innerHTML = data[i].SpecificProblem;
-							var th5 = document.createElement("th");
-							tr.appendChild(th5);
-							th5.innerHTML = data[i].PredictFinishTime;
-							var th6 = document.createElement("th");
-							tr.appendChild(th6);
-							th6.innerHTML = "<font color=#0000FF><u>查看pdf</u></font>";
-							th6.setAttribute("style", "cursor:pointer");
-							th6.setAttribute("onclick", "window.open('/show_pdf?attorney_no=" + data[i].OrderNumber + "&user_id=" + data[i].Username + "')");
+							var td1 = document.createElement("td");
+							tr.appendChild(td1);
+							td1.innerHTML = data[i].OrderNumber;
+							var td2 = document.createElement("td");
+							tr.appendChild(td2);
+							td2.innerHTML = data[i].Vin
+							var td3 = document.createElement("td");
+							tr.appendChild(td3);
+							td3.innerHTML = data[i].RoughProblem;
+							var td4 = document.createElement("td");
+							tr.appendChild(td4);
+							td4.innerHTML = data[i].SpecificProblem;
+							var td5 = document.createElement("td");
+							tr.appendChild(td5);
+							td5.innerHTML = data[i].PredictFinishTime;
+							var td6 = document.createElement("td");
+							tr.appendChild(td6);
+							td6.innerHTML = "<font color=#0000FF><u>查看pdf</u></font>";
+							td6.setAttribute("style", "cursor:pointer");
+							td6.setAttribute("onclick", "window.open('/show_pdf?attorney_no=" + data[i].OrderNumber + "&user_id=" + data[i].Username + "')");
 						}
 					}
 				})
