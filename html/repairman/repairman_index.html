@@ -137,7 +137,7 @@
 				<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
 <!--				<a class='list-group-item' data-toggle='modal' data-target='#ongoing_order' id="ongoing_orders" style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>-->
 <!--				<a class='list-group-item' href='/index' id="ongoing_orders" style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>-->
-				<a class='list-group-item' data-toggle='modal' data-target='#finished_order' style='cursor:pointer; text-decoration-line: underline'>已完成</a>
+				<a class='list-group-item' data-toggle='modal' data-target='#finished_order' style='cursor:pointer; text-decoration-line: underline' onclick="getFinishedArrangement()">已完成</a>
 			</div>
 		</div>
 
@@ -360,6 +360,7 @@
 				-->
 				<table id="finished_table" border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">
 					<!-- 表头 -->
+					<tbody>
 					<tr style="height: 30px">
 						<th id="number_finished" style="text-align: center; width: 120px">订单号</th>
 						<th id="vehicle_number_finished" style="text-align: center">车架号</th>
@@ -368,7 +369,9 @@
 						<th id="parts_count_finished" style="text-align: center">数量</th>
 						<th id="finished_detail" style="text-align: center">详情</th>
 					</tr>
+					</tbody>
 					<!-- 传参处 -->
+					<tbody id="body_second">
 					<tr>
 						<td rowspan="2">0000001</td>
 						<td rowspan="2">12345678901234567</td>
@@ -385,6 +388,7 @@
 						<td>后视镜</td>
 						<td>2</td>
 					</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>
@@ -591,6 +595,106 @@
 					}
 				})
 	}
+	function getFinishedArrangement(){
+		//删表
+		try {
+			document.getElementById("finished_table").removeChild(document.getElementById("body_second"))
+		} catch (error) {
+		}
+		//建表
+		axios({
+			method: 'get',
+			url: "/get_finished_arrangement"
+		})
+				.then(function (response) {
+					var data = response.data;
+					var num = data.length;
+					var tbody = document.createElement("tbody");
+					tbody.id = "body_second";
+					document.getElementById("finished_table").appendChild(tbody);
+					if (num === 0) {
+						var tr = document.createElement("tr");
+						tbody.appendChild(tr);
+						var td1 = document.createElement("td");
+						tr.appendChild(td1);
+						td1.innerHTML = " 　";
+						var td2 = document.createElement("td");
+						tr.appendChild(td2);
+						var td3 = document.createElement("td");
+						tr.appendChild(td3);
+						var td4 = document.createElement("td");
+						tr.appendChild(td4);
+						var td5 = document.createElement("td");
+						tr.appendChild(td5);
+						var td6 = document.createElement("td");
+						tr.appendChild(td6);
+					}
+					else {
+						for (var i = 0; i < num; i++) {
+							var parts = data[i].Parts;
+							var number = parts.length;
+							var tr = document.createElement("tr");
+							tbody.appendChild(tr);
+							var td1 = document.createElement("td");
+							tr.appendChild(td1);
+							td1.innerHTML = data[i].OrderNumber;
+							var td2 = document.createElement("td");
+							tr.appendChild(td2);
+							td2.innerHTML = data[i].Vin
+							if(number === 0){
+								let td3 = document.createElement("td");
+								tr.appendChild(td3);
+								let td4 = document.createElement("td");
+								tr.appendChild(td4);
+								let td5 = document.createElement("td");
+								tr.appendChild(td5);
+								let td6 = document.createElement("td");
+								tr.appendChild(td6);
+								td6.innerHTML = "<font color=#0000FF><u>查看pdf</u></font>";
+								td6.setAttribute("style", "cursor:pointer");
+								td6.setAttribute("onclick", "window.open('/show_pdf?attorney_no=" + data[i].OrderNumber + "&user_id=" + data[i].Username + "')");
+							}
+							else{
+								td1.setAttribute("rowspan",number);
+								td2.setAttribute("rowspan",number);
+								var j = 0;
+								let td3 = document.createElement("td");
+								tr.appendChild(td3);
+								td3.innerHTML = parts[j].PartsNumber;
+								let td4 = document.createElement("td");
+								tr.appendChild(td4);
+								td4.innerHTML = parts[j].PartsName;
+								let td5 = document.createElement("td");
+								tr.appendChild(td5);
+								td5.innerHTML = parts[j].PartsCount;
+								let td6 = document.createElement("td");
+								tr.appendChild(td6);
+								let a = document.createElement("a");
+								td6.appendChild(a);
+								a.innerHTML = "添加";
+								td6.setAttribute("rowspan",number);
+								td6.innerHTML = "<font color=#0000FF><u>查看pdf</u></font>";
+								td6.setAttribute("style", "cursor:pointer");
+								td6.setAttribute("onclick", "window.open('/show_pdf?attorney_no=" + data[i].OrderNumber + "&user_id=" + data[i].Username + "')");
+								for(j = 1; j < number; j++){
+									let tr1 = document.createElement("tr");
+									tbody.appendChild(tr1);
+									let td3 = document.createElement("td");
+									tr1.appendChild(td3);
+									td3.innerHTML = parts[j].PartsNumber;
+									let td4 = document.createElement("td");
+									tr1.appendChild(td4);
+									td4.innerHTML = parts[j].PartsName;
+									let td5 = document.createElement("td");
+									tr1.appendChild(td5);
+									td5.innerHTML = parts[j].PartsCount;
+								}
+							}
+						}
+					}
+				})
+	}
+
 
 </script>
 </body>
