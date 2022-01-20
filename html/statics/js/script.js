@@ -296,12 +296,12 @@ function checkUser(){
 		})
 }
 */
-function searchForProjects(){
+function searchForParts(){
 	delProjectResults();
 	if (document.getElementById("detail1").value === "") return;
 	axios({
 		method: 'get',
-		url: '/search_for_projects?text=' + document.getElementById("detail1").value + '&type=A'
+		url: '/search_for_parts?text=' + document.getElementById("detail1").value + '&type=A'
 	})
 		.then(function (response) {
 			{
@@ -341,60 +341,65 @@ function searchForProjects(){
 		})
 }
 
-// function SsearchForProjects(){
-// 	delProjectResults();
-// 	if (document.getElementById("project1").value === "") return;
-// 	axios({
-// 		method: 'get',
-// 		url: '/search_for_parts?text=' + document.getElementById("project1").value + '&type=A'
-// 	})
-// 		.then(function (response) {
-// 			{
-// 				console.log(response.data);
-// 				var div = document.getElementById("fill_project1");//寻找定位的区块
-// 				var list = document.createElement("ul");
-// 				//list.setAttribute("name", "list");
-// 				// list.className = "table-responsive";
-// 				//div.appendChild(list);
-// 				// var ordertable = document.createElement("table");//生成表格ordertable
-// 				// ordertable.id = "ordertable";
-// 				// ordertable.className = "table  table-bordered table-hover";
-// 				// table.appendChild(ordertable);
-// 				//var tbody = document.createElement("tbody");//不知道这是啥
-// 				// ordertable.appendChild(tbody);
-// 				// var tablehead = document.createElement("tr");//生成表格头tablehead
-// 				// tablehead.id = "tablehead";
-// 				// tbody.appendChild(tablehead);
-// 				// var head_1 = document.createElement("th");
-// 				// head_1.innerHTML = "维修项目名";
-// 				// tablehead.appendChild(head_1);
-// 				// var head_2 = document.createElement("th");
-// 				// head_2.innerHTML = "维修项目编号";
-// 				// tablehead.appendChild(head_2);
-//
-// 				for (var i = 0; response.data[i].Name !== ""; ++i) {
-// 					var temp = document.createElement("li");
-// 					//var t1 = document.createElement("td");
-// 					temp.innerHTML = JSON.stringify(response.data[i].Name);
-// 					alert(temp.innerHTML);
-// 					//temp.appendChild(t1);
-// 					// var t2 = document.createElement("td");
-// 					// t2.innerHTML = JSON.stringify(response.data[i].Id);
-// 					// temp.appendChild(t2);
-// 					// alert(temp);
-// 					list.appendChild(temp);
-// 				}
-// 				div.appendChild(list)
-// 			}
-// 		})
-// }
+function SsearchForProjects(){
+	delProjectResults();
+ 	if (document.getElementById("project1").value === "") return;
+ 	axios({
+ 		method: 'get',
+ 		url: '/search_for_projects?text=' + document.getElementById("project1").value + '&type=' +'A'
+ 	})
+ 		.then(function (response) {
+ 			{
+ 				 var div = document.getElementById("project_input");//寻找定位的区块
+				 var select = document.createElement("datalist");
+				 select.id ="projects";
+				 div.appendChild(select);
+				 //table.setAttribute("style", "display: inline; width: 90px; position: absolute");
+				 /*list.setAttribute("name", "list");
+				 list.className = "table-responsive";
+				 list.id = "li";
+ 				 div.appendChild(list);
+				 var ordertable = document.createElement("table");//生成表格ordertable
+ 				 ordertable.id = "ordertable";
+ 				 ordertable.className = "table  table-bordered table-hover";
+ 				 table.appendChild(ordertable);
+ 				 var tbody = document.createElement("tbody");//不知道这是啥
+ 				 ordertable.appendChild(tbody);
+				 var tablehead = document.createElement("tr");//生成表格头tablehead
+ 				 tablehead.id = "tablehead";
+ 				 tbody.appendChild(tablehead);
+ 				 var head_1 = document.createElement("th");
+ 				 head_1.innerHTML = "维修项目名";
+ 				 tablehead.appendChild(head_1);
+ 				 var head_2 = document.createElement("th");
+ 				 head_2.innerHTML = "维修项目编号";
+ 				 tablehead.appendChild(head_2);
+				*/
+ 				for (var i = 0; response.data[i].Name !== ""; ++i) {
+					 if(i === 5){
+						 break;
+					 }
+					// var tr = document.createElement("tr");
+					 //table.appendChild(tr);
+					// tr.setAttribute("style","text-align: center; border: 1px solid #000");
+					 var temp = document.createElement("option");
+					 //var t1 = document.createElement("td");
+ 					 temp.innerHTML = JSON.stringify(response.data[i].Name);
+					 //temp.appendChild(t1);
+ 					 //var t2 = document.createElement("td");
+ 					 //t2.innerHTML = JSON.stringify(response.data[i].Id);
+ 					 //temp.appendChild(t2);
+ 					 //alert(temp);
+ 					 select.appendChild(temp);
+ 				}
+ 			}
+ 		})
+ }
 
 function delProjectResults(){
 	try {
-		var div = document.getElementById("con");
-		var res = document.getElementsByName("table");
-		for(var i=0; i<res.length; i++)
-			div.removeChild(res[i]);
+		var div = document.getElementById("projects");
+			document.getElementById("project_input").removeChild(div);
 	}catch (error)
 	{}
 }
@@ -480,6 +485,15 @@ function delPartsResults(){
 		var res = document.getElementsByName("table");
 		for(var i=0; i<res.length; i++)
 			div.removeChild(res[i]);
+	}catch (error)
+	{}
+}
+
+function delProjectsResults(){
+	try {
+		var div = document.getElementById("fill_project1");
+		var res = document.getElementById("li");
+		div.removeChild(res);
 	}catch (error)
 	{}
 }

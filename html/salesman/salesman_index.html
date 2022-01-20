@@ -3,8 +3,11 @@
 <head>
 	<title>主页</title>
 	<script src="/statics/js/header.js"></script>
+	<script src="/statics/js/axios.js"></script>
+	<script src="/statics/js/axios.min.js"></script>
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/statics/js/script.js"></script>
 	<style>
 		/*web background*/
 		.container{
@@ -266,27 +269,14 @@
 					<img src='/statics/user/详情.png' width='20px' alt="正在加载图片">
 					<label style='font-size:15px;width: 90px;'>详情：</label>
 					<br>
-
 					<div id="detail1">
 						<div id="fill_project1" style="display: inline">
 							<!--				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">-->
 							<label for="project1" style='font-size:15px;width: 90px;'>具体问题：</label>
 <!--							<input id='project1' type='text' onblur="delProjectResults()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" placeholder='项目名称'/>-->
-							<table style="display: inline; width: 90px; position: absolute">
-								<tr>
-									<th>
-										<input id='project1' type='text'  placeholder='项目名称'/>
-									</th>
-								</tr>
-								<tr style="text-align: center; border: 1px solid #000">
-<!--								<tr style="display: none">-->
-									<th>检查</th>
-								</tr>
-								<tr style="text-align: center; border: 1px solid #000">
-<!--								<tr style="display: none">-->
-									<th>维修</th>
-								</tr>
-							</table>
+							<div id="project_input" style="display: inline; width: 90px; position: absolute">
+								<input id='project1' list="projects" onblur="delProjectsResults()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" type='text'  placeholder='项目名称'/>
+							</div>
 <!--							<ul id="datalist" style="display: inline">-->
 <!--								<li>检查</li>-->
 <!--								<li>维修</li>-->
