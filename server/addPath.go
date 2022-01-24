@@ -33,6 +33,7 @@ func addPath(r *gin.Engine) {
 	r.GET("/u_check_orders_finished", authMiddleWare(), checkPermission(), filterUser(), startUCheckOrdersFinished) //进入用户查看已完成订单页面
 
 	//----------业务员路径----------
+	r.GET("/get_project_time", authMiddleWare(), checkPermission(), filterSalesman(), getProjectTime)                       //业务员根据维修项目来获取预计维修时间
 	r.GET("/search_for_projects", authMiddleWare(), checkPermission(), filterSalesman(), searchForProjects)                 //寻找维修项目
 	r.GET("/get_salesman_info", authMiddleWare(), checkPermission(), filterSalesman(), getSalesmanInfo)                     //获取业务员个人信息
 	r.GET("/get_relating_attorney", authMiddleWare(), checkPermission(), filterSalesman(), getRelatingAttorney)             //业务员获与自己相关的订单
@@ -61,8 +62,8 @@ func addPath(r *gin.Engine) {
 	r.POST("/add_vehicle", authMiddleWare(), checkPermission(), filterUser(), addVehicle)         //后端处理用户添加车辆
 
 	//----------业务员路径----------
-	r.POST("/add_project_for_attorney", authMiddleWare(), checkPermission(), filterRepairman(), addProjectForAttorney) //业务员为委托添加维修项目
-	r.POST("/set_attorney_finished", authMiddleWare(), checkPermission(), filterRepairman(), setAttorneyFinished)      //业务员结算委托书并设置进度为已完成
+	r.POST("/add_project_for_attorney", authMiddleWare(), checkPermission(), filterSalesman(), addProjectForAttorney) //业务员为委托添加维修项目
+	r.POST("/set_attorney_finished", authMiddleWare(), checkPermission(), filterSalesman(), setAttorneyFinished)      //业务员结算委托书并设置进度为已完成
 
 	//----------维修员路径----------
 	r.POST("/change_status", authMiddleWare(), checkPermission(), filterRepairman(), changeStatus)                //后端处理维修员更改工作状态

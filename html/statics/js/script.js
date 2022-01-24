@@ -341,6 +341,16 @@ function searchForParts(){
 		})
 }
 
+function getProjectTime(){
+	axios({
+		method: 'get',
+		url: '/get_project_time?project=' + document.getElementById("project1").value + '&type=' +'A'
+	})
+		.then(function (response) {
+			time = response.data.Time;
+			document.getElementById("predict_finish_time1").value = time;
+		})
+}
 function SsearchForProjects(){
 	delProjectResults();
  	if (document.getElementById("project1").value === "") return;
@@ -353,6 +363,7 @@ function SsearchForProjects(){
  				 var div = document.getElementById("project_input");//寻找定位的区块
 				 var select = document.createElement("datalist");
 				 select.id ="projects";
+				 //select.setAttribute("onchange", "getProjectTime()");
 				 div.appendChild(select);
 				 //table.setAttribute("style", "display: inline; width: 90px; position: absolute");
 				 /*list.setAttribute("name", "list");
@@ -384,7 +395,7 @@ function SsearchForProjects(){
 					// tr.setAttribute("style","text-align: center; border: 1px solid #000");
 					 var temp = document.createElement("option");
 					 //var t1 = document.createElement("td");
- 					 temp.innerHTML = JSON.stringify(response.data[i].Name);
+ 					 temp.innerHTML = JSON.stringify(response.data[i].Name).replace("\"","").replace("\"","");
 					 //temp.appendChild(t1);
  					 //var t2 = document.createElement("td");
  					 //t2.innerHTML = JSON.stringify(response.data[i].Id);

@@ -187,6 +187,22 @@ func searchForProjects(c *gin.Context) {
 	c.JSON(http.StatusOK, timeOverview)
 }
 
+func getProjectTime(c *gin.Context) {
+	project := c.Query("project")
+	carType := c.Query("type")
+	dbType := strings.ToLower(carType)
+	dbType = "time_" + dbType
+	var timeOverview struct {
+		Time float64
+	}
+	if project[0] >= 'a' && project[0] <= 'z' || project[0] >= '0' && project[0] <= '9' {
+		database.Table("time_overview").Select(""+dbType+" as time").Where("project_spelling = ? and ? != ''", project, dbType).Scan(&timeOverview)
+	} else {
+		database.Table("time_overview").Select(""+dbType+" as time").Where("project_name = ? and ? != ''", project, dbType).Scan(&timeOverview)
+	}
+	c.JSON(http.StatusOK, timeOverview)
+}
+
 func read(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	var notification Notification

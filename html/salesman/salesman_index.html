@@ -275,7 +275,7 @@
 							<label for="project1" style='font-size:15px;width: 90px;'>具体问题：</label>
 <!--							<input id='project1' type='text' onblur="delProjectResults()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" placeholder='项目名称'/>-->
 							<div id="project_input" style="display: inline; width: 90px; position: absolute">
-								<input id='project1' list="projects" onblur="delProjectsResults()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" type='text'  placeholder='项目名称'/>
+								<input id='project1' list="projects" onchange="getProjectTime()" onblur="delProjectsResults()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" type='text'  placeholder='项目名称'/>
 							</div>
 <!--							<ul id="datalist" style="display: inline">-->
 <!--								<li>检查</li>-->
@@ -285,7 +285,7 @@
 						</div>
 
 						<label for="classification1" style='font-size:15px;width: 60px; margin-left: 200px'>　工种：</label>
-						<select id='classification1'>
+						<select id='classification1' onchange="getCorrespondingRepairman()">
 							<option>机修工</option>
 							<option>电工</option>
 							<option>钣金工</option>
@@ -466,6 +466,11 @@
 				})
 	}
 	function ongoingNumber(){
+		//删表
+		try {$("#bound_orders").empty();
+			$("#unbound_orders").empty()}
+		catch(error){}
+		//建表
 		axios({
 			method : 'get',
 			url: "/get_relating_attorney"
@@ -476,7 +481,21 @@
 					var unbound_num = data.Pending.length;
 					var num = bound_num + unbound_num;
 					document.getElementById("bound_orders").label = "已绑定订单" + "(" + bound_num + ")";
+					for(var i = 0; i < bound_num; i++){
+						var option = document.createElement("option");
+						document.getElementById("bound_orders").appendChild(option);
+						option.innerHTML = data.Own[i].Number;
+						option.value = data.Own[i].Number;
+						option.name = data.Own[i].Number;
+					}
 					document.getElementById("unbound_orders").label = "未绑定订单" + "(" + unbound_num + ")";
+					for(var i = 0; i < unbound_num; i++){
+						var option = document.createElement("option");
+						document.getElementById("unbound_orders").appendChild(option);
+						option.innerHTML = data.Pending[i].Number;
+						option.value = data.Pending[i].Number;
+						option.name = data.Pending[i].Number;
+					}
 					document.getElementById("ongoing_orders").innerHTML = "　进行中订单" + "(" + num + ")";
 				})
 	}
@@ -602,6 +621,23 @@
 					}
 				})
 	}
+	function getCorrespondingRepairman(){
+		try{ $("#repairman_name1").empty()
+		} catch(error){}
+		axios({
+			method: 'get',
+			url: '/get_corresponding_repairman?type=' + document.getElementById("classification1").value
+		})
+				.then(function (response) {
+					var num = response.data.length;
+					for(var i = 0; i < num; i++){
+						var option = document.createElement("option");
+						document.getElementById("repairman_name1").appendChild(option);
+						option.innerHTML = response.data[i].Name;
+					}
+				})
+	}
+
 	// var EventUtil = {
 	// 	on:function(elem,type,handler){
 	// 		if(elem.addEventListener){
