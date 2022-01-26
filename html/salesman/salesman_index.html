@@ -14,7 +14,9 @@
 			display:table;
 			height:100%;
 		}
-
+		.select:hover{
+			background-color: #77bbe2;
+		}
 		/* centered columns styles */
 		.row-centered {
 			text-align:center;
@@ -167,7 +169,7 @@
 			</div>
 
 			<div id="ongoing">
-				<div class='col-md-10' id='ongoing_title'  style='text-align: center'>
+				<div class='col-md-12' id='ongoing_title'  style='text-align: center'>
 					<label style='color: #77bbe2;font-size:50px;' id="ongoing_orders">　进行中订单</label>
 				</div>
 
@@ -274,8 +276,15 @@
 							<!--				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">-->
 							<label for="project1" style='font-size:15px;width: 90px;'>具体问题：</label>
 <!--							<input id='project1' type='text' onblur="delProjectResults()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" placeholder='项目名称'/>-->
-							<div id="project_input" style="display: inline; width: 90px; position: absolute">
-								<input id='project1' list="projects" onchange="getProjectTime()" onblur="delProjectsResults()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" type='text'  placeholder='项目名称'/>
+							<div id="project_input" style="display: inline; width: 90px; position: absolute;">
+								<input id='project1' list="projects" onblur="delProjectsResults();" onchange="getProjectTime()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" placeholder='项目名称'  type='text'/>
+								<div style="width:150px; height:50px; position: absolute; top: 20px; left: 0; background-color: white; border: 1px solid black; cursor: pointer;">
+									<div class="select" onclick="fill(this)">发动机</div>
+									<div class="select" onclick="fill(this)">检修</div>
+									<div class="select" onclick="fill(this)">维护</div>
+								</div>
+								<datalist id="projects">
+								</datalist>
 							</div>
 <!--							<ul id="datalist" style="display: inline">-->
 <!--								<li>检查</li>-->
@@ -284,7 +293,7 @@
 							<!--						<ul id="datalist"></ul>-->
 						</div>
 
-						<label for="classification1" style='font-size:15px;width: 60px; margin-left: 200px'>　工种：</label>
+						<label for="classification1" style='font-size:15px;width: 60px; margin-left: 158px'>　工种：</label>
 						<select id='classification1' onchange="getCorrespondingRepairman()">
 							<option>机修工</option>
 							<option>电工</option>
@@ -453,6 +462,10 @@
 		showNotificationOrNot();
 		ongoingNumber();
 		getRelatingAttorney();
+	}
+	function fill(source){
+		document.getElementById("project1").value = source.innerHTML;
+		getProjectTime();
 	}
 	function salesmanInfo(){
 		axios({

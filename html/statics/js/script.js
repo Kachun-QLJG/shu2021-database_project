@@ -395,6 +395,7 @@ function SsearchForProjects(){
 					// tr.setAttribute("style","text-align: center; border: 1px solid #000");
 					 var temp = document.createElement("option");
 					 //var t1 = document.createElement("td");
+					temp.setAttribute("value",JSON.stringify(response.data[i].Name).replace("\"","").replace("\"",""));
  					 temp.innerHTML = JSON.stringify(response.data[i].Name).replace("\"","").replace("\"","");
 					 //temp.appendChild(t1);
  					 //var t2 = document.createElement("td");

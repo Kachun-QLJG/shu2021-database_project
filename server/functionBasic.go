@@ -192,6 +192,9 @@ func getProjectTime(c *gin.Context) {
 	carType := c.Query("type")
 	dbType := strings.ToLower(carType)
 	dbType = "time_" + dbType
+	if project == "" {
+		return
+	}
 	var timeOverview struct {
 		Time float64
 	}
