@@ -153,10 +153,10 @@
 					<label style='color: #77bbe2;font-size:50px;' id="ongoing_orders">　进行中订单</label>
 				</div>
 
-				<div id="ongoing_table_father" style="margin: auto; text-align: center; font-size: 17px;">
+				<div class='col-md-12' id="ongoing_table_father" style="margin: auto; text-align: center; font-size: 17px;left: 10%">
 					<table id="ongoing_table" border="1" style="text-align: center; font-size: 17px;">
 						<!-- 表头 -->
-						<tbody>
+						<tbody id = "table_head">
 						<tr style="height: 30px">
 							<th id="number_ongoing" style="text-align: center; width: 250px">订单号</th>
 							<th id="vehicle_number_ongoing" style="text-align: center; width: 300px">车架号</th>
@@ -168,7 +168,7 @@
 						</tbody>
 						<!-- 传参处 -->
 						<tbody id = "body_son">
-						<tr>
+						<tr style="height: 30px">
 							<td rowspan="2">0000001</td>
 							<td rowspan="2">12345678901234567</td>
 							<td>001</td>
@@ -334,7 +334,6 @@
 				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static" >&times;</button>
 				<h3 class='modal-title' id='ongoingOrder' style="text-align: center">未完成订单</h3>
 			</div>
-
 		</div>
 	</div>
 </div>
@@ -358,11 +357,11 @@
 					</tr>
 				</table>
 				-->
-				<table id="finished_table" border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">
+				<table id="finished_table" border="1" style="margin: auto; width: 550px; text-align: center; font-size: 17px;">
 					<!-- 表头 -->
 					<tbody>
 					<tr style="height: 30px">
-						<th id="number_finished" style="text-align: center; width: 120px">订单号</th>
+						<th id="number_finished" style="text-align: center; width: 110px">订单号</th>
 						<th id="vehicle_number_finished" style="text-align: center">车架号</th>
 						<th id="parts_number_finished" style="text-align: center">零件号</th>
 						<th id="parts_name_finished" style="text-align: center">零件名</th>
@@ -502,7 +501,10 @@
 	function getProcessingArrangement(){
 		//删表
 		try {
-			document.getElementById("ongoing_table").removeChild(document.getElementById("body_son"))
+			// document.getElementById("ongoing_table").removeChild(document.getElementById("body_son"))
+			var table = document.getElementById("ongoing_table");
+			var table_data = document.getElementById("body_son");
+			table.removeChild(table_data);
 		} catch (error) {
 		}
 		//建表
