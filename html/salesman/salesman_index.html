@@ -277,14 +277,12 @@
 							<label for="project1" style='font-size:15px;width: 90px;'>具体问题：</label>
 <!--							<input id='project1' type='text' onblur="delProjectResults()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" placeholder='项目名称'/>-->
 							<div id="project_input" style="display: inline; width: 90px; position: absolute;">
-								<input id='project1' list="projects" onblur="delProjectsResults();" onchange="getProjectTime()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" onclick="showOptions()" placeholder='项目名称'  type='text'/>
-								<div id="projectOptions" style="width:150px; height:50px; position: absolute; top: 20px; left: 0; background-color: white; border: 1px solid black; cursor: pointer; display: none">
-									<div class="select" onclick="fill(this)">发动机</div>
-									<div class="select" onclick="fill(this)">检修</div>
-									<div class="select" onclick="fill(this)">维护</div>
-								</div>
-								<datalist id="projects">
-								</datalist>
+								<input id='project1' list="projects" onblur="delProjectsResults();" onchange="getProjectTime()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" placeholder='项目名称'  type='text'/>
+<!--								<div style="width:150px; height:50px; position: absolute; top: 20px; left: 0; background-color: white; border: 1px solid black; cursor: pointer;" id="projects">-->
+<!--									<div class="select" onclick="fill(this)">发动机</div>-->
+<!--									<div class="select" onclick="fill(this)">检修</div>-->
+<!--									<div class="select" onclick="fill(this)">维护</div>-->
+<!--								</div>-->
 							</div>
 <!--							<ul id="datalist" style="display: inline">-->
 <!--								<li>检查</li>-->

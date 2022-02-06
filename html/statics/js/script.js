@@ -360,11 +360,10 @@ function SsearchForProjects(){
  	})
  		.then(function (response) {
  			{
- 				 var div = document.getElementById("project_input");//寻找定位的区块
-				 var select = document.createElement("datalist");
-				 select.id ="projects";
-				 //select.setAttribute("onchange", "getProjectTime()");
-				 div.appendChild(select);
+				 var div = document.createElement("div");
+				 div.id ="projects";
+				 div.setAttribute("style", "width:150px; height:50px; position: absolute; top: 20px; left: 0; background-color: white; border: 1px solid black; cursor: pointer;");
+				 document.getElementById("project_input").appendChild(div);
 				 //table.setAttribute("style", "display: inline; width: 90px; position: absolute");
 				 /*list.setAttribute("name", "list");
 				 list.className = "table-responsive";
@@ -387,22 +386,24 @@ function SsearchForProjects(){
  				 tablehead.appendChild(head_2);
 				*/
  				for (var i = 0; response.data[i].Name !== ""; ++i) {
-					 if(i === 5){
+					 if(i === 3){
 						 break;
 					 }
 					// var tr = document.createElement("tr");
 					 //table.appendChild(tr);
 					// tr.setAttribute("style","text-align: center; border: 1px solid #000");
-					 var temp = document.createElement("option");
+					 var temp = document.createElement("div");
+					 temp.class="select";
+					 temp.setAttribute("onclick","fill(this)");
 					 //var t1 = document.createElement("td");
-					temp.setAttribute("value",JSON.stringify(response.data[i].Name).replace("\"","").replace("\"",""));
+					 //temp.setAttribute("value",JSON.stringify(response.data[i].Name).replace("\"","").replace("\"",""));
  					 temp.innerHTML = JSON.stringify(response.data[i].Name).replace("\"","").replace("\"","");
 					 //temp.appendChild(t1);
  					 //var t2 = document.createElement("td");
  					 //t2.innerHTML = JSON.stringify(response.data[i].Id);
  					 //temp.appendChild(t2);
  					 //alert(temp);
- 					 select.appendChild(temp);
+ 					 div.appendChild(temp);
  				}
  			}
  		})
