@@ -352,7 +352,6 @@ function getProjectTime(){
 		})
 }
 function SsearchForProjects(){
-	delProjectResults();
  	if (document.getElementById("project1").value === "") return;
  	axios({
  		method: 'get',
@@ -362,7 +361,7 @@ function SsearchForProjects(){
  			{
 				 var div = document.createElement("div");
 				 div.id ="projects";
-				 div.setAttribute("style", "width:150px; height:50px; position: absolute; top: 20px; left: 0; background-color: white; border: 1px solid black; cursor: pointer;");
+				 div.setAttribute("style", "width:150px; height:90px; position: absolute; top: 20px; left: 0; background-color: white; border: 1px solid black; cursor: pointer;");
 				 document.getElementById("project_input").appendChild(div);
 				 //table.setAttribute("style", "display: inline; width: 90px; position: absolute");
 				 /*list.setAttribute("name", "list");
@@ -385,8 +384,8 @@ function SsearchForProjects(){
  				 head_2.innerHTML = "维修项目编号";
  				 tablehead.appendChild(head_2);
 				*/
- 				for (var i = 0; response.data[i].Name !== ""; ++i) {
-					 if(i === 3){
+ 				for (var i = 1; response.data[i].Name !== ""; ++i) {
+					 if(i === 6){
 						 break;
 					 }
 					// var tr = document.createElement("tr");
@@ -394,7 +393,8 @@ function SsearchForProjects(){
 					// tr.setAttribute("style","text-align: center; border: 1px solid #000");
 					 var temp = document.createElement("div");
 					 temp.class="select";
-					 temp.setAttribute("onclick","fill(this)");
+					 temp.setAttribute("onclick","fill(this);delProjectResults()");
+					 temp.setAttribute("style","overflow:hidden;text-overflow:ellipsis;white-space:nowrap");
 					 //var t1 = document.createElement("td");
 					 //temp.setAttribute("value",JSON.stringify(response.data[i].Name).replace("\"","").replace("\"",""));
  					 temp.innerHTML = JSON.stringify(response.data[i].Name).replace("\"","").replace("\"","");
@@ -431,7 +431,7 @@ function openFlagParts () {
 	}, 200);
 }
 function openFlagProjects () {
-	timerProjects = setTimeout(function(){
+	    timerProjects = setTimeout(function(){
 		flagProjects = 1;
 		SsearchForProjects();
 		clearTimeout(timerProjects);
@@ -501,15 +501,16 @@ function delPartsResults(){
 	}catch (error)
 	{}
 }
-
+/*
 function delProjectsResults(){
 	try {
-		var div = document.getElementById("fill_project1");
-		var res = document.getElementById("li");
+		var div = document.getElementById("project_input");
+		var res = document.getElementById("project1");
 		div.removeChild(res);
 	}catch (error)
 	{}
 }
+*/
 /*
 function getinfo(){
 	axios({
