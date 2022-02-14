@@ -16,7 +16,6 @@ func addPath(r *gin.Engine) {
 	r.GET("/get_username", authMiddleWare(), checkPermission(), getUsername)             //返回用户的用户名
 	r.GET("/download_pdf", authMiddleWare(), checkPermission(), downloadPdf)             //生成并下载PDF文档
 	r.GET("/show_pdf", authMiddleWare(), checkPermission(), showPdf)                     //返回pdf文档
-	r.GET("/get_full_attorney", authMiddleWare(), checkPermission(), getFullAttorney)    //返回完整委托书·所有内容
 	r.GET("/generate_pdf", authMiddleWare(), checkPermission(), generatePdf)             //【临时】生成PDF
 	r.GET("/captcha", func(c *gin.Context) { Captcha(c, 4) })                            //随机生成一个4位数字验证码
 
@@ -31,6 +30,7 @@ func addPath(r *gin.Engine) {
 	r.GET("/check_vehicle", authMiddleWare(), checkPermission(), filterUser(), checkVehicle)                        //检查车辆是否已被绑定
 	r.GET("/u_check_orders_ongoing", authMiddleWare(), checkPermission(), filterUser(), startUCheckOrdersOngoing)   //进入用户查看进行中订单页面
 	r.GET("/u_check_orders_finished", authMiddleWare(), checkPermission(), filterUser(), startUCheckOrdersFinished) //进入用户查看已完成订单页面
+	r.GET("/get_full_attorney", authMiddleWare(), checkPermission(), filterUser(), getFullAttorney)                 //返回完整委托书·所有内容（用戶）
 
 	//----------业务员路径----------
 	r.GET("/get_project_time", authMiddleWare(), checkPermission(), filterSalesman(), getProjectTime)                       //业务员根据维修项目来获取预计维修时间
@@ -41,6 +41,7 @@ func addPath(r *gin.Engine) {
 	r.GET("/take_orders", authMiddleWare(), checkPermission(), filterSalesman(), startTakeOrders)                           //进入接单界面
 	r.GET("/get_corresponding_repairman", authMiddleWare(), checkPermission(), filterSalesman(), getCorrespondingRepairman) //根据维修员种类返回相应种类的维修员信息
 	r.GET("/get_finished_attorney_s", authMiddleWare(), checkPermission(), filterSalesman(), getFinishedAttorneyS)          //寻找已完成的委托（业务员）
+	r.GET("/get_full_attorney_s", authMiddleWare(), checkPermission(), filterSalesman(), getFullAttorneyS)                  //获得委托的详细信息（业务员）
 
 	//----------维修员路径----------
 	r.GET("/search_for_parts", authMiddleWare(), checkPermission(), filterRepairman(), searchForParts)                     //寻找零件

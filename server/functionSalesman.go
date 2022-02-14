@@ -4,9 +4,121 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"sort"
 	"strconv"
+	"strings"
 	"time"
 )
+
+func getFullAttorneyS(c *gin.Context) {
+	attorneyNo := c.Query("attorney_no")
+	var attorney Attorney
+	database.First(&attorney, "number = ?", attorneyNo)
+	var user User
+	database.First(&user, "number = ?", attorney.UserID)
+	var vehicle Vehicle
+	database.First(&vehicle, "number = ?", attorney.VehicleNumber)
+	//定义表的结构
+	type repairmanInfo struct {
+		RepairmanNumber string
+		RepairmanName   string
+		Type            string
+		Progress        string
+	}
+	type project struct {
+		ProjectNumber string
+		ProjectName   string
+		ProjectTime   float64
+		Repairman     []repairmanInfo
+		ProjectRemark string
+	}
+	var result struct {
+		UserNumber           string
+		UserContactPerson    string
+		UserContactTel       string
+		SalesmanNumber       string
+		VehiclePlate         string
+		VehicleVin           string
+		VehicleModel         string
+		VehicleType          string
+		StartPetrol          float64
+		StartMile            float64
+		PayMethod            string
+		DiscountRate         int
+		PredictFinishTime    string
+		RepairType           string
+		RepairClassification string
+		RoughProblem         string
+		OutRange             string
+		SpecificProblem      string
+		Project              []project
+		Remark               string
+	}
+	//填充信息
+	result.UserNumber = user.Number
+	result.UserContactPerson = user.ContactPerson
+	result.UserContactTel = user.ContactTel
+	result.SalesmanNumber = attorney.SalesmanID
+	result.VehiclePlate = vehicle.LicenseNumber
+	result.VehicleVin = vehicle.Number
+	result.VehicleModel = vehicle.Model
+	result.VehicleType = vehicle.Type
+	result.StartPetrol = attorney.StartPetrol
+	result.StartMile = attorney.StartMile
+	result.PayMethod = attorney.PayMethod
+	result.DiscountRate = user.DiscountRate
+	result.PredictFinishTime = attorney.PredictFinishTime
+	result.RepairType = attorney.RepairType
+	result.RepairClassification = attorney.Classification
+	result.RoughProblem = attorney.RoughProblem
+	result.OutRange = attorney.OutRange
+	result.SpecificProblem = attorney.SpecificProblem
+	timeType := ""
+	if vehicle.Type == "轿车-A" {
+		timeType = "time_a"
+	} else if vehicle.Type == "轿车-B" {
+		timeType = "time_b"
+	} else if vehicle.Type == "轿车-C" {
+		timeType = "time_c"
+	} else if vehicle.Type == "轿车-D" {
+		timeType = "time_d"
+	} else {
+		timeType = "time_e"
+	}
+	database.Raw("select time_overview.project_number as project_number, project_name as project_name, "+timeType+" as project_time, remark as project_remark\n"+
+		"from arrangement inner join time_overview on arrangement.project_number = time_overview.project_number\n"+
+		"where order_number = ?", attorneyNo).Scan(&result.Project) //找到该委托所有的维修项目
+	var remarks []string            //备注字典
+	for i := range result.Project { //遍历所有维修项目
+		remarkList := strings.Split(result.Project[i].ProjectRemark, "*") //按照*分割备注
+		result.Project[i].ProjectRemark = ""                              //处理后的备注，先置空
+		if len(remarkList) > 1 {                                          //备注不为空
+			for j := 1; j < len(remarkList); j++ { //0是空，1开始有值
+				if j == len(remarkList)-1 { //如果是最后一条备注
+					result.Project[i].ProjectRemark += "*" + remarkList[j] //不加换行符
+				} else {
+					result.Project[i].ProjectRemark += "*" + remarkList[j] + "\n" //加换行符
+				}
+				remarks = append(remarks, "*"+remarkList[j]) //将这条备注添加到字典中
+			}
+		}
+		database.Raw("select repairman_number as repairman_number, name as repairman_name, type as type, progress as progress\n"+
+			"from arrangement inner join repairman on arrangement.repairman_number = repairman.number\n"+
+			"where order_number = ? and project_number = ?", attorneyNo, result.Project[i].ProjectNumber).Scan(&result.Project[i].Repairman) //找到该委托所有的维修项目
+	}
+	strRemark := ""        //备注返回的结果
+	if len(remarks) != 0 { //如果备注字典中非空
+		sort.Strings(remarks)           //按字典顺序排序
+		for _, value := range remarks { //遍历字典
+			var remarkDatabase Remark
+			database.First(&remarkDatabase, "remark_number = ?", value)                    //查找备注表
+			strRemark += remarkDatabase.RemarkNumber + " " + remarkDatabase.Content + "\n" //添加到返回结果中
+		}
+		strRemark = strRemark[:len(strRemark)-1] //处理掉最后一个换行符
+	}
+	result.Remark = strRemark //将备注结果加到返回结果中
+	c.JSON(http.StatusOK, result)
+}
 
 func addProjectForAttorney(c *gin.Context) {
 	attorneyNo := c.PostForm("attorney_no")
