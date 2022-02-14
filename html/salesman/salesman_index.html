@@ -57,6 +57,13 @@
 		.inner-row-3 h4{font-size: 15px;display:inline-block;margin-left: 5%}
 		.outer-png{margin-top:12px;margin-left: 12px;}
 
+		.order-form{}
+		.order-form th{text-align: center;font-size: 15px;}
+		.order-form td{text-align: center;font-size: 12px;}
+
+		.wcr{color: red}
+		.wcg{color: green}
+
 		/*
 		.row > div {
 			display: inline-block;
@@ -168,37 +175,130 @@
 				<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
 			</div>
 
-			<div id="ongoing">
-				<div class='col-md-12' id='ongoing_title'  style='text-align: center'>
-					<label style='color: #77bbe2;font-size:50px;' id="ongoing_orders">　进行中订单</label>
+			<!--大标题-->
+			<div class='col-md-12'  style='text-align: center'>
+				<label style='color: #77bbe2;font-size:50px;' >订单详情</label>
+			</div>
+
+			<!--折叠组-->
+			<div class="panel-group col-md-12" id="accordion">
+				<!--折叠组-1-->
+				<div class="panel panel-warning">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion"
+							   href="#collapseOne">
+								待接订单
+							</a>
+						</h4>
+					</div>
+					<div id="collapseOne" class="panel-collapse collapse in">
+						<table class="table  table-bordered table-hover">
+							<tbody>
+							<tr  class="order-form">
+								<th><label>订单号</label></th>
+								<th><label>车牌号</label></th>
+								<th><label>车架号</label></th>
+								<th><label>客户姓名</label></th>
+								<th><label>客户联系电话</label></th>
+								<th><label>接单</label></th>
+							</tr>
+							<tr class="order-form">
+								<td><h5>00000002</h5></td>
+								<td><h5>SHU6502</h5></td>
+								<td><h5>12345678901234567</h5></td>
+								<td><h5>ZLF</h5></td>
+								<td><h5>110</h5></td>
+								<td><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>接单！！！</a></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 
-				<div class='col-md-12' id="ongoing_table_father" style="margin: auto; text-align: center; font-size: 17px;left: 10%">
-					<table id="ongoing_table" border="1" style="text-align: center; font-size: 17px;">
-						<!-- 表头 -->
-						<tbody>
-						<tr style="height: 30px">
-							<th id="number_ongoing" style="text-align: center; width: 300px">订 单 号：</th>
-							<th id="user_name" style="text-align: center; width: 250px">车型：</th>
-							<th id="status" style="text-align: center; width: 200px">状态：</th>
-						</tr>
-						</tbody>
-						<!-- 传参处 -->
-						<tbody id ="body_son">
-						<tr id="1">
-							<td id="order_number_1">0000001</td>
-							<td>夏逸凡</td>
-							<td>进行中</td>
-						</tr>
-						<tr id="2">
-							<td id="order_number_2">0000002</td>
-							<td>张霖锋</td>
-							<td><a data-toggle='modal' data-target='#take_order' onclick=addSpecificDetail()>编辑具体信息</a></td>
-						</tr>
-						</tbody>
-					</table>
+				<br>
+
+				<!--折叠组-2-->
+				<div class="panel panel-info" id="ongoing">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion"
+							   href="#collapseTwo">
+								进行中订单
+							</a>
+						</h4>
+					</div>
+					<div id="collapseTwo" class="panel-collapse collapse">
+						<div id="ongoing_table_father" style="margin: auto;align-items: center; text-align: center; font-size: 17px;left: 10%">
+							<table id="ongoing_table" border="1" style="text-align: center; font-size: 17px;">
+								<!-- 表头 -->
+								<tbody>
+								<tr style="height: 30px">
+									<th id="number_ongoing" style="text-align: center; width: 300px">订 单 号：</th>
+									<th id="user_name" style="text-align: center; width: 250px">车型：</th>
+									<th id="status" style="text-align: center; width: 200px">状态：</th>
+								</tr>
+								</tbody>
+								<!-- 传参处 -->
+								<tbody id ="body_son">
+								<tr id="1">
+									<td id="order_number_1">0000001</td>
+									<td>夏逸凡</td>
+									<td>进行中</td>
+								</tr>
+								<tr id="2">
+									<td id="order_number_2">0000002</td>
+									<td>张霖锋</td>
+									<td><a data-toggle='modal' data-target='#take_order' onclick=addSpecificDetail()>编辑具体信息</a></td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<br>
+
+				<!--折叠组-3-->
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion"
+							   href="#collapseThree">
+								维修中订单
+							</a>
+						</h4>
+					</div>
+					<div id="collapseThree" class="panel-collapse collapse">
+						<table class="table  table-bordered table-hover">
+							<tbody>
+								<tr  class="order-form" style="background-color: #adadad">
+									<th><label>订单号:00000002</label></th>
+									<th><label>车牌号:SHU6502</label></th>
+									<th><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>过！！！</a></th>
+								</tr>
+							</tbody>
+						</table>
+						<table class="table  table-bordered table-hover">
+							<tbody>
+								<tr class="order-form">
+									<td><h5>问题：</h5></td>
+									<td><h5>SHU6502</h5></td>
+									<td><h5>状态：</h5></td>
+									<td class="wcg"><h5>已完成</h5></td>
+								</tr>
+								<tr class="order-form">
+									<td><h5>问题：</h5></td>
+									<td><h5>SHU6503</h5></td>
+									<td><h5>状态：</h5></td>
+									<td class="wcr"><h5>未完成</h5></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 </div>
@@ -220,7 +320,8 @@
 	</div>
 </div>
 
-<!-- 接单 -->
+
+<!--编辑订单信息 -->
 <div class='modal fade' id='take_order' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static">
 	<div class='modal-dialog' style="width: 70%;height: 80%;">
 		<div class='modal-content'>
