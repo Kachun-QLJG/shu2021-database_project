@@ -71,6 +71,20 @@ func getRelatingAttorney(c *gin.Context) {
 	c.JSON(http.StatusOK, attorney)
 }
 
+func receiveAttorney(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	attorneyNo := c.PostForm("attorney_no")
+	var attorney Attorney
+	result := database.Find(&attorney, "number = ? and progress = '待处理'", attorneyNo)
+	if result.RowsAffected != 1 {
+		c.JSON(http.StatusOK, gin.H{"status": "错误", "data": "订单号错误或该订单已被其他用户接单！"})
+		return
+	}
+	database.Model(&attorney).Update("progress", "处理中")
+	database.Model(&attorney).Update("salesman_id", username)
+	c.JSON(http.StatusOK, gin.H{"status": "成功", "data": "操作成功！"})
+}
+
 func getFinishedAttorneyS(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	var result []struct {
