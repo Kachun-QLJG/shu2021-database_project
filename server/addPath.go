@@ -40,8 +40,8 @@ func addPath(r *gin.Engine) {
 	r.GET("/s_check_orders", authMiddleWare(), checkPermission(), filterSalesman(), startSCheckOrders)                      //进入业务员查看订单页面
 	r.GET("/take_orders", authMiddleWare(), checkPermission(), filterSalesman(), startTakeOrders)                           //进入接单界面
 	r.GET("/get_corresponding_repairman", authMiddleWare(), checkPermission(), filterSalesman(), getCorrespondingRepairman) //根据维修员种类返回相应种类的维修员信息
-	r.GET("/get_finished_attorney_s", authMiddleWare(), checkPermission(), filterSalesman(), getFinishedAttorneyS)          //寻找已完成的委托（业务员）
-	r.GET("/get_full_attorney_s", authMiddleWare(), checkPermission(), filterSalesman(), getFullAttorneyS)                  //获得委托的详细信息（业务员）
+	//r.GET("/get_finished_attorney_s", authMiddleWare(), checkPermission(), filterSalesman(), getFinishedAttorneyS)          //寻找已完成的委托（业务员）
+	r.GET("/get_full_attorney_s", authMiddleWare(), checkPermission(), filterSalesman(), getFullAttorneyS) //获得委托的详细信息（业务员）
 
 	//----------维修员路径----------
 	r.GET("/search_for_parts", authMiddleWare(), checkPermission(), filterRepairman(), searchForParts)                     //寻找零件

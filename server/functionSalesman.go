@@ -66,6 +66,7 @@ func getFullAttorneyS(c *gin.Context) {
 		StartMile            float64
 		PayMethod            string
 		DiscountRate         int
+		StartTime            string
 		PredictFinishTime    string
 		RepairType           string
 		RepairClassification string
@@ -74,6 +75,7 @@ func getFullAttorneyS(c *gin.Context) {
 		SpecificProblem      string
 		Project              []project
 		Remark               string
+		Progress             string
 	}
 	//填充信息
 	result.UserNumber = user.Number
@@ -88,12 +90,14 @@ func getFullAttorneyS(c *gin.Context) {
 	result.StartMile = attorney.StartMile
 	result.PayMethod = attorney.PayMethod
 	result.DiscountRate = user.DiscountRate
+	result.StartTime = attorney.StartTime
 	result.PredictFinishTime = attorney.PredictFinishTime
 	result.RepairType = attorney.RepairType
 	result.RepairClassification = attorney.Classification
 	result.RoughProblem = attorney.RoughProblem
 	result.OutRange = attorney.OutRange
 	result.SpecificProblem = attorney.SpecificProblem
+	result.Progress = attorney.Progress
 	timeType := ""
 	if vehicle.Type == "轿车-A" {
 		timeType = "time_a"
@@ -186,21 +190,45 @@ func getCorrespondingRepairman(c *gin.Context) {
 func getRelatingAttorney(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	type pending struct {
-		Number  string
-		CarType string
-		Status  string
+		Number       string
+		Plate        string
+		Vin          string
+		CarModel     string
+		CarType      string
+		RoughProblem string
 	}
-	type own struct {
-		Number  string
-		CarType string
-		Status  string
+	type processing struct {
+		Number          string
+		Plate           string
+		Vin             string
+		CarModel        string
+		CarType         string
+		RoughProblem    string
+		SpecificProblem string
+		Progress        string
+	}
+	type finished struct {
+		Number          string
+		Plate           string
+		Vin             string
+		CarModel        string
+		CarType         string
+		SpecificProblem string
 	}
 	var attorney struct {
-		Pending []pending
-		Own     []own
+		Pending    []pending
+		Processing []processing
+		Finished   []finished
 	}
-	database.Raw("select attorney.number as number, type as car_type, progress as status from attorney inner join vehicle on attorney.vehicle_number = vehicle.number where progress = '待处理'").Scan(&attorney.Pending)
-	database.Raw("select attorney.number as number, type as car_type, progress as status from attorney inner join vehicle on attorney.vehicle_number = vehicle.number where salesman_id = ?", username).Scan(&attorney.Own)
+	database.Raw("select attorney.number as number, license_number as plate, vehicle.number as vin, model as car_model, type as car_type, rough_problem as rough_problem\n" +
+		"from attorney inner join vehicle on attorney.vehicle_number = vehicle.number\n" +
+		"where progress = '待处理' order by attorney.number").Scan(&attorney.Pending)
+	database.Raw("select attorney.number as number, license_number as plate, vehicle.number as vin, model as car_model, type as car_type, rough_problem as rough_problem, specific_problem as specific_problem, progress as progress\n"+
+		"from attorney inner join vehicle on attorney.vehicle_number = vehicle.number\n"+
+		"where salesman_id = ? and progress != '已完成' order by progress desc, attorney.number", username).Scan(&attorney.Processing)
+	database.Raw("select attorney.number as number, license_number as plate, vehicle.number as vin, model as car_model, type as car_type, specific_problem as specific_problem\n"+
+		"from attorney inner join vehicle on attorney.vehicle_number = vehicle.number\n"+
+		"where salesman_id = ? and progress = '已完成' order by attorney.number desc", username).Scan(&attorney.Finished)
 	c.JSON(http.StatusOK, attorney)
 }
 
@@ -218,22 +246,22 @@ func receiveAttorney(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"status": "成功", "data": "操作成功！"})
 }
 
-func getFinishedAttorneyS(c *gin.Context) {
-	username := c.MustGet("username").(string)
-	var result []struct {
-		OrderNumber       string
-		Vin               string
-		RoughProblem      string
-		SpecificProblem   string
-		PredictFinishTime string
-		Progress          string
-		Username          string
-	}
-	database.Raw("select attorney.number as order_number, vehicle_number as vin, rough_problem as rough_problem, specific_problem as specific_problem, predict_finish_time as predict_finish_time, progress as progress, contact_tel as username\n"+
-		"from attorney inner join user on attorney.user_id = user.number\n"+
-		"where salesman_id = ? and progress = '已完成'", username).Scan(&result)
-	c.JSON(http.StatusOK, result)
-}
+//func getFinishedAttorneyS(c *gin.Context) {
+//	username := c.MustGet("username").(string)
+//	var result []struct {
+//		OrderNumber       string
+//		Vin               string
+//		RoughProblem      string
+//		SpecificProblem   string
+//		PredictFinishTime string
+//		Progress          string
+//		Username          string
+//	}
+//	database.Raw("select attorney.number as order_number, vehicle_number as vin, rough_problem as rough_problem, specific_problem as specific_problem, predict_finish_time as predict_finish_time, progress as progress, contact_tel as username\n"+
+//		"from attorney inner join user on attorney.user_id = user.number\n"+
+//		"where salesman_id = ? and progress = '已完成'", username).Scan(&result)
+//	c.JSON(http.StatusOK, result)
+//}
 
 func setAttorneyFinished(c *gin.Context) {
 	username := c.MustGet("username").(string)

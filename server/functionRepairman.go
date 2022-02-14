@@ -73,6 +73,7 @@ func changeRepairProgress(c *gin.Context) {
 			var attorney Attorney
 			database.First(&attorney, "number = ?", attorneyNo)
 			database.Model(&arrangement).Update("progress", "待结算")
+			database.Model(&arrangement).Update("actual_finish_time", time.Now().Format("2006-01-02"))
 			var user User
 			database.First(&user, "number = ?", attorney.UserID)
 			var vehicle Vehicle
