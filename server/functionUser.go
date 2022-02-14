@@ -77,9 +77,10 @@ func createAttorney(c *gin.Context) {
 		c.String(http.StatusOK, "请完善个人信息后再提交新的委托申请！")
 		return
 	}
+	date := time.Now().Format("20060102")
 	var attorney Attorney
-	number := database.Find(&attorney).RowsAffected + 1
-	strNumber := fmt.Sprintf("%08d", number)
+	number := database.Find(&attorney, "number like ?", date+"___").RowsAffected + 1
+	strNumber := date + fmt.Sprintf("%03d", number)
 	vin := c.PostForm("vin")
 	payMethod := c.PostForm("pay_method")
 	startTime := c.PostForm("start_time")
