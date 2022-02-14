@@ -35,6 +35,10 @@
 		.inner-row-3 h4{font-size: 15px;display:inline-block;margin-left: 5%}
 		.outer-png{margin-top:12px;margin-left: 12px;}
 
+		.order-form{}
+		.order-form th{text-align: center;font-size: 15px;}
+		.order-form td{text-align: center;font-size: 12px;}
+
 		/*
 		.row > div {
 			display: inline-block;
@@ -143,54 +147,94 @@
 
 		<!--右区域-->
 		<div class="col-md-10">
-			<div id="notification" class="alert alert-warning alert-dismissible" role="alert" style="display: none">
-				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true" data-backdrop="static">&times;</span><span class="sr-only">Close</span></button>
-				<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
+
+			<!--大标题-->
+			<div class='col-md-12'  style='text-align: center'>
+				<label style='color: #77bbe2;font-size:50px;' >维修详情</label>
 			</div>
 
-			<div id="ongoing">
-				<div class='col-md-10' id='ongoing_title'  style='text-align: center'>
-					<label style='color: #77bbe2;font-size:50px;' id="ongoing_orders">　进行中订单</label>
+			<!--折叠组-->
+			<div class="panel-group col-md-12" id="accordion">
+				<!--折叠组-1-->
+				<div class="panel panel-warning">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion"
+							   href="#collapseOne">
+								待确认维修
+							</a>
+						</h4>
+					</div>
+					<div id="collapseOne" class="panel-collapse collapse in">
+						<table class="table  table-bordered table-hover">
+							<tbody>
+								<tr class="order-form">
+									<th><label>订单号</label></th>
+									<th><label>车牌号</label></th>
+									<th><label>车架号</label></th>
+									<th><label>所属业务员</label></th>
+									<th><label>确认</label></th>
+								</tr>
+								<tr class="order-form">
+									<td><h5>00000002</h5></td>
+									<td><h5>SHU6502</h5></td>
+									<td><h5>12345678901234567</h5></td>
+									<td><h5>XJJ</h5></td>
+									<td><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>没办法了开始工作吧</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 
-				<div class='col-md-12' id="ongoing_table_father" style="margin: auto; text-align: center; font-size: 17px;left: 10%">
-					<table id="ongoing_table" border="1" style="text-align: center; font-size: 17px;">
-						<!-- 表头 -->
-						<tbody id = "table_head">
-						<tr style="height: 30px">
-							<th id="number_ongoing" style="text-align: center; width: 250px">订单号</th>
-							<th id="vehicle_number_ongoing" style="text-align: center; width: 300px">车架号</th>
-							<th id="parts_number_ongoing" style="text-align: center; width: 150px">零件号</th>
-							<th id="parts_name_ongoing" style="text-align: center; width: 150px">零件名</th>
-							<th id="parts_count_ongoing" style="text-align: center; width: 100px">数量</th>
-							<th id="add_parts" style="text-align: center; width: 100px">添加零件</th>
-						</tr>
-						</tbody>
-						<!-- 传参处 -->
-						<tbody id = "body_son">
-						<tr style="height: 30px">
-							<td rowspan="2">0000001</td>
-							<td rowspan="2">12345678901234567</td>
-							<td>001</td>
-							<td>轮毂</td>
-							<td>1</td>
-							<td rowspan="2"><a>添加</a></td>
-						</tr>
-						<tr>
-							<td>002</td>
-							<td>后视镜</td>
-							<td>2</td>
-						</tr>
-						<tr>
-							<td rowspan="1">0000002</td>
-							<td rowspan="1">22345678901234567</td>
-							<td>002</td>
-							<td>后视镜</td>
-							<td>1</td>
-							<td rowspan="1"><a>添加</a></td>
-						</tr>
-						</tbody>
-					</table>
+				<br>
+
+				<!--折叠组-2-->
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion"
+							   href="#collapseThree">
+								进行中维修
+							</a>
+						</h4>
+					</div>
+					<div id="collapseThree" class="panel-collapse collapse">
+						<table class="table  table-bordered table-hover">
+							<tbody>
+								<tr class="order-form" style="background-color: #ebebeb">
+									<th width="40%"><label>订单号:00000002</label></th>
+									<th width="40%"><label>车牌号:SHU6502</label></th>
+									<th width="20%"><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>都修好了!</a></th>
+								</tr>
+								<tr class="order-form">
+									<th><h5>问题：wwwwwwwwwwwwwww</h5></th>
+									<th><h5>所需零件：CPU ALU PC MAR MDR</h5></th>
+									<th><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加或修改零件</a></th>
+								</tr>
+								<tr class="order-form">
+									<th><h5>问题：zzzzzzzzzzzzzzzzzz</h5></th>
+									<th><h5>所需零件：承诺情况属实 健康码 行程码 在校 体温正常</h5></th>
+									<th><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加或修改零件</a></th>
+								</tr>
+							</tbody>
+						</table>
+						<table class="table  table-bordered table-hover">
+							<tbody>
+								<tr class="order-form" style="background-color: #ebebeb">
+									<th width="40%"><label>订单号:00000003</label></th>
+									<th width="40%"><label>车牌号:SHU6503</label></th>
+									<th width="20%"><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>都修好了!</a></th>
+								</tr>
+								<br>
+								<tr class="order-form">
+									<th><h5>问题：zzzzzzzzzzzzzzzzzz</h5></th>
+									<th><h5>所需零件：承诺情况属实 健康码 行程码 在校 体温正常</h5></th>
+									<th><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加或修改零件</a></th>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 
@@ -297,6 +341,27 @@
 <!--					</table>-->
 <!--				</div>-->
 <!--			</div>-->
+		</div>
+	</div>
+</div>
+
+<!-- 添加或修改零件 -->
+<div class="modal fade" id="add_parts" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" style="vertical-align: middle;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-backdrop="static">&times;</button>
+				<h3 class="modal-title">添加或修改零件</h3>
+			</div>
+			<div class="modal-body">
+				<img src="/statics/user/工作状态.png" width="20px">
+				<label style="font-size:15px;">添加零件：</label>
+				<input placeholder='输入零件名或拼音：'> </input>
+			</div>
+			<form class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="changeStatus()" >确认添加</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			</form>
 		</div>
 	</div>
 </div>
