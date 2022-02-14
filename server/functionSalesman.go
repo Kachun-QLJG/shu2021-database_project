@@ -10,6 +10,27 @@ import (
 	"time"
 )
 
+func changeDiscountRate(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	attorneyNo := c.PostForm("attorney_no")
+	client := c.PostForm("user_id")
+	discountRate, _ := strconv.Atoi(c.PostForm("discount_rate"))
+	var attorney Attorney
+	result := database.First(&attorney, "number = ? and salesman = ? and user_id = ?", attorneyNo, username, client)
+	if result.RowsAffected == 0 {
+		c.String(http.StatusForbidden, "无权限！")
+		return
+	}
+	var user User
+	database.First(&user, "number = ?", client)
+	curDiscountRate := user.DiscountRate
+	if curDiscountRate <= discountRate || curDiscountRate-discountRate > 10 || discountRate < 70 {
+		c.String(http.StatusForbidden, "折扣率设置不合法！")
+		return
+	}
+	database.Model(&user).Update("discount_rate", discountRate)
+}
+
 func getFullAttorneyS(c *gin.Context) {
 	attorneyNo := c.Query("attorney_no")
 	var attorney Attorney

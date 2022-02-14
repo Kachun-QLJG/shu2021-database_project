@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func getFinishedArrangement(c *gin.Context) {
@@ -72,6 +73,31 @@ func changeRepairProgress(c *gin.Context) {
 			var attorney Attorney
 			database.First(&attorney, "number = ?", attorneyNo)
 			database.Model(&arrangement).Update("progress", "待结算")
+			var user User
+			database.First(&user, "number = ?", attorney.UserID)
+			var vehicle Vehicle
+			database.First(&vehicle, "number = ?", attorney.VehicleNumber)
+			var notification Notification
+			notificationNumber := database.Find(&notification).RowsAffected + 1
+			strNumber := fmt.Sprintf("%08d", notificationNumber) //获取通知序号
+			data := Notification{                                //给用户发通知
+				strNumber,
+				user.ContactTel,
+				"【通知】您的车辆" + vehicle.LicenseNumber + "维修完成",
+				"尊敬的用户" + user.Name + "您好，您的车辆" + vehicle.LicenseNumber + "已完成订单号为" + attorney.Number + "的维修委托。请您保持电话畅通，与您对接的业务员将与您联系，以确认后续事宜。\n最后感谢您选择了我们为您提供车辆维修服务，祝您一路顺风、生活愉快。",
+				"未读",
+				time.Now().Format("2006-01-02 15:04:05"),
+			}
+			database.Create(&data) //添加到通知表
+			data = Notification{   //给业务员发通知
+				fmt.Sprintf("%08d", notificationNumber+1),
+				attorney.SalesmanID,
+				"【通知】订单" + attorney.Number + "维修完成，请及时联系客户",
+				"业务员您好，您对接的" + attorney.Number + "号维修委托已完成维修，请您及时与客户" + user.ContactPerson + "取得联系（联系电话：" + user.ContactTel + "），提醒客户及时结算、取车。",
+				"未读",
+				time.Now().Format("2006-01-02 15:04:05"),
+			}
+			database.Create(&data) //添加到通知表
 		}
 	}
 	c.JSON(http.StatusOK, gin.H{"data": "成功"})
