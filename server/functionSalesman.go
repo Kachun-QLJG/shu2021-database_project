@@ -54,14 +54,7 @@ func getFullAttorneyS(c *gin.Context) {
 		ProjectRemark string
 	}
 	var result struct {
-		UserNumber           string
-		UserContactPerson    string
-		UserContactTel       string
-		SalesmanNumber       string
-		VehiclePlate         string
 		VehicleVin           string
-		VehicleModel         string
-		VehicleType          string
 		StartPetrol          float64
 		StartMile            float64
 		PayMethod            string
@@ -78,14 +71,7 @@ func getFullAttorneyS(c *gin.Context) {
 		Progress             string
 	}
 	//填充信息
-	result.UserNumber = user.Number
-	result.UserContactPerson = user.ContactPerson
-	result.UserContactTel = user.ContactTel
-	result.SalesmanNumber = attorney.SalesmanID
-	result.VehiclePlate = vehicle.LicenseNumber
 	result.VehicleVin = vehicle.Number
-	result.VehicleModel = vehicle.Model
-	result.VehicleType = vehicle.Type
 	result.StartPetrol = attorney.StartPetrol
 	result.StartMile = attorney.StartMile
 	result.PayMethod = attorney.PayMethod
