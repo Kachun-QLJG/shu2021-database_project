@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"github.com/tiechui1994/gopdf"
 	"github.com/tiechui1994/gopdf/core"
 	"net/http"
@@ -37,21 +38,28 @@ func showPdf(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
 	attorneyNo := c.Query("attorney_no")
-	userId := c.Query("user_id")
+	if group == "维修员" {
+		c.String(http.StatusForbidden, "无权限")
+		return
+	}
+	var result *gorm.DB
 	if group == "普通用户" {
 		var user User
 		database.First(&user, "contact_tel = ?", username)
-		userId = username
-		username = user.Number
+		var attorney Attorney
+		result = database.First(&attorney, "user_id = ? and number = ?", user.Number, attorneyNo)
+	} else if group == "业务员" {
+		var attorney Attorney
+		result = database.First(&attorney, "salesman_id = ? and number = ?", username, attorneyNo)
+		var res struct{ Username string }
+		database.Raw("select contact_tel as username from user where number = ?", attorney.UserID).Scan(&res)
+		username = res.Username
 	}
-	var attorney Attorney
-	result := database.First(&attorney, "user_id = ? or salesman_id = ?", username, username)
 	if result.RowsAffected == 0 {
 		c.String(http.StatusForbidden, "无权限")
 		return
 	}
-	fmt.Println("./files/generatedPDF/" + userId + "/" + attorneyNo + "/" + attorneyNo + ".pdf")
-	c.File("./files/generatedPDF/" + userId + "/" + attorneyNo + "/" + attorneyNo + ".pdf")
+	c.File("./files/generatedPDF/" + username + "/" + attorneyNo + "/" + attorneyNo + ".pdf")
 }
 
 func downloadPdf(c *gin.Context) {
