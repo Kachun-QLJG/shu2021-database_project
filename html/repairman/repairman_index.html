@@ -124,6 +124,9 @@
 		<!--左导航栏-->
 		<div class='col-md-2'>
 			<div class="list-group">
+				<a class="list-group-item list-group-item-info">
+					员工信息
+				</a>
 				<a id="number" class="list-group-item" style="cursor: default">工　　号：</a>
 				<a id="repairman_name" class="list-group-item" style="cursor: default">姓　　名：</a>
 				<a id="repairman_type" class="list-group-item" style="cursor: default">工　　种：</a>
@@ -133,16 +136,16 @@
 				<a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer; text-decoration-line: underline">更改密码</a>
 			</div>
 
-			<div class='list-group'>
-				<a class='list-group-item list-group-item-success'>
-					订单详情
-				</a>
-				<!-- <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> -->
-				<!-- <a class='list-group-item' href='/change_userinfo'>个人信息</a> -->
-<!--				<a class='list-group-item' data-toggle='modal' data-target='#ongoing_order' id="ongoing_orders" style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>-->
-<!--				<a class='list-group-item' href='/index' id="ongoing_orders" style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>-->
-				<a class='list-group-item' data-toggle='modal' data-target='#finished_order' style='cursor:pointer; text-decoration-line: underline' onclick="getFinishedArrangement()">已完成</a>
-			</div>
+<!--			<div class='list-group'>-->
+<!--				<a class='list-group-item list-group-item-success'>-->
+<!--					订单详情-->
+<!--				</a>-->
+<!--				&lt;!&ndash; <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> &ndash;&gt;-->
+<!--				&lt;!&ndash; <a class='list-group-item' href='/change_userinfo'>个人信息</a> &ndash;&gt;-->
+<!--&lt;!&ndash;				<a class='list-group-item' data-toggle='modal' data-target='#ongoing_order' id="ongoing_orders" style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>&ndash;&gt;-->
+<!--&lt;!&ndash;				<a class='list-group-item' href='/index' id="ongoing_orders" style='cursor:pointer; text-decoration-line: underline'>进行中(3)</a>&ndash;&gt;-->
+<!--				<a class='list-group-item' data-toggle='modal' data-target='#finished_order' style='cursor:pointer; text-decoration-line: underline' onclick="getFinishedArrangement()">已完成</a>-->
+<!--			</div>-->
 		</div>
 
 		<!--右区域-->
@@ -190,53 +193,135 @@
 				<br>
 
 				<!--折叠组-2-->
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion"
+							   href="#collapseTwo">
+								进行中维修
+							</a>
+						</h4>
+					</div>
+					<div id="collapseTwo" class="panel-collapse collapse">
+						<table class="table  table-bordered table-hover">
+							<tbody>
+							<tr class="order-form" style="background-color: #ebebeb">
+								<th width="40%"><label>订单号:00000002</label></th>
+								<th width="40%"><label>车牌号:SHU6502</label></th>
+								<th width="20%"><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>都修好了!</a></th>
+							</tr>
+							<tr class="order-form">
+								<th><h5>问题：wwwwwwwwwwwwwww</h5></th>
+								<th><h5>所需零件：CPU ALU PC MAR MDR</h5></th>
+								<th><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加或修改零件</a></th>
+							</tr>
+							<tr class="order-form">
+								<th><h5>问题：zzzzzzzzzzzzzzzzzz</h5></th>
+								<th><h5>所需零件：承诺情况属实 健康码 行程码 在校 体温正常</h5></th>
+								<th><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加或修改零件</a></th>
+							</tr>
+							</tbody>
+						</table>
+						<table class="table  table-bordered table-hover">
+							<tbody>
+							<tr class="order-form" style="background-color: #ebebeb">
+								<th width="40%"><label>订单号:00000003</label></th>
+								<th width="40%"><label>车牌号:SHU6503</label></th>
+								<th width="20%"><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>都修好了!</a></th>
+							</tr>
+							<br>
+							<tr class="order-form">
+								<th><h5>问题：zzzzzzzzzzzzzzzzzz</h5></th>
+								<th><h5>所需零件：承诺情况属实 健康码 行程码 在校 体温正常</h5></th>
+								<th><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加或修改零件</a></th>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<br>
+
+				<!--折叠组-3-->
 				<div class="panel panel-success">
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" data-parent="#accordion"
 							   href="#collapseThree">
-								进行中维修
+								已完成订单
 							</a>
 						</h4>
 					</div>
 					<div id="collapseThree" class="panel-collapse collapse">
-						<table class="table  table-bordered table-hover">
+						<table class="table  table-bordered table-hover" id="finished_table" border="1" style="margin: auto; text-align: center;">
+							<!-- 表头 -->
 							<tbody>
-								<tr class="order-form" style="background-color: #ebebeb">
-									<th width="40%"><label>订单号:00000002</label></th>
-									<th width="40%"><label>车牌号:SHU6502</label></th>
-									<th width="20%"><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>都修好了!</a></th>
-								</tr>
-								<tr class="order-form">
-									<th><h5>问题：wwwwwwwwwwwwwww</h5></th>
-									<th><h5>所需零件：CPU ALU PC MAR MDR</h5></th>
-									<th><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加或修改零件</a></th>
-								</tr>
-								<tr class="order-form">
-									<th><h5>问题：zzzzzzzzzzzzzzzzzz</h5></th>
-									<th><h5>所需零件：承诺情况属实 健康码 行程码 在校 体温正常</h5></th>
-									<th><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加或修改零件</a></th>
-								</tr>
+							<tr class="order-form" style="height: 30px">
+								<th id="number_finished" style="text-align: center; width: 110px"><label>订单号</label></th>
+								<th id="vehicle_number_finished" style="text-align: center"><label>车架号</label></th>
+								<th id="parts_number_finished" style="text-align: center"><label>零件号</label></th>
+								<th id="parts_name_finished" style="text-align: center"><label>零件名</label></th>
+								<th id="parts_count_finished" style="text-align: center"><label>数量</label></th>
+								<th id="finished_detail" style="text-align: center"><label>详情</label></th>
+							</tr>
+							</tbody>
+							<!-- 传参处 -->
+							<tbody id="body_second">
+							<tr class="order-form" >
+								<td rowspan="2"><h5>0000001</h5></td>
+								<td rowspan="2"><h5>12345678901234567</h5></td>
+
+								<td><h5>001</h5></td>
+								<td><h5>轮毂</h5></td>
+								<td><h5>1</h5></td>
+
+								<!-- <td rowspan="2"><a href="/show_pdf?attorney_no=00000002" target="_blank">查看pdf</a></td> -->
+								<td rowspan="2"><a data-toggle='modal' data-target='#detail' style="cursor: pointer; text-decoration-line: underline">查看pdf</a></td>
+							</tr>
+							<tr>
+								<td><h5>002</h5></td>
+								<td><h5>后视镜</h5></td>
+								<td><h5>2</h5></td>
+							</tr>
 							</tbody>
 						</table>
-						<table class="table  table-bordered table-hover">
-							<tbody>
-								<tr class="order-form" style="background-color: #ebebeb">
-									<th width="40%"><label>订单号:00000003</label></th>
-									<th width="40%"><label>车牌号:SHU6503</label></th>
-									<th width="20%"><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>都修好了!</a></th>
-								</tr>
-								<br>
-								<tr class="order-form">
-									<th><h5>问题：zzzzzzzzzzzzzzzzzz</h5></th>
-									<th><h5>所需零件：承诺情况属实 健康码 行程码 在校 体温正常</h5></th>
-									<th><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加或修改零件</a></th>
-								</tr>
-							</tbody>
-						</table>
+						<!--					<table class="table  table-bordered table-hover" id="finished_table" style="margin: auto; text-align: center;">-->
+						<!--						&lt;!&ndash; 表头 &ndash;&gt;-->
+						<!--						<tbody>-->
+						<!--						<tr class="order-form" style="height: 30px">-->
+						<!--							<th id="number_finished" style="text-align: center;"><label>订单号</label></th>-->
+						<!--							<th id="vehicle_number_finished" style="text-align: center"><label>车架号</label></th>-->
+						<!--							<th id="parts_number_finished" style="text-align: center"><label>粗略故障描述</label></th>-->
+						<!--							<th id="parts_name_finished" style="text-align: center"><label>详细故障描述</label></th>-->
+						<!--							<th id="parts_count_finished" style="text-align: center"><label>维修完成时间</label></th>-->
+						<!--							<th id="finished_detail" style="text-align: center"><label>委托书</label></th>-->
+						<!--						</tr>-->
+						<!--						</tbody>-->
+						<!--						&lt;!&ndash; 传参处 &ndash;&gt;-->
+						<!--						<tbody  id ="body_second">-->
+						<!--						<tr class="order-form">-->
+						<!--							<td rowspan="2"><h5>0000001</h5></td>-->
+						<!--							<td rowspan="2"><h5>12345678901234567</h5></td>-->
+
+						<!--							<td><h5>001</h5></td>-->
+						<!--							<td><h5>轮毂</h5></td>-->
+						<!--							<td><h5>1</h5></td>-->
+
+						<!--							&lt;!&ndash; <td rowspan="2"><a href="/show_pdf?attorney_no=00000002" target="_blank">查看pdf</a></td> &ndash;&gt;-->
+						<!--							<td rowspan="2"><a data-toggle='modal' data-target='#detail' style="cursor: pointer; text-decoration-line: underline"><h5>查看pdf</h5></a></td>-->
+						<!--						</tr>-->
+						<!--						<tr class="order-form">-->
+						<!--							<td><h5>002</h5></td>-->
+						<!--							<td><h5>后视镜</h5></td>-->
+						<!--							<td><h5>2</h5></td>-->
+						<!--						</tr>-->
+						<!--						</tbody>-->
+						<!--					</table>-->
 					</div>
 				</div>
 			</div>
+
+
 
 <!--			<div id="pbb_finished_table">-->
 <!--				<div class='col-md-10' id='finished_title'  style='text-align: center'>-->
@@ -404,60 +489,60 @@
 </div>
 
 <!-- 已完成订单 -->
-<div class='modal fade' id='finished_order' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static">
-	<div class='modal-dialog'>
-		<div class='modal-content'>
-			<div class='modal-header'>
-				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static" >&times;</button>
-				<h3 class='modal-title' id='finishedOrder' style="text-align: center">已完成订单</h3>
-			</div>
-			<div class='modal-body' id="finished_table_father" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">
-				<!--
-				<table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">
-					<tr>
-						<th style="text-align: center; width: 70px">车牌号</th>
-						<th id="finished_plate" style="text-align: center; width: 210px">沪SHU502</th>
-						<th style="text-align: center; width: 70px">车架号</th>
-						<th id="finsihed_VIN"style="text-align: center; width: 210px">11111111111111111</th>
-					</tr>
-				</table>
-				-->
-				<table id="finished_table" border="1" style="margin: auto; width: 550px; text-align: center; font-size: 17px;">
-					<!-- 表头 -->
-					<tbody>
-					<tr style="height: 30px">
-						<th id="number_finished" style="text-align: center; width: 110px">订单号</th>
-						<th id="vehicle_number_finished" style="text-align: center">车架号</th>
-						<th id="parts_number_finished" style="text-align: center">零件号</th>
-						<th id="parts_name_finished" style="text-align: center">零件名</th>
-						<th id="parts_count_finished" style="text-align: center">数量</th>
-						<th id="finished_detail" style="text-align: center">详情</th>
-					</tr>
-					</tbody>
-					<!-- 传参处 -->
-					<tbody id="body_second">
-					<tr>
-						<td rowspan="2">0000001</td>
-						<td rowspan="2">12345678901234567</td>
+<!--<div class='modal fade' id='finished_order' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static">-->
+<!--	<div class='modal-dialog'>-->
+<!--		<div class='modal-content'>-->
+<!--			<div class='modal-header'>-->
+<!--				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static" >&times;</button>-->
+<!--				<h3 class='modal-title' id='finishedOrder' style="text-align: center">已完成订单</h3>-->
+<!--			</div>-->
+<!--			<div class='modal-body' id="finished_table_father" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">-->
+<!--				&lt;!&ndash;-->
+<!--				<table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">-->
+<!--					<tr>-->
+<!--						<th style="text-align: center; width: 70px">车牌号</th>-->
+<!--						<th id="finished_plate" style="text-align: center; width: 210px">沪SHU502</th>-->
+<!--						<th style="text-align: center; width: 70px">车架号</th>-->
+<!--						<th id="finsihed_VIN"style="text-align: center; width: 210px">11111111111111111</th>-->
+<!--					</tr>-->
+<!--				</table>-->
+<!--				&ndash;&gt;-->
+<!--				<table id="finished_table" border="1" style="margin: auto; width: 550px; text-align: center; font-size: 17px;">-->
+<!--					&lt;!&ndash; 表头 &ndash;&gt;-->
+<!--					<tbody>-->
+<!--					<tr style="height: 30px">-->
+<!--						<th id="number_finished" style="text-align: center; width: 110px">订单号</th>-->
+<!--						<th id="vehicle_number_finished" style="text-align: center">车架号</th>-->
+<!--						<th id="parts_number_finished" style="text-align: center">零件号</th>-->
+<!--						<th id="parts_name_finished" style="text-align: center">零件名</th>-->
+<!--						<th id="parts_count_finished" style="text-align: center">数量</th>-->
+<!--						<th id="finished_detail" style="text-align: center">详情</th>-->
+<!--					</tr>-->
+<!--					</tbody>-->
+<!--					&lt;!&ndash; 传参处 &ndash;&gt;-->
+<!--					<tbody id="body_second">-->
+<!--					<tr>-->
+<!--						<td rowspan="2">0000001</td>-->
+<!--						<td rowspan="2">12345678901234567</td>-->
 
-						<td>001</td>
-						<td>轮毂</td>
-						<td>1</td>
+<!--						<td>001</td>-->
+<!--						<td>轮毂</td>-->
+<!--						<td>1</td>-->
 
-						<!-- <td rowspan="2"><a href="/show_pdf?attorney_no=00000002" target="_blank">查看pdf</a></td> -->
-						<td rowspan="2"><a data-toggle='modal' data-target='#detail' style="cursor: pointer; text-decoration-line: underline">查看pdf</a></td>
-					</tr>
-					<tr>
-						<td>002</td>
-						<td>后视镜</td>
-						<td>2</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-</div>
+<!--						&lt;!&ndash; <td rowspan="2"><a href="/show_pdf?attorney_no=00000002" target="_blank">查看pdf</a></td> &ndash;&gt;-->
+<!--						<td rowspan="2"><a data-toggle='modal' data-target='#detail' style="cursor: pointer; text-decoration-line: underline">查看pdf</a></td>-->
+<!--					</tr>-->
+<!--					<tr>-->
+<!--						<td>002</td>-->
+<!--						<td>后视镜</td>-->
+<!--						<td>2</td>-->
+<!--					</tr>-->
+<!--					</tbody>-->
+<!--				</table>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--</div>-->
 
 <!-- 详情——》委托书 -->
 <div class='modal fade' id='detail' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static" >
