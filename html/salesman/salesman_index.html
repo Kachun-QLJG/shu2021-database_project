@@ -403,11 +403,11 @@
 
 						<img src='/statics/user/结算方式.png' width='20px' alt="正在加载图片">
 						<label style='font-size:15px;width: 80px;'>结算方式：</label>
-						<input id='PayMethod1' name="PayMethod" type='radio' value="现金" />
+						<input id='PayMethod1' disabled name="PayMethod" type='radio' value="自付" readonly="readonly"/>
 						<label for="PayMethod1">自付</label>
-						<input id='PayMethod2' name="PayMethod" type='radio' value="保险" checked="checked"/>
+						<input id='PayMethod2' disabled name="PayMethod" type='radio' value="三包" readonly="readonly"/>
 						<label for="PayMethod2">三包</label>
-						<input id='PayMethod3' name="PayMethod" type='radio' value="信用卡" />
+						<input id='PayMethod3' disabled name="PayMethod" type='radio' value="索赔" readonly="readonly"/>
 						<label for="PayMethod3">索赔</label>
 						<!-- <span id='checktext2'></span> -->
 						<br>
@@ -415,7 +415,7 @@
 
 						<img src='/statics/user/进场时间.png' width='20px' alt="正在加载图片">
 						<label for="StartTime" style='font-size:15px;width: 80px;'>进场时间：</label>
-						<input id="StartTime" type="date" min ="2022-01-01" max ="2999-12-31" class="measureDate" placeholder="请选择日期" onblur="dateModify(this.value)">
+						<input id="StartTime" readonly="readonly" type="date" min ="2022-01-01" max ="2999-12-31" class="measureDate" placeholder="请选择日期" onblur="dateModify(this.value)">
 						<!-- <label for='StartTime'></label><input id='StartTime' type='text'/> -->
 						<br>
 						<br>
@@ -423,19 +423,19 @@
 						<div>
 							<img src='/statics/user/车辆故障.png' width='20px' style="vertical-align: top" alt="正在加载图片">
 							<label for='RoughProblem' style='font-size:15px;width: 80px;vertical-align: top'>粗略故障：</label>
-							<textarea id='RoughProblem' placeholder='请粗略描述您车辆的故障（字数在255以下）' style="width: 300px;height: 100px;"></textarea>
+							<textarea id='RoughProblem' readonly="readonly" placeholder='请粗略描述您车辆的故障（字数在255以下）' style="width: 300px;height: 100px;"></textarea>
 						</div>
 						<br>
 
 						<img src='/statics/user/油量.png' width='20px' alt="正在加载图片">
 						<label for="StartPetrol" style='font-size:15px;width: 80px;'>进场油量：</label>
-						<input id='StartPetrol' type='number' min="0" max="100" step="0.1" placeholder='进场时车辆所剩油量' style="width: 130px"/> L
+						<input id='StartPetrol' type='number' readonly="readonly" min="0" max="100" step="0.1" placeholder='进场时车辆所剩油量' style="width: 130px"/> L
 						<br>
 						<br>
 
 						<img src='/statics/user/里程.png' width='20px' alt="正在加载图片">
 						<label for="StartMile" style='font-size:15px;width: 80px;'>进场里程：</label>
-						<input id='StartMile' type='number' min="0" step="0.1" placeholder='进场时车辆里程数' style="width: 130px"/> km
+						<input id='StartMile' type='number' readonly="readonly" min="0" step="0.1" placeholder='进场时车辆里程数' style="width: 130px"/> km
 						<br>
 						<br>
 					</div>
@@ -488,20 +488,20 @@
 
 						<br>
 						<img src='/statics/user/进场时间.png' width='20px' alt="正在加载图片">
-						<label for="StartTime" style='font-size:15px;width: 110px;'>预计出厂时间：</label>
-						<input id="ExpectedEndTime" type="date" min ="2022-01-01" max ="2999-12-31" class="measureDate" placeholder="请选择日期" onblur="dateModify(this.value)">
+						<label for="ExpectedEndTime" style='font-size:15px;width: 110px;'>预计出厂时间：</label>
+						<input id='ExpectedEndTime' type="date" min ="2022-01-01" max ="2999-12-31" class="measureDate" placeholder="请选择日期" onblur="dateModify(this.value)">
 						<!-- <label for='StartTime'></label><input id='StartTime' type='text'/> -->
 						<br>
 						<br>
 
 						<img src='/statics/user/油量.png' width='20px' alt="正在加载图片">
-						<label for="StartPetrol" style='font-size:15px;width: 80px;'>出场油量：</label>
+						<label for="EndPetrol" style='font-size:15px;width: 80px;'>出场油量：</label>
 						<input id='EndPetrol' type='number' min="0" max="100" step="0.1" placeholder='进场时车辆所剩油量' style="width: 130px"/> L
 						<br>
 						<br>
 
 						<img src='/statics/user/里程.png' width='20px' alt="正在加载图片">
-						<label for="StartMile" style='font-size:15px;width: 80px;'>出场里程：</label>
+						<label for="EndMile" style='font-size:15px;width: 80px;'>出场里程：</label>
 						<input id='EndMile' type='number' min="0" step="0.1" placeholder='进场时车辆里程数' style="width: 130px"/> km
 						<br>
 						<br>
@@ -1031,8 +1031,51 @@
 		})
 				.then(function (response) {
 					res = response.data;
-					alert(res.VehicleVin);
+					// alert(res.VehicleVin);
+					var input = document.getElementById('VehicleNumber')
+					input.value = res.VehicleVin;
+					// alert(res.PayMethod);
+					var selections = document.getElementsByName('PayMethod');
+					for(var i = 0; i < 3; i++){
+						if(selections[i].value === res.PayMethod){
+							selections[i].checked = "checked";
+							break;
+						}
+					}
+					var date = document.getElementById("StartTime");
+					date.value = res.StartTime;
+					var roughProblem = document.getElementById('RoughProblem');
+					roughProblem.value = res.RoughProblem;
+					var startPetrol = document.getElementById('StartPetrol');
+					startPetrol.value = res.StartPetrol;
+					var startMile = document.getElementById('StartMile');
+					startMile.value = res.StartMile;
+
+					var repairTypes = document.getElementsByName('repair_type');
+					for(var i = 0; i < 3; i++){
+						if(repairTypes[i].value === res.RepairType){
+							repairTypes[i].checked = "checked";
+							break;
+						}
+					}
+					var detailMalfunction = document.getElementById('DetailedProblem');
+					detailMalfunction.value = res.SpecificProblem;
+					var excluded = document.getElementById('ExcludedParts');
+					excluded.value = res.OutRange;
+					var expectedEndTime = document.getElementById('ExpectedEndTime');
+					expectedEndTime.value = res.PredictFinishTime
+					// 这里没有改好
+					var endPetrol = document.getElementById('EndPetrol');
+					endPetrol.value = res.StartPetrol;
+					var endMile = document.getElementById('EndMile');
+					endMile.value = res.StartMile;
 				})
+	}
+	function getCustomerInfo(){
+		axios({
+			method: 'get',
+			url: '/get_full_attorney_s?attorney_no=' + document.getElementById("order_number_0").value
+		})
 	}
 	// var EventUtil = {
 	// 	on:function(elem,type,handler){
