@@ -5,6 +5,10 @@
 	<script src="/statics/js/header.js"></script>
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style>
+		td{text-align: center!important;vertical-align: middle!important;}
+		th{text-align: center!important;vertical-align: middle!important;}
+	</style>
 </head>
 <body bgcolor="#f0f8ff" id="body">
 
@@ -214,7 +218,7 @@
 				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static">&times;</button>
 			</div>
 			<div class='modal-body'>
-				<div style="text-align: center;">
+				<div id="pdf_div" style="text-align: center;">
 					<embed id="show_pdf" height="840px" width="90%" src="/show_pdf?attorney_no=00000001" />
 				</div>
 			</div>
@@ -411,8 +415,9 @@
 							td6.appendChild(a);
 							a.setAttribute("data-toggle","modal");
 							a.setAttribute("data-target","#detail");
+							a.setAttribute("style","cursor:pointer");
+							a.setAttribute("onclick","loadPDF(this)");
 							a.innerHTML = "详情";
-							document.getElementById("show_pdf").setAttribute("src","/show_pdf?attorney_no="+data[i-1].OrderNumber);
 						}
 					}
 				})

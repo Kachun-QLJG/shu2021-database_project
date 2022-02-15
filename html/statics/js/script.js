@@ -631,3 +631,18 @@ function checkSubmit(param){
 	}
 	return true;
 }
+
+function loadPDF(param)
+{
+	try {document.getElementById("pdf_div").removeChild(document.getElementById("show_pdf"));
+	}
+	catch(error){}
+	var temp = param.parentNode.parentNode.children[0].innerText;
+	var pdf = document.createElement("embed");
+	var pdfDiv = document.getElementById("pdf_div");
+	pdfDiv.appendChild(pdf);
+	pdf.id = "show_pdf";
+	pdf.setAttribute("height","840px");
+	pdf.setAttribute("width","90%");
+	pdf.setAttribute("src","/show_pdf?attorney_no="+temp);
+}
