@@ -194,25 +194,25 @@
 					</div>
 					<div id="collapseOne" class="panel-collapse collapse in">
 						<table id="pending_table" class="table  table-bordered table-hover">
-							<tbody>
-							<tr  class="order-form">
-								<th><label>订单号</label></th>
-								<th><label>车牌号</label></th>
-								<th><label>车架号</label></th>
-								<th><label>车型</label></th>
-								<th><label>粗略故障描述</label></th>
-								<th><label>接单</label></th>
-							</tr>
-							</tbody>
+							<thead>
+								<tr  class="order-form">
+									<th><label>订单号</label></th>
+									<th><label>车牌号</label></th>
+									<th><label>车架号</label></th>
+									<th><label>车型</label></th>
+									<th><label>粗略故障描述</label></th>
+									<th><label>接单</label></th>
+								</tr>
+							</thead>
 							<tbody id="pending_table_son">
-							<tr class="order-form">
-								<td><h5>00000002</h5></td>
-								<td><h5>SHU6502</h5></td>
-								<td><h5>12345678901234567</h5></td>
-								<td><h5>12345678901234567</h5></td>
-								<td><h5>110</h5></td>
-								<td><a class="btn btn-info btn-md"><span class="glyphicon"></span>接单！！！</a></td>
-							</tr>
+								<tr class="order-form">
+									<td><h5>00000002</h5></td>
+									<td><h5>SHU6502</h5></td>
+									<td><h5>12345678901234567</h5></td>
+									<td><h5>12345678901234567</h5></td>
+									<td><h5>110</h5></td>
+									<td><a class="btn btn-info btn-md"><span class="glyphicon"></span>接单！！！</a></td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -284,25 +284,25 @@
 						<div id="ongoing_table_father" style="margin: auto;align-items: center; text-align: center; font-size: 17px;left: 10%">
 							<table class="table  table-bordered table-hover" id="ongoing_table" border="1" style="text-align: center; font-size: 17px;">
 								<!-- 表头 -->
-								<tbody>
-								<tr style="height: 30px">
-									<th id="number_ongoing" style="text-align: center; width: 300px">订 单 号：</th>
-									<th id="user_name" style="text-align: center; width: 250px">车型：</th>
-									<th id="status" style="text-align: center; width: 200px">状态：</th>
-								</tr>
-								</tbody>
+								<thead>
+									<tr style="height: 30px">
+										<th id="number_ongoing" style="text-align: center; width: 300px">订 单 号：</th>
+										<th id="user_name" style="text-align: center; width: 250px">车型：</th>
+										<th id="status" style="text-align: center; width: 200px">状态：</th>
+									</tr>
+								</thead>
 								<!-- 传参处 -->
 								<tbody id ="body_son">
-								<tr id="1">
-									<td id="order_number_1">0000001</td>
-									<td>夏逸凡</td>
-									<td>进行中</td>
-								</tr>
-								<tr id="2">
-									<td id="order_number_2">0000002</td>
-									<td>张霖锋</td>
-									<td><a data-target='#take_order' data-toggle='modal' onclick=addSpecificDetail(this.parentNode.parentNode.children[1].innerHTML)>编辑具体信息</a></td>
-								</tr>
+									<tr id="1">
+										<td id="order_number_1">0000001</td>
+										<td>夏逸凡</td>
+										<td>进行中</td>
+									</tr>
+									<tr id="2">
+										<td id="order_number_2">0000002</td>
+										<td>张霖锋</td>
+										<td><a data-target='#take_order' data-toggle='modal' onclick=addSpecificDetail(this.parentNode.parentNode.children[1].innerHTML)>编辑具体信息</a></td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -324,7 +324,7 @@
 					<div id="collapseThree" class="panel-collapse collapse">
 						<table class="table  table-bordered table-hover" id="finished_table" style="margin: auto; text-align: center;">
 							<!-- 表头 -->
-							<tbody>
+							<thead>
 								<tr class="order-form" style="height: 30px">
 									<th><label>订单号</label></th>
 									<th><label>车牌号</label></th>
@@ -333,7 +333,7 @@
 									<th><label>详细故障描述</label></th>
 									<th><label>委托书</label></th>
 								</tr>
-							</tbody>
+							</thead>
 							<!-- 传参处 -->
 							<tbody  id ="body_second">
 								<tr class="order-form">
@@ -394,6 +394,14 @@
 			<div class='modal-body'>
 				<div class='row' style="margin-left: 20px">
 					<div class='col-md-6'>
+						<div id="order_selection">
+							<img src='/statics/user/订单号.png' width='20px' alt="正在加载图片">
+							<label for="order_number" style='font-size:15px;width: 80px;'>订单号：</label>
+							<input id='order_number' style="width: 150px; color: #9d9d9d" readonly="readonly">
+							<br>
+						</div>
+
+						<br>
 						<img src='/statics/user/井号.png' width='20px' alt="正在加载图片">
 						<label for="VehicleNumber" style='font-size:15px;width: 80px;'>车架号：</label>
 						<input id='VehicleNumber' type='text' onchange='check_number()' readonly="readonly" value="1111111111111" style="color: #9d9d9d"/>
@@ -415,7 +423,7 @@
 
 						<img src='/statics/user/进场时间.png' width='20px' alt="正在加载图片">
 						<label for="StartTime" style='font-size:15px;width: 80px;'>进场时间：</label>
-						<input id="StartTime" readonly="readonly" type="date" min ="2022-01-01" max ="2999-12-31" class="measureDate" placeholder="请选择日期" onblur="dateModify(this.value)">
+						<input id="StartTime" readonly="readonly" type="date" min ="2022-01-01" max ="2999-12-31" class="measureDate" placeholder="请选择日期" onblur="dateModify(this.value)" style="color: #9d9d9d">
 						<!-- <label for='StartTime'></label><input id='StartTime' type='text'/> -->
 						<br>
 						<br>
@@ -423,43 +431,24 @@
 						<div>
 							<img src='/statics/user/车辆故障.png' width='20px' style="vertical-align: top" alt="正在加载图片">
 							<label for='RoughProblem' style='font-size:15px;width: 80px;vertical-align: top'>粗略故障：</label>
-							<textarea id='RoughProblem' readonly="readonly" placeholder='请粗略描述您车辆的故障（字数在255以下）' style="width: 300px;height: 100px;"></textarea>
+							<textarea id='RoughProblem' readonly="readonly" placeholder='请粗略描述您车辆的故障（字数在255以下）' style="width: 300px;height: 100px; color: #9d9d9d"></textarea>
 						</div>
 						<br>
 
 						<img src='/statics/user/油量.png' width='20px' alt="正在加载图片">
 						<label for="StartPetrol" style='font-size:15px;width: 80px;'>进场油量：</label>
-						<input id='StartPetrol' type='number' readonly="readonly" min="0" max="100" step="0.1" placeholder='进场时车辆所剩油量' style="width: 130px"/> L
+						<input id='StartPetrol' type='number' readonly="readonly" min="0" max="100" step="0.1" placeholder='进场时车辆所剩油量' style="width: 130px; color: #9d9d9d"/> L
 						<br>
 						<br>
 
 						<img src='/statics/user/里程.png' width='20px' alt="正在加载图片">
 						<label for="StartMile" style='font-size:15px;width: 80px;'>进场里程：</label>
-						<input id='StartMile' type='number' readonly="readonly" min="0" step="0.1" placeholder='进场时车辆里程数' style="width: 130px"/> km
+						<input id='StartMile' type='number' readonly="readonly" min="0" step="0.1" placeholder='进场时车辆里程数' style="width: 130px; color: #9d9d9d"/> km
 						<br>
 						<br>
 					</div>
 
 					<div class='col-md-6'>
-						<!--						<div id="order_selection">-->
-						<!--							<img src='/statics/user/订单号.png' width='20px' alt="正在加载图片">-->
-						<!--							<label for="order_number" style='font-size:15px;width: 80px;'>订单号：</label>-->
-						<!--							<select id='order_number'>-->
-						<!--								<optgroup label="已绑定订单" id="bound_orders">-->
-						<!--									<option value="0000001" name="0000001">0000001</option>-->
-						<!--									<option value="0000002" name="0000002">0000002</option>-->
-						<!--									<option value="0000003" name="0000003">0000003</option>-->
-						<!--								</optgroup>-->
-						<!--								<optgroup label="未绑定订单" id="unbound_orders">-->
-						<!--									<option value="0000004" name="0000004">0000004</option>-->
-						<!--									<option value="0000005" name="0000005">0000005</option>-->
-						<!--									<option value="0000006" name="0000006">0000006</option>-->
-						<!--								</optgroup>-->
-						<!--							</select>-->
-						<!--							<span id='checktext1'></span>-->
-						<!--							<br>-->
-						<!--						</div>-->
-
 						<div id="type_selection">
 							<img src='/statics/user/维修类型.png' width='20px' alt="正在加载图片">
 							<label style='font-size:15px;width: 80px;'>维修类型：</label>
@@ -1102,6 +1091,8 @@
 			url: '/get_full_attorney_s?attorney_no=' + attorneyNo
 		})
 				.then(function (response) {
+					var order_number = document.getElementById('order_number');
+					order_number.value = attorneyNo;
 					res = response.data;
 					// alert(res.VehicleVin);
 					var input = document.getElementById('VehicleNumber')
