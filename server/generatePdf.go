@@ -36,19 +36,21 @@ func generatePdf(c *gin.Context) {
 func showPdf(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
+	attorneyNo := c.Query("attorney_no")
+	userId := c.Query("user_id")
 	if group == "普通用户" {
 		var user User
 		database.First(&user, "contact_tel = ?", username)
+		userId = username
 		username = user.Number
 	}
-	attorneyNo := c.Query("attorney_no")
-	userId := c.Query("user_id")
 	var attorney Attorney
 	result := database.First(&attorney, "user_id = ? or salesman_id = ?", username, username)
 	if result.RowsAffected == 0 {
 		c.String(http.StatusForbidden, "无权限")
 		return
 	}
+	fmt.Println("./files/generatedPDF/" + userId + "/" + attorneyNo + "/" + attorneyNo + ".pdf")
 	c.File("./files/generatedPDF/" + userId + "/" + attorneyNo + "/" + attorneyNo + ".pdf")
 }
 
