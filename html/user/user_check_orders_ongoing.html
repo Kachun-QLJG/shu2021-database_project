@@ -5,6 +5,10 @@
 	<script src="/statics/js/header.js"></script>
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style>
+		td{text-align: center!important;vertical-align: middle!important;}
+		th{text-align: center!important;vertical-align: middle!important;}
+	</style>
 </head>
 <body bgcolor="#f0f8ff" id="body">
 
@@ -118,8 +122,8 @@
 			<div class='modal-header'>
 				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static">&times;</button>
 				<h3 class='modal-title' style="text-align: center">502汽车维修站维修委托书</h3>
-				<h5 id="No" style="float: left">No.20211220001</h5>
-				<h5 id="date" style="float: right">登记日期：2021年12月20日</h5>
+				<h5 id="No" style="float: left; margin-left: 15%">No.20211220001</h5>
+				<h5 id="date" style="float: right; margin-right: 15%">登记日期：2021年12月20日</h5>
 				<br>
 			</div>
 			<div class='modal-body'>
@@ -635,6 +639,7 @@
 					var tbody = document.createElement("tbody");
 					tbody.id = "son_middle";
 					document.getElementById("father_table").insertBefore(tbody,document.getElementById("son_foot"));
+					document.getElementById("father_table").setAttribute("style", "margin:auto")
 					var tr1 = document.createElement("tr");
 					tbody.appendChild(tr1);
 					var th11 = document.createElement("th");

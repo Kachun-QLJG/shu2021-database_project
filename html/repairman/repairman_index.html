@@ -12,7 +12,8 @@
 			display:table;
 			height:100%;
 		}
-
+		td{text-align: center!important;vertical-align: middle!important;}
+		th{text-align: center!important;vertical-align: middle!important;}
 		/* centered columns styles */
 		.row-centered {
 			text-align:center;
@@ -114,7 +115,7 @@
 <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
 	<ul id='navbar' class='nav navbar-nav navbar-right' >
 		<li><a id='text'></a></li>
-		<li><a id='logout' title='退出登录' data-toggle='modal' data-target='#log_out' onclick='getUsername()'>退出登录</a></li>
+		<li><a data-target='#log_out' data-toggle='modal' id='logout' onclick='getUsername()' style="cursor: pointer" title='退出登录'>退出登录</a></li>
 	</ul>
 </div>
 

@@ -61,6 +61,8 @@
 		.order-form th{text-align: center;font-size: 15px;}
 		.order-form td{text-align: center;font-size: 12px;}
 
+		td{text-align: center!important;vertical-align: middle!important;}
+		th{text-align: center!important;vertical-align: middle!important;}
 		.wcr{color: red}
 		.wcg{color: green}
 
@@ -139,7 +141,7 @@
 <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
 	<ul id='navbar' class='nav navbar-nav navbar-right' >
 		<li><a id='text'></a></li>
-		<li><a id='logout' title='退出登录' data-toggle='modal' data-target='#log_out' onclick='getUsername()'>退出登录</a></li>
+		<li><a data-target='#log_out' data-toggle='modal' id='logout' onclick='getUsername()' style="cursor: pointer" title='退出登录'>退出登录</a></li>
 	</ul>
 </div>
 
@@ -193,6 +195,17 @@
 						</h4>
 					</div>
 					<div id="collapseOne" class="panel-collapse collapse in">
+						<table class="table table-bordered table-hover" id="pending_table" style="text-align: center; vertical-align: center">
+							<tbody>
+							<tr  class="order-form">
+								<th><label>订单号</label></th>
+								<th><label>车牌号</label></th>
+								<th><label>车架号</label></th>
+								<th><label>车型</label></th>
+								<th><label>粗略故障描述</label></th>
+								<th><label>接单</label></th>
+							</tr>
+							</tbody>
 						<table id="pending_table" class="table  table-bordered table-hover">
 							<thead>
 								<tr  class="order-form">
@@ -282,7 +295,7 @@
 					</div>
 					<div id="collapseTwo" class="panel-collapse collapse">
 						<div id="ongoing_table_father" style="margin: auto;align-items: center; text-align: center; font-size: 17px;left: 10%">
-							<table class="table  table-bordered table-hover" id="ongoing_table" border="1" style="text-align: center; font-size: 17px;">
+							<table border="1" class="table table-bordered table-hover" id="ongoing_table"  style="text-align: center; vertical-align: center; font-size: 17px;">
 								<!-- 表头 -->
 								<thead>
 									<tr style="height: 30px">
@@ -322,7 +335,7 @@
 						</h4>
 					</div>
 					<div id="collapseThree" class="panel-collapse collapse">
-						<table class="table  table-bordered table-hover" id="finished_table" style="margin: auto; text-align: center;">
+						<table class="table  table-bordered table-hover" id="finished_table"  style="text-align: center; val: middle">
 							<!-- 表头 -->
 							<thead>
 								<tr class="order-form" style="height: 30px">
@@ -720,8 +733,8 @@
 				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static">&times;</button>
 			</div>
 			<div class='modal-body'>
-				<div style="text-align: center;">
-					<embed id="showpdf" height="840px" width="90%" src="/show_pdf?attorney_no=00000001" />
+				<div id="pdf_div" style="text-align: center;">
+					<embed height="840px" id="show_pdf" src="/show_pdf?attorney_no=00000001" width="90%" />
 				</div>
 			</div>
 		</div>
@@ -909,6 +922,7 @@
 								a.setAttribute("data-toggle", "modal");
 								a.setAttribute("data-target", "#take_order");
 								a.setAttribute("onclick", "addSpecificDetail(this.parentNode.parentNode.children[0].innerHTML)");
+								a.setAttribute("style", "cursor:pointer");
 								// a.setAttribute("onclick", "addSpecificDetail(\""+td1.id+"\",\""+td2.id+"\")");
 								a.innerHTML = "编辑具体信息";
 							}
@@ -986,8 +1000,9 @@
 							td7.appendChild(h57);
 							h57.setAttribute("data-toggle","modal");
 							h57.setAttribute("data-target","#pdf");
+							h57.setAttribute("style", "cursor:pointer");
+							h57.setAttribute("onclick","loadPDF(this)");
 							h57.innerHTML = "查看委托书";
-							document.getElementById("showpdf").setAttribute("src","/show_pdf?attorney_no="+own[i].Number+"&user_id="+document.getElementById("number").class);
 						}
 					}
 				})
