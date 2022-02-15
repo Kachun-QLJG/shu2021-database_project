@@ -303,7 +303,7 @@
 									<tr id="2">
 										<td id="order_number_2">0000002</td>
 										<td>张霖锋</td>
-										<td><a data-target='#take_order' data-toggle='modal' onclick=addSpecificDetail(this.parentNode.parentNode.children[1].innerHTML)>编辑具体信息</a></td>
+										<td><a data-target='#take_order' data-toggle='modal' onclick=addSpecificDetail(this.parentNode.parentNode.children[0].innerHTML,this.parentNode.parentNode.children[2].innerHTML)>编辑具体信息</a></td>
 									</tr>
 								</tbody>
 							</table>
@@ -508,12 +508,12 @@
 						<br>
 						<br>
 						<div id="detail">
-							<div id="fill_project1" style="display: inline">
+							<div id="fill_project" style="display: inline">
 								<!--				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">-->
-								<label for="project1" style='font-size:15px;width: 90px;'>具体问题：</label>
+								<label for="project" style='font-size:15px;width: 90px;'>具体问题：</label>
 								<!--							<input id='project1' type='text' onblur="delProjectResults()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" placeholder='项目名称'/>-->
 								<div id="project_input" style="margin-top: 10px;display: inline; width: 90px; position: absolute;">
-									<input id='project1' list="projects" onchange="getProjectTime()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" placeholder='项目名称'  type='text'/>
+									<input class="detail" id='project' list="projects" onchange="getProjectTime()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" placeholder='项目名称'  type='text'/>
 																	<div id="projects" style="width:150px; height:50px; position: absolute; top: 20px; left: 0; background-color: white; border: 1px solid black; cursor: pointer;">
 																	</div>
 								</div>
@@ -524,36 +524,41 @@
 								<!--						<ul id="datalist"></ul>-->
 							</div>
 
-							<label for="classification1" style='font-size:15px;width: 60px; margin-left: 158px'>　工种：</label>
-							<select id='classification1' onchange="getCorrespondingRepairman()">
+							<label for="classification" style='font-size:15px;width: 60px; margin-left: 158px'>　工种：</label>
+							<select id='classification' onchange="getCorrespondingRepairman()">
 								<option>机修工</option>
 								<option>电工</option>
 								<option>钣金工</option>
 								<option>喷漆工</option>
 							</select>
 
-							<label for="repairman_name1" style='font-size:15px;width: 115px;'>　维修工姓名：</label>
-							<select id='repairman_name1'>
+							<label for="repairman_name" style='font-size:15px;width: 115px;'>　维修工姓名：</label>
+							<select id='repairman_name'>
 								<option>奚嘉骏</option>
 								<option>伍慕庭</option>
 								<option>夏逸凡</option>
 								<option>张霖锋</option>
 							</select>
 
-							<label for="predict_finish_time1" style='font-size:15px;width: 120px;'>　预计所需时间：</label>
-							<input id="predict_finish_time1" type='number' min="0" max="10000" step="0.5" placeholder='预计所需时间' style="width: 130px"/>
+							<label for="predict_finish_time" style='font-size:15px;width: 120px;'>　预计所需时间：</label>
+							<input class="detail" id="predict_finish_time" type='number' min="0" max="10000" step="0.5" placeholder='预计所需时间' style="width: 130px"/>
 
-							<img src="/statics/user/添加.png" alt="正在加载图片">
+							<img id="add_repairman" onclick="if(checkSubmit('detail'))addRepairman()" src="/statics/user/添加.png" alt="正在加载图片">
 						</div>
 
-						<div id="detailTable" style="padding-right: 100px">
-							<table class="table  table-bordered table-hover" >
-								<tr>
-									<th><label>具体问题</label></th>
-									<th><label>工种</label></th>
-									<th><label>维修工</label></th>
-									<th><label>预计所需时间</label></th>
-								</tr>
+						<div style="padding-right: 100px">
+							<table id="detailTable" class="table  table-bordered table-hover" >
+								<thead>
+									<tr class="order-form">
+										<th><label>具体问题</label></th>
+										<th><label>工种</label></th>
+										<th><label>维修工</label></th>
+										<th><label>预计所需时间</label></th>
+									</tr>
+								</thead>
+								<tbody id="detailTableRow">
+
+								</tbody>
 							</table>
 						</div>
 
@@ -746,7 +751,7 @@
 		getFinishedAttorney();
 	}
 	function fill(source){
-		document.getElementById("project1").value = source.innerHTML;
+		document.getElementById("project").value = source.innerHTML;
 		getProjectTime();
 	}
 	function salesmanInfo(){
@@ -910,7 +915,7 @@
 								td3.appendChild(a);
 								a.setAttribute("data-toggle", "modal");
 								a.setAttribute("data-target", "#take_order");
-								a.setAttribute("onclick", "addSpecificDetail(this.parentNode.parentNode.children[0].innerHTML)");
+								a.setAttribute("onclick", "addSpecificDetail(this.parentNode.parentNode.children[0].innerHTML,this.parentNode.parentNode.children[1].innerHTML)");
 								a.setAttribute("style", "cursor:pointer");
 								// a.setAttribute("onclick", "addSpecificDetail(\""+td1.id+"\",\""+td2.id+"\")");
 								a.innerHTML = "编辑具体信息";
@@ -1089,7 +1094,7 @@
 			}
 		})
 	}
-	function addSpecificDetail(attorneyNo){
+	function addSpecificDetail(attorneyNo,type){
 		axios({
 			method: 'get',
 			url: '/get_full_attorney_s?attorney_no=' + attorneyNo
@@ -1097,6 +1102,7 @@
 				.then(function (response) {
 					var order_number = document.getElementById('order_number');
 					order_number.value = attorneyNo;
+					order_number.class = type[3];
 					res = response.data;
 					// alert(res.VehicleVin);
 					var input = document.getElementById('VehicleNumber')
@@ -1143,6 +1149,30 @@
 			method: 'get',
 			url: '/get_full_attorney_s?attorney_no=' + document.getElementById("order_number_0").value
 		})
+	}
+	function addRepairman(){
+		var specific_problem = document.getElementById("project").value;
+		var type = document.getElementById("classification").value;
+		var repairman_name = document.getElementById("repairman_name").value;
+		var time = document.getElementById("predict_finish_time").value;
+		var tr1 = document.createElement("tr");
+		tr1.setAttribute("class","order-form");
+		document.getElementById("detailTableRow").appendChild(tr1);
+		var td1 = document.createElement("td");
+		tr1.appendChild(td1);
+		td1.innerHTML = specific_problem;
+		document.getElementById("project").value = "";
+		var td2 = document.createElement("td");
+		tr1.appendChild(td2);
+		td2.innerHTML = type;
+		var td3 = document.createElement("td");
+		tr1.appendChild(td3);
+		td3.innerHTML = repairman_name;
+		var td4 = document.createElement("td");
+		tr1.appendChild(td4);
+		td4.innerHTML = time;
+
+		document.getElementById("predict_finish_time").value = "";
 	}
 	// var EventUtil = {
 	// 	on:function(elem,type,handler){

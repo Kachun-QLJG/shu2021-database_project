@@ -297,6 +297,7 @@ function checkUser(){
 }
 */
 function searchForParts(){
+
 	delProjectResults();
 	if (document.getElementById("detail1").value === "") return;
 	axios({
@@ -344,18 +345,18 @@ function searchForParts(){
 function getProjectTime(){
 	axios({
 		method: 'get',
-		url: '/get_project_time?project=' + document.getElementById("project1").value + '&type=' + document.getElementById("repair_number").class
+		url: '/get_project_time?project=' + document.getElementById("project").value + '&type=' + document.getElementById("order_number").class
 	})
 		.then(function (response) {
 			time = response.data.Time;
-			document.getElementById("predict_finish_time1").value = time;
+			document.getElementById("predict_finish_time").value = time;
 		})
 }
 function SsearchForProjects(){
- 	if (document.getElementById("project1").value === "") return;
+ 	if (document.getElementById("project").value === "") return;
  	axios({
  		method: 'get',
- 		url: '/search_for_projects?text=' + document.getElementById("project1").value + '&type=' +'A'
+ 		url: '/search_for_projects?text=' + document.getElementById("project").value + '&type=' +'A'
  	})
  		.then(function (response) {
  			{
