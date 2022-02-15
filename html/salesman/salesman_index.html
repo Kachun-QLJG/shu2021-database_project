@@ -301,7 +301,7 @@
 								<tr id="2">
 									<td id="order_number_2">0000002</td>
 									<td>张霖锋</td>
-									<td><a data-toggle='modal' data-target='#take_order' onclick=addSpecificDetail()>编辑具体信息</a></td>
+									<td><a data-target='#take_order' data-toggle='modal' onclick=addSpecificDetail(this.parentNode.parentNode.children[1].innerHTML)>编辑具体信息</a></td>
 								</tr>
 								</tbody>
 							</table>
@@ -523,11 +523,8 @@
 								<!--							<input id='project1' type='text' onblur="delProjectResults()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" placeholder='项目名称'/>-->
 								<div id="project_input" style="margin-top: 10px;display: inline; width: 90px; position: absolute;">
 									<input id='project1' list="projects" onchange="getProjectTime()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" placeholder='项目名称'  type='text'/>
-									<!--								<div style="width:150px; height:50px; position: absolute; top: 20px; left: 0; background-color: white; border: 1px solid black; cursor: pointer;" id="projects">-->
-									<!--									<div class="select" onclick="fill(this)">发动机</div>-->
-									<!--									<div class="select" onclick="fill(this)">检修</div>-->
-									<!--									<div class="select" onclick="fill(this)">维护</div>-->
-									<!--								</div>-->
+																	<div id="projects" style="width:150px; height:50px; position: absolute; top: 20px; left: 0; background-color: white; border: 1px solid black; cursor: pointer;">
+																	</div>
 								</div>
 								<!--							<ul id="datalist" style="display: inline">-->
 								<!--								<li>检查</li>-->
@@ -791,10 +788,10 @@
 					document.getElementById("ongoing_orders").innerHTML = "　进行中订单" + "(" + num + ")";
 				})
 	}
-	function addSpecificDetail(param1,param2){
-		document.getElementById("repair_number").placeholder = document.getElementById(param1).innerText;
-		document.getElementById("repair_number").class = document.getElementById(param2).innerText[3];
-	}
+	// function addSpecificDetail(param1,param2){
+	// 	document.getElementById("repair_number").placeholder = document.getElementById(param1).innerText;
+	// 	document.getElementById("repair_number").class = document.getElementById(param2).innerText[3];
+	// }
 	function showOptions(){
 		var option_list = document.getElementById("projectOptions");
 		option_list.style.display="inline";
@@ -927,7 +924,8 @@
 								td3.appendChild(a);
 								a.setAttribute("data-toggle", "modal");
 								a.setAttribute("data-target", "#take_order");
-								a.setAttribute("onclick", "addSpecificDetail(\""+td1.id+"\",\""+td2.id+"\")");
+								a.setAttribute("onclick", "addSpecificDetail(this.parentNode.parentNode.children[0].innerHTML)");
+								// a.setAttribute("onclick", "addSpecificDetail(\""+td1.id+"\",\""+td2.id+"\")");
 								a.innerHTML = "编辑具体信息";
 							}
 						}
@@ -1025,6 +1023,16 @@
 				location.reload();
 			}
 		})
+	}
+	function addSpecificDetail(attorneyNo){
+		axios({
+			method: 'get',
+			url: '/get_full_attorney_s?attorney_no=' + attorneyNo
+		})
+				.then(function (response) {
+					res = response.data;
+					alert(res.VehicleVin);
+				})
 	}
 	// var EventUtil = {
 	// 	on:function(elem,type,handler){
