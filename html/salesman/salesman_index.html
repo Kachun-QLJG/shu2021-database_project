@@ -186,7 +186,7 @@
 				<div class="panel panel-warning">
 					<div class="panel-heading">
 						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion"
+							<a id="preBound" data-toggle="collapse" data-parent="#accordion"
 							   href="#collapseOne">
 								待接订单
 							</a>
@@ -274,7 +274,7 @@
 				<div class="panel panel-info">
 					<div class="panel-heading">
 						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion"
+							<a id="onBound" data-toggle="collapse" data-parent="#accordion"
 							   href="#collapseTwo">
 								进行中订单
 							</a>
@@ -315,7 +315,7 @@
 				<div class="panel panel-success">
 					<div class="panel-heading">
 						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion"
+							<a id="Bounded"data-toggle="collapse" data-parent="#accordion"
 							   href="#collapseThree">
 								已完成订单
 							</a>
@@ -326,12 +326,12 @@
 							<!-- 表头 -->
 							<tbody>
 								<tr class="order-form" style="height: 30px">
-									<th id="number_finished" style="text-align: center;"><label>订单号</label></th>
-									<th id="vehicle_number_finished" style="text-align: center"><label>车架号</label></th>
-									<th id="parts_number_finished" style="text-align: center"><label>粗略故障描述</label></th>
-									<th id="parts_name_finished" style="text-align: center"><label>详细故障描述</label></th>
-									<th id="parts_count_finished" style="text-align: center"><label>维修完成时间</label></th>
-									<th id="finished_detail" style="text-align: center"><label>委托书</label></th>
+									<th><label>订单号</label></th>
+									<th><label>车牌号</label></th>
+									<th><label>车架号</label></th>
+									<th><label>车型</label></th>
+									<th><label>详细故障描述</label></th>
+									<th><label>委托书</label></th>
 								</tr>
 							</tbody>
 							<!-- 传参处 -->
@@ -724,6 +724,20 @@
 	</div>
 </div>
 
+<div class='modal fade' id='pdf' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static" >
+	<div class='modal-dialog' style="width: 80%;height: 80%;">
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static">&times;</button>
+			</div>
+			<div class='modal-body'>
+				<div style="text-align: center;">
+					<embed id="showpdf" height="840px" width="90%" src="/show_pdf?attorney_no=00000001" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <!-- 接单按钮 -->
 <!--<div class='col-md-3' >-->
 <!--	<img src="/statics/user/添加.png" data-toggle='modal' data-target='#take_order' data-backdrop='static' style='position:fixed;top:70%;right:1%;cursor: pointer' alt="正在加载图片"/>-->
@@ -738,6 +752,7 @@
 		ongoingNumber();
 		getProcessingAttorney();
 		getPendingAttorney();
+		getFinishedAttorney();
 	}
 	function fill(source){
 		document.getElementById("project1").value = source.innerHTML;
@@ -751,41 +766,23 @@
 				.then(function(response){
 					var last = response.data;
 					document.getElementById("number").innerHTML = "工　　号：" + last.Number;
+					document.getElementById("number").class = last.Number;
 					document.getElementById("salesman_name").innerHTML = "姓　　名：" + last.Name;
 				})
 	}
 	function ongoingNumber(){
-		//删表
-		try {$("#bound_orders").empty();
-			$("#unbound_orders").empty()}
-		catch(error){}
-		//建表
 		axios({
 			method : 'get',
 			url: "/get_relating_attorney"
 		})
 				.then(function (response) {
 					var data = response.data;
-					var bound_num = data.Processing.length;
-					var unbound_num = data.Pending.length;
-					var num = bound_num + unbound_num;
-					document.getElementById("bound_orders").label = "已绑定订单" + "(" + bound_num + ")";
-					for(var i = 0; i < bound_num; i++){
-						var option = document.createElement("option");
-						document.getElementById("bound_orders").appendChild(option);
-						option.innerHTML = data.Processing[i].Number;
-						option.value = data.Processing[i].Number;
-						option.name = data.Processing[i].Number;
-					}
-					document.getElementById("unbound_orders").label = "未绑定订单" + "(" + unbound_num + ")";
-					for(var i = 0; i < unbound_num; i++){
-						var option = document.createElement("option");
-						document.getElementById("unbound_orders").appendChild(option);
-						option.innerHTML = data.Pending[i].Number;
-						option.value = data.Pending[i].Number;
-						option.name = data.Pending[i].Number;
-					}
-					document.getElementById("ongoing_orders").innerHTML = "　进行中订单" + "(" + num + ")";
+					var prebound_num = data.Pending.length;
+					var onbound_num = data.Processing.length;
+					var bounded_num = data.Finished.length;
+					document.getElementById("preBound").innerHTML = "待接订单" + "(" + prebound_num + ")";
+					document.getElementById("onBound").innerHTML = "进行中订单" + "(" + onbound_num + ")";
+					document.getElementById("Bounded").innerHTML = "已完成订单" + "(" + bounded_num + ")";
 				})
 	}
 	// function addSpecificDetail(param1,param2){
@@ -908,12 +905,10 @@
 							tr.appendChild(td1);
 							td1.id = "order_number_" + i;
 							td1.innerHTML = own[i].Number;
-							var temp1 = own[i].Number;
 							var td2 = document.createElement("td");
 							tr.appendChild(td2);
 							td2.id = "order_type_" + i;
 							td2.innerHTML = own[i].CarType;
-							var temp2 = own[i].CarType;
 							var td3 = document.createElement("td");
 							tr.appendChild(td3);
 							if(own[i].Progress === "已完成"){
@@ -932,6 +927,83 @@
 					}
 				})
 	}
+	function getFinishedAttorney(){
+		//删除表格
+		try {document.getElementById("finished_table").removeChild(document.getElementById("body_second"))}
+		catch(error){}
+		//建立表格
+		var tbody = document.createElement("tbody");
+		document.getElementById("finished_table").appendChild(tbody);
+		tbody.id = "body_second";
+		axios({
+			method : 'get',
+			url: "/get_relating_attorney"
+		})
+				.then(function (response) {
+					var data = response.data;
+					var own = data.Finished;
+					var num = own.length;
+					if(num === 0){
+						var tr = document.createElement("tr");
+						tbody.appendChild(tr);
+						var td = document.createElement("td");
+						tr.appendChild(td);
+						td.innerHTML = " 　";
+						var td1 = document.createElement("td");
+						tr.appendChild(td1);
+						var td2 = document.createElement("td");
+						tr.appendChild(td2);
+						var td3 = document.createElement("td");
+						tr.appendChild(td3);
+						var td4 = document.createElement("td");
+						tr.appendChild(td4);
+						var td5 = document.createElement("td");
+						tr.appendChild(td5);
+						var td6 = document.createElement("td");
+						tr.appendChild(td6);
+					}
+					else{
+						for(var i = 0; i < num; i++) {
+							var tr = document.createElement("tr");
+							tbody.appendChild(tr);
+							var td1 = document.createElement("td");
+							tr.appendChild(td1);
+							var h51 = document.createElement("h5");
+							td1.appendChild(h51);
+							h51.innerHTML = own[i].Number;
+							var td2 = document.createElement("td");
+							tr.appendChild(td2);
+							var h52 = document.createElement("h5");
+							td2.appendChild(h52);
+							h52.innerHTML = own[i].Plate;
+							var td3 = document.createElement("td");
+							tr.appendChild(td3);
+							var h53 = document.createElement("h5");
+							td3.appendChild(h53);
+							h53.innerHTML = own[i].Vin;
+							var td4 = document.createElement("td");
+							tr.appendChild(td4);
+							var h54 = document.createElement("h5");
+							td4.appendChild(h54);
+							h54.innerHTML = own[i].CarModel;
+							var td6 = document.createElement("td");
+							tr.appendChild(td6);
+							var h56 = document.createElement("h5");
+							td6.appendChild(h56);
+							h56.innerHTML = own[i].SpecificProblem;
+							var td7 = document.createElement("td");
+							tr.appendChild(td7);
+							var h57 = document.createElement("a");
+							td7.appendChild(h57);
+							h57.setAttribute("data-toggle","modal");
+							h57.setAttribute("data-target","#pdf");
+							h57.innerHTML = "查看委托书";
+							document.getElementById("showpdf").setAttribute("src","/show_pdf?attorney_no="+own[i].Number+"&user_id="+document.getElementById("number").class);
+						}
+					}
+				})
+	}
+
 	function getFinishedAttorneyS() {
 		//删表
 		try {

@@ -215,7 +215,7 @@
 			</div>
 			<div class='modal-body'>
 				<div style="text-align: center;">
-					<embed height="840px" width="90%" src="/show_pdf?attorney_no=00000001" />
+					<embed id="show_pdf" height="840px" width="90%" src="/show_pdf?attorney_no=00000001" />
 				</div>
 			</div>
 		</div>
@@ -412,6 +412,7 @@
 							a.setAttribute("data-toggle","modal");
 							a.setAttribute("data-target","#detail");
 							a.innerHTML = "详情";
+							document.getElementById("show_pdf").setAttribute("src","/show_pdf?attorney_no="+data[i-1].OrderNumber);
 						}
 					}
 				})
