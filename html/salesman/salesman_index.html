@@ -193,27 +193,26 @@
 						</h4>
 					</div>
 					<div id="collapseOne" class="panel-collapse collapse in">
-						<table class="table  table-bordered table-hover">
+						<table id="pending_table" class="table  table-bordered table-hover">
 							<tbody>
-								<tr  class="order-form">
-									<th><label>订单号</label></th>
-									<th><label>车牌号</label></th>
-									<th><label>车架号</label></th>
-									<th><label>客户姓名</label></th>
-									<th><label>客户联系电话</label></th>
-									<th><label>接单</label></th>
-								</tr>
+							<tr  class="order-form">
+								<th><label>订单号</label></th>
+								<th><label>车牌号</label></th>
+								<th><label>车架号</label></th>
+								<th><label>车型</label></th>
+								<th><label>粗略故障描述</label></th>
+								<th><label>接单</label></th>
+							</tr>
 							</tbody>
-							<!-- 传参处 -->
-							<tbody>
-								<tr class="order-form">
-									<td><h5>00000002</h5></td>
-									<td><h5>SHU6502</h5></td>
-									<td><h5>12345678901234567</h5></td>
-									<td><h5>ZLF</h5></td>
-									<td><h5>110</h5></td>
-									<td><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>接单！！！</a></td>
-								</tr>
+							<tbody id="pending_table_son">
+							<tr class="order-form">
+								<td><h5>00000002</h5></td>
+								<td><h5>SHU6502</h5></td>
+								<td><h5>12345678901234567</h5></td>
+								<td><h5>12345678901234567</h5></td>
+								<td><h5>110</h5></td>
+								<td><a class="btn btn-info btn-md"><span class="glyphicon"></span>接单！！！</a></td>
+							</tr>
 							</tbody>
 						</table>
 					</div>
@@ -277,36 +276,36 @@
 						<h4 class="panel-title">
 							<a data-toggle="collapse" data-parent="#accordion"
 							   href="#collapseTwo">
-								维修中订单
+								进行中订单
 							</a>
 						</h4>
 					</div>
 					<div id="collapseTwo" class="panel-collapse collapse">
-						<table class="table  table-bordered table-hover">
-							<tbody>
-								<tr class="order-form" style="background-color: #ebebeb">
-									<th><label>订单号:00000002</label></th>
-									<th><label>车牌号:SHU6502</label></th>
-									<th><a class="btn btn-info btn-md" data-toggle='modal' data-target='#take_order' data-backdrop='static'><span class="glyphicon"></span>编辑订单</a></th>
+						<div id="ongoing_table_father" style="margin: auto;align-items: center; text-align: center; font-size: 17px;left: 10%">
+							<table class="table  table-bordered table-hover" id="ongoing_table" border="1" style="text-align: center; font-size: 17px;">
+								<!-- 表头 -->
+								<tbody>
+								<tr style="height: 30px">
+									<th id="number_ongoing" style="text-align: center; width: 300px">订 单 号：</th>
+									<th id="user_name" style="text-align: center; width: 250px">车型：</th>
+									<th id="status" style="text-align: center; width: 200px">状态：</th>
 								</tr>
-							</tbody>
-						</table>
-						<table class="table  table-bordered table-hover">
-							<tbody>
-								<tr class="order-form">
-									<td><h5>问题：</h5></td>
-									<td><h5>SHU6502</h5></td>
-									<td><h5>状态：</h5></td>
-									<td class="wcg"><h5>已完成</h5></td>
+								</tbody>
+								<!-- 传参处 -->
+								<tbody id ="body_son">
+								<tr id="1">
+									<td id="order_number_1">0000001</td>
+									<td>夏逸凡</td>
+									<td>进行中</td>
 								</tr>
-								<tr class="order-form">
-									<td><h5>问题：</h5></td>
-									<td><h5>SHU6503</h5></td>
-									<td><h5>状态：</h5></td>
-									<td class="wcr"><h5>未完成</h5></td>
+								<tr id="2">
+									<td id="order_number_2">0000002</td>
+									<td>张霖锋</td>
+									<td><a data-toggle='modal' data-target='#take_order' onclick=addSpecificDetail()>编辑具体信息</a></td>
 								</tr>
-							</tbody>
-						</table>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 
@@ -740,7 +739,8 @@
 		salesmanInfo();
 		showNotificationOrNot();
 		ongoingNumber();
-		getRelatingAttorney();
+		getProcessingAttorney();
+		getPendingAttorney();
 	}
 	function fill(source){
 		document.getElementById("project1").value = source.innerHTML;
@@ -769,16 +769,16 @@
 		})
 				.then(function (response) {
 					var data = response.data;
-					var bound_num = data.Own.length;
+					var bound_num = data.Processing.length;
 					var unbound_num = data.Pending.length;
 					var num = bound_num + unbound_num;
 					document.getElementById("bound_orders").label = "已绑定订单" + "(" + bound_num + ")";
 					for(var i = 0; i < bound_num; i++){
 						var option = document.createElement("option");
 						document.getElementById("bound_orders").appendChild(option);
-						option.innerHTML = data.Own[i].Number;
-						option.value = data.Own[i].Number;
-						option.name = data.Own[i].Number;
+						option.innerHTML = data.Processing[i].Number;
+						option.value = data.Processing[i].Number;
+						option.name = data.Processing[i].Number;
 					}
 					document.getElementById("unbound_orders").label = "未绑定订单" + "(" + unbound_num + ")";
 					for(var i = 0; i < unbound_num; i++){
@@ -791,16 +791,92 @@
 					document.getElementById("ongoing_orders").innerHTML = "　进行中订单" + "(" + num + ")";
 				})
 	}
-	function addSpecificDetail(){
-		var value = document.getElementById("order_number_2").innerHTML
-		var option = document.getElementsByName(value)[0];
-		option.setAttribute("selected", "selected");
+	function addSpecificDetail(param1,param2){
+		document.getElementById("repair_number").placeholder = document.getElementById(param1).innerText;
+		document.getElementById("repair_number").class = document.getElementById(param2).innerText[3];
 	}
 	function showOptions(){
 		var option_list = document.getElementById("projectOptions");
 		option_list.style.display="inline";
 	}
-	function getRelatingAttorney(){
+	function getPendingAttorney(){
+        //删除表格
+		try {document.getElementById("pending_table").removeChild(document.getElementById("pending_table_son"))}
+		catch(error){}
+		//建立表格
+		var tbody = document.createElement("tbody");
+		document.getElementById("pending_table").appendChild(tbody);
+		tbody.id = "pending_table_son";
+		axios({
+			method : 'get',
+			url: "/get_relating_attorney"
+		})
+				.then(function (response) {
+					var data = response.data;
+					var own = data.Pending;
+					var num = own.length;
+					if(num === 0){
+						var tr = document.createElement("tr");
+						tbody.appendChild(tr);
+						var td1 = document.createElement("td");
+						tr.appendChild(td1);
+						td1.innerHTML = " 　";
+						var td2 = document.createElement("td");
+						tr.appendChild(td2);
+						var td3 = document.createElement("td");
+						tr.appendChild(td3);
+						var td4 = document.createElement("td");
+						tr.appendChild(td4);
+						var td5 = document.createElement("td");
+						tr.appendChild(td5);
+						var td6 = document.createElement("td");
+						tr.appendChild(td6);
+					}
+					else{
+						for(var i = 0; i < num; i++){
+							var tr = document.createElement("tr");
+							tbody.appendChild(tr);
+							var td1 = document.createElement("td");
+							tr.appendChild(td1);
+							var h51 = document.createElement("h5");
+							td1.appendChild(h51);
+							h51.innerHTML = own[i].Number;
+							var td2 = document.createElement("td");
+							tr.appendChild(td2);
+							var h52 = document.createElement("h5");
+							td2.appendChild(h52);
+							h52.innerHTML = own[i].Plate;
+							var td3 = document.createElement("td");
+							tr.appendChild(td3);
+							var h53 = document.createElement("h5");
+							td3.appendChild(h53);
+							h53.innerHTML = own[i].Vin;
+							var td4 = document.createElement("td");
+							tr.appendChild(td4);
+							var h54 = document.createElement("h5");
+							td4.appendChild(h54);
+							h54.innerHTML = own[i].CarModel;
+							var td5 = document.createElement("td");
+							tr.appendChild(td5);
+							var h55 = document.createElement("h5");
+							td5.appendChild(h55);
+							h55.innerHTML = own[i].RoughProblem;
+							var td6 = document.createElement("td");
+							tr.appendChild(td6);
+							var a = document.createElement("a");
+							td6.appendChild(a);
+							a.innerHTML = "接单！！！";
+							a.setAttribute("class","btn btn-info btn-md");
+							var span = document.createElement("span");
+							span.setAttribute("class","glyphicon");
+							a.appendChild(span);
+							a.setAttribute("onclick","takeOrder(\""+own[i].Number+"\")");
+						}
+					}
+				})
+	}
+
+	function getProcessingAttorney(){
 		//删除表格
 		try {document.getElementById("ongoing_table").removeChild(document.getElementById("body_son"))}
 		catch(error){}
@@ -814,7 +890,7 @@
 		})
 				.then(function (response) {
 					var data = response.data;
-					var own = data.Own;
+					var own = data.Processing;
 					var num = own.length;
 					if(num === 0){
 						var tr = document.createElement("tr");
@@ -835,20 +911,23 @@
 							tr.appendChild(td1);
 							td1.id = "order_number_" + i;
 							td1.innerHTML = own[i].Number;
+							var temp1 = own[i].Number;
 							var td2 = document.createElement("td");
 							tr.appendChild(td2);
+							td2.id = "order_type_" + i;
 							td2.innerHTML = own[i].CarType;
+							var temp2 = own[i].CarType;
 							var td3 = document.createElement("td");
 							tr.appendChild(td3);
-							if(own[i].Status === "已完成"){
-								td3.innerHTML = own[i].Status;
+							if(own[i].Progress === "已完成"){
+								td3.innerHTML = own[i].Progress;
 							}
 							else{
 								var a = document.createElement("a");
 								td3.appendChild(a);
 								a.setAttribute("data-toggle", "modal");
 								a.setAttribute("data-target", "#take_order");
-								a.setAttribute("onclick", "addSpecificDetail()");
+								a.setAttribute("onclick", "addSpecificDetail(\""+td1.id+"\",\""+td2.id+"\")");
 								a.innerHTML = "编辑具体信息";
 							}
 						}
@@ -933,7 +1012,20 @@
 					}
 				})
 	}
-
+    function takeOrder(param){
+		let formData = new FormData();
+		formData.append("attorney_no", param);
+		let config = {
+			headers: {"Content-Type": "multipart/form-data"}
+		};
+		axios.post("/receive_attorney", formData, config).then(res => {
+			res = res.data;
+			alert(res.data);
+			if(res.status === "成功"){
+				location.reload();
+			}
+		})
+	}
 	// var EventUtil = {
 	// 	on:function(elem,type,handler){
 	// 		if(elem.addEventListener){

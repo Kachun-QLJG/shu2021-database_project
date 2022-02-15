@@ -215,7 +215,7 @@
 			<div class='modal-body'>
 				<img src='/statics/user/真实姓名.png' width='20px' alt="正在加载图片">
 				<label for="name" style='font-size:15px;width: 100px;'>客户名称：</label>
-				<input id='name' type='text' placeholder='请输入姓名'/>
+				<input class="change_info" id='name' type='text' placeholder='请输入姓名'/>
 				<br>
 
 				<img src='/statics/user/公司.png' width='20px' alt="正在加载图片">
@@ -228,7 +228,7 @@
 
 				<img src='/statics/user/联系人.png' width='20px' alt="正在加载图片">
 				<label for="contact_person" style='font-size:15px;width: 100px;'>联 系 人：</label>
-				<input id='contact_person' type='text' placeholder='请输入联系人'/>
+				<input class="change_info" id='contact_person' type='text' placeholder='请输入联系人'/>
 				<br>
 
 				<img src='/statics/user/联系电话.png' width='20px' alt="正在加载图片">
@@ -244,7 +244,7 @@
 			</div>
 			<form class='modal-footer'>
 				<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
-				<button type='button' class='btn btn-primary' onclick='changeinfo()' id='confirmChangeInfo'>确认更改</button>
+				<button type='button' class='btn btn-primary' onclick='if(checkSubmit("change_info"))changeinfo()' id='confirmChangeInfo'>确认更改</button>
 				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 			</form>
 		</div>
@@ -355,12 +355,12 @@
 
 				<img src='/statics/user/结算方式.png' width='20px' alt="正在加载图片">
 				<label style='font-size:15px;width: 80px;'>结算方式：</label>
-				<input id='PayMethod1' name="PayMethod" type='radio' value="现金" />
+				<input id='PayMethod1' name="PayMethod" type='radio' value="自付" checked="checked"/>
 				<label for="PayMethod1">自付</label>
-				<input id='PayMethod2' name="PayMethod" type='radio' value="保险" checked="checked"/>
-				<label for="PayMethod2">三包</label>
-				<input id='PayMethod3' name="PayMethod" type='radio' value="信用卡" />
+				<input id='PayMethod3' name="PayMethod" type='radio' value="索赔" />
 				<label for="PayMethod3">索赔</label>
+				<input id='PayMethod2' name="PayMethod" type='radio' value="三包" />
+				<label for="PayMethod2">三包</label>
 				<!-- <span id='checktext2'></span> -->
 				<br>
 
@@ -374,26 +374,26 @@
 				<div>
 					<img src='/statics/user/车辆故障.png' width='20px' style="vertical-align: top" alt="正在加载图片">
 					<label for='RoughProblem' style='font-size:15px;width: 80px;vertical-align: top'>粗略故障：</label>
-					<textarea id='RoughProblem' placeholder='请粗略描述您车辆的故障（字数在255以下）' style="width: 300px;height: 100px;"></textarea>
+					<textarea class='add_attorney' id='RoughProblem' placeholder='请粗略描述您车辆的故障（字数在255以下）' style="width: 300px;height: 100px;"></textarea>
 				</div>
 				<br>
 
 				<img src='/statics/user/油量.png' width='20px' alt="正在加载图片">
 				<label for="StartPetrol" style='font-size:15px;width: 80px;'>进场油量：</label>
-				<input id='StartPetrol' type='number' min="0" max="100" step="0.1" placeholder='进场时车辆所剩油量' style="width: 130px"/> L
+				<input class='add_attorney' id='StartPetrol' type='number' min="0" max="100" step="0.1" placeholder='进场时车辆所剩油量' style="width: 130px"/> L
 				<br>
 				<br>
 
 				<img src='/statics/user/里程.png' width='20px' alt="正在加载图片">
 				<label for="StartMile" style='font-size:15px;width: 80px;'>进场里程：</label>
-				<input id='StartMile' type='number' min="0" step="0.1" placeholder='进场时车辆里程数' style="width: 130px"/> km
+				<input class='add_attorney' id='StartMile' type='number' min="0" step="0.1" placeholder='进场时车辆里程数' style="width: 130px"/> km
 				<br>
 				<br>
 
 			</div>
 			<form class='modal-footer'>
 				<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
-				<button type='button' class='btn btn-primary' onclick='addAttorney(this.id)' id='confirmAddAttorney'>提交委托</button>
+				<button type='button' class='btn btn-primary' onclick='if(checkSubmit("add_attorney")&&dateModify(document.getElementById("StartTime").value))addAttorney(this.id)' id='confirmAddAttorney'>提交委托</button>
 				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 			</form>
 		</div>
@@ -729,6 +729,7 @@
 		if(param === ""){
 			alert("日期不合法");
 			document.getElementById("StartTime").value = "";
+			return false;
 		}
 		else{
 			var year = param[0] + param[1] + param[2] + param[3];
@@ -748,6 +749,7 @@
 					document.getElementById("StartTime").value = param[0] + param[1] + param[2] + param[3] + param[4] + param[5] + param[6] + param[7] + "30";
 				}
 			}
+			return true;
 		}
 	}
 </script>

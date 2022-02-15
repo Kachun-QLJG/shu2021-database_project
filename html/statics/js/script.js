@@ -344,7 +344,7 @@ function searchForParts(){
 function getProjectTime(){
 	axios({
 		method: 'get',
-		url: '/get_project_time?project=' + document.getElementById("project1").value + '&type=' +'A'
+		url: '/get_project_time?project=' + document.getElementById("project1").value + '&type=' + document.getElementById("repair_number").class
 	})
 		.then(function (response) {
 			time = response.data.Time;
@@ -620,18 +620,14 @@ function getUsername(){
 		})
 }
 
-/*function getusername(){
-	axios({
-		method : 'get',
-		url: "/get_username"
-	})
-		.then(function(response){
-			var text2 = document.getElementById("navbar").getElementsByTagName("li");
-			if(response.data===null){
-				text2[0].innerHTML ="用户名：未登录";
-			}
-			else{
-				text2[0].innerHTML ="用户名：" + response.data;
-			}
-		})
-}*/
+function checkSubmit(param){
+	var temp = document.getElementsByClassName(param);
+	var num = temp.length;
+	for(var i = 0; i < num; i++){
+		if(temp[i].value === ""){
+			alert("请把表单填写完整！");
+			return false;
+		}
+	}
+	return true;
+}

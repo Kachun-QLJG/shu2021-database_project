@@ -26,25 +26,25 @@
 					<div class="form-group">
 						<label>用户名（手机号/工号）：</label>
 						<label for="username"></label>
-						<input class="form-control" id="username" name="username" placeholder="请输入账号" type="text"/>
+						<input class="form-control login" id="username" name="username" placeholder="请输入账号" type="text"/>
 					</div>
 					<div class="form-group">
 						<label >密码</label>
 						<label for="password"></label>
-						<input class="form-control" id="password" name="password" onkeydown="if(event.keyCode==32) return false" onpaste="return false" placeholder="请输入密码" type="password" autocomplete="true"/>
+						<input class="form-control login" id="password" name="password" onkeydown="if(event.keyCode==32) return false" onpaste="return false" placeholder="请输入密码" type="password" autocomplete="true"/>
 					</div>
 					<div class="form-group">
 						<label >验证码</label>
 						<div style="margin-top: -15px">
 							<label for="ver_code"></label>
-							<input class="form-control" id="ver_code" name="ver_code" placeholder="请输入验证码" type="text" />
+							<input class="form-control login" id="ver_code" name="ver_code" placeholder="请输入验证码" type="text" />
 							<img id="ver_pic" onclick="this.src='/captcha?v='+Math.random()" src="/captcha" alt="图片正在加载中">
 							<br>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<a href="/register" style="margin-left: 200px">还没有账号？点此注册。</a>
-						<button id="loginbutton" class="btn btn-primary" onclick="login()">登录</button>
+						<button id="loginbutton" class="btn btn-primary" onclick="if(checkSubmit('login'))login()">登录</button>
 					</div>
 				</div>
 			</div>
