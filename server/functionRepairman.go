@@ -105,13 +105,13 @@ func getPendingArrangement(c *gin.Context) {
 		SpecificProblem string
 		Salesman        string
 	}
-	var temp struct{ Time string }
 	database.Raw("select order_number as order_number, license_number as plate, vehicle.number as vin, arrangement.project_number as project_number,\n"+
 		"time_overview.project_name as project_name, specific_problem as specific_problem, salesman_id as salesman\n"+
 		"from arrangement inner join attorney inner join vehicle inner join time_overview on arrangement.order_number = attorney.number\n"+
 		"and attorney.vehicle_number = vehicle.number and arrangement.project_number = time_overview.project_number\n"+
 		"where repairman_number = ? and arrangement.progress = '待确认'", username).Scan(&arrangement)
 	for i := range arrangement {
+		var temp struct{ Time string }
 		timeType := ""
 		var vehicle Vehicle
 		database.First(&vehicle, "number = ?", arrangement[i].Vin)
@@ -141,6 +141,30 @@ func changeRepairProgress(c *gin.Context) {
 	database.First(&arrangement, "order_number = ? and project_number = ? and repairman_number = ?", attorneyNo, projectNo, username)
 	database.Model(&arrangement).Update("progress", progress)
 	if progress == "已完成" {
+		//减工时
+		var temp struct{ Time string }
+		var vehicle struct{ Type string }
+		timeType := ""
+		database.Raw("select type as type\n"+
+			"from vehicle inner join attorney on vehicle.number = attorney.vehicle_number\n"+
+			"where attorney.number = ?", arrangement.OrderNumber)
+		if vehicle.Type == "轿车-A" {
+			timeType = "time_a"
+		} else if vehicle.Type == "轿车-B" {
+			timeType = "time_b"
+		} else if vehicle.Type == "轿车-C" {
+			timeType = "time_c"
+		} else if vehicle.Type == "轿车-D" {
+			timeType = "time_d"
+		} else {
+			timeType = "time_e"
+		}
+		database.Raw("select "+timeType+" as time from time_overview where project_number = ?", arrangement.OrderNumber).Scan(&temp)
+		reduceTime, _ := strconv.ParseFloat(temp.Time, 64)
+		fmt.Println(temp.Time)
+		var repairman Repairman
+		database.First(&repairman, "number = ?", username)
+		database.Model(&repairman).Update("current_work_hour", repairman.CurrentWorkHour-reduceTime)
 		result := database.Find(&arrangement, "order_number = ? and progress != '已完成'", attorneyNo)
 		if result.RowsAffected == 0 {
 			var attorney Attorney
