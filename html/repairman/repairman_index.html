@@ -40,8 +40,7 @@
 		.order-form th{text-align: center;font-size: 15px;}
 		.order-form td{text-align: center;font-size: 12px;}
 		.form-head{}
-		.form-head th{width:22%;text-align: center;font-size: 15px;background-color: #ebebeb;}
-		.form-head td{width:12%;text-align: center;font-size: 12px;background-color: #ebebeb;}
+		.form-head th{text-align: center;font-size: 15px;background-color: #ebebeb;}
 
 		/*
 		.row > div {
@@ -208,74 +207,67 @@
 					</div>
 					<div id="collapseTwo" class="panel-collapse collapse">
 						<table class="table  table-bordered table-hover">
-							<tbody>
+							<thead>
 								<tr class="form-head" style="background-color: #ebebeb">
-									<th><label>订单号:00000002</label></th>
-									<th><label>车牌号:SHU6502</label></th>
-									<th><label>维修项目号:502</label></th>
-									<th><label>项目名称:502</label></th>
-									<td><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>都修好了!</a></td>
+									<th colspan="3"><label>订单号:00000002</label></th>
+									<th colspan="3"><label>车牌号:SHU6502</label></th>
+									<th colspan="3"><label>车架号:11111111111111111</label></th>
+									<th colspan="1"><a class="btn btn-info btn-md"><span class="glyphicon"></span>都修好了!</a></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="order-form">
+									<th rowspan="2"><h5>维修项目号：1111</h5></th>
+									<th rowspan="2"><h5>项目名称：2222</h5></th>
+									<th rowspan="2"><h5>项目工时：24H</h5></th>
+									<th colspan="2"><h5>零件号：114</h5></th>
+									<th colspan="2"><h5>零件名：CPU</h5></th>
+									<th colspan="2"><h5>零件数量：514</h5></th>
+									<th rowspan="2"><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加零件</a></th>
+								</tr>
+								<tr class="order-form">
+									<th colspan="2"><h5>零件号：114</h5></th>
+									<th colspan="2"><h5>零件名：CPU</h5></th>
+									<th colspan="2"><h5>零件数量：514</h5></th>
 								</tr>
 							</tbody>
 							<tbody>
 								<tr class="order-form">
-									<th rowspan="2"><h5>具体问题：wwwwwwwwwwwwwww</h5></th>
-									<th><h5>零件号：114</h5></th>
-									<th><h5>零件名：CPU</h5></th>
-									<th><h5>数量：514</h5></th>
-									<th><a data-toggle="modal" data-target="#del_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>删除零件</a></th>
+									<th rowspan="1"><h5>维修项目号：1111</h5></th>
+									<th rowspan="1"><h5>项目名称：2222</h5></th>
+									<th rowspan="1"><h5>项目工时：24H</h5></th>
+									<th colspan="2"><h5>零件号：114</h5></th>
+									<th colspan="2"><h5>零件名：CPU</h5></th>
+									<th colspan="2"><h5>零件数量：514</h5></th>
+									<th rowspan="1"><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加零件</a></th>
 								</tr>
-								<tr class="order-form">
-									<th><h5>零件号：114</h5></th>
-									<th><h5>零件名：CPU</h5></th>
-									<th><h5>数量：514</h5></th>
-									<th><a data-toggle="modal" data-target="#del_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>删除零件</a></th>
-								</tr>
-								<tr class="order-form">
-									<th colspan="5"><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加零件</a></th>
-								</tr>
-							</tbody>
-							<tbody>
-							<tr class="order-form">
-								<th rowspan="2"><h5>具体问题：wwwwwwwwwwwwwww</h5></th>
-								<th><h5>零件号：114</h5></th>
-								<th><h5>零件名：CPU</h5></th>
-								<th><h5>数量：514</h5></th>
-								<th><a data-toggle="modal" data-target="#del_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>删除零件</a></th>
-							</tr>
-							<tr class="order-form">
-								<th><h5>零件号：114</h5></th>
-								<th><h5>零件名：CPU</h5></th>
-								<th><h5>数量：514</h5></th>
-								<th><a data-toggle="modal" data-target="#del_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>删除零件</a></th>
-							</tr>
-							<tr class="order-form">
-								<th colspan="5"><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加零件</a></th>
-							</tr>
 							</tbody>
 						</table>
 						<br>
 						<br>
 						<table class="table  table-bordered table-hover">
-							<tbody>
+							<thead>
 								<tr class="form-head" style="background-color: #ebebeb">
-									<th><label>订单号:00000003</label></th>
-									<th><label>车牌号:SHU6503</label></th>
-									<th><label>维修项目号:503</label></th>
-									<th><label>项目名称:503</label></th>
-									<td><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>都修好了!</a></td>
+									<th colspan="3"><label>订单号:00000002</label></th>
+									<th colspan="3"><label>车牌号:SHU6502</label></th>
+									<th colspan="3"><label>车架号:11111111111111111</label></th>
+									<th colspan="1"><a class="btn btn-info btn-md"><span class="glyphicon"></span>都修好了!</a></th>
 								</tr>
-							</tbody>
+							</thead>
 							<tbody>
 								<tr class="order-form">
-									<th rowspan="1"><h5>具体问题：wwwwwwwwwwwwwww</h5></th>
-									<th><h5>零件号：514</h5></th>
-									<th><h5>零件名：ALU</h5></th>
-									<th><h5>数量：114</h5></th>
-									<th><a data-toggle="modal" data-target="#del_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>删除零件</a></th>
+									<th rowspan="2"><h5>维修项目号：1111</h5></th>
+									<th rowspan="2"><h5>项目名称：2222</h5></th>
+									<th rowspan="2"><h5>项目工时：24H</h5></th>
+									<th colspan="2"><h5>零件号：114</h5></th>
+									<th colspan="2"><h5>零件名：CPU</h5></th>
+									<th colspan="2"><h5>零件数量：514</h5></th>
+									<th rowspan="2"><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加零件</a></th>
 								</tr>
 								<tr class="order-form">
-									<th colspan="5"><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加零件</a></th>
+									<th colspan="2"><h5>零件号：114</h5></th>
+									<th colspan="2"><h5>零件名：CPU</h5></th>
+									<th colspan="2"><h5>零件数量：514</h5></th>
 								</tr>
 							</tbody>
 						</table>
@@ -602,22 +594,6 @@
 					<embed height="840px" width="90%" src="/show_pdf?attorney_no=00000001" />
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
-
-<!--删除零件 -->
-<div class='modal fade' id='del_parts' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static">
-	<div class='modal-dialog'>
-		<div class='modal-content'>
-			<div class='modal-header'>
-				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static">&times;</button>
-				<h3 class='modal-title'>您确定要删除该零件吗？</h3>
-			</div>
-			<form class='modal-footer'>
-				<button type='submit' value='确认' class='btn btn-primary'>确认</button>
-				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
-			</form>
 		</div>
 	</div>
 </div>
