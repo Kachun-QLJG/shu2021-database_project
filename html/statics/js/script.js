@@ -298,15 +298,15 @@ function checkUser(){
 */
 function searchForParts(){
 
-	delProjectResults();
-	if (document.getElementById("detail1").value === "") return;
+	delPartsResults();
+	if (document.getElementById("part").value === "") return;
 	axios({
 		method: 'get',
-		url: '/search_for_parts?text=' + document.getElementById("detail1").value + '&type=A'
+		url: '/search_for_parts?text=' + document.getElementById("part").value
 	})
 		.then(function (response) {
 			{
-				console.log(response.data);
+				/*console.log(response.data);
 				var div = document.getElementById("con");//寻找定位的区块
 				var table = document.createElement("div");
 				table.setAttribute("name", "table");
@@ -326,17 +326,28 @@ function searchForParts(){
 				tablehead.appendChild(head_1);
 				var head_2 = document.createElement("th");
 				head_2.innerHTML = "维修项目编号";
-				tablehead.appendChild(head_2);
-
-				for (var i = 0; response.data[i].Name !== ""; ++i) {
-					var temp = document.createElement("tr");
-					var t1 = document.createElement("td");
-					t1.innerHTML = JSON.stringify(response.data[i].Name);
-					temp.appendChild(t1);
-					var t2 = document.createElement("td");
-					t2.innerHTML = JSON.stringify(response.data[i].Id);
-					temp.appendChild(t2);
-					tbody.appendChild(temp);
+				tablehead.appendChild(head_2);*/
+				var div = document.createElement("div");
+				div.id ="parts";
+				div.setAttribute("style", "width:150px; height:85px; position: absolute; top: 35px; left: 90px; background-color: white; border: 1px solid black; cursor: pointer;");
+				document.getElementById("part_input").appendChild(div);
+				for (var i = 1; response.data[i].Name !== ""; ++i) {
+					if(i === 6){
+						break;
+					}
+					var temp = document.createElement("div");
+					temp.class="select";
+					temp.setAttribute("onclick","fill(this)");
+					temp.setAttribute("style","overflow:hidden;text-overflow:ellipsis;white-space:nowrap");
+					//var t1 = document.createElement("td");
+					//temp.setAttribute("value",JSON.stringify(response.data[i].Name).replace("\"","").replace("\"",""));
+					temp.innerHTML = JSON.stringify(response.data[i].Name).replace("\"","").replace("\"","");
+					//temp.appendChild(t1);
+					//var t2 = document.createElement("td");
+					//t2.innerHTML = JSON.stringify(response.data[i].Id);
+					//temp.appendChild(t2);
+					//alert(temp);
+					div.appendChild(temp);
 				}
 			}
 		})
@@ -448,7 +459,7 @@ function closeFlagProjects() {
 	flagProjects = 0;
 }
 
-function searchForParts(){
+/*function searchForParts(){
 	delPartsResults();
 	if(document.getElementById("txt").value === "") return;
 	axios({
@@ -491,14 +502,12 @@ function searchForParts(){
 				}
 			}
 		})
-}
+}*/
 
 function delPartsResults(){
 	try {
-		var div = document.getElementById("con");
-		var res = document.getElementsByName("table");
-		for(var i=0; i<res.length; i++)
-			div.removeChild(res[i]);
+		var div = document.getElementById("parts");
+		document.getElementById("part_input").removeChild(div);
 	}catch (error)
 	{}
 }
