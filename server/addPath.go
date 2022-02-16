@@ -42,6 +42,7 @@ func addPath(r *gin.Engine) {
 	r.GET("/get_corresponding_repairman", authMiddleWare(), checkPermission(), filterSalesman(), getCorrespondingRepairman) //根据维修员种类返回相应种类的维修员信息
 	//r.GET("/get_finished_attorney_s", authMiddleWare(), checkPermission(), filterSalesman(), getFinishedAttorneyS)          //寻找已完成的委托（业务员）
 	r.GET("/get_full_attorney_s", authMiddleWare(), checkPermission(), filterSalesman(), getFullAttorneyS) //获得委托的详细信息（业务员）
+	r.GET("/get_arrangements", authMiddleWare(), checkPermission(), filterSalesman(), getArrangements)     //获得某一订单的派工单
 
 	//----------维修员路径----------
 	r.GET("/search_for_parts", authMiddleWare(), checkPermission(), filterRepairman(), searchForParts)                     //寻找零件
@@ -69,6 +70,7 @@ func addPath(r *gin.Engine) {
 	r.POST("/set_attorney_finished", authMiddleWare(), checkPermission(), filterSalesman(), setAttorneyFinished)      //业务员结算委托书并设置进度为已完成
 	r.POST("/receive_attorney", authMiddleWare(), checkPermission(), filterSalesman(), receiveAttorney)               //接单
 	r.POST("/change_discount_rate", authMiddleWare(), checkPermission(), filterSalesman(), changeDiscountRate)        //更改用户折扣率
+	r.POST("/save_attorney", authMiddleWare(), checkPermission(), filterSalesman(), saveAttorney)                     //保存对委托的更改
 
 	//----------维修员路径----------
 	r.POST("/change_status", authMiddleWare(), checkPermission(), filterRepairman(), changeStatus)                //后端处理维修员更改工作状态

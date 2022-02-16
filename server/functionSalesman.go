@@ -10,13 +10,84 @@ import (
 	"time"
 )
 
+func saveAttorney(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	attorneyNo := c.PostForm("attorney_no")
+	repairType := c.PostForm("repair_type")
+	repairClassification := c.PostForm("repair_classification")
+	specificProblem := c.PostForm("specific_problem")
+	outRange := c.PostForm("out_range")
+	predictFinishTime := c.PostForm("predict_finish_time")
+	endPetrol := c.PostForm("end_petrol")
+	endMile := c.PostForm("end_mile")
+	var attorney Attorney
+	result := database.First(&attorney, "number = ? and salesman_id = ?", attorneyNo, username)
+	if result.RowsAffected == 0 {
+		c.String(http.StatusForbidden, "无权限！")
+		return
+	}
+	database.Model(&attorney).Update("repair_type", repairType)
+	database.Model(&attorney).Update("repair_classification", repairClassification)
+	database.Model(&attorney).Update("predict_finish_time", predictFinishTime)
+	database.Model(&attorney).Update("specific_problem", specificProblem)
+	database.Model(&attorney).Update("end_petrol", endPetrol)
+	database.Model(&attorney).Update("end_mile", endMile)
+	database.Model(&attorney).Update("out_range", outRange)
+	c.String(http.StatusOK, "保存成功！")
+}
+
+func getArrangements(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	attorneyNo := c.Query("attorney_no")
+	var attorney Attorney
+	result := database.First(&attorney, "number = ? and salesman_id = ?", attorneyNo, username)
+	if result.RowsAffected == 0 {
+		c.String(http.StatusForbidden, "无权限！")
+		return
+	}
+	type repairman struct {
+		Type   string
+		Number string
+		Name   string
+	}
+	var arrangement []struct {
+		ProjectNumber string
+		ProjectName   string
+		ProjectTime   string
+		Repairman     []repairman
+	}
+	timeType := ""
+	var vehicle Vehicle
+	database.First(&vehicle, "number = ?", attorney.VehicleNumber)
+	if vehicle.Type == "轿车-A" {
+		timeType = "time_a"
+	} else if vehicle.Type == "轿车-B" {
+		timeType = "time_b"
+	} else if vehicle.Type == "轿车-C" {
+		timeType = "time_c"
+	} else if vehicle.Type == "轿车-D" {
+		timeType = "time_d"
+	} else {
+		timeType = "time_e"
+	}
+	database.Raw("select distinct arrangement.project_number as project_number, project_name as project_name, "+timeType+" as project_time\n"+
+		"from arrangement inner join time_overview on arrangement.project_number = time_overview.project_number\n"+
+		"where order_number = ?", attorneyNo).Scan(&arrangement)
+	for i := range arrangement {
+		database.Raw("select type as type, name as name, repairman.number as number\n"+
+			"from arrangement inner join repairman on arrangement.repairman_number = repairman.number\n"+
+			"where order_number = ? and project_number = ?", attorneyNo, arrangement[i].ProjectNumber).Scan(&arrangement[i].Repairman)
+	}
+	c.JSON(http.StatusOK, arrangement)
+}
+
 func changeDiscountRate(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	attorneyNo := c.PostForm("attorney_no")
 	client := c.PostForm("user_id")
 	discountRate, _ := strconv.Atoi(c.PostForm("discount_rate"))
 	var attorney Attorney
-	result := database.First(&attorney, "number = ? and salesman = ? and user_id = ?", attorneyNo, username, client)
+	result := database.First(&attorney, "number = ? and salesman_id = ? and user_id = ?", attorneyNo, username, client)
 	if result.RowsAffected == 0 {
 		c.String(http.StatusForbidden, "无权限！")
 		return
@@ -267,7 +338,7 @@ func setAttorneyFinished(c *gin.Context) {
 	database.Model(&attorney).Update("end_mile", endMile)
 	database.Model(&attorney).Update("progress", "已完成")
 	genPdf(attorney.UserID, attorneyNo)
-	c.JSON(http.StatusOK, gin.H{"url": "/show_pdf?attorney_no=" + attorneyNo + "&user_id=" + attorney.UserID})
+	c.JSON(http.StatusOK, gin.H{"url": "/show_pdf?attorney_no=" + attorneyNo})
 }
 
 func getSalesmanInfo(c *gin.Context) {

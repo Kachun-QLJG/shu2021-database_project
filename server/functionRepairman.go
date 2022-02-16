@@ -141,7 +141,6 @@ func changeRepairProgress(c *gin.Context) {
 	database.First(&arrangement, "order_number = ? and project_number = ? and repairman_number = ?", attorneyNo, projectNo, username)
 	database.Model(&arrangement).Update("progress", progress)
 	if progress == "已完成" {
-		//减工时
 		var temp struct{ Time string }
 		var vehicle struct{ Type string }
 		timeType := ""
@@ -161,7 +160,6 @@ func changeRepairProgress(c *gin.Context) {
 		}
 		database.Raw("select "+timeType+" as time from time_overview where project_number = ?", arrangement.OrderNumber).Scan(&temp)
 		reduceTime, _ := strconv.ParseFloat(temp.Time, 64)
-		fmt.Println(temp.Time)
 		var repairman Repairman
 		database.First(&repairman, "number = ?", username)
 		database.Model(&repairman).Update("current_work_hour", repairman.CurrentWorkHour-reduceTime)
@@ -277,7 +275,6 @@ func checkStatus(c *gin.Context) {
 func changeStatus(c *gin.Context) {
 	status := c.PostForm("status")
 	number := c.MustGet("username").(string)
-	fmt.Println("status: ", status)
 	var repairman Repairman
 	database.First(&repairman, "number = ?", number)
 	database.Model(&repairman).Update("status", status) //更改状态为传过来的状态
