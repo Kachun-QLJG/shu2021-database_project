@@ -46,7 +46,6 @@ func getProcessingArrangement(c *gin.Context) {
 		ProjectNumber string
 		Parts         []parts
 		Vin           string
-		Status        string
 	}
 	database.Raw("select order_number as order_number, project_number as project_number, vehicle_number as vin, arrangement.progress as status\n"+
 		"from arrangement inner join attorney on arrangement.order_number = attorney.number\n"+
@@ -55,6 +54,45 @@ func getProcessingArrangement(c *gin.Context) {
 		database.Raw("select repair_parts.parts_number as parts_number, parts_name as parts_name, parts_count as parts_count\n"+
 			"from repair_parts inner join parts_overview on repair_parts.parts_number = parts_overview.parts_number\n"+
 			"where order_number = ? and project_number = ?", arrangement[i].OrderNumber, arrangement[i].ProjectNumber).Scan(&arrangement[i].Parts)
+	}
+	c.JSON(http.StatusOK, arrangement)
+}
+
+func getPendingArrangement(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	var arrangement []struct {
+		OrderNumber     string
+		Plate           string
+		Vin             string
+		ProjectNumber   string
+		ProjectName     string
+		ProjectTime     string
+		SpecificProblem string
+		Salesman        string
+	}
+	var temp struct{ Time string }
+	database.Raw("select order_number as order_number, license_number as plate, vehicle.number as vin, arrangement.project_number as project_number,\n"+
+		"time_overview.project_name as project_name, specific_problem as specific_problem, salesman_id as salesman\n"+
+		"from arrangement inner join attorney inner join vehicle inner join time_overview on arrangement.order_number = attorney.number\n"+
+		"and attorney.vehicle_number = vehicle.number and arrangement.project_number = time_overview.project_number\n"+
+		"where repairman_number = ? and arrangement.progress = '待确认'", username).Scan(&arrangement)
+	for i := range arrangement {
+		timeType := ""
+		var vehicle Vehicle
+		database.First(&vehicle, "number = ?", arrangement[i].Vin)
+		if vehicle.Type == "轿车-A" {
+			timeType = "time_a"
+		} else if vehicle.Type == "轿车-B" {
+			timeType = "time_b"
+		} else if vehicle.Type == "轿车-C" {
+			timeType = "time_c"
+		} else if vehicle.Type == "轿车-D" {
+			timeType = "time_d"
+		} else {
+			timeType = "time_e"
+		}
+		database.Raw("select "+timeType+" as time from time_overview where project_number = ?", arrangement[i].ProjectNumber).Scan(&temp)
+		arrangement[i].ProjectTime = temp.Time
 	}
 	c.JSON(http.StatusOK, arrangement)
 }

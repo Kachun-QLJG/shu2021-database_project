@@ -47,6 +47,7 @@ func addPath(r *gin.Engine) {
 	r.GET("/search_for_parts", authMiddleWare(), checkPermission(), filterRepairman(), searchForParts)                     //寻找零件
 	r.GET("/get_repairman_info", authMiddleWare(), checkPermission(), filterRepairman(), getRepairmanInfo)                 //获取业务员个人信息
 	r.GET("/check_status", authMiddleWare(), checkPermission(), filterRepairman(), checkStatus)                            //返回维修工状态
+	r.GET("/get_pending_arrangement", authMiddleWare(), checkPermission(), filterRepairman(), getPendingArrangement)       //返回待确认的维修项目
 	r.GET("/get_processing_arrangement", authMiddleWare(), checkPermission(), filterRepairman(), getProcessingArrangement) //返回正在处理的维修项目
 	r.GET("/get_finished_arrangement", authMiddleWare(), checkPermission(), filterRepairman(), getFinishedArrangement)     //返回已完成的维修项目
 
