@@ -8,7 +8,7 @@ require (
 	github.com/gin-gonic/gin v1.7.7
 	github.com/jinzhu/gorm v1.9.16
 	github.com/tiechui1994/gopdf v0.0.0-20210906105035-7cce3d921a5a
-	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3
+	golang.org/x/crypto v0.0.0-20220214200702-86341886e292
 )
 
 require (
