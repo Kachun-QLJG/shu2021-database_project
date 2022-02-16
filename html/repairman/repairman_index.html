@@ -39,6 +39,9 @@
 		.order-form{}
 		.order-form th{text-align: center;font-size: 15px;}
 		.order-form td{text-align: center;font-size: 12px;}
+		.form-head{}
+		.form-head th{width:22%;text-align: center;font-size: 15px;background-color: #ebebeb;}
+		.form-head td{width:12%;text-align: center;font-size: 12px;background-color: #ebebeb;}
 
 		/*
 		.row > div {
@@ -206,36 +209,52 @@
 					<div id="collapseTwo" class="panel-collapse collapse">
 						<table class="table  table-bordered table-hover">
 							<tbody>
-							<tr class="order-form" style="background-color: #ebebeb">
-								<th width="40%"><label>订单号:00000002</label></th>
-								<th width="40%"><label>车牌号:SHU6502</label></th>
-								<th width="20%"><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>都修好了!</a></th>
-							</tr>
-							<tr class="order-form">
-								<th><h5>问题：wwwwwwwwwwwwwww</h5></th>
-								<th><h5>所需零件：CPU ALU PC MAR MDR</h5></th>
-								<th><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加或修改零件</a></th>
-							</tr>
-							<tr class="order-form">
-								<th><h5>问题：zzzzzzzzzzzzzzzzzz</h5></th>
-								<th><h5>所需零件：承诺情况属实 健康码 行程码 在校 体温正常</h5></th>
-								<th><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加或修改零件</a></th>
-							</tr>
+								<tr class="form-head" style="background-color: #ebebeb">
+									<th><label>订单号:00000002</label></th>
+									<th><label>车牌号:SHU6502</label></th>
+									<th><label>维修项目号:502</label></th>
+									<th><label>项目名称:502</label></th>
+									<td><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>都修好了!</a></td>
+								</tr>
+								<tr class="order-form">
+									<th rowspan="2"><h5>具体问题：wwwwwwwwwwwwwww</h5></th>
+									<th><h5>零件号：114</h5></th>
+									<th><h5>零件名：CPU</h5></th>
+									<th><h5>数量：514</h5></th>
+									<th><a data-toggle="modal" data-target="#del_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>删除零件</a></th>
+								</tr>
+								<tr class="order-form">
+									<th><h5>零件号：114</h5></th>
+									<th><h5>零件名：CPU</h5></th>
+									<th><h5>数量：514</h5></th>
+									<th><a data-toggle="modal" data-target="#del_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>删除零件</a></th>
+								</tr>
+								<tr class="order-form">
+									<th colspan="5"><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加零件</a></th>
+								</tr>
 							</tbody>
 						</table>
+						<br>
 						<table class="table  table-bordered table-hover">
 							<tbody>
-							<tr class="order-form" style="background-color: #ebebeb">
-								<th width="40%"><label>订单号:00000003</label></th>
-								<th width="40%"><label>车牌号:SHU6503</label></th>
-								<th width="20%"><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>都修好了!</a></th>
-							</tr>
-							<br>
-							<tr class="order-form">
-								<th><h5>问题：zzzzzzzzzzzzzzzzzz</h5></th>
-								<th><h5>所需零件：承诺情况属实 健康码 行程码 在校 体温正常</h5></th>
-								<th><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加或修改零件</a></th>
-							</tr>
+								<tr class="form-head" style="background-color: #ebebeb">
+									<th><label>订单号:00000003</label></th>
+									<th><label>车牌号:SHU6503</label></th>
+									<th><label>维修项目号:503</label></th>
+									<th><label>项目名称:503</label></th>
+									<td><a href="#" class="btn btn-info btn-md"><span class="glyphicon"></span>都修好了!</a></td>
+								</tr>
+
+								<tr class="order-form">
+									<th rowspan="1"><h5>具体问题：wwwwwwwwwwwwwww</h5></th>
+									<th><h5>零件号：514</h5></th>
+									<th><h5>零件名：ALU</h5></th>
+									<th><h5>数量：114</h5></th>
+									<th><a data-toggle="modal" data-target="#del_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>删除零件</a></th>
+								</tr>
+								<tr class="order-form">
+									<th colspan="5"><a data-toggle="modal" data-target="#add_parts" class="btn btn-info btn-md"><span class="glyphicon"></span>添加零件</a></th>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -431,18 +450,22 @@
 	</div>
 </div>
 
-<!-- 添加或修改零件 -->
+<!-- 添加零件 -->
 <div class="modal fade" id="add_parts" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" style="vertical-align: middle;">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-backdrop="static">&times;</button>
-				<h3 class="modal-title">添加或修改零件</h3>
+				<h3 class="modal-title">添加零件</h3>
 			</div>
 			<div class="modal-body">
 				<img src="/statics/user/工作状态.png" width="20px">
-				<label style="font-size:15px;">添加零件：</label>
+				<label style="font-size:15px;">零件：</label>
 				<input placeholder='输入零件名或拼音：'> </input>
+
+				<img src='/statics/user/里程.png' width='20px' alt="正在加载图片">
+				<label for="EndMile" style='font-size:15px;'>所需零件数量：</label>
+				<input id='EndMile' type='number' min="1" step="1" value="1" style="width: 50px"/>
 			</div>
 			<form class="modal-footer">
 				<button type="button" class="btn btn-primary" onclick="changeStatus()" >确认添加</button>
@@ -557,6 +580,22 @@
 					<embed height="840px" width="90%" src="/show_pdf?attorney_no=00000001" />
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
+
+<!--删除零件 -->
+<div class='modal fade' id='del_parts' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static">
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static">&times;</button>
+				<h3 class='modal-title'>您确定要删除该零件吗？</h3>
+			</div>
+			<form class='modal-footer'>
+				<button type='submit' value='确认' class='btn btn-primary'>确认</button>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+			</form>
 		</div>
 	</div>
 </div>
