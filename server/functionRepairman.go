@@ -16,20 +16,29 @@ func getFinishedArrangement(c *gin.Context) {
 		PartsName   string
 		PartsCount  string
 	}
-	var arrangement []struct {
-		OrderNumber   string
+	type project struct {
 		ProjectNumber string
+		ProjectName   string
 		Parts         []parts
-		Vin           string
-		Status        string
 	}
-	database.Raw("select order_number as order_number, project_number as project_number, vehicle_number as vin, arrangement.progress as status\n"+
-		"from arrangement inner join attorney on arrangement.order_number = attorney.number\n"+
+	var arrangement []struct {
+		OrderNumber string
+		Plate       string
+		Vin         string
+		Project     []project
+	}
+	database.Raw("select distinct order_number as order_number, license_number as plate, vehicle.number as vin\n"+
+		"from arrangement inner join attorney inner join vehicle on arrangement.order_number = attorney.number and attorney.vehicle_number = vehicle.number\n"+
 		"where repairman_number = ? and arrangement.progress = '已完成'", username).Scan(&arrangement)
 	for i := range arrangement {
-		database.Raw("select repair_parts.parts_number as parts_number, parts_name as parts_name, parts_count as parts_count\n"+
-			"from repair_parts inner join parts_overview on repair_parts.parts_number = parts_overview.parts_number\n"+
-			"where order_number = ? and project_number = ?", arrangement[i].OrderNumber, arrangement[i].ProjectNumber).Scan(&arrangement[i].Parts)
+		database.Raw("select arrangement.project_number as project_number, project_name as project_name\n"+
+			"from arrangement inner join time_overview on arrangement.project_number = time_overview.project_number\n"+
+			"where repairman_number = ? and arrangement.progress = '已完成'", username).Scan(&arrangement[i].Project)
+		for j := range arrangement[i].Project {
+			database.Raw("select repair_parts.parts_number as parts_number, parts_name as parts_name, parts_count as parts_count\n"+
+				"from repair_parts inner join parts_overview on repair_parts.parts_number = parts_overview.parts_number\n"+
+				"where project_number = ?", arrangement[i].Project[j].ProjectNumber).Scan(&arrangement[i].Project[j].Parts)
+		}
 	}
 	c.JSON(http.StatusOK, arrangement)
 }
