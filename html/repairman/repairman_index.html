@@ -289,38 +289,38 @@
 						</h4>
 					</div>
 					<div id="collapseThree" class="panel-collapse collapse">
-						<table class="table  table-bordered table-hover" id="finished_table" border="1" style="margin: auto; text-align: center;">
-							<!-- 表头 -->
-							<tbody>
-							<tr class="order-form" style="height: 30px">
-								<th id="number_finished" style="text-align: center; width: 110px"><label>订单号</label></th>
-								<th id="vehicle_number_finished" style="text-align: center"><label>车架号</label></th>
-								<th id="parts_number_finished" style="text-align: center"><label>零件号</label></th>
-								<th id="parts_name_finished" style="text-align: center"><label>零件名</label></th>
-								<th id="parts_count_finished" style="text-align: center"><label>数量</label></th>
-								<th id="finished_detail" style="text-align: center"><label>详情</label></th>
-							</tr>
-							</tbody>
-							<!-- 传参处 -->
-							<tbody id="body_second">
-							<tr class="order-form" >
-								<td rowspan="2"><h5>0000001</h5></td>
-								<td rowspan="2"><h5>12345678901234567</h5></td>
+						<!--<table class="table  table-bordered table-hover" id="finished_table" border="1" style="margin: auto; text-align: center;">
+							&lt;!&ndash; 表头 &ndash;&gt;
+							&lt;!&ndash;<tbody>
+								<tr class="order-form" style="height: 30px">
+									<th id="number_finished" style="text-align: center; width: 110px"><label>订单号</label></th>
+									<th id="vehicle_number_finished" style="text-align: center"><label>车架号</label></th>
+									<th id="parts_number_finished" style="text-align: center"><label>零件号</label></th>
+									<th id="parts_name_finished" style="text-align: center"><label>零件名</label></th>
+									<th id="parts_count_finished" style="text-align: center"><label>数量</label></th>
+									<th id="finished_detail" style="text-align: center"><label>详情</label></th>
+								</tr>
+							</tbody>&ndash;&gt;
+							&lt;!&ndash; 传参处 &ndash;&gt;
+							&lt;!&ndash;<tbody id="body_second">
+								&lt;!&ndash;<tr class="order-form" >
+										<td rowspan="2"><h5>0000001</h5></td>
+										<td rowspan="2"><h5>12345678901234567</h5></td>
 
-								<td><h5>001</h5></td>
-								<td><h5>轮毂</h5></td>
-								<td><h5>1</h5></td>
+										<td><h5>001</h5></td>
+										<td><h5>轮毂</h5></td>
+										<td><h5>1</h5></td>
 
-								<!-- <td rowspan="2"><a href="/show_pdf?attorney_no=00000002" target="_blank">查看pdf</a></td> -->
-								<td rowspan="2"><a data-toggle='modal' data-target='#detail' style="cursor: pointer; text-decoration-line: underline">查看pdf</a></td>
-							</tr>
-							<tr>
-								<td><h5>002</h5></td>
-								<td><h5>后视镜</h5></td>
-								<td><h5>2</h5></td>
-							</tr>
-							</tbody>
-						</table>
+										&lt;!&ndash; <td rowspan="2"><a href="/show_pdf?attorney_no=00000002" target="_blank">查看pdf</a></td> &ndash;&gt;
+										<td rowspan="2"><a data-toggle='modal' data-target='#detail' style="cursor: pointer; text-decoration-line: underline">查看pdf</a></td>
+								</tr>
+								<tr>
+									<td><h5>002</h5></td>
+									<td><h5>后视镜</h5></td>
+									<td><h5>2</h5></td>
+								</tr>&ndash;&gt;
+							</tbody>&ndash;&gt;
+						</table>-->
 						<!--					<table class="table  table-bordered table-hover" id="finished_table" style="margin: auto; text-align: center;">-->
 						<!--						&lt;!&ndash; 表头 &ndash;&gt;-->
 						<!--						<tbody>-->
@@ -918,106 +918,171 @@
 							}
 						})
 	}
+
+
 	function getFinishedArrangement(){
 		//删表
 		try {
-			document.getElementById("finished_table").removeChild(document.getElementById("body_second"))
+			// document.getElementById("ongoing_table").removeChild(document.getElementById("body_son"))
+			$("#collapseThree").empty();
 		} catch (error) {
 		}
 		//建表
 		axios({
 			method: 'get',
-			url: "/get_finished_arrangement"
+			url: '/get_finished_arrangement'
 		})
 				.then(function (response) {
 					var data = response.data;
 					var num = data.length;
 					document.getElementById("repaired").innerHTML = "已完成订单" + "(" + num + ")";
-					var tbody = document.createElement("tbody");
-					tbody.id = "body_second";
-					document.getElementById("finished_table").appendChild(tbody);
-					if (num === 0) {
-						var tr = document.createElement("tr");
-						tbody.appendChild(tr);
-						var td1 = document.createElement("td");
-						tr.appendChild(td1);
-						td1.innerHTML = " 　";
-						var td2 = document.createElement("td");
-						tr.appendChild(td2);
-						var td3 = document.createElement("td");
-						tr.appendChild(td3);
-						var td4 = document.createElement("td");
-						tr.appendChild(td4);
-						var td5 = document.createElement("td");
-						tr.appendChild(td5);
-						var td6 = document.createElement("td");
-						tr.appendChild(td6);
-					}
-					else {
-						for (var i = 0; i < num; i++) {
-							var parts = data[i].Parts;
+
+
+					for(var i = 0; i < num; i++) {
+						var table = document.createElement("table");
+						table.id = "finished_table"+i;
+						document.getElementById("collapseThree").appendChild(table);
+						table.setAttribute("class","table  table-bordered table-hover");
+						var tbody = document.createElement("tbody");
+						table.appendChild(tbody);
+						var tr1 = document.createElement("tr");
+						tbody.appendChild(tr1);
+						tr1.setAttribute("class","order-form");
+						tr1.setAttribute("style","background-color: #ebebeb");
+						var th1 = document.createElement("th");
+						tr1.appendChild(th1);
+						th1.setAttribute("colspan","3");
+						var label1 = document.createElement("label");
+						th1.appendChild(label1);
+						label1.innerHTML = "订单号:"+data[i].OrderNumber;
+						var th2 = document.createElement("th");
+						tr1.appendChild(th2);
+						th2.setAttribute("colspan","2");
+						var label2 = document.createElement("label");
+						th2.appendChild(label2);
+						label2.innerHTML = "车牌号:"+data[i].Plate;
+						var th3 = document.createElement("th");
+						tr1.appendChild(th3);
+						th3.setAttribute("colspan","3");
+						var label3 = document.createElement("label");
+						th3.appendChild(label3);
+						label3.innerHTML = "车牌号:"+data[i].Vin;
+						var th4 = document.createElement("th");
+						tr1.appendChild(th4);
+						th4.setAttribute("colspan","1");
+						var a1 = document.createElement("a");
+						th4.appendChild(a1);
+						a1.setAttribute("href","#");
+						a1.setAttribute("class","btn btn-info btn-md")
+						var span = document.createElement("span");
+						a1.appendChild(span);
+						span.setAttribute("class","glyphicon");
+						a1.innerHTML = "查看pdf";
+						a1.setAttribute("onclick", "window.open('/show_pdf?attorney_no=" + data[i].OrderNumber + "&user_id=" + data[i].Username + "')");
+
+						var project = data[i].Project;
+						var len = project.length;
+						for(var k = 0; k < len; k++){
+							var tbody2 = document.createElement("tbody");
+							table.appendChild(tbody2);
+							var tr2 = document.createElement("tr");
+							tbody2.appendChild(tr2);
+							tr2.setAttribute("class","order-form");
+							var th21 = document.createElement("th");
+							tr2.appendChild(th21);
+							var h521 = document.createElement("h5");
+							th21.appendChild(h521);
+							h521.innerHTML = "维修项目号："+project[k].ProjectNumber;
+							var th22 = document.createElement("th");
+							tr2.appendChild(th22);
+							th22.setAttribute("colspan","2");
+							var h522 = document.createElement("h5");
+							th22.appendChild(h522);
+							h522.innerHTML = "项目名称："+project[k].ProjectName;
+
+
+							var parts = project[k].Parts;
 							var number = parts.length;
-							var tr = document.createElement("tr");
-							tbody.appendChild(tr);
-							var td1 = document.createElement("td");
-							tr.appendChild(td1);
-							td1.innerHTML = data[i].OrderNumber;
-							var td2 = document.createElement("td");
-							tr.appendChild(td2);
-							td2.innerHTML = data[i].Vin
 							if(number === 0){
-								let td3 = document.createElement("td");
-								tr.appendChild(td3);
-								let td4 = document.createElement("td");
-								tr.appendChild(td4);
-								let td5 = document.createElement("td");
-								tr.appendChild(td5);
-								let td6 = document.createElement("td");
-								tr.appendChild(td6);
-								td6.innerHTML = "<font color=#0000FF><u>查看pdf</u></font>";
-								td6.setAttribute("style", "cursor:pointer");
-								td6.setAttribute("onclick", "window.open('/show_pdf?attorney_no=" + data[i].OrderNumber + "&user_id=" + data[i].Username + "')");
+								let th24 = document.createElement("th");
+								tr2.appendChild(th24);
+								th24.setAttribute("colspan","2");
+								let h524 = document.createElement("h5");
+								th24.appendChild(h524);
+								let th25 = document.createElement("th");
+								tr2.appendChild(th25);
+								th25.setAttribute("colspan","2");
+								let h525 = document.createElement("h5");
+								th25.appendChild(h525);
+								let th26 = document.createElement("th");
+								tr2.appendChild(th26);
+								th26.setAttribute("colspan","2");
+								let h526 = document.createElement("h5");
+								th26.appendChild(h526);
+								let th27 = document.createElement("th");
+								tr2.appendChild(th27);
+								let a = document.createElement("a");
+								th27.appendChild(a);
+								a.setAttribute("data-toggle","modal");
+								a.setAttribute("data-target","#add_parts");
+								a.setAttribute("class","btn btn-info btn-md");
+								let span2 = document.createElement("span");
+								a.appendChild(span2);
+								span2.setAttribute("class","glyphicon");
+								a.innerHTML = "添加零件";
 							}
 							else{
-								td1.setAttribute("rowspan",number);
-								td2.setAttribute("rowspan",number);
-								var j = 0;
-								let td3 = document.createElement("td");
-								tr.appendChild(td3);
-								td3.innerHTML = parts[j].PartsNumber;
-								let td4 = document.createElement("td");
-								tr.appendChild(td4);
-								td4.innerHTML = parts[j].PartsName;
-								let td5 = document.createElement("td");
-								tr.appendChild(td5);
-								td5.innerHTML = parts[j].PartsCount;
-								let td6 = document.createElement("td");
-								tr.appendChild(td6);
-								let a = document.createElement("a");
-								td6.appendChild(a);
-								a.innerHTML = "添加";
-								td6.setAttribute("rowspan",number);
-								td6.innerHTML = "<font color=#0000FF><u>查看pdf</u></font>";
-								td6.setAttribute("style", "cursor:pointer");
-								td6.setAttribute("onclick", "window.open('/show_pdf?attorney_no=" + data[i].OrderNumber + "&user_id=" + data[i].Username + "')");
+								th21.setAttribute("rowspan",number);
+								th22.setAttribute("rowspan",number);
+								let th24 = document.createElement("th");
+								tr2.appendChild(th24);
+								th24.setAttribute("colspan","2");
+								let h524 = document.createElement("h5");
+								th24.appendChild(h524);
+								h524.innerHTML = "零件号：" + parts[0].PartsNumber;
+								let th25 = document.createElement("th");
+								tr2.appendChild(th25);
+								th25.setAttribute("colspan","2");
+								let h525 = document.createElement("h5");
+								th25.appendChild(h525);
+								h525.innerHTML = "零件名：" + parts[0].PartsName;
+								let th26 = document.createElement("th");
+								tr2.appendChild(th26);
+								th26.setAttribute("colspan","2");
+								let h526 = document.createElement("h5");
+								th26.appendChild(h526);
+								h526.innerHTML = "零件数量：" + parts[0].PartsCount;
 								for(j = 1; j < number; j++){
-									let tr1 = document.createElement("tr");
-									tbody.appendChild(tr1);
-									let td3 = document.createElement("td");
-									tr1.appendChild(td3);
-									td3.innerHTML = parts[j].PartsNumber;
-									let td4 = document.createElement("td");
-									tr1.appendChild(td4);
-									td4.innerHTML = parts[j].PartsName;
-									let td5 = document.createElement("td");
-									tr1.appendChild(td5);
-									td5.innerHTML = parts[j].PartsCount;
+									let tr3 = document.createElement("tr");
+									tbody2.appendChild(tr3);
+									tr3.setAttribute("class","order-form");
+									let th31 = document.createElement("th");
+									tr3.appendChild(th31);
+									th31.setAttribute("colspan","2");
+									let h531 = document.createElement("h5");
+									th31.appendChild(h531);
+									h531.innerHTML = "零件号：" + parts[j].PartsNumber;
+									let th32 = document.createElement("th");
+									tr3.appendChild(th32);
+									th32.setAttribute("colspan","2");
+									let h532 = document.createElement("h5");
+									th32.appendChild(h532);
+									h532.innerHTML = "零件名：" + parts[j].PartsName;
+									let th33 = document.createElement("th");
+									tr3.appendChild(th33);
+									th33.setAttribute("colspan","2");
+									let h533 = document.createElement("h5");
+									th33.appendChild(h533);
+									h533.innerHTML = "零件数量：" + parts[j].PartsCount;
 								}
 							}
 						}
+
+
 					}
 				})
 	}
+
 function finishRepairment(param1,param2,param3){
 	let formData = new FormData();
 	formData.append("attorney_no", param1);
