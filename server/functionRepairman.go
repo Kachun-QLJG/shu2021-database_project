@@ -235,7 +235,7 @@ func addPartsForProject(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{"status": "成功", "data": ""})
 		}
 	} else { //更改数量
-		database.Model(&repairParts).Update("parts_count", partsCount)
+		database.Model(&repairParts).Update("parts_count", partsCount+repairParts.PartsCount)
 		c.JSON(http.StatusOK, gin.H{"status": "成功", "data": ""})
 	}
 }
