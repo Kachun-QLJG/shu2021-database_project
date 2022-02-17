@@ -526,6 +526,7 @@
 
 							<label for="classification" style='font-size:15px;width: 60px; margin-left: 158px'>　工种：</label>
 							<select id='classification' onchange="getCorrespondingRepairman()">
+								<option selected="selected" disabled="disabled"  style='display: none' value=''></option>
 								<option>机修工</option>
 								<option>电工</option>
 								<option>钣金工</option>
@@ -534,6 +535,7 @@
 
 							<label for="repairman_name" style='font-size:15px;width: 115px;'>　维修工姓名：</label>
 							<select id='repairman_name'>
+								<option selected="selected" disabled="disabled"  style='display: none' value=''></option>
 								<option>奚嘉骏</option>
 								<option>伍慕庭</option>
 								<option>夏逸凡</option>
@@ -1070,17 +1072,17 @@
 	}
 
 	function getCorrespondingRepairman(){
-		try{ $("#repairman_name1").empty()
+		try{ $("#repairman_name").empty()
 		} catch(error){}
 		axios({
 			method: 'get',
-			url: '/get_corresponding_repairman?type=' + document.getElementById("classification1").value
+			url: '/get_corresponding_repairman?type=' + document.getElementById("classification").value
 		})
 				.then(function (response) {
 					var num = response.data.length;
 					for(var i = 0; i < num; i++){
 						var option = document.createElement("option");
-						document.getElementById("repairman_name1").appendChild(option);
+						document.getElementById("repairman_name").appendChild(option);
 						option.innerHTML = response.data[i].Name;
 					}
 				})
