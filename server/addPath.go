@@ -33,16 +33,18 @@ func addPath(r *gin.Engine) {
 	r.GET("/get_full_attorney", authMiddleWare(), checkPermission(), filterUser(), getFullAttorney)                 //返回完整委托书·所有内容（用戶）
 
 	//----------业务员路径----------
-	r.GET("/get_project_time", authMiddleWare(), checkPermission(), filterSalesman(), getProjectTime)                       //业务员根据维修项目来获取预计维修时间
-	r.GET("/search_for_projects", authMiddleWare(), checkPermission(), filterSalesman(), searchForProjects)                 //寻找维修项目
-	r.GET("/get_salesman_info", authMiddleWare(), checkPermission(), filterSalesman(), getSalesmanInfo)                     //获取业务员个人信息
-	r.GET("/get_relating_attorney", authMiddleWare(), checkPermission(), filterSalesman(), getRelatingAttorney)             //业务员获与自己相关的订单
-	r.GET("/s_check_orders", authMiddleWare(), checkPermission(), filterSalesman(), startSCheckOrders)                      //进入业务员查看订单页面
-	r.GET("/take_orders", authMiddleWare(), checkPermission(), filterSalesman(), startTakeOrders)                           //进入接单界面
-	r.GET("/get_corresponding_repairman", authMiddleWare(), checkPermission(), filterSalesman(), getCorrespondingRepairman) //根据维修员种类返回相应种类的维修员信息
+	r.GET("/get_project_time", authMiddleWare(), checkPermission(), filterSalesman(), getProjectTime)                            //业务员根据维修项目来获取预计维修时间
+	r.GET("/search_for_projects", authMiddleWare(), checkPermission(), filterSalesman(), searchForProjects)                      //寻找维修项目
+	r.GET("/get_salesman_info", authMiddleWare(), checkPermission(), filterSalesman(), getSalesmanInfo)                          //获取业务员个人信息
+	r.GET("/get_relating_attorney", authMiddleWare(), checkPermission(), filterSalesman(), getRelatingAttorney)                  //业务员获与自己相关的订单
+	r.GET("/s_check_orders", authMiddleWare(), checkPermission(), filterSalesman(), startSCheckOrders)                           //进入业务员查看订单页面
+	r.GET("/take_orders", authMiddleWare(), checkPermission(), filterSalesman(), startTakeOrders)                                //进入接单界面
+	r.GET("/get_corresponding_repairman", authMiddleWare(), checkPermission(), filterSalesman(), getCorrespondingRepairman)      //根据维修员种类返回相应种类的维修员信息
+	r.GET("/get_corresponding_repairman_no", authMiddleWare(), checkPermission(), filterSalesman(), getCorrespondingRepairmanNo) //根据维修员姓名返回维修员编号
 	//r.GET("/get_finished_attorney_s", authMiddleWare(), checkPermission(), filterSalesman(), getFinishedAttorneyS)          //寻找已完成的委托（业务员）
 	r.GET("/get_full_attorney_s", authMiddleWare(), checkPermission(), filterSalesman(), getFullAttorneyS) //获得委托的详细信息（业务员）
 	r.GET("/get_arrangements", authMiddleWare(), checkPermission(), filterSalesman(), getArrangements)     //获得某一订单的派工单
+	r.GET("/get_project_no", authMiddleWare(), checkPermission(), filterSalesman(), getProjectNumber)      //根据项目名称获取项目编号
 
 	//----------维修员路径----------
 	r.GET("/search_for_parts", authMiddleWare(), checkPermission(), filterRepairman(), searchForParts)                     //寻找零件

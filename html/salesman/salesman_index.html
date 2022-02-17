@@ -127,11 +127,6 @@
 	</script>
 </head>
 <body bgcolor="#f0f8ff" id="body">
-<!--
-<script src="/statics/js/universal.js"></script>
-<script src="/statics/js/salesman.js"></script>
--->
-
 <!-- 标题 -->
 <div class='navbar-header' id='head1'>
 	<a class='navbar-brand'>502汽修厂管理系统</a>
@@ -451,6 +446,16 @@
 					</div>
 
 					<div class='col-md-6'>
+						<div id="time_request">
+							<img src='/statics/user/维修类型.png' width='20px' alt="正在加载图片">
+							<label style='font-size:15px;width: 80px;'>维修类型：</label>
+							<input id='time_request1' name="time_request" type='radio' value="加急" />
+							<label for="time_request1">加急</label>
+							<input id='time_request2' name="time_request" type='radio' value="普通" checked="checked"/>
+							<label for="time_request2">普通</label>
+							<br>
+						</div>
+
 						<div id="type_selection">
 							<img src='/statics/user/维修类型.png' width='20px' alt="正在加载图片">
 							<label style='font-size:15px;width: 80px;'>维修类型：</label>
@@ -509,19 +514,12 @@
 						<br>
 						<div id="detail">
 							<div id="fill_project" style="display: inline">
-								<!--				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">-->
-								<label for="project" style='font-size:15px;width: 90px;'>具体问题：</label>
-								<!--							<input id='project1' type='text' onblur="delProjectResults()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" placeholder='项目名称'/>-->
+								<label for="project" style='font-size:15px;width: 90px;'>项目名：</label>
 								<div id="project_input" style="margin-top: 10px;display: inline; width: 90px; position: absolute;">
 									<input class="detail" id='project' list="projects" onchange="getProjectTime()" onkeydown="closeFlagProjects()" onkeyup="openFlagProjects()" placeholder='项目名称'  type='text'/>
-																	<div id="projects">
-																	</div>
+									<div id="projects">
+									</div>
 								</div>
-								<!--							<ul id="datalist" style="display: inline">-->
-								<!--								<li>检查</li>-->
-								<!--								<li>维修</li>-->
-								<!--							</ul>-->
-								<!--						<ul id="datalist"></ul>-->
 							</div>
 
 							<label for="classification" style='font-size:15px;width: 60px; margin-left: 158px'>　工种：</label>
@@ -542,20 +540,21 @@
 								<option>张霖锋</option>
 							</select>
 
-							<label for="predict_finish_time" style='font-size:15px;width: 120px;'>　预计所需时间：</label>
-							<input class="detail" id="predict_finish_time" type='number' min="0" max="10000" step="0.5" placeholder='预计所需时间' style="width: 130px"/>
-
-							<img id="add_repairman" onclick="if(checkSubmit('detail'))addRepairman()" src="/statics/user/添加.png" alt="正在加载图片">
+							<label for="predict_finish_time" style='font-size:15px;width: 120px;'>　工时：</label>
+							<input class="detail" id="predict_finish_time" type='number' min="0" max="10000" step="0.5" placeholder='工时' style="width: 130px"/>
+							<img id="add_repairman" onclick="if(checkSubmit('detail'))addProject()" src="/statics/user/添加.png" alt="正在加载图片">
 						</div>
 
 						<div style="padding-right: 100px">
 							<table id="detailTable" class="table  table-bordered table-hover" >
 								<thead>
 									<tr class="order-form">
-										<th><label>具体问题</label></th>
+										<th><label>项目号</label></th>
+										<th><label>项目名</label></th>
+										<th><label>工时</label></th>
 										<th><label>工种</label></th>
-										<th><label>维修工</label></th>
-										<th><label>预计所需时间</label></th>
+										<th><label>维修员编号</label></th>
+										<th><label>维修员姓名</label></th>
 									</tr>
 								</thead>
 								<tbody id="detailTableRow">
@@ -1152,6 +1151,7 @@
 					var endMile = document.getElementById('EndMile');
 					endMile.value = res.StartMile;
 				})
+		getProjects(attorneyNo);
 	}
 
 	function getCustomerInfo(){
@@ -1161,30 +1161,126 @@
 		})
 	}
 
-	function addRepairman(){
-		var specific_problem = document.getElementById("project").value;
-		var type = document.getElementById("classification").value;
-		var repairman_name = document.getElementById("repairman_name").value;
-		var time = document.getElementById("predict_finish_time").value;
-		var tr1 = document.createElement("tr");
-		tr1.setAttribute("class","order-form");
-		document.getElementById("detailTableRow").appendChild(tr1);
-		var td1 = document.createElement("td");
-		tr1.appendChild(td1);
-		td1.innerHTML = specific_problem;
-		document.getElementById("project").value = "";
-		var td2 = document.createElement("td");
-		tr1.appendChild(td2);
-		td2.innerHTML = type;
-		var td3 = document.createElement("td");
-		tr1.appendChild(td3);
-		td3.innerHTML = repairman_name;
-		var td4 = document.createElement("td");
-		tr1.appendChild(td4);
-		td4.innerHTML = time;
-
-		document.getElementById("predict_finish_time").value = "";
+	function addProject(){
+		var attorney_no = document.getElementById("order_number").value;
+		//向数据库发送项目信息
+		var project = document.getElementById("project").value;
+		axios({
+			method: 'get',
+			url: '/get_project_no?project_name='+ project
+		})
+				.then(function (response_1) {
+					var project_no = response_1.data.ProjectNumber;
+					// alert(project_no);
+					let formData = new FormData();
+					formData.append("attorney_no", attorney_no);
+					formData.append("project_no", project_no);
+					var repairman_name = document.getElementById("repairman_name").value;
+					axios({
+						method: 'get',
+						url: '/get_corresponding_repairman_no?name='+ repairman_name
+					})
+							.then(function (response_2) {
+								var repairman_no = response_2.data.Number;
+								alert(repairman_no)
+								formData.append("repairman_no", repairman_no);
+								formData.append("work_hour", document.getElementById("predict_finish_time").value);
+								let config = {
+									headers: {"Content-Type": "multipart/form-data"}
+								};
+								axios.post("/add_project_for_attorney", formData, config);
+							})
+					})
+		setTimeout(function(){getProjects(attorney_no)}, 3000);
 	}
+
+	function getProjects(attorney_no) {
+		try{document.getElementById("detailTable").removeChild(document.getElementById("detailTableRow"))
+		} catch(error){}
+		var table = document.getElementById("detailTable");
+		var tbody = document.createElement("tbody");
+		tbody.setAttribute("id", "detailTableRow");
+		table.appendChild(tbody);
+		axios({
+			method: 'get',
+			url: '/get_arrangements?attorney_no='+ attorney_no
+		})
+				.then(function (response) {
+					var data = response.data;
+					for (var i = 0; i < data.length; i++) {
+						// alert(i);
+						var arrangement = data[i];
+						var project_number = arrangement.ProjectNumber;
+						var project_name = arrangement.ProjectName;
+						var project_time = arrangement.ProjectTime;
+						var repairmen = arrangement.Repairman;
+						for (var j = 0; j < repairmen.length; j++) {
+							var repairman = repairmen[j];
+							var type = repairman.Type;
+							var number = repairman.Number;
+							var name = repairman.Name;
+
+							var tr = document.createElement("tr");
+							tr.setAttribute("class", "order-form");
+							tbody.appendChild(tr);
+
+							var td1 = document.createElement("td");
+							tr.appendChild(td1);
+							td1.innerHTML = project_number;
+							// alert(project_number);
+
+							var td2 = document.createElement("td");
+							tr.appendChild(td2);
+							td2.innerHTML = project_name;
+							// alert(project_name);
+
+							var td3 = document.createElement("td");
+							tr.appendChild(td3);
+							td3.innerHTML = project_time;
+							// alert(project_time);
+
+							var td4 = document.createElement("td");
+							tr.appendChild(td4);
+							td4.innerHTML = type;
+							// alert(type);
+
+							var td5 = document.createElement("td");
+							tr.appendChild(td5);
+							td5.innerHTML = number;
+							// alert(number);
+
+							var td6 = document.createElement("td");
+							tr.appendChild(td6);
+							td6.innerHTML = name;
+
+
+
+							// var tr1 = document.createElement("tr");
+							// tr1.setAttribute("class","order-form");
+							// document.getElementById("detailTableRow").appendChild(tr1);
+							//
+							// td1.innerHTML = specific_problem;
+							// document.getElementById("project").value = "";
+							// var td2 = document.createElement("td");
+							// tr1.appendChild(td2);
+							// td2.innerHTML = type;
+							// var td3 = document.createElement("td");
+							// tr1.appendChild(td3);
+							// td3.innerHTML = repairman_name;
+							// var td4 = document.createElement("td");
+							// tr1.appendChild(td4);
+							// td4.innerHTML = time;
+							//
+							// document.getElementById("predict_finish_time").value = "";
+						}
+
+					}
+				})
+	}
+
+		// axios.post("/get_project_no", formData, config).then(res => {
+
+
 	// var EventUtil = {
 	// 	on:function(elem,type,handler){
 	// 		if(elem.addEventListener){

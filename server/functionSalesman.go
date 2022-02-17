@@ -36,6 +36,7 @@ func saveAttorney(c *gin.Context) {
 	c.String(http.StatusOK, "保存成功！")
 }
 
+// 获取项目详情
 func getArrangements(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	attorneyNo := c.Query("attorney_no")
@@ -202,6 +203,19 @@ func getFullAttorneyS(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
+// 通过项目名称获取项目编号
+func getProjectNumber(c *gin.Context) {
+	projectName := c.Query("project_name")
+	var project TimeOverview
+	database.First(&project, "project_name = ?", projectName)
+	var result struct {
+		ProjectNumber string
+	}
+	result.ProjectNumber = project.ProjectNumber
+	c.JSON(http.StatusOK, result)
+}
+
+// 订单添加项目
 func addProjectForAttorney(c *gin.Context) {
 	attorneyNo := c.PostForm("attorney_no")
 	projectNo := c.PostForm("project_no")
@@ -233,6 +247,7 @@ func addProjectForAttorney(c *gin.Context) {
 	database.Create(&notice) //添加到通知表
 }
 
+// 通过维修工编号获取维修工信息
 func getCorrespondingRepairman(c *gin.Context) {
 	repairmanType := c.Query("type")
 	var result []struct {
@@ -241,6 +256,18 @@ func getCorrespondingRepairman(c *gin.Context) {
 		CurrentWorkHour float64
 	}
 	database.Table("repairman").Order("current_work_hour").Find(&result, "type = ? and status = '正常'", repairmanType)
+	c.JSON(http.StatusOK, result)
+}
+
+// 通过维修工姓名获取维修工编号
+func getCorrespondingRepairmanNo(c *gin.Context) {
+	repairmanName := c.Query("name")
+	var repairman Repairman
+	database.First(&repairman, "name = ?", repairmanName)
+	var result struct {
+		Number string
+	}
+	result.Number = repairman.Number
 	c.JSON(http.StatusOK, result)
 }
 
