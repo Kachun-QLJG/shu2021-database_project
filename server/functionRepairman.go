@@ -33,7 +33,7 @@ func getFinishedArrangement(c *gin.Context) {
 	for i := range arrangement {
 		database.Raw("select arrangement.project_number as project_number, project_name as project_name\n"+
 			"from arrangement inner join time_overview on arrangement.project_number = time_overview.project_number\n"+
-			"where repairman_number = ? and arrangement.progress = '已完成'", username).Scan(&arrangement[i].Project)
+			"where repairman_number = ? and arrangement.progress = '已完成' and order_number = ?", username, arrangement[i].OrderNumber).Scan(&arrangement[i].Project)
 		for j := range arrangement[i].Project {
 			database.Raw("select repair_parts.parts_number as parts_number, parts_name as parts_name, parts_count as parts_count\n"+
 				"from repair_parts inner join parts_overview on repair_parts.parts_number = parts_overview.parts_number\n"+
@@ -83,7 +83,7 @@ func getProcessingArrangement(c *gin.Context) {
 		}
 		database.Raw("select arrangement.project_number as project_number, project_name as project_name, "+timeType+" as project_time\n"+
 			"from arrangement inner join time_overview on arrangement.project_number = time_overview.project_number\n"+
-			"where repairman_number = ? and arrangement.progress = '维修中'", username).Scan(&arrangement[i].Project)
+			"where repairman_number = ? and arrangement.progress = '维修中' and order_number = ?", username, arrangement[i].OrderNumber).Scan(&arrangement[i].Project)
 		for j := range arrangement[i].Project {
 			database.Raw("select repair_parts.parts_number as parts_number, parts_name as parts_name, parts_count as parts_count\n"+
 				"from repair_parts inner join parts_overview on repair_parts.parts_number = parts_overview.parts_number\n"+
