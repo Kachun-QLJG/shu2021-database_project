@@ -173,6 +173,9 @@
 									<th><label>订单号</label></th>
 									<th><label>车牌号</label></th>
 									<th><label>车架号</label></th>
+									<th><label>维修项目号</label></th>
+									<th><label>维修项目名</label></th>
+									<th><label>具体问题</label></th>
 									<th><label>所属业务员</label></th>
 									<th><label>确认</label></th>
 								</tr>
@@ -724,11 +727,26 @@
 						tr.appendChild(td4);
 						var h54 = document.createElement("h5");
 						td4.appendChild(h54);
-						h54.innerHTML = data[i].Salesman;
+						h54.innerHTML = data[i].ProjectNumber;
 						var td5 = document.createElement("td");
 						tr.appendChild(td5);
+						var h55 = document.createElement("h5");
+						td5.appendChild(h55);
+						h55.innerHTML = data[i].ProjectName;
+						var td6 = document.createElement("td");
+						tr.appendChild(td6);
+						var h56 = document.createElement("h5");
+						td6.appendChild(h56);
+						h56.innerHTML = data[i].SpecificProblem;
+						var td7 = document.createElement("td");
+						tr.appendChild(td7);
+						var h57 = document.createElement("h5");
+						td7.appendChild(h57);
+						h57.innerHTML = data[i].SpecificProblem;
+						var td8 = document.createElement("td");
+						tr.appendChild(td8);
 						var a = document.createElement("a");
-						td5.appendChild(a);
+						td8.appendChild(a);
 						a.setAttribute("class", "btn btn-info btn-md");
 						var span = document.createElement("span");
 						a.appendChild(span);
@@ -1080,7 +1098,6 @@ function getParam(param1,param2){
 	document.getElementById("button_submit").class = param2;
 }
 function addPartsForProject(){
-	//alert(document.getElementById("part").name);
 	let formData = new FormData();
 	formData.append("attorney_no", document.getElementById("EndMile").class);
 	formData.append("project_no", document.getElementById("button_submit").class);

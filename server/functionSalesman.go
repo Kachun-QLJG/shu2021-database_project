@@ -18,8 +18,8 @@ func saveAttorney(c *gin.Context) {
 	specificProblem := c.PostForm("specific_problem")
 	outRange := c.PostForm("out_range")
 	predictFinishTime := c.PostForm("predict_finish_time")
-	endPetrol := c.PostForm("end_petrol")
-	endMile := c.PostForm("end_mile")
+	endPetrol, _ := strconv.ParseFloat(c.PostForm("end_petrol"), 64)
+	endMile, _ := strconv.ParseFloat(c.PostForm("end_mile"), 64)
 	var attorney Attorney
 	result := database.First(&attorney, "number = ? and salesman_id = ?", attorneyNo, username)
 	if result.RowsAffected == 0 {
@@ -27,7 +27,7 @@ func saveAttorney(c *gin.Context) {
 		return
 	}
 	database.Model(&attorney).Update("repair_type", repairType)
-	database.Model(&attorney).Update("repair_classification", repairClassification)
+	database.Model(&attorney).Update("classification", repairClassification)
 	database.Model(&attorney).Update("predict_finish_time", predictFinishTime)
 	database.Model(&attorney).Update("specific_problem", specificProblem)
 	database.Model(&attorney).Update("end_petrol", endPetrol)
@@ -129,6 +129,8 @@ func getFullAttorneyS(c *gin.Context) {
 		VehicleVin           string
 		StartPetrol          float64
 		StartMile            float64
+		EndPetrol            float64
+		EndMile              float64
 		PayMethod            string
 		DiscountRate         int
 		StartTime            string
@@ -146,6 +148,8 @@ func getFullAttorneyS(c *gin.Context) {
 	result.VehicleVin = vehicle.Number
 	result.StartPetrol = attorney.StartPetrol
 	result.StartMile = attorney.StartMile
+	result.EndPetrol = attorney.EndPetrol
+	result.EndMile = attorney.EndMile
 	result.PayMethod = attorney.PayMethod
 	result.DiscountRate = user.DiscountRate
 	result.StartTime = attorney.StartTime

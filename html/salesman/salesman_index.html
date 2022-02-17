@@ -458,7 +458,7 @@
 
 						<div id="type_selection">
 							<img src='/statics/user/维修类型.png' width='20px' alt="正在加载图片">
-							<label style='font-size:15px;width: 80px;'>维修类型：</label>
+							<label style='font-size:15px;width: 80px;'>作业分类：</label>
 							<input id='repair_type1' name="repair_type" type='radio' value="小型" />
 							<label for="repair_type1">小型</label>
 							<input id='repair_type2' name="repair_type" type='radio' value="中型" checked="checked"/>
@@ -471,34 +471,34 @@
 						<div id="malfunction_detail">
 							<img src='/statics/user/车辆故障.png' width='20px' style="vertical-align: top" alt="正在加载图片">
 							<label for='DetailedProblem' style='font-size:15px;width: 80px;vertical-align: top'>详细故障：</label>
-							<textarea id='DetailedProblem' placeholder='请详细描述顾客车辆的故障' style="width: 300px;height: 100px;"></textarea>
+							<textarea class="edit_attorney" id='DetailedProblem' placeholder='请详细描述顾客车辆的故障' style="width: 300px;height: 100px;"></textarea>
 							<br>
 						</div>
 
 						<div id="excluded">
 							<img src='/statics/user/车辆故障.png' width='20px' style="vertical-align: top" alt="正在加载图片">
 							<label for='RoughProblem' style='font-size:15px;width: 80px;vertical-align: top'>非保修：</label>
-							<textarea id='ExcludedParts' placeholder='请填写车辆非保修部分：' style="width: 300px;height: 100px;"></textarea>
+							<textarea class="edit_attorney" id='ExcludedParts' placeholder='请填写车辆非保修部分：' style="width: 300px;height: 100px;"></textarea>
 							<br>
 						</div>
 
 						<br>
 						<img src='/statics/user/进场时间.png' width='20px' alt="正在加载图片">
 						<label for="ExpectedEndTime" style='font-size:15px;width: 110px;'>预计出厂时间：</label>
-						<input id='ExpectedEndTime' type="date" min ="2022-01-01" max ="2999-12-31" class="measureDate" placeholder="请选择日期" onblur="dateModify(this.value)">
+						<input id='ExpectedEndTime' type="date" min ="2022-01-01" max ="2999-12-31" class="measureDate edit_attorney" placeholder="请选择日期" onblur="dateModify(this.value)">
 						<!-- <label for='StartTime'></label><input id='StartTime' type='text'/> -->
 						<br>
 						<br>
 
 						<img src='/statics/user/油量.png' width='20px' alt="正在加载图片">
 						<label for="EndPetrol" style='font-size:15px;width: 80px;'>出场油量：</label>
-						<input id='EndPetrol' type='number' min="0" max="100" step="0.1" placeholder='进场时车辆所剩油量' style="width: 130px"/> L
+						<input class="edit_attorney" id='EndPetrol' type='number' min="0" max="100" step="0.1" placeholder='进场时车辆所剩油量' style="width: 130px"/> L
 						<br>
 						<br>
 
 						<img src='/statics/user/里程.png' width='20px' alt="正在加载图片">
 						<label for="EndMile" style='font-size:15px;width: 80px;'>出场里程：</label>
-						<input id='EndMile' type='number' min="0" step="0.1" placeholder='进场时车辆里程数' style="width: 130px"/> km
+						<input class="edit_attorney" id='EndMile' type='number' min="0" step="0.1" placeholder='进场时车辆里程数' style="width: 130px"/> km
 						<br>
 						<br>
 
@@ -534,10 +534,6 @@
 							<label for="repairman_name" style='font-size:15px;width: 115px;'>　维修工姓名：</label>
 							<select id='repairman_name'>
 								<option selected="selected" disabled="disabled"  style='display: none' value=''></option>
-								<option>奚嘉骏</option>
-								<option>伍慕庭</option>
-								<option>夏逸凡</option>
-								<option>张霖锋</option>
 							</select>
 
 							<label for="predict_finish_time" style='font-size:15px;width: 120px;'>　工时：</label>
@@ -601,7 +597,7 @@
 			</div>
 			<form class='modal-footer'>
 <!--				<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>-->
-				<button type='button' class='btn btn-primary' onclick='checkVehicle()' id='confirmAddVehicle'>确认新增</button>
+				<button type='button' class='btn btn-primary' onclick="if(checkSubmit('edit_attorney'))saveAttorney()&&dateModify(document.getElementById('ExpectedEndTime').value)" id='confirmAddVehicle'>确认新增</button>
 				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 			</form>
 		</div>
@@ -1132,10 +1128,17 @@
 					var startMile = document.getElementById('StartMile');
 					startMile.value = res.StartMile;
 
-					var repairTypes = document.getElementsByName('repair_type');
-					for(var i = 0; i < 3; i++){
-						if(repairTypes[i].value === res.RepairType){
-							repairTypes[i].checked = "checked";
+					var repairTypes1 = document.getElementsByName('time_request');
+					for(var j = 0; j < 2; j++){
+						if(repairTypes1[j].value === res.RepairType){
+							repairTypes1[j].checked = "checked";
+							break;
+						}
+					}
+					var repairTypes2 = document.getElementsByName('repair_type');
+					for(var k = 0; k < 3; k++){
+						if(repairTypes2[k].value === res.RepairClassification){
+							repairTypes2[k].checked = "checked";
 							break;
 						}
 					}
@@ -1147,9 +1150,9 @@
 					expectedEndTime.value = res.PredictFinishTime
 					// 这里没有改好
 					var endPetrol = document.getElementById('EndPetrol');
-					endPetrol.value = res.StartPetrol;
+					endPetrol.value = res.EndPetrol;
 					var endMile = document.getElementById('EndMile');
-					endMile.value = res.StartMile;
+					endMile.value = res.EndMile;
 				})
 		getProjects(attorneyNo);
 	}
@@ -1208,7 +1211,6 @@
 				.then(function (response) {
 					var data = response.data;
 					for (var i = 0; i < data.length; i++) {
-						// alert(i);
 						var arrangement = data[i];
 						var project_number = arrangement.ProjectNumber;
 						var project_name = arrangement.ProjectName;
@@ -1277,7 +1279,65 @@
 					}
 				})
 	}
-
+	function saveAttorney(){
+		let formData = new FormData();
+		formData.append("attorney_no", document.getElementById("order_number").value);
+		var selections1 = document.getElementsByName('time_request');;
+		for(var i = 0; i < 2; i++){
+			if(selections1[i].checked){
+				formData.append("repair_type", selections1[i].value);
+				break;
+			}
+		}
+		var selections2 = document.getElementsByName('repair_type');
+		for(var j = 0; j < 3; j++){
+			if(selections2[j].checked){
+				formData.append("repair_classification", selections2[j].value);
+				break;
+			}
+		}
+		formData.append("specific_problem", document.getElementById("DetailedProblem").value);
+		formData.append("out_range", document.getElementById("ExcludedParts").value);
+		formData.append("predict_finish_time", document.getElementById("ExpectedEndTime").value);
+		formData.append("end_petrol", document.getElementById("EndPetrol").value);
+		formData.append("end_mile",  document.getElementById("EndMile").value);
+		let config = {
+			headers: {"Content-Type": "multipart/form-data"}
+		};
+		axios.post("/save_attorney", formData, config).then(res => {
+			alert(res.data);
+			if(res.data === "保存成功！"){
+				location.reload();
+			}
+		})
+	}
+	function dateModify(param){
+		if(param === ""){
+			alert("日期不合法");
+			document.getElementById("StartTime").value = "";
+			return false;
+		}
+		else{
+			var year = param[0] + param[1] + param[2] + param[3];
+			year = parseInt(year);
+			var month = param[5] + param[6];
+			month = parseInt(month);
+			var date = param[8] + param[9];
+			date = parseInt(date);
+			if(year < 2022 ){
+				document.getElementById("ExpectedEndTime").value = "2022-01-01";
+			}
+			else if(year > 2999 ){
+				document.getElementById("ExpectedEndTime").value = "2099-12-31";
+			}
+			if(month === 4 || month === 6 || month === 9 || month === 11){
+				if(date === 31){
+					document.getElementById("ExpectedEndTime").value = param[0] + param[1] + param[2] + param[3] + param[4] + param[5] + param[6] + param[7] + "30";
+				}
+			}
+			return true;
+		}
+	}
 		// axios.post("/get_project_no", formData, config).then(res => {
 
 
