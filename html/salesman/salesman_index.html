@@ -1182,7 +1182,7 @@
 					})
 							.then(function (response_2) {
 								var repairman_no = response_2.data.Number;
-								alert(repairman_no)
+								// alert(repairman_no)
 								formData.append("repairman_no", repairman_no);
 								formData.append("work_hour", document.getElementById("predict_finish_time").value);
 								let config = {
@@ -1191,7 +1191,7 @@
 								axios.post("/add_project_for_attorney", formData, config);
 							})
 					})
-		setTimeout(function(){getProjects(attorney_no)}, 3000);
+		setTimeout(function(){getProjects(attorney_no)}, 5000);
 	}
 
 	function getProjects(attorney_no) {

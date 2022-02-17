@@ -245,6 +245,7 @@ func addProjectForAttorney(c *gin.Context) {
 		sTime,
 	}
 	database.Create(&notice) //添加到通知表
+	c.JSON(http.StatusOK, gin.H{"status": "成功", "data": ""})
 }
 
 // 通过维修工编号获取维修工信息
