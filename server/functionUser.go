@@ -185,16 +185,16 @@ func getFinishedAttorney(c *gin.Context) {
 	var user User
 	database.First(&user, "contact_tel = ?", username)
 	type information struct {
-		OrderNumber       string
-		Vin               string
-		RoughProblem      string
-		SpecificProblem   string
-		PredictFinishTime string
-		Progress          string
-		Owner             string
+		OrderNumber      string
+		Vin              string
+		RoughProblem     string
+		SpecificProblem  string
+		ActualFinishTime string
+		Progress         string
+		Owner            string
 	}
 	var result []information
-	database.Table("attorney").Select("number as order_number, vehicle_number as vin, rough_problem as rough_problem, specific_problem as specific_problem, predict_finish_time as predict_finish_time, progress as progress").Where("user_id = ? and progress = '已完成'", user.Number).Scan(&result) //查询该用户的，状态是已完成的委托
+	database.Table("attorney").Select("number as order_number, vehicle_number as vin, rough_problem as rough_problem, specific_problem as specific_problem, actual_finish_time as actual_finish_time, progress as progress").Where("user_id = ? and progress = '已完成'", user.Number).Order("order_number desc").Scan(&result) //查询该用户的，状态是已完成的委托
 	for index := range result {
 		var vehicle Vehicle
 		res := database.First(&vehicle, "number = ? and user_id = ?", result[index].Vin, user.Number)
@@ -368,7 +368,7 @@ func addVehicle(c *gin.Context) {
 	} else { //这辆车已经被绑定
 		//检查这辆车是否有正在处理的订单
 		var attorney Attorney
-		result := database.First(&attorney, "vehicle_number = ? and status != '已完成'", number)
+		result := database.First(&attorney, "vehicle_number = ? and progress != '已完成'", number)
 		if result.RowsAffected == 0 {
 			//通知原车主
 			var notification Notification
@@ -394,7 +394,7 @@ func addVehicle(c *gin.Context) {
 			database.Model(&vehicle).Update("user_id", user.Number)          //更改用户id为传过来的用户id
 			c.JSON(http.StatusOK, gin.H{"status": "成功", "data": "成功"})
 		} else {
-			c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "该车辆有未完成的维修委托！"})
+			c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "该车辆有未完成的维修委托！绑定失败！"})
 		}
 	}
 }
