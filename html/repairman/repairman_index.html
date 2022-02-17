@@ -469,19 +469,22 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-backdrop="static">&times;</button>
 				<h3 class="modal-title">添加零件</h3>
 			</div>
-			<br id="part_input">
 			<div class="modal-body">
-				<img src="/statics/user/工作状态.png" width="20px">
-				<label style="font-size:15px;">零件：</label>
-				<input class="addparts" id="part" list="parts" onkeydown="closeFlagParts()" onkeyup="openFlagParts()" placeholder='输入零件名或首字母：'>
-				<div id="parts">
+				<div id="part_input" >
+					<img src="/statics/user/工作状态.png" width="20px">
+					<label style="font-size:15px;">零件：</label>
+					<input class="addparts" id="part" list="parts" onkeydown="closeFlagParts()" onkeyup="openFlagParts()" placeholder='输入零件名或首字母：'>
+					<div id="parts">
+					</div>
 				</div>
-				<img src='/statics/user/里程.png' width='20px' alt="正在加载图片">
-				<label for="EndMile" style='font-size:15px;'>所需零件数量：</label>
-				<input id='EndMile' type='number' min="1" step="1" value="1" style="width: 50px"/>
+				<div>
+					<img src='/statics/user/里程.png' width='20px' alt="正在加载图片">
+					<label for="EndMile" style='font-size:15px;'>所需零件数量：</label>
+					<input id='EndMile' type='number' min="1" step="1" value="1" style="width: 50px"/>
+				</div>
 			</div>
 			<form class="modal-footer">
-				<button type="button" class="btn btn-primary" onclick="if(checkSubmit('addparts'))changeStatus()" >确认添加</button>
+				<button id="button_submit" type="button" class="btn btn-primary" onclick="if(checkSubmit('addparts'))addPartsForProject()" >确认添加</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 			</form>
 		</div>
@@ -662,6 +665,7 @@
 
 	function fill(source){
 		document.getElementById("part").value = source.innerHTML;
+		document.getElementById("part").name = source.id;
 		delPartsResults();
 	}
 
@@ -820,6 +824,7 @@
 									a.appendChild(span2);
 									span2.setAttribute("class","glyphicon");
 									a.innerHTML = "添加零件";
+									a.setAttribute("onclick","getParam(\""+data[i].OrderNumber+"\",\""+project[k].ProjectNumber+"\")");
 									let bb1 = document.createElement("br");
 									let bb2 = document.createElement("br");
 									th27.appendChild(bb1);
@@ -874,6 +879,7 @@
 									th27.appendChild(bb1);
 									th27.appendChild(bb2);
 									a.innerHTML = "添加零件";
+									a.setAttribute("onclick","getParam(\""+data[i].OrderNumber+"\",\""+project[k].ProjectNumber+"\")");
 									let a1 = document.createElement("a");
 									th27.appendChild(a1);
 									a1.setAttribute("class","btn btn-info btn-md")
@@ -1066,6 +1072,31 @@
 		alert(res.data);
 		if(res.data === "成功"){
 			location.reload();
+		}
+	})
+}
+function getParam(param1,param2){
+	document.getElementById("EndMile").class = param1;
+	document.getElementById("button_submit").class = param2;
+}
+function addPartsForProject(){
+	//alert(document.getElementById("part").name);
+	let formData = new FormData();
+	formData.append("attorney_no", document.getElementById("EndMile").class);
+	formData.append("project_no", document.getElementById("button_submit").class);
+	formData.append("parts_no", document.getElementById("part").name);
+	formData.append("number", document.getElementById("EndMile").value);
+	let config = {
+		headers: {"Content-Type": "multipart/form-data"}
+	};
+	axios.post("/add_parts_for_project", formData, config).then(res => {
+
+		if(res.data.status === "成功"){
+			alert("成功!");
+			location.reload();
+		}
+		else{
+			alert("添加失败!");
 		}
 	})
 }

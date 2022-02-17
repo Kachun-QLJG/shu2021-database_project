@@ -305,7 +305,6 @@ function searchForParts(){
 		url: '/search_for_parts?text=' + document.getElementById("part").value
 	})
 		.then(function (response) {
-			{
 				var div = document.createElement("div");
 				div.id ="parts";
 				div.setAttribute("style", "width:150px; height:85px; position: absolute; top: 35px; left: 90px; background-color: white; border: 1px solid black; cursor: pointer;");
@@ -316,6 +315,7 @@ function searchForParts(){
 					}
 					var temp = document.createElement("div");
 					temp.class="select";
+					temp.setAttribute("id",response.data[i].Id);
 					temp.setAttribute("onclick","fill(this)");
 					temp.setAttribute("style","overflow:hidden;text-overflow:ellipsis;white-space:nowrap");
 					//var t1 = document.createElement("td");
@@ -328,9 +328,8 @@ function searchForParts(){
 					//alert(temp);
 					div.appendChild(temp);
 				}
-			}
-		})
-}
+			})
+		}
 
 function getProjectTime(){
 	axios({
