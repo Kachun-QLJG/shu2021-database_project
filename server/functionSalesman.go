@@ -231,7 +231,7 @@ func addProjectForAttorney(c *gin.Context) {
 	database.First(&repairman, "number = ?", repairmanNo)
 	database.Model(&repairman).Update("current_work_hour", repairman.CurrentWorkHour+workHour)
 	var project TimeOverview
-	database.First(&project, "number = ?", projectNo)
+	database.First(&project, "project_number = ?", projectNo)
 	var notification Notification
 	notificationNumber := database.Find(&notification).RowsAffected + 1
 	strNumber := fmt.Sprintf("%08d", notificationNumber) //获取通知序号
@@ -366,7 +366,9 @@ func setAttorneyFinished(c *gin.Context) {
 	database.Model(&attorney).Update("end_mile", endMile)
 	database.Model(&attorney).Update("progress", "已完成")
 	genPdf(attorney.UserID, attorneyNo)
-	c.JSON(http.StatusOK, gin.H{"url": "/show_pdf?attorney_no=" + attorneyNo})
+	var user User
+	database.First(&user, "number = ?", attorney.UserID)
+	c.JSON(http.StatusOK, gin.H{"url": "/show_pdf?attorney_no=" + attorneyNo, "discountRate": user.DiscountRate, "user_id": user.Number, "attorney_no": attorneyNo})
 }
 
 func getSalesmanInfo(c *gin.Context) {

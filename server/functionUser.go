@@ -176,7 +176,7 @@ func getProcessingAttorney(c *gin.Context) {
 		Progress          string
 	}
 	var result []information
-	database.Table("attorney").Select("number as order_number, vehicle_number as vin, rough_problem as rough_problem, specific_problem as specific_problem, predict_finish_time as predict_finish_time, progress as progress").Where("user_id = ? and progress != '已完成'", user.Number).Scan(&result) //查询该用户的，状态不是已完成的委托
+	database.Table("attorney").Select("number as order_number, vehicle_number as vin, rough_problem as rough_problem, specific_problem as specific_problem, predict_finish_time as predict_finish_time, progress as progress").Where("user_id = ? and progress != '已完成'", user.Number).Order("progress, order_number").Scan(&result) //查询该用户的，状态不是已完成的委托
 	c.JSON(http.StatusOK, result)
 }
 
