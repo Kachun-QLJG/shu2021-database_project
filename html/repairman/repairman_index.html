@@ -103,11 +103,6 @@
 	</script>
 </head>
 <body bgcolor="#f0f8ff" id="body">
-<!--
-<script src="/statics/js/universal.js"></script>
-<script src="/statics/js/repairman.js"></script>
--->
-
 <!-- 标题 -->
 <div class='navbar-header' id='head1'>
 	<a class='navbar-brand'>502汽修厂管理系统</a>
@@ -669,6 +664,7 @@
 		document.getElementById("part").value = source.innerHTML;
 		delPartsResults();
 	}
+
 	function repairmanInfo(){
 		axios({
 			method : 'get',
@@ -688,8 +684,10 @@
 	function getPendingArrangement() {
 		try {
 			document.getElementById("pending_table").removeChild(document.getElementById("pending_table_son"));
-		} catch (error) {
-		}
+		} catch (error) {}
+		var tbody = document.createElement("tbody");
+		document.getElementById("pending_table").appendChild(tbody);
+		tbody.id = "pending_table_son";
 		//建表
 		axios({
 			method: 'get',
@@ -700,9 +698,6 @@
 					var num = data.length;
 					document.getElementById("pre_repair").innerHTML = "待确认维修" + "(" + num + ")";
 					for (var i = 0; i < num; i++) {
-						var tbody = document.createElement("tbody");
-						document.getElementById("pending_table").appendChild(tbody);
-						tbody.id = "pending_table_son";
 						var tr = document.createElement("tr");
 						tbody.appendChild(tr);
 						tr.setAttribute("class", "order-form");
@@ -919,7 +914,6 @@
 						})
 	}
 
-
 	function getFinishedArrangement(){
 		//删表
 		try {
@@ -1059,7 +1053,7 @@
 				})
 	}
 
-function finishRepairment(param1,param2,param3){
+	function finishRepairment(param1,param2,param3){
 	let formData = new FormData();
 	formData.append("attorney_no", param1);
 	formData.append("project_no", param2);
