@@ -306,27 +306,6 @@ function searchForParts(){
 	})
 		.then(function (response) {
 			{
-				/*console.log(response.data);
-				var div = document.getElementById("con");//寻找定位的区块
-				var table = document.createElement("div");
-				table.setAttribute("name", "table");
-				table.className = "table-responsive";
-				div.appendChild(table);
-				var ordertable = document.createElement("table");//生成表格ordertable
-				ordertable.id = "ordertable";
-				ordertable.className = "table  table-bordered table-hover";
-				table.appendChild(ordertable);
-				var tbody = document.createElement("tbody");//不知道这是啥
-				ordertable.appendChild(tbody);
-				var tablehead = document.createElement("tr");//生成表格头tablehead
-				tablehead.id = "tablehead";
-				tbody.appendChild(tablehead);
-				var head_1 = document.createElement("th");
-				head_1.innerHTML = "维修项目名";
-				tablehead.appendChild(head_1);
-				var head_2 = document.createElement("th");
-				head_2.innerHTML = "维修项目编号";
-				tablehead.appendChild(head_2);*/
 				var div = document.createElement("div");
 				div.id ="parts";
 				div.setAttribute("style", "width:150px; height:85px; position: absolute; top: 35px; left: 90px; background-color: white; border: 1px solid black; cursor: pointer;");
