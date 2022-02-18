@@ -208,18 +208,6 @@ func getFullAttorneyS(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
-// 通过项目名称获取项目编号
-func getProjectNumber(c *gin.Context) {
-	projectName := c.Query("project_name")
-	var project TimeOverview
-	database.First(&project, "project_name = ?", projectName)
-	var result struct {
-		ProjectNumber string
-	}
-	result.ProjectNumber = project.ProjectNumber
-	c.JSON(http.StatusOK, result)
-}
-
 // 订单添加项目
 func addProjectForAttorney(c *gin.Context) {
 	attorneyNo := c.PostForm("attorney_no")
@@ -229,6 +217,7 @@ func addProjectForAttorney(c *gin.Context) {
 	data := Arrangement{attorneyNo, projectNo, repairmanNo, "待确认"}
 	addArrangementResult := database.Create(&data) //添加到派工单表
 	if addArrangementResult.Error != nil {
+		fmt.Println(addArrangementResult.Error)
 		c.JSON(http.StatusOK, gin.H{"status": "错误", "data": addArrangementResult.Error})
 		return
 	}
@@ -251,7 +240,7 @@ func addProjectForAttorney(c *gin.Context) {
 		sTime,
 	}
 	database.Create(&notice) //添加到通知表
-	c.JSON(http.StatusOK, gin.H{"status": "成功", "data": ""})
+	c.JSON(http.StatusOK, gin.H{"status": "成功", "data": "添加成功"})
 }
 
 // 通过维修工编号获取维修工信息
@@ -263,18 +252,6 @@ func getCorrespondingRepairman(c *gin.Context) {
 		CurrentWorkHour float64
 	}
 	database.Table("repairman").Order("current_work_hour").Find(&result, "type = ? and status = '正常'", repairmanType)
-	c.JSON(http.StatusOK, result)
-}
-
-// 通过维修工姓名获取维修工编号
-func getCorrespondingRepairmanNo(c *gin.Context) {
-	repairmanName := c.Query("name")
-	var repairman Repairman
-	database.First(&repairman, "name = ?", repairmanName)
-	var result struct {
-		Number string
-	}
-	result.Number = repairman.Number
 	c.JSON(http.StatusOK, result)
 }
 
@@ -338,23 +315,6 @@ func receiveAttorney(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"status": "成功", "data": "操作成功！"})
 }
 
-//func getFinishedAttorneyS(c *gin.Context) {
-//	username := c.MustGet("username").(string)
-//	var result []struct {
-//		OrderNumber       string
-//		Vin               string
-//		RoughProblem      string
-//		SpecificProblem   string
-//		PredictFinishTime string
-//		Progress          string
-//		Username          string
-//	}
-//	database.Raw("select attorney.number as order_number, vehicle_number as vin, rough_problem as rough_problem, specific_problem as specific_problem, predict_finish_time as predict_finish_time, progress as progress, contact_tel as username\n"+
-//		"from attorney inner join user on attorney.user_id = user.number\n"+
-//		"where salesman_id = ? and progress = '已完成'", username).Scan(&result)
-//	c.JSON(http.StatusOK, result)
-//}
-
 func setAttorneyFinished(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	attorneyNo := c.PostForm("attorney_no")
@@ -387,10 +347,22 @@ func getSalesmanInfo(c *gin.Context) {
 	c.JSON(http.StatusOK, salesman)
 }
 
-func startSCheckOrders(c *gin.Context) {
-	c.HTML(http.StatusOK, "salesman_check_orders.html", nil)
-}
-
-func startTakeOrders(c *gin.Context) {
-	c.HTML(http.StatusOK, "salesman_take_orders.html", nil)
+func searchForProjects(c *gin.Context) {
+	text := c.Query("text")
+	carType := c.Query("type")
+	dbType := strings.ToLower(carType)
+	dbType = "time_" + dbType
+	text = strings.Replace(text, " ", "%", -1)
+	searchText := "%" + strings.ToLower(text) + "%"
+	var timeOverview []struct {
+		Name string
+		Id   string
+		Time float64
+	}
+	if searchText[1] >= 'a' && searchText[1] <= 'z' || searchText[1] >= '0' && searchText[1] <= '9' {
+		database.Limit(20).Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_spelling LIKE ? and ? != ''", searchText, dbType).Scan(&timeOverview)
+	} else {
+		database.Limit(20).Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_name LIKE ? and ? != ''", searchText, dbType).Scan(&timeOverview)
+	}
+	c.JSON(http.StatusOK, timeOverview)
 }

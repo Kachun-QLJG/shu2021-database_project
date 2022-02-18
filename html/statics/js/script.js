@@ -383,6 +383,7 @@ function SsearchForProjects(){
 					// tr.setAttribute("style","text-align: center; border: 1px solid #000");
 					 var temp = document.createElement("div");
 					 temp.class="select";
+					 temp.setAttribute("id",response.data[i].Id);
 					 temp.setAttribute("onclick","fill(this);delProjectResults()");
 					 temp.setAttribute("style","overflow:hidden;text-overflow:ellipsis;white-space:nowrap");
 					 //var t1 = document.createElement("td");

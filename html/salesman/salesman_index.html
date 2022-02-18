@@ -535,10 +535,11 @@
 							<select id='repairman_name'>
 								<option selected="selected" disabled="disabled"  style='display: none' value=''></option>
 							</select>
-
+							<input class="detail" id="repairman_number" type="text" style="display: none"/>
 							<label for="predict_finish_time" style='font-size:15px;width: 120px;'>　工时：</label>
 							<input class="detail" id="predict_finish_time" type='number' min="0" max="10000" step="0.5" placeholder='工时' style="width: 130px"/>
-							<img id="add_repairman" onclick="if(checkSubmit('detail'))addProject()" src="/statics/user/添加.png" alt="正在加载图片">
+							<input class="detail" id="project_number" type="text" style="display: none"/>
+							<button id="add_repairman" class='btn btn-primary' onclick="if(checkSubmit('detail'))addProject()">添加维修项目</button>
 						</div>
 
 						<div style="padding-right: 100px">
@@ -752,6 +753,7 @@
 
 	function fill(source){
 		document.getElementById("project").value = source.innerHTML;
+		document.getElementById("project_number").value = source.id;
 		getProjectTime();
 		delProjectResults();
 	}
@@ -1080,6 +1082,7 @@
 					for(var i = 0; i < num; i++){
 						var option = document.createElement("option");
 						document.getElementById("repairman_name").appendChild(option);
+						document.getElementById("repairman_number").value = response.data[i].Number;
 						option.innerHTML = response.data[i].Name;
 					}
 				})
@@ -1169,34 +1172,23 @@
 	function addProject(){
 		var attorney_no = document.getElementById("order_number").value;
 		//向数据库发送项目信息
-		var project = document.getElementById("project").value;
-		axios({
-			method: 'get',
-			url: '/get_project_no?project_name='+ project
-		})
-				.then(function (response_1) {
-					var project_no = response_1.data.ProjectNumber;
-					// alert(project_no);
-					let formData = new FormData();
-					formData.append("attorney_no", attorney_no);
-					formData.append("project_no", project_no);
-					var repairman_name = document.getElementById("repairman_name").value;
-					axios({
-						method: 'get',
-						url: '/get_corresponding_repairman_no?name='+ repairman_name
-					})
-							.then(function (response_2) {
-								var repairman_no = response_2.data.Number;
-								// alert(repairman_no)
-								formData.append("repairman_no", repairman_no);
-								formData.append("work_hour", document.getElementById("predict_finish_time").value);
-								let config = {
-									headers: {"Content-Type": "multipart/form-data"}
-								};
-								axios.post("/add_project_for_attorney", formData, config);
-							})
-					})
-		setTimeout(function(){getProjects(attorney_no)}, 5000);
+		var project_no = document.getElementById("project_number").value;
+		var repairman_no = document.getElementById("repairman_number").value;
+		let formData = new FormData();
+		formData.append("attorney_no", attorney_no);
+		formData.append("project_no", project_no);
+		formData.append("repairman_no", repairman_no);
+		formData.append("work_hour", document.getElementById("predict_finish_time").value);
+		let config = {
+			headers: {"Content-Type": "multipart/form-data"}
+		};
+		axios.post("/add_project_for_attorney", formData, config).then(res => {
+			if(res.data.status === "错误")
+				alert("添加失败！错误信息：" + res.data.data.Message);
+			else
+				alert("添加成功！");
+		});
+		getProjects(attorney_no);
 	}
 
 	function getProjects(attorney_no) {
