@@ -598,7 +598,8 @@
 			</div>
 			<form class='modal-footer'>
 <!--				<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>-->
-				<button type='button' class='btn btn-primary' onclick="if(checkSubmit('edit_attorney'))saveAttorney()&&dateModify(document.getElementById('ExpectedEndTime').value)" id='confirmAddVehicle'>确认新增</button>
+				<button type='button' class='btn btn-primary' onclick="saveAttorney()" id='confirmAddVehicle'>保存编辑</button>
+<!--				onclick="if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value))saveAttorney()"-->
 				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 			</form>
 		</div>
