@@ -172,7 +172,7 @@
 		<div class="col-md-10">
 			<div id="notification" class="alert alert-warning alert-dismissible" role="alert" style="display: none">
 				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true" data-backdrop="static">&times;</span><span class="sr-only">Close</span></button>
-				<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
+				<strong>业务员您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
 			</div>
 
 			<!--大标题-->
@@ -192,7 +192,7 @@
 							</a>
 						</h4>
 					</div>
-					<div id="collapseOne" class="panel-collapse collapse in">
+					<div id="collapseOne" class="panel-collapse collapse">
 						<table class="table table-bordered table-hover" id="pending_table" style="text-align: center; vertical-align: center">
 							<thead>
 								<tr  class="order-form">
@@ -280,7 +280,7 @@
 							</a>
 						</h4>
 					</div>
-					<div id="collapseTwo" class="panel-collapse collapse">
+					<div id="collapseTwo" class="panel-collapse collapse in">
 <!--					<div id="ongoing_table_father" style="margin: auto;align-items: center; text-align: center; font-size: 17px;left: 10%">-->
 						<table border="1" class="table table-bordered table-hover" id="ongoing_table"  style="text-align: center; vertical-align: center; font-size: 17px;">
 							<!-- 表头 -->
@@ -747,7 +747,6 @@
 
 <script type="text/javascript">
 	window.onload= function(){
-		checkNotification();
 		getUserName();
 		salesmanInfo();
 		showNotificationOrNot();
@@ -902,8 +901,9 @@
 
 							var td1 = document.createElement("td");
 							tr.appendChild(td1);
-							td1.id = "order_number_" + i;
+							td1.id = "order_number_" + i;;
 							td1.innerHTML = own[i].Number;
+							var car_type = own[i].CarType[3];
 
 							var td2 = document.createElement("td");
 							tr.appendChild(td2);
@@ -953,7 +953,7 @@
                             a.setAttribute("data-toggle", "modal");
                             a.setAttribute("data-target", "#take_order");
 							// alert(progress);
-                            a.setAttribute("onclick", "addSpecificDetail(this.parentNode.parentNode.children[0].innerHTML,this.parentNode.parentNode.children[1].innerHTML,this.parentNode.parentNode.children[6].innerHTML)");
+                            a.setAttribute("onclick", "addSpecificDetail(this.parentNode.parentNode.children[0].innerHTML,\""+car_type+"\",this.parentNode.parentNode.children[6].innerHTML)");
                             a.setAttribute("class", "btn btn-primary");
 							a.setAttribute("type", "button");
                             // a.setAttribute("onclick", "addSpecificDetail(\""+td1.id+"\",\""+td2.id+"\")");
@@ -1146,7 +1146,11 @@
 	}
 
 	// 根据订单号查询订单的详细信息
-	function addSpecificDetail(attorneyNo,type, Progress){
+	function addSpecificDetail(attorneyNo, type, Progress){
+		document.getElementById("project").value ="";
+		document.getElementById("classification").value ="";
+		document.getElementById("repairman_name").value ="";
+		document.getElementById("predict_finish_time").value ="";
 		axios({
 			method: 'get',
 			url: '/get_full_attorney_s?attorney_no=' + attorneyNo
@@ -1154,7 +1158,7 @@
 				.then(function (response) {
 					var order_number = document.getElementById('order_number');
 					order_number.value = attorneyNo;
-					order_number.class = type[3];
+					order_number.class = type;
 					res = response.data;
 					// alert(res.VehicleVin);
 					var input = document.getElementById('VehicleNumber')
@@ -1244,6 +1248,10 @@
 			else
 				alert("添加成功！");
 		});
+		document.getElementById("project").value ="";
+		document.getElementById("classification").value ="";
+		document.getElementById("repairman_name").value ="";
+		document.getElementById("predict_finish_time").value ="";
 		getProjects(attorney_no);
 	}
 
@@ -1444,7 +1452,21 @@
 			$('#discountRate').modal("show");
 		}
     }
-
+	function showNotificationOrNot() {
+		axios({
+			method: 'get',
+			url: '/check_notification'
+		})
+				.then(function (response) {
+					var last = response.data;
+					if(last !== null){
+						document.getElementById("notification").style.display = "";
+					}
+					else{
+						document.getElementById("notification").style.display = "none";
+					}
+				})
+	}
 
 	// var EventUtil = {
 	// 	on:function(elem,type,handler){

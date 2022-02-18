@@ -154,6 +154,10 @@
 
 		<!--右区域-->
 		<div class="col-md-10">
+			<div id="notification" class="alert alert-warning alert-dismissible" role="alert" style="display: none">
+				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true" data-backdrop="static">&times;</span><span class="sr-only">Close</span></button>
+				<strong>维修工您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
+			</div>
 
 			<!--大标题-->
 			<div class='col-md-12'  style='text-align: center'>
@@ -668,7 +672,6 @@
 
 <script>
 	window.onload= function(){
-		checkNotification();
 		getUserName();
 		repairmanInfo();
 		showNotificationOrNot();
@@ -1237,6 +1240,21 @@ function addPartsForProject(){
 		}
 	})
 }
+	function showNotificationOrNot() {
+		axios({
+			method: 'get',
+			url: '/check_notification'
+		})
+				.then(function (response) {
+					var last = response.data;
+					if(last !== null){
+						document.getElementById("notification").style.display = "";
+					}
+					else{
+						document.getElementById("notification").style.display = "none";
+					}
+				})
+	}
 </script>
 </body>
 </html>

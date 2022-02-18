@@ -345,7 +345,7 @@ function SsearchForProjects(){
  	if (document.getElementById("project").value === "") return;
  	axios({
  		method: 'get',
- 		url: '/search_for_projects?text=' + document.getElementById("project").value + '&type=' +'A'
+ 		url: '/search_for_projects?text=' + document.getElementById("project").value + '&type=' +document.getElementById("order_number").class
  	})
  		.then(function (response) {
  			{
@@ -375,7 +375,8 @@ function SsearchForProjects(){
  				 head_2.innerHTML = "维修项目编号";
  				 tablehead.appendChild(head_2);
 				*/
- 				for (var i = 0; response.data[i].Name !== ""; ++i) {
+				var len = response.data.length;
+ 				for (var i = 0; i < len; ++i) {
 					 if(i === 20){
 						 break;
 					 }
