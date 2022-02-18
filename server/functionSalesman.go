@@ -87,6 +87,8 @@ func changeDiscountRate(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	attorneyNo := c.PostForm("attorney_no")
 	client := c.PostForm("user_id")
+	fmt.Println(client)
+	fmt.Println(attorneyNo)
 	discountRate, _ := strconv.Atoi(c.PostForm("discount_rate"))
 	var attorney Attorney
 	result := database.First(&attorney, "number = ? and salesman_id = ? and user_id = ?", attorneyNo, username, client)
@@ -102,6 +104,7 @@ func changeDiscountRate(c *gin.Context) {
 		return
 	}
 	database.Model(&user).Update("discount_rate", discountRate)
+	c.String(http.StatusOK, "成功")
 }
 
 func getFullAttorneyS(c *gin.Context) {
@@ -316,8 +319,8 @@ func receiveAttorney(c *gin.Context) {
 func setAttorneyFinished(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	attorneyNo := c.PostForm("attorney_no")
-	endPetrol := c.PostForm("end_petrol")
-	endMile := c.PostForm("end_mile")
+	//endPetrol := c.PostForm("end_petrol")
+	//endMile := c.PostForm("end_mile")
 	var attorney Attorney
 	result := database.First(&attorney, "number = ? and salesman_id = ?", attorneyNo, username)
 	if result.RowsAffected == 0 {
@@ -326,8 +329,8 @@ func setAttorneyFinished(c *gin.Context) {
 	}
 	sTime := time.Now().Format("2006-01-02 15:04:05")
 	database.Model(&attorney).Update("actual_finish_time", sTime)
-	database.Model(&attorney).Update("end_petrol", endPetrol)
-	database.Model(&attorney).Update("end_mile", endMile)
+	//database.Model(&attorney).Update("end_petrol", endPetrol)
+	//database.Model(&attorney).Update("end_mile", endMile)
 	database.Model(&attorney).Update("progress", "已完成")
 	genPdf(attorney.UserID, attorneyNo)
 	var user User

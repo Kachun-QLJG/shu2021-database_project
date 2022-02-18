@@ -282,10 +282,15 @@
 						<table border="1" class="table table-bordered table-hover" id="ongoing_table"  style="text-align: center; vertical-align: center; font-size: 17px;">
 							<!-- 表头 -->
 							<thead>
-								<tr style="height: 30px">
-									<th id="number_ongoing" style="text-align: center; width: 300px">订 单 号：</th>
-									<th id="user_name" style="text-align: center; width: 250px">车型：</th>
-									<th id="status" style="text-align: center; width: 200px">状态：</th>
+								<tr style="height: 30px; text-align: center">
+									<th id="number_ongoing" >订 单 号</th>
+                                    <th>车牌</th>
+                                    <th>车架号</th>
+									<th id="user_name">车型</th>
+                                    <th>粗略故障描述</th>
+                                    <th>详细故障描述</th>
+									<th id="status" >订单状态</th>
+                                    <th>操作</th>
 								</tr>
 							</thead>
 							<!-- 传参处 -->
@@ -599,8 +604,8 @@
 			</div>
 			<form class='modal-footer'>
 <!--				<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>-->
-				<button type='button' class='btn btn-primary' onclick="saveAttorney()" id='confirmAddVehicle'>保存编辑</button>
-<!--				onclick="if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value))saveAttorney()"-->
+				<button type='button' class='btn btn-primary' onclick='checkOut()' id='checkOutAttorney' style="display: none">结算</button>				、
+				<button type='button' class='btn btn-primary' onclick="if(checkSubmit('edit_attorney'))saveAttorney()&&dateModify(document.getElementById('ExpectedEndTime').value)" id='confirmAddVehicle'>确认新增</button>
 				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 			</form>
 		</div>
@@ -674,11 +679,11 @@
 			<div class="modal-body">
 				<img src='/statics/user/折扣.png' width='20px' alt="正在加载图片">
 				<label for="discount_rate" style='font-size:15px;width: 80px;'>折 扣 率：</label>
-				<input id='discount_rate' type='number' min="0" step="5" max="100" value='100' style="color: #9d9d9d"/> %
+				<input id='discount_rate' type='number' min="70" step="5" max="100" value='100'/> %
 				<br>
 			</div>
 			<form class="modal-footer">
-				<button type="button" class="btn btn-primary" onclick="changeDiscountRate()" id="confirmStatusChange">确认更改</button>
+				<button type="button" class="btn btn-primary" id="confirmDiscountChange" onclick="updateDiscountRate()">确认更改</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 			</form>
 		</div>
@@ -720,6 +725,7 @@
 	</div>
 </div>
 
+<!-- 显示pdf -->
 <div class='modal fade' id='pdf' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static" >
 	<div class='modal-dialog' style="width: 80%;height: 80%;">
 		<div class='modal-content'>
@@ -734,10 +740,7 @@
 		</div>
 	</div>
 </div>
-<!-- 接单按钮 -->
-<!--<div class='col-md-3' >-->
-<!--	<img src="/statics/user/添加.png" data-toggle='modal' data-target='#take_order' data-backdrop='static' style='position:fixed;top:70%;right:1%;cursor: pointer' alt="正在加载图片"/>-->
-<!--</div>-->
+
 
 <script type="text/javascript">
 	window.onload= function(){
@@ -901,29 +904,65 @@
 						for(var i = 0; i < num; i++){
 							var tr = document.createElement("tr");
 							tbody.appendChild(tr);
+
 							var td1 = document.createElement("td");
 							tr.appendChild(td1);
 							td1.id = "order_number_" + i;
 							td1.innerHTML = own[i].Number;
+
 							var td2 = document.createElement("td");
 							tr.appendChild(td2);
 							td2.id = "order_type_" + i;
-							td2.innerHTML = own[i].CarType;
+							td2.innerHTML = own[i].Plate;
+
 							var td3 = document.createElement("td");
 							tr.appendChild(td3);
-							if(own[i].Progress === "已完成"){
-								td3.innerHTML = own[i].Progress;
-							}
-							else{
-								var a = document.createElement("a");
-								td3.appendChild(a);
-								a.setAttribute("data-toggle", "modal");
-								a.setAttribute("data-target", "#take_order");
-								a.setAttribute("onclick", "addSpecificDetail(this.parentNode.parentNode.children[0].innerHTML,this.parentNode.parentNode.children[1].innerHTML)");
-								a.setAttribute("style", "cursor:pointer");
-								// a.setAttribute("onclick", "addSpecificDetail(\""+td1.id+"\",\""+td2.id+"\")");
-								a.innerHTML = "编辑具体信息";
-							}
+                            td3.id = "order_type_" + i;
+                            td3.innerHTML = own[i].Vin;
+
+                            var td4 = document.createElement("td");
+                            tr.appendChild(td4);
+                            td4.id = "order_type_" + i;
+                            td4.innerHTML = own[i].CarModel;
+
+                            var td5 = document.createElement("td");
+                            tr.appendChild(td5);
+                            td5.id = "order_type_" + i;
+                            td5.innerHTML = own[i].RoughProblem;
+
+                            var td6 = document.createElement("td");
+                            tr.appendChild(td6);
+                            td6.id = "order_type_" + i;
+                            td6.innerHTML = own[i].SpecificProblem;
+
+                            var td7 = document.createElement("td");
+                            tr.appendChild(td7);
+                            var progress = own[i].Progress;
+                            td7.innerHTML = progress;
+                            // alert(own[i].Progress);
+							// if(own[i].Progress === "待结算"){
+							// 	// td7.innerHTML = own[i].Progress;
+                            //     var a = document.createElement("a");
+                            //     td7.appendChild(a);
+                            //     a.setAttribute("data-toggle", "modal");
+                            //     a.setAttribute("data-target", "#discountRate");
+                            //     a.setAttribute("onclick", "");
+                            //     a.setAttribute("style", "cursor:pointer");
+                            //     // a.setAttribute("onclick", "addSpecificDetail(\""+td1.id+"\",\""+td2.id+"\")");
+                            //     a.innerHTML = "待结算";
+							// }
+                            var td8 = document.createElement("td");
+                            tr.appendChild(td8);
+                            var a = document.createElement("a");
+                            td8.appendChild(a);
+                            a.setAttribute("data-toggle", "modal");
+                            a.setAttribute("data-target", "#take_order");
+							// alert(progress);
+                            a.setAttribute("onclick", "addSpecificDetail(this.parentNode.parentNode.children[0].innerHTML,this.parentNode.parentNode.children[1].innerHTML,this.parentNode.parentNode.children[6].innerHTML)");
+                            a.setAttribute("style", "cursor:pointer");
+                            // a.setAttribute("onclick", "addSpecificDetail(\""+td1.id+"\",\""+td2.id+"\")");
+                            a.innerHTML = "编辑具体信息";
+
 						}
 					}
 				})
@@ -1103,7 +1142,8 @@
 		})
 	}
 
-	function addSpecificDetail(attorneyNo,type){
+	// 根据订单号查询订单的详细信息
+	function addSpecificDetail(attorneyNo,type, Progress){
 		axios({
 			method: 'get',
 			url: '/get_full_attorney_s?attorney_no=' + attorneyNo
@@ -1158,6 +1198,13 @@
 					endPetrol.value = res.EndPetrol;
 					var endMile = document.getElementById('EndMile');
 					endMile.value = res.EndMile;
+
+                    if (Progress === "待结算"){
+						checkout_string = "checkOut(" + attorneyNo + ")";
+                        var btn = document.getElementById('checkOutAttorney');
+                        btn.setAttribute("style", "display: inline");
+						btn.setAttribute("onclick", checkout_string);
+                    }
 				})
 		getProjects(attorneyNo);
 	}
@@ -1169,6 +1216,7 @@
 		})
 	}
 
+	// 点击加号图案后将项目送到库中
 	function addProject(){
 		var attorney_no = document.getElementById("order_number").value;
 		//向数据库发送项目信息
@@ -1191,6 +1239,7 @@
 		getProjects(attorney_no);
 	}
 
+	// 根据订单号从库中返回项目
 	function getProjects(attorney_no) {
 		try{document.getElementById("detailTable").removeChild(document.getElementById("detailTableRow"))
 		} catch(error){}
@@ -1276,6 +1325,7 @@
 					}
 				})
 	}
+
 	function saveAttorney(){
 		let formData = new FormData();
 		formData.append("attorney_no", document.getElementById("order_number").value);
@@ -1304,10 +1354,11 @@
 		axios.post("/save_attorney", formData, config).then(res => {
 			alert(res.data);
 			if(res.data === "保存成功！"){
-				location.reload();
+				// location.reload();
 			}
 		})
 	}
+
 	function dateModify(param){
 		if(param === ""){
 			alert("日期不合法");
@@ -1335,7 +1386,52 @@
 			return true;
 		}
 	}
-		// axios.post("/get_project_no", formData, config).then(res => {
+
+	// 在结算订单时更新折扣率
+	function updateDiscountRate(attorney_no, user_id) {
+		var finalDiscountRate = document.getElementById('discount_rate').value;
+		let formData = new FormData();
+		formData.append("attorney_no", attorney_no);
+		formData.append("discount_rate", finalDiscountRate);
+		formData.append("user_id", user_id);
+		alert(attorney_no);
+		alert(finalDiscountRate);
+		alert(user_id);
+		let config = {
+			headers: {"Content-Type": "multipart/form-data"}
+		};
+		axios.post("/change_discount_rate", formData, config).then(res => {
+			alert(res.data);
+			location.reload();
+		})
+	}
+
+    // 结算
+	function checkOut(param) {
+		// alert(param);
+		if(checkSubmit(param)) {
+			saveAttorney();
+			let formData = new FormData();
+			formData.append("attorney_no", param);
+			let config = {
+				headers: {"Content-Type": "multipart/form-data"}
+			};
+			axios.post("/set_attorney_finished", formData, config).then(res => {
+				var data = res.data;
+				window.open(data.url, "_blank");
+				discountRate = data.discountRate;
+				user_id = data.user_id;
+
+				var originalDiscountRate = document.getElementById('discount_rate');
+				originalDiscountRate.value = discountRate;
+				var confirmButton = document.getElementById('confirmDiscountChange');
+				// alert("updateDiscountRate(" + param + ", " + user_id + ")");
+				u_attribute = "updateDiscountRate(" + param + ", \"" + user_id + "\")";
+				confirmButton.setAttribute("onclick", u_attribute);
+			})
+			$('#discountRate').modal("show");
+		}
+    }
 
 
 	// var EventUtil = {
