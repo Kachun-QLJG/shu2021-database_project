@@ -146,7 +146,7 @@ func changeRepairProgress(c *gin.Context) {
 		timeType := ""
 		database.Raw("select type as type\n"+
 			"from vehicle inner join attorney on vehicle.number = attorney.vehicle_number\n"+
-			"where attorney.number = ?", arrangement.OrderNumber)
+			"where attorney.number = ?", arrangement.OrderNumber).Scan(&vehicle)
 		if vehicle.Type == "轿车-A" {
 			timeType = "time_a"
 		} else if vehicle.Type == "轿车-B" {

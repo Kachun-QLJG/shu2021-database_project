@@ -8,6 +8,9 @@
 	<style>
 		td{text-align: center!important;vertical-align: middle!important;}
 		th{text-align: center!important;vertical-align: middle!important;}
+		#alert div h4{
+			line-height: 130%;
+		}
 	</style>
 </head>
 <body bgcolor="#f0f8ff" id="body">
@@ -71,7 +74,7 @@
 						<th width="20%"><h5 style="font-weight: 900;">粗略故障描述</h5></th>
 						<th width="40%"><h5 style="font-weight: 900;">详细故障描述</h5></th>
 						<th width="10%"><h5 style="font-weight: 900;">维修完成时间</h5></th>
-						<th width="8%"><h5 style="font-weight: 900;">委托书</h5></th>
+						<th width="8%"><h5 style="font-weight: 900;">操作</h5></th>
 					</tr>
 
 					<tr ng-repeat="item in list | filter:listfilter">
@@ -363,7 +366,7 @@
 		var h6 = document.createElement("h5");
 		th6.appendChild(h6);
 		h6.setAttribute("style","font-weight: 900;");
-		h6.innerHTML = "委托书";
+		h6.innerHTML = "操作";
 		axios({
 			method : 'get',
 			url: '/get_finished_attorney'
@@ -411,13 +414,20 @@
 							td5.innerHTML = data[i-1].ActualFinishTime;
 							var td6 = document.createElement("td");
 							tr1.appendChild(td6);
-							var a = document.createElement("a");
+							var a = document.createElement("button");
 							td6.appendChild(a);
 							a.setAttribute("data-toggle","modal");
 							a.setAttribute("data-target","#detail");
-							a.setAttribute("style","cursor:pointer");
+							a.setAttribute("class", "btn btn-primary");
+							a.setAttribute("type", "button")
 							a.setAttribute("onclick","loadPDF(this)");
-							a.innerHTML = "详情";
+							a.innerHTML = "查看委托书";
+							var h57 = document.createElement("button");
+							td6.appendChild(h57);
+							h57.setAttribute("class", "btn btn-primary");
+							h57.setAttribute("type", "button")
+							h57.setAttribute("onclick","downloadPDF(this)");
+							h57.innerHTML = "下载委托书";
 						}
 					}
 				})

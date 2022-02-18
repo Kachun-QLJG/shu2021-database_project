@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	"github.com/tiechui1994/gopdf"
 	"github.com/tiechui1994/gopdf/core"
 	"net/http"
@@ -34,44 +33,59 @@ func generatePdf(c *gin.Context) {
 	c.File(filename)
 }
 
-func showPdf(c *gin.Context) {
-	username := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	attorneyNo := c.Query("attorney_no")
+func checkPermissionForPdf(username string, group string, attorneyNo string) string {
 	if group == "维修员" {
-		c.String(http.StatusForbidden, "无权限")
-		return
+		return ""
 	}
-	var result *gorm.DB
 	if group == "普通用户" {
 		var user User
 		database.First(&user, "contact_tel = ?", username)
 		var attorney Attorney
-		result = database.First(&attorney, "user_id = ? and number = ?", user.Number, attorneyNo)
+		result := database.First(&attorney, "user_id = ? and number = ?", user.Number, attorneyNo)
+		if result.RowsAffected == 1 {
+			return "./files/generatedPDF/" + username + "/" + attorneyNo + "/" + attorneyNo + ".pdf"
+		}
 	} else if group == "业务员" {
 		var attorney Attorney
-		result = database.First(&attorney, "salesman_id = ? and number = ?", username, attorneyNo)
-		var res struct{ Username string }
-		database.Raw("select contact_tel as username from user where number = ?", attorney.UserID).Scan(&res)
-		username = res.Username
+		result := database.First(&attorney, "salesman_id = ? and number = ?", username, attorneyNo)
+		if result.RowsAffected == 1 {
+			var res struct{ Username string }
+			database.Raw("select contact_tel as username from user where number = ?", attorney.UserID).Scan(&res)
+			username = res.Username
+			return "./files/generatedPDF/" + username + "/" + attorneyNo + "/" + attorneyNo + ".pdf"
+		}
 	}
-	if result.RowsAffected == 0 {
+	return ""
+}
+func showPdf(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	attorneyNo := c.Query("attorney_no")
+	path := checkPermissionForPdf(username, group, attorneyNo)
+	if path != "" {
+		c.File(path)
+	} else {
 		c.String(http.StatusForbidden, "无权限")
-		return
 	}
-	c.File("./files/generatedPDF/" + username + "/" + attorneyNo + "/" + attorneyNo + ".pdf")
 }
 
 func downloadPdf(c *gin.Context) {
-	usernameForPdfGen = c.MustGet("username").(string)
-	attorneyNoForPdfGen = c.Query("attorney_no")
-	filename := genPdf(usernameForPdfGen, attorneyNoForPdfGen)
-	c.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", "委托书No"+attorneyNoForPdfGen+".pdf")) //fmt.Sprintf("attachment; filename=%s", filename)对下载的文件重命名
-	c.Writer.Header().Add("Content-Type", "application/octet-stream")
-	c.File(filename)
+	username := c.MustGet("username").(string)
+	group := c.MustGet("group").(string)
+	attorneyNo := c.Query("attorney_no")
+	path := checkPermissionForPdf(username, group, attorneyNo)
+	if path != "" {
+		c.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", "委托书No"+attorneyNo+".pdf")) //fmt.Sprintf("attachment; filename=%s", filename)对下载的文件重命名
+		c.Writer.Header().Add("Content-Type", "application/octet-stream")
+		c.File(path)
+	} else {
+		c.String(http.StatusForbidden, "无权限")
+	}
 }
 
 func genPdf(username string, attorneyNo string) string {
+	usernameForPdfGen = username
+	attorneyNoForPdfGen = attorneyNo
 	pdf := core.CreateReport()
 	font1 := core.FontMap{
 		FontName: FONT_KT,
@@ -108,8 +122,12 @@ func ComplexReportExecutor(report *core.Report) {
 	database.First(&salesman, "number = ?", attorney.SalesmanID)
 	var vehicle Vehicle
 	database.First(&vehicle, "number = ? and user_id = ?", attorney.VehicleNumber, attorney.UserID)
-	var arrangement []Arrangement
-	database.Find(&arrangement, "order_number = ?", attorney.Number) //查这个订单有多少维修项目
+	var arrangement []struct {
+		OrderNumber   string
+		ProjectNumber string
+	}
+	database.Raw("select distinct order_number as order_number, project_number as project_number\n"+
+		"from arrangement where order_number = ?", attorney.Number).Scan(&arrangement) //查这个订单有多少维修项目
 	columnCount := 0
 	for _, data := range arrangement {
 		var repairParts []RepairParts
@@ -120,6 +138,7 @@ func ComplexReportExecutor(report *core.Report) {
 			columnCount += int(result.RowsAffected)
 		}
 	}
+
 	var remarks []string
 	lineSpace := 1.0
 	lineHeight := 16.0
@@ -589,7 +608,11 @@ func ComplexReportExecutor(report *core.Report) {
 	cell.SetFont(textFont).SetBorder(border).HorizontalCentered().VerticalCentered().SetContent("（总工时*工时单价+材料费）*折扣率")
 	calculateMethodBlank.SetElement(cell)
 
-	table.GenerateAtomicCell()
+	err := table.GenerateAtomicCell()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
 func ComplexReportFooterExecutor(report *core.Report) {
 	content := fmt.Sprintf("第 %v / {#TotalPage#} 页", report.GetCurrentPageNo())

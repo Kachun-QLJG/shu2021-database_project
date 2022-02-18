@@ -47,16 +47,16 @@ func getArrangements(c *gin.Context) {
 		return
 	}
 	type repairman struct {
-		Type   string
-		Number string
-		Name   string
+		Type     string
+		Number   string
+		Name     string
+		Progress string
 	}
 	var arrangement []struct {
-		ProjectNumber   string
-		ProjectName     string
-		ProjectTime     string
-		ProjectProgress string
-		Repairman       []repairman
+		ProjectNumber string
+		ProjectName   string
+		ProjectTime   string
+		Repairman     []repairman
 	}
 	timeType := ""
 	var vehicle Vehicle
@@ -72,11 +72,11 @@ func getArrangements(c *gin.Context) {
 	} else {
 		timeType = "time_e"
 	}
-	database.Raw("select distinct arrangement.project_number as project_number, project_name as project_name, "+timeType+" as project_time, progress as project_progress\n"+
+	database.Raw("select distinct arrangement.project_number as project_number, project_name as project_name, "+timeType+" as project_time\n"+
 		"from arrangement inner join time_overview on arrangement.project_number = time_overview.project_number\n"+
 		"where order_number = ?", attorneyNo).Scan(&arrangement)
 	for i := range arrangement {
-		database.Raw("select type as type, name as name, repairman.number as number\n"+
+		database.Raw("select type as type, name as name, repairman.number as number, progress as progress\n"+
 			"from arrangement inner join repairman on arrangement.repairman_number = repairman.number\n"+
 			"where order_number = ? and project_number = ?", attorneyNo, arrangement[i].ProjectNumber).Scan(&arrangement[i].Repairman)
 	}
@@ -214,13 +214,29 @@ func addProjectForAttorney(c *gin.Context) {
 	attorneyNo := c.PostForm("attorney_no")
 	projectNo := c.PostForm("project_no")
 	repairmanNo := c.PostForm("repairman_no")
-	workHour, _ := strconv.ParseFloat(c.PostForm("work_hour"), 64)
 	data := Arrangement{attorneyNo, projectNo, repairmanNo, "待确认"}
 	addArrangementResult := database.Create(&data) //添加到派工单表
 	if addArrangementResult.Error != nil {
 		c.JSON(http.StatusOK, gin.H{"status": "错误", "data": addArrangementResult.Error})
 		return
 	}
+	timeType := ""
+	var vehicle struct{ Type string }
+	database.Raw("select type as type from vehicle inner join attorney on vehicle.number = attorney.vehicle_number where attorney.number = ?", attorneyNo).Scan(&vehicle)
+	if vehicle.Type == "轿车-A" {
+		timeType = "time_a"
+	} else if vehicle.Type == "轿车-B" {
+		timeType = "time_b"
+	} else if vehicle.Type == "轿车-C" {
+		timeType = "time_c"
+	} else if vehicle.Type == "轿车-D" {
+		timeType = "time_d"
+	} else {
+		timeType = "time_e"
+	}
+	var temp struct{ Time string }
+	database.Raw("select "+timeType+" as time from time_overview where project_number = ?", projectNo).Scan(&temp)
+	workHour, _ := strconv.ParseFloat(temp.Time, 64)
 	var repairman Repairman
 	database.First(&repairman, "number = ?", repairmanNo)
 	database.Model(&repairman).Update("current_work_hour", repairman.CurrentWorkHour+workHour)
@@ -234,7 +250,7 @@ func addProjectForAttorney(c *gin.Context) {
 		strNumber,
 		repairmanNo,
 		"【通知】您有新的任务，请查收！",
-		"维修员" + repairman.Name + "您好，您有新的任务：" + project.ProjectName + "，工时定额为" + c.PostForm("work_hour") + "工时，请及时处理！\n祝您工作愉快！",
+		"维修员" + repairman.Name + "您好，您有新的任务：" + project.ProjectName + "，工时定额为" + temp.Time + "工时，请及时处理！\n祝您工作愉快！",
 		"未读",
 		sTime,
 	}
@@ -325,14 +341,14 @@ func setAttorneyFinished(c *gin.Context) {
 		c.String(http.StatusForbidden, "无权限！")
 		return
 	}
-	sTime := time.Now().Format("2006-01-02 15:04:05")
+	sTime := time.Now().Format("2006-01-02")
 	database.Model(&attorney).Update("actual_finish_time", sTime)
 	//database.Model(&attorney).Update("end_petrol", endPetrol)
 	//database.Model(&attorney).Update("end_mile", endMile)
 	database.Model(&attorney).Update("progress", "已完成")
-	genPdf(attorney.UserID, attorneyNo)
 	var user User
 	database.First(&user, "number = ?", attorney.UserID)
+	genPdf(user.ContactTel, attorneyNo)
 	c.JSON(http.StatusOK, gin.H{"url": "/show_pdf?attorney_no=" + attorneyNo, "discountRate": user.DiscountRate, "user_id": user.Number, "attorney_no": attorneyNo})
 }
 
@@ -358,10 +374,12 @@ func searchForProjects(c *gin.Context) {
 		Id   string
 		Time float64
 	}
+	database.LogMode(true)
 	if searchText[1] >= 'a' && searchText[1] <= 'z' || searchText[1] >= '0' && searchText[1] <= '9' {
 		database.Limit(20).Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_spelling LIKE ? and ? != ''", searchText, dbType).Scan(&timeOverview)
 	} else {
 		database.Limit(20).Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_name LIKE ? and ? != ''", searchText, dbType).Scan(&timeOverview)
 	}
+	database.LogMode(false)
 	c.JSON(http.StatusOK, timeOverview)
 }

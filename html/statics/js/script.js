@@ -307,14 +307,14 @@ function searchForParts(){
 		.then(function (response) {
 				var div = document.createElement("div");
 				div.id ="parts";
-				div.setAttribute("style", "width:150px; height:85px; position: absolute; top: 35px; left: 90px; background-color: white; border: 1px solid black; cursor: pointer;");
+				div.setAttribute("style", "width:150px; height:auto; position: absolute; top: 35px; left: 90px; background-color: white; border: 1px solid black; cursor: pointer;");
 				document.getElementById("part_input").appendChild(div);
-				for (var i = 1; response.data[i].Name !== ""; ++i) {
-					if(i === 6){
+				for (var i = 0; response.data[i].Name !== ""; ++i) {
+					if(i === 20){
 						break;
 					}
 					var temp = document.createElement("div");
-					temp.class="select";
+					temp.setAttribute("class", "select");
 					temp.setAttribute("id",response.data[i].Id);
 					temp.setAttribute("onclick","fill(this)");
 					temp.setAttribute("style","overflow:hidden;text-overflow:ellipsis;white-space:nowrap");
@@ -349,9 +349,10 @@ function SsearchForProjects(){
  	})
  		.then(function (response) {
  			{
+				 delProjectResults();
 				 var div = document.createElement("div");
 				 div.id ="projects";
-				 div.setAttribute("style", "width:150px; height:90px; position: absolute; top: 20px; left: 0; background-color: white; border: 1px solid black; cursor: pointer;");
+				 div.setAttribute("style", "width:150px; height:auto; position: absolute; top: 20px; left: 0; background-color: white; border: 1px solid black; cursor: pointer;");
 				 document.getElementById("project_input").appendChild(div);
 				 //table.setAttribute("style", "display: inline; width: 90px; position: absolute");
 				 /*list.setAttribute("name", "list");
@@ -374,18 +375,18 @@ function SsearchForProjects(){
  				 head_2.innerHTML = "维修项目编号";
  				 tablehead.appendChild(head_2);
 				*/
- 				for (var i = 1; response.data[i].Name !== ""; ++i) {
-					 if(i === 6){
+ 				for (var i = 0; response.data[i].Name !== ""; ++i) {
+					 if(i === 20){
 						 break;
 					 }
 					// var tr = document.createElement("tr");
 					 //table.appendChild(tr);
 					// tr.setAttribute("style","text-align: center; border: 1px solid #000");
 					 var temp = document.createElement("div");
-					 temp.class="select";
+					 temp.setAttribute("class","select");
 					 temp.setAttribute("id",response.data[i].Id);
 					 temp.setAttribute("onclick","fill(this);delProjectResults()");
-					 temp.setAttribute("style","overflow:hidden;text-overflow:ellipsis;white-space:nowrap");
+					 temp.setAttribute("style","overflow:hidden;text-overflow:ellipsis;white-space:nowrap;");
 					 //var t1 = document.createElement("td");
 					 //temp.setAttribute("value",JSON.stringify(response.data[i].Name).replace("\"","").replace("\"",""));
  					 temp.innerHTML = JSON.stringify(response.data[i].Name).replace("\"","").replace("\"","");
@@ -634,4 +635,10 @@ function loadPDF(param)
 	pdf.setAttribute("height","840px");
 	pdf.setAttribute("width","90%");
 	pdf.setAttribute("src","/show_pdf?attorney_no="+temp);
+}
+
+function downloadPDF(param)
+{
+	var temp = param.parentNode.parentNode.children[0].innerText;
+	window.open("/download_pdf?attorney_no="+temp,"_self");
 }

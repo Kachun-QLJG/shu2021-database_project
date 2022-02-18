@@ -63,6 +63,9 @@
 
 		td{text-align: center!important;vertical-align: middle!important;}
 		th{text-align: center!important;vertical-align: middle!important;}
+		#alert div h4{
+			line-height: 130%;
+		}
 		.wcr{color: red}
 		.wcg{color: green}
 
@@ -605,7 +608,7 @@
 			<form class='modal-footer'>
 <!--				<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>-->
 				<button type='button' class='btn btn-primary' onclick="if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value))checkOut()" id='checkOutAttorney' style="display: none">结算</button>				、
-				<button type='button' class='btn btn-primary' onclick="saveAttorney(true)" id='confirmAddVehicle'>确认新增</button>
+				<button type='button' class='btn btn-primary' onclick="saveAttorney(true)" id='confirmAddVehicle'>保存编辑</button>
 				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 			</form>
 		</div>
@@ -817,17 +820,8 @@
 						tbody.appendChild(tr);
 						var td1 = document.createElement("td");
 						tr.appendChild(td1);
-						td1.innerHTML = " 　";
-						var td2 = document.createElement("td");
-						tr.appendChild(td2);
-						var td3 = document.createElement("td");
-						tr.appendChild(td3);
-						var td4 = document.createElement("td");
-						tr.appendChild(td4);
-						var td5 = document.createElement("td");
-						tr.appendChild(td5);
-						var td6 = document.createElement("td");
-						tr.appendChild(td6);
+						td1.innerHTML = "暂时没有新的订单供接单...";
+						td1.setAttribute("colspan", "6");
 					}
 					else{
 						for(var i = 0; i < num; i++){
@@ -860,10 +854,11 @@
 							h55.innerHTML = own[i].RoughProblem;
 							var td6 = document.createElement("td");
 							tr.appendChild(td6);
-							var a = document.createElement("a");
+							var a = document.createElement("button");
 							td6.appendChild(a);
 							a.innerHTML = "接单！！！";
-							a.setAttribute("class","btn btn-info btn-md");
+							a.setAttribute("class", "btn btn-primary");
+							a.setAttribute("type", "button");
 							var span = document.createElement("span");
 							span.setAttribute("class","glyphicon");
 							a.appendChild(span);
@@ -953,13 +948,14 @@
 							// }
                             var td8 = document.createElement("td");
                             tr.appendChild(td8);
-                            var a = document.createElement("a");
+                            var a = document.createElement("button");
                             td8.appendChild(a);
                             a.setAttribute("data-toggle", "modal");
                             a.setAttribute("data-target", "#take_order");
 							// alert(progress);
                             a.setAttribute("onclick", "addSpecificDetail(this.parentNode.parentNode.children[0].innerHTML,this.parentNode.parentNode.children[1].innerHTML,this.parentNode.parentNode.children[6].innerHTML)");
-                            a.setAttribute("style", "cursor:pointer");
+                            a.setAttribute("class", "btn btn-primary");
+							a.setAttribute("type", "button");
                             // a.setAttribute("onclick", "addSpecificDetail(\""+td1.id+"\",\""+td2.id+"\")");
                             a.innerHTML = "编辑具体信息";
 
@@ -1034,13 +1030,20 @@
 							h56.innerHTML = own[i].SpecificProblem;
 							var td7 = document.createElement("td");
 							tr.appendChild(td7);
-							var h57 = document.createElement("a");
+							var h57 = document.createElement("button");
 							td7.appendChild(h57);
 							h57.setAttribute("data-toggle","modal");
 							h57.setAttribute("data-target","#pdf");
-							h57.setAttribute("style", "cursor:pointer");
+							h57.setAttribute("class", "btn btn-primary");
+							h57.setAttribute("type", "button")
 							h57.setAttribute("onclick","loadPDF(this)");
 							h57.innerHTML = "查看委托书";
+							var h58 = document.createElement("button");
+							td7.appendChild(h58);
+							h58.setAttribute("class", "btn btn-primary");
+							h58.setAttribute("type", "button")
+							h58.setAttribute("onclick","downloadPDF(this)");
+							h58.innerHTML = "下载委托书";
 						}
 					}
 				})
@@ -1232,7 +1235,6 @@
 		formData.append("attorney_no", attorney_no);
 		formData.append("project_no", project_no);
 		formData.append("repairman_no", repairman_no);
-		formData.append("work_hour", document.getElementById("predict_finish_time").value);
 		let config = {
 			headers: {"Content-Type": "multipart/form-data"}
 		};
@@ -1264,13 +1266,13 @@
 						var project_number = arrangement.ProjectNumber;
 						var project_name = arrangement.ProjectName;
 						var project_time = arrangement.ProjectTime;
-						var project_progress = arrangement.ProjectProgress;
 						var repairmen = arrangement.Repairman;
 						for (var j = 0; j < repairmen.length; j++) {
 							var repairman = repairmen[j];
 							var type = repairman.Type;
 							var number = repairman.Number;
 							var name = repairman.Name;
+							var progress = repairman.Progress;
 
 							var tr = document.createElement("tr");
 							tr.setAttribute("class", "order-form");
@@ -1307,7 +1309,14 @@
 
 							var td7 = document.createElement("td");
 							tr.appendChild(td7);
-							td7.innerHTML = project_progress;
+							td7.innerHTML = "<b>"+progress+"</b>";
+							if(progress === "待确认"){
+								td7.setAttribute("style","color: #8a6d3b")
+							}else if(progress === "维修中"){
+								td7.setAttribute("style","color: #31708f")
+							}else{
+								td7.setAttribute("style","color: #3c763d")
+							}
 
 							// var tr1 = document.createElement("tr");
 							// tr1.setAttribute("class","order-form");

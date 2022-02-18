@@ -7,6 +7,9 @@
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<style>
+		.select:hover{
+			background-color: #77bbe2;
+		}
 		/*web background*/
 		.container{
 			display:table;
@@ -14,6 +17,9 @@
 		}
 		td{text-align: center!important;vertical-align: middle!important;}
 		th{text-align: center!important;vertical-align: middle!important;}
+		#alert div h4{
+			line-height: 130%;
+		}
 		/* centered columns styles */
 		.row-centered {
 			text-align:center;
@@ -173,7 +179,7 @@
 									<th><label>订单号</label></th>
 									<th><label>车牌号</label></th>
 									<th><label>车架号</label></th>
-									<th><label>维修项目号</label></th>
+									<th><label>维修项目编号</label></th>
 									<th><label>维修项目名</label></th>
 									<th><label>具体问题</label></th>
 									<th><label>所属业务员</label></th>
@@ -481,6 +487,11 @@
 					</div>
 				</div>
 				<div>
+					<img src='/statics/user/编号.png' width='20px' alt="正在加载图片">
+					<label for="parts_number" style='font-size:15px;'>零件编号：</label>
+					<input id='parts_number' style="width: 150px" readonly placeholder="搜索零件后自动生成..."/>
+				</div>
+				<div>
 					<img src='/statics/user/里程.png' width='20px' alt="正在加载图片">
 					<label for="EndMile" style='font-size:15px;'>所需零件数量：</label>
 					<input id='EndMile' type='number' min="1" step="1" value="1" style="width: 50px"/>
@@ -669,6 +680,7 @@
 	function fill(source){
 		document.getElementById("part").value = source.innerHTML;
 		document.getElementById("part").name = source.id;
+		document.getElementById("parts_number").value = source.id;
 		delPartsResults();
 	}
 
@@ -704,6 +716,17 @@
 					var data = response.data;
 					var num = data.length;
 					document.getElementById("pre_repair").innerHTML = "待确认维修" + "(" + num + ")";
+					if(num === 0){
+						var tr = document.createElement("tr");
+						tbody.appendChild(tr);
+						tr.setAttribute("class", "order-form");
+						var td1 = document.createElement("td");
+						tr.appendChild(td1);
+						var h51 = document.createElement("h5");
+						td1.appendChild(h51);
+						h51.innerHTML = "暂时没有待确认的维修项目...";
+						td1.setAttribute("colspan","8");
+					}
 					for (var i = 0; i < num; i++) {
 						var tr = document.createElement("tr");
 						tbody.appendChild(tr);
@@ -745,12 +768,10 @@
 						h57.innerHTML = data[i].Salesman;
 						var td8 = document.createElement("td");
 						tr.appendChild(td8);
-						var a = document.createElement("a");
+						var a = document.createElement("button");
 						td8.appendChild(a);
-						a.setAttribute("class", "btn btn-info btn-md");
-						var span = document.createElement("span");
-						a.appendChild(span);
-						span.setAttribute("class", "glyphico");
+						a.setAttribute("class", "btn btn-primary");
+						a.setAttribute("type", "button");
 						a.innerHTML = "没办法了开始工作吧";
 						a.setAttribute("onclick","finishRepairment(\""+data[i].OrderNumber+"\",\""+data[i].ProjectNumber+"\",\""+"维修中"+"\")");
 					}
@@ -877,32 +898,46 @@
 								var parts = project[k].Parts;
 								var number = parts.length;
 								if(number === 0){
+									let th24 = document.createElement("th");
+									tr2.appendChild(th24);
+									th24.setAttribute("colspan","2");
+									let h524 = document.createElement("h5");
+									th24.appendChild(h524);
+									h524.innerHTML = "-";
+									let th25 = document.createElement("th");
+									tr2.appendChild(th25);
+									th25.setAttribute("colspan","2");
+									let h525 = document.createElement("h5");
+									th25.appendChild(h525);
+									h525.innerHTML = "-";
+									let th26 = document.createElement("th");
+									tr2.appendChild(th26);
+									th26.setAttribute("colspan","2");
+									let h526 = document.createElement("h5");
+									th26.appendChild(h526);
+									h526.innerHTML = "-";
 									let th27 = document.createElement("th");
 									tr2.appendChild(th27);
 									let a = document.createElement("a");
 									th27.appendChild(a);
 									a.setAttribute("data-toggle","modal");
 									a.setAttribute("data-target","#add_parts");
-									a.setAttribute("class","btn btn-info btn-md");
-									let span2 = document.createElement("span");
-									a.appendChild(span2);
-									span2.setAttribute("class","glyphicon");
+									a.setAttribute("class", "btn btn-primary");
+									a.setAttribute("type", "button");
 									a.innerHTML = "添加零件";
 									a.setAttribute("onclick","getParam(\""+data[i].OrderNumber+"\",\""+project[k].ProjectNumber+"\")");
 									let bb1 = document.createElement("br");
 									let bb2 = document.createElement("br");
 									th27.appendChild(bb1);
 									th27.appendChild(bb2);
-									let a1 = document.createElement("a");
+									let a1 = document.createElement("button");
 									th27.appendChild(a1);
-									a1.setAttribute("class","btn btn-info btn-md")
-									let span = document.createElement("span");
-									a1.appendChild(span);
-									span.setAttribute("class","glyphicon");
+									a1.setAttribute("class", "btn btn-primary");
+									a1.setAttribute("type", "button");
 									a1.innerHTML = "修好了!";
-									th21.setAttribute("colspan","3");
-									th22.setAttribute("colspan","3");
-									th23.setAttribute("colspan","3");
+									th21.setAttribute("colspan","1");
+									th22.setAttribute("colspan","1");
+									th23.setAttribute("colspan","1");
 									a1.setAttribute("onclick","finishRepairment(\""+data[i].OrderNumber+"\",\""+project[k].ProjectNumber+"\",\""+"已完成"+"\")");
 								}
 								else{
@@ -934,22 +969,18 @@
 									th27.appendChild(a);
 									a.setAttribute("data-toggle","modal");
 									a.setAttribute("data-target","#add_parts");
-									a.setAttribute("class","btn btn-info btn-md");
-									let span2 = document.createElement("span");
-									a.appendChild(span2);
-									span2.setAttribute("class","glyphicon");
+									a.setAttribute("class", "btn btn-primary");
+									a.setAttribute("type", "button");
+									a.innerHTML = "添加零件";
+									a.setAttribute("onclick","getParam(\""+data[i].OrderNumber+"\",\""+project[k].ProjectNumber+"\")");
 									let bb1 = document.createElement("br");
 									let bb2 = document.createElement("br");
 									th27.appendChild(bb1);
 									th27.appendChild(bb2);
-									a.innerHTML = "添加零件";
-									a.setAttribute("onclick","getParam(\""+data[i].OrderNumber+"\",\""+project[k].ProjectNumber+"\")");
-									let a1 = document.createElement("a");
+									let a1 = document.createElement("button");
 									th27.appendChild(a1);
-									a1.setAttribute("class","btn btn-info btn-md")
-									let span = document.createElement("span");
-									a1.appendChild(span);
-									span.setAttribute("class","glyphicon");
+									a1.setAttribute("class", "btn btn-primary");
+									a1.setAttribute("type", "button");
 									a1.innerHTML = "修好了!";
 									a1.setAttribute("onclick","finishRepairment(\""+data[i].OrderNumber+"\",\""+project[k].ProjectNumber+"\",\""+"已完成"+"\")");
 
@@ -1196,6 +1227,8 @@ function addPartsForProject(){
 		if(res.data.status === "成功"){
 			alert("成功!");
 			document.getElementById("part").value = "";
+			document.getElementById("parts_number").value = "";
+			document.getElementById("EndMile").value = 1;
 			$('#add_parts').modal('hide');
 			getProcessingArrangement();
 		}
