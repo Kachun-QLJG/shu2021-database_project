@@ -166,7 +166,7 @@
 							</a>
 						</h4>
 					</div>
-					<div id="collapseOne" class="panel-collapse collapse in">
+					<div id="collapseOne" class="panel-collapse collapse">
 						<table id="pending_table" class="table  table-bordered table-hover">
 							<thead>
 								<tr class="order-form">
@@ -205,7 +205,7 @@
 							</a>
 						</h4>
 					</div>
-					<div id="collapseTwo" class="panel-collapse collapse">
+					<div id="collapseTwo" class="panel-collapse collapse in">
 						<table id="ongoing_table1" class="table  table-bordered table-hover">
 							<tbody>
 								<tr class="form-head" style="background-color: #ebebeb">
@@ -816,21 +816,36 @@
 								tr2.appendChild(th21);
 								var h521 = document.createElement("h5");
 								th21.appendChild(h521);
-								h521.innerHTML = "维修项目号："+project[k].ProjectNumber;
+								h521.innerHTML = project[k].ProjectNumber;
 								var th22 = document.createElement("th");
 								tr2.appendChild(th22);
 								var h522 = document.createElement("h5");
 								th22.appendChild(h522);
-								h522.innerHTML = "项目名称："+project[k].ProjectName;
+								h522.innerHTML = project[k].ProjectName;
 								var th23 = document.createElement("th");
 								tr2.appendChild(th23);
 								var h523 = document.createElement("h5");
 								th23.appendChild(h523);
-								h523.innerHTML = "项目工时："+project[k].ProjectTime;
+								h523.innerHTML = project[k].ProjectTime;
 
 								var parts = project[k].Parts;
 								var number = parts.length;
 								if(number === 0){
+									/*let th24 = document.createElement("th");
+									tr2.appendChild(th24);
+									th24.setAttribute("colspan","2");
+									let h524 = document.createElement("h5");
+									th24.appendChild(h524);
+									let th25 = document.createElement("th");
+									tr2.appendChild(th25);
+									th25.setAttribute("colspan","2");
+									let h525 = document.createElement("h5");
+									th25.appendChild(h525);
+									let th26 = document.createElement("th");
+									tr2.appendChild(th26);
+									th26.setAttribute("colspan","2");
+									let h526 = document.createElement("h5");
+									th26.appendChild(h526);*/
 									let th27 = document.createElement("th");
 									tr2.appendChild(th27);
 									let a = document.createElement("a");
@@ -868,19 +883,19 @@
 									th24.setAttribute("colspan","2");
 									let h524 = document.createElement("h5");
 									th24.appendChild(h524);
-									h524.innerHTML = "零件号：" + parts[0].PartsNumber;
+									h524.innerHTML = parts[0].PartsNumber;
 									let th25 = document.createElement("th");
 									tr2.appendChild(th25);
 									th25.setAttribute("colspan","2");
 									let h525 = document.createElement("h5");
 									th25.appendChild(h525);
-									h525.innerHTML = "零件名：" + parts[0].PartsName;
+									h525.innerHTML = parts[0].PartsName;
 									let th26 = document.createElement("th");
 									tr2.appendChild(th26);
 									th26.setAttribute("colspan","2");
 									let h526 = document.createElement("h5");
 									th26.appendChild(h526);
-									h526.innerHTML = "零件数量：" + parts[0].PartsCount;
+									h526.innerHTML = parts[0].PartsCount;
 									let th27 = document.createElement("th");
 									tr2.appendChild(th27);
 									th27.setAttribute("rowspan",number);
@@ -916,19 +931,19 @@
 										th31.setAttribute("colspan","2");
 										let h531 = document.createElement("h5");
 										th31.appendChild(h531);
-										h531.innerHTML = "零件号：" + parts[j].PartsNumber;
+										h531.innerHTML = parts[j].PartsNumber;
 										let th32 = document.createElement("th");
 										tr3.appendChild(th32);
 										th32.setAttribute("colspan","2");
 										let h532 = document.createElement("h5");
 										th32.appendChild(h532);
-										h532.innerHTML = "零件名：" + parts[j].PartsName;
+										h532.innerHTML = parts[j].PartsName;
 										let th33 = document.createElement("th");
 										tr3.appendChild(th33);
 										th33.setAttribute("colspan","2");
 										let h533 = document.createElement("h5");
 										th33.appendChild(h533);
-										h533.innerHTML = "零件数量：" + parts[j].PartsCount;
+										h533.innerHTML = parts[j].PartsCount;
 									}
 								}
 							}
