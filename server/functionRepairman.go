@@ -37,7 +37,7 @@ func getFinishedArrangement(c *gin.Context) {
 		for j := range arrangement[i].Project {
 			database.Raw("select repair_parts.parts_number as parts_number, parts_name as parts_name, parts_count as parts_count\n"+
 				"from repair_parts inner join parts_overview on repair_parts.parts_number = parts_overview.parts_number\n"+
-				"where project_number = ?", arrangement[i].Project[j].ProjectNumber).Scan(&arrangement[i].Project[j].Parts)
+				"where project_number = ? and order_number = ?", arrangement[i].Project[j].ProjectNumber, arrangement[i].OrderNumber).Scan(&arrangement[i].Project[j].Parts)
 		}
 	}
 	c.JSON(http.StatusOK, arrangement)
@@ -87,7 +87,7 @@ func getProcessingArrangement(c *gin.Context) {
 		for j := range arrangement[i].Project {
 			database.Raw("select repair_parts.parts_number as parts_number, parts_name as parts_name, parts_count as parts_count\n"+
 				"from repair_parts inner join parts_overview on repair_parts.parts_number = parts_overview.parts_number\n"+
-				"where project_number = ?", arrangement[i].Project[j].ProjectNumber).Scan(&arrangement[i].Project[j].Parts)
+				"where project_number = ? and order_number = ?", arrangement[i].Project[j].ProjectNumber, arrangement[i].OrderNumber).Scan(&arrangement[i].Project[j].Parts)
 		}
 	}
 	c.JSON(http.StatusOK, arrangement)
