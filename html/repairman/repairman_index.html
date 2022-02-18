@@ -1110,14 +1110,14 @@ function addPartsForProject(){
 
 		if(res.data.status === "成功"){
 			alert("成功!");
-			location.reload();
+			$('#add_parts').modal('hide');
+			getProcessingArrangement();
 		}
 		else{
 			alert("添加失败!");
 		}
 	})
 }
-
 </script>
 </body>
 </html>
