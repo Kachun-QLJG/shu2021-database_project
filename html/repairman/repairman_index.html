@@ -803,7 +803,53 @@
 							var label3 = document.createElement("label");
 							th3.appendChild(label3);
 							label3.innerHTML = "车架号:"+data[i].Vin;
-
+							tbody = document.createElement("tbody");
+							table.appendChild(tbody);
+							var tr = document.createElement("tr");
+							tbody.appendChild(tr);
+							tr.setAttribute("class","order-form");
+							var th = document.createElement("th");
+							tr.appendChild(th);
+							var h5 = document.createElement("h5");
+							th.appendChild(h5);
+							th.setAttribute("colspan","1");
+							h5.innerHTML = "<b>维修项目编号</b>";
+							th = document.createElement("th");
+							tr.appendChild(th);
+							th.setAttribute("colspan","1");
+							h5 = document.createElement("h5");
+							th.appendChild(h5);
+							h5.innerHTML = "<b>项目名称</b>";
+							th = document.createElement("th");
+							tr.appendChild(th);
+							th.setAttribute("colspan","1");
+							h5 = document.createElement("h5");
+							th.appendChild(h5);
+							h5.innerHTML = "<b>额定工时</b>";
+							th = document.createElement("th");
+							tr.appendChild(th);
+							th.setAttribute("colspan","2");
+							h5 = document.createElement("h5");
+							th.appendChild(h5);
+							h5.innerHTML = "<b>零件号</b>";
+							th = document.createElement("th");
+							tr.appendChild(th);
+							th.setAttribute("colspan","2");
+							h5 = document.createElement("h5");
+							th.appendChild(h5);
+							h5.innerHTML = "<b>零件名</b>";
+							th = document.createElement("th");
+							tr.appendChild(th);
+							th.setAttribute("colspan","2");
+							h5 = document.createElement("h5");
+							th.appendChild(h5);
+							h5.innerHTML = "<b>零件数量</b>";
+							th = document.createElement("th");
+							tr.appendChild(th);
+							th.setAttribute("colspan","1");
+							h5 = document.createElement("h5");
+							th.appendChild(h5);
+							h5.innerHTML = "<b>操作</b>";
 							var project = data[i].Project;
 							var len = project.length;
 							for(var k = 0; k < len; k++){
@@ -831,21 +877,6 @@
 								var parts = project[k].Parts;
 								var number = parts.length;
 								if(number === 0){
-									/*let th24 = document.createElement("th");
-									tr2.appendChild(th24);
-									th24.setAttribute("colspan","2");
-									let h524 = document.createElement("h5");
-									th24.appendChild(h524);
-									let th25 = document.createElement("th");
-									tr2.appendChild(th25);
-									th25.setAttribute("colspan","2");
-									let h525 = document.createElement("h5");
-									th25.appendChild(h525);
-									let th26 = document.createElement("th");
-									tr2.appendChild(th26);
-									th26.setAttribute("colspan","2");
-									let h526 = document.createElement("h5");
-									th26.appendChild(h526);*/
 									let th27 = document.createElement("th");
 									tr2.appendChild(th27);
 									let a = document.createElement("a");
@@ -1000,6 +1031,40 @@
 						var label3 = document.createElement("label");
 						th3.appendChild(label3);
 						label3.innerHTML = "车架号:"+data[i].Vin;
+						var tbody = document.createElement("tbody");
+						table.appendChild(tbody);
+						var tr = document.createElement("tr");
+						tbody.appendChild(tr);
+						tr.setAttribute("class","order-form");
+						var th = document.createElement("th");
+						tr.appendChild(th);
+						var h5 = document.createElement("h5");
+						th.appendChild(h5);
+						h5.innerHTML = "<b>维修项目编号</b>";
+						th = document.createElement("th");
+						tr.appendChild(th);
+						th.setAttribute("colspan","2");
+						h5 = document.createElement("h5");
+						th.appendChild(h5);
+						h5.innerHTML = "<b>项目名称</b>";
+						th = document.createElement("th");
+						tr.appendChild(th);
+						th.setAttribute("colspan","2");
+						h5 = document.createElement("h5");
+						th.appendChild(h5);
+						h5.innerHTML = "<b>零件号</b>";
+						th = document.createElement("th");
+						tr.appendChild(th);
+						th.setAttribute("colspan","2");
+						h5 = document.createElement("h5");
+						th.appendChild(h5);
+						h5.innerHTML = "<b>零件名</b>";
+						th = document.createElement("th");
+						tr.appendChild(th);
+						th.setAttribute("colspan","2");
+						h5 = document.createElement("h5");
+						th.appendChild(h5);
+						h5.innerHTML = "<b>零件数量</b>";
 						var project = data[i].Project;
 						var len = project.length;
 						for(var k = 0; k < len; k++){
@@ -1012,13 +1077,13 @@
 							tr2.appendChild(th21);
 							var h521 = document.createElement("h5");
 							th21.appendChild(h521);
-							h521.innerHTML = "维修项目号："+project[k].ProjectNumber;
+							h521.innerHTML = project[k].ProjectNumber;
 							var th22 = document.createElement("th");
 							tr2.appendChild(th22);
 							th22.setAttribute("colspan","2");
 							var h522 = document.createElement("h5");
 							th22.appendChild(h522);
-							h522.innerHTML = "项目名称："+project[k].ProjectName;
+							h522.innerHTML = project[k].ProjectName;
 
 
 							var parts = project[k].Parts;
@@ -1029,16 +1094,19 @@
 								th24.setAttribute("colspan","2");
 								let h524 = document.createElement("h5");
 								th24.appendChild(h524);
+								h524.innerHTML = "-";
 								let th25 = document.createElement("th");
 								tr2.appendChild(th25);
 								th25.setAttribute("colspan","2");
 								let h525 = document.createElement("h5");
 								th25.appendChild(h525);
+								h525.innerHTML = "-";
 								let th26 = document.createElement("th");
 								tr2.appendChild(th26);
 								th26.setAttribute("colspan","2");
 								let h526 = document.createElement("h5");
 								th26.appendChild(h526);
+								h526.innerHTML = "-";
 							}
 							else{
 								th21.setAttribute("rowspan",number);
@@ -1048,19 +1116,19 @@
 								th24.setAttribute("colspan","2");
 								let h524 = document.createElement("h5");
 								th24.appendChild(h524);
-								h524.innerHTML = "零件号：" + parts[0].PartsNumber;
+								h524.innerHTML =  parts[0].PartsNumber;
 								let th25 = document.createElement("th");
 								tr2.appendChild(th25);
 								th25.setAttribute("colspan","2");
 								let h525 = document.createElement("h5");
 								th25.appendChild(h525);
-								h525.innerHTML = "零件名：" + parts[0].PartsName;
+								h525.innerHTML = parts[0].PartsName;
 								let th26 = document.createElement("th");
 								tr2.appendChild(th26);
 								th26.setAttribute("colspan","2");
 								let h526 = document.createElement("h5");
 								th26.appendChild(h526);
-								h526.innerHTML = "零件数量：" + parts[0].PartsCount;
+								h526.innerHTML = parts[0].PartsCount;
 								for(j = 1; j < number; j++){
 									let tr3 = document.createElement("tr");
 									tbody2.appendChild(tr3);
@@ -1070,19 +1138,19 @@
 									th31.setAttribute("colspan","2");
 									let h531 = document.createElement("h5");
 									th31.appendChild(h531);
-									h531.innerHTML = "零件号：" + parts[j].PartsNumber;
+									h531.innerHTML = parts[j].PartsNumber;
 									let th32 = document.createElement("th");
 									tr3.appendChild(th32);
 									th32.setAttribute("colspan","2");
 									let h532 = document.createElement("h5");
 									th32.appendChild(h532);
-									h532.innerHTML = "零件名：" + parts[j].PartsName;
+									h532.innerHTML = parts[j].PartsName;
 									let th33 = document.createElement("th");
 									tr3.appendChild(th33);
 									th33.setAttribute("colspan","2");
 									let h533 = document.createElement("h5");
 									th33.appendChild(h533);
-									h533.innerHTML = "零件数量：" + parts[j].PartsCount;
+									h533.innerHTML = parts[j].PartsCount;
 								}
 							}
 						}
