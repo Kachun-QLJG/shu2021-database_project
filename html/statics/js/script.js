@@ -221,7 +221,7 @@ function checkNotification(){
 
 				var modalBody=document.createElement("h4");
 				modal.appendChild(modalBody);
-				modalBody.innerHTML = content1;
+				modalBody.innerHTML = content1.replace(/\n/g,"<br>　　");
 				modalBody.className="modal-body"
 				modalBody.style.cssText="text-align: left;"
 
