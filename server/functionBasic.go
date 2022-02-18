@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
@@ -56,10 +55,6 @@ func changePassword(c *gin.Context) {
 	newPassword := c.PostForm("pswd")
 	username := c.MustGet("username").(string)
 	group := c.MustGet("group").(string)
-	fmt.Println(oldPassword, newPassword)
-	if oldPassword == "" {
-		fmt.Println("empty!")
-	}
 	var passwordChange struct {
 		OldPassword string
 		Username    string
@@ -71,7 +66,6 @@ func changePassword(c *gin.Context) {
 	} else {
 		database.Table("repairman").Select("number as username, password as old_password").Where("number = ?", username).Scan(&passwordChange).Limit(1)
 	}
-	fmt.Println(passwordChange)
 	if CheckPasswordHash(oldPassword, passwordChange.OldPassword) { //密码比对通过
 		secretPassword, _ := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
 		if group == "普通用户" {

@@ -315,17 +315,15 @@ func generateLicensePlate(licenseNumber string) {
 	}
 	args := []string{"--plate-number", licenseNumber, "--bg-color", color}
 	cmd := exec.Command("generate_special_plate.exe", args...)
-	fmt.Println(cmd.Args)
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
 	cmd.Stderr = &stderr
 	err := cmd.Run()
 	if err != nil {
-		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
+		fmt.Println("生成车牌失败！" + fmt.Sprint(err) + ": " + stderr.String())
 		return
 	}
-	fmt.Println("Result: " + out.String())
 }
 
 func checkVehicle(c *gin.Context) {

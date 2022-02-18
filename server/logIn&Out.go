@@ -112,7 +112,6 @@ func login(c *gin.Context) {
 				if CheckPasswordHash(password, repairMan.Password) { //密码比对通过
 					goto CORRECT
 				} else { //密码比对不通过
-					fmt.Println("@2")
 					c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "用户名或密码错误！"})
 					return
 				}
@@ -123,12 +122,10 @@ func login(c *gin.Context) {
 					if CheckPasswordHash(password, salesman.Password) { //密码比对通过
 						goto CORRECT
 					} else { //密码比对不通过
-						fmt.Println()
 						c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "用户名或密码错误！"})
 						return
 					}
 				} else {
-					fmt.Println("4")
 					c.JSON(http.StatusOK, gin.H{"status": "失败", "data": "用户名或密码错误！"})
 					return
 				}

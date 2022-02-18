@@ -217,7 +217,6 @@ func addProjectForAttorney(c *gin.Context) {
 	data := Arrangement{attorneyNo, projectNo, repairmanNo, "待确认"}
 	addArrangementResult := database.Create(&data) //添加到派工单表
 	if addArrangementResult.Error != nil {
-		fmt.Println(addArrangementResult.Error)
 		c.JSON(http.StatusOK, gin.H{"status": "错误", "data": addArrangementResult.Error})
 		return
 	}
@@ -226,7 +225,6 @@ func addProjectForAttorney(c *gin.Context) {
 	database.Model(&repairman).Update("current_work_hour", repairman.CurrentWorkHour+workHour)
 	var project TimeOverview
 	database.First(&project, "project_number = ?", projectNo)
-	fmt.Println(project)
 	var notification Notification
 	notificationNumber := database.Find(&notification).RowsAffected + 1
 	strNumber := fmt.Sprintf("%08d", notificationNumber) //获取通知序号

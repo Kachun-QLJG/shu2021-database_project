@@ -165,7 +165,6 @@ func changeRepairProgress(c *gin.Context) {
 		database.Model(&repairman).Update("current_work_hour", repairman.CurrentWorkHour-reduceTime)
 		var totalArrangement Arrangement
 		result := database.Find(&totalArrangement, "order_number = ? and progress != '已完成'", attorneyNo)
-		fmt.Println(totalArrangement)
 		if result.RowsAffected == 0 {
 			var attorney Attorney
 			database.First(&attorney, "number = ?", attorneyNo)
