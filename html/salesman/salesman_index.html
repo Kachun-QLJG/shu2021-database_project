@@ -551,6 +551,7 @@
 										<th><label>工种</label></th>
 										<th><label>维修员编号</label></th>
 										<th><label>维修员姓名</label></th>
+										<th><label>维修状态</label></th>
 									</tr>
 								</thead>
 								<tbody id="detailTableRow">
@@ -1114,7 +1115,6 @@
 					// alert(res.PayMethod);
 					var selections = document.getElementsByName('PayMethod');
 					for(var i = 0; i < 3; i++){
-						alert(selections[i].value + res.PayMethod);
 						if(selections[i].value === res.PayMethod){
 							selections[i].setAttribute("checked", "checked");
 							break;
@@ -1216,6 +1216,7 @@
 						var project_number = arrangement.ProjectNumber;
 						var project_name = arrangement.ProjectName;
 						var project_time = arrangement.ProjectTime;
+						var project_progress = arrangement.ProjectProgress;
 						var repairmen = arrangement.Repairman;
 						for (var j = 0; j < repairmen.length; j++) {
 							var repairman = repairmen[j];
@@ -1256,7 +1257,9 @@
 							tr.appendChild(td6);
 							td6.innerHTML = name;
 
-
+							var td7 = document.createElement("td");
+							tr.appendChild(td7);
+							td7.innerHTML = project_progress;
 
 							// var tr1 = document.createElement("tr");
 							// tr1.setAttribute("class","order-form");

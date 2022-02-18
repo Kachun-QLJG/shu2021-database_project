@@ -52,10 +52,11 @@ func getArrangements(c *gin.Context) {
 		Name   string
 	}
 	var arrangement []struct {
-		ProjectNumber string
-		ProjectName   string
-		ProjectTime   string
-		Repairman     []repairman
+		ProjectNumber   string
+		ProjectName     string
+		ProjectTime     string
+		ProjectProgress string
+		Repairman       []repairman
 	}
 	timeType := ""
 	var vehicle Vehicle
@@ -71,7 +72,7 @@ func getArrangements(c *gin.Context) {
 	} else {
 		timeType = "time_e"
 	}
-	database.Raw("select distinct arrangement.project_number as project_number, project_name as project_name, "+timeType+" as project_time\n"+
+	database.Raw("select distinct arrangement.project_number as project_number, project_name as project_name, "+timeType+" as project_time, progress as project_progress\n"+
 		"from arrangement inner join time_overview on arrangement.project_number = time_overview.project_number\n"+
 		"where order_number = ?", attorneyNo).Scan(&arrangement)
 	for i := range arrangement {
@@ -236,6 +237,7 @@ func addProjectForAttorney(c *gin.Context) {
 	database.Model(&repairman).Update("current_work_hour", repairman.CurrentWorkHour+workHour)
 	var project TimeOverview
 	database.First(&project, "project_number = ?", projectNo)
+	fmt.Println(project)
 	var notification Notification
 	notificationNumber := database.Find(&notification).RowsAffected + 1
 	strNumber := fmt.Sprintf("%08d", notificationNumber) //获取通知序号
@@ -244,7 +246,7 @@ func addProjectForAttorney(c *gin.Context) {
 		strNumber,
 		repairmanNo,
 		"【通知】您有新的任务，请查收！",
-		"维修员" + repairman.Name + "您好，您有新的任务：" + project.ProjectName + "，工时定额为" + c.PostForm("work_hour") + "小时，请及时处理！\n祝您工作愉快！",
+		"维修员" + repairman.Name + "您好，您有新的任务：" + project.ProjectName + "，工时定额为" + c.PostForm("work_hour") + "工时，请及时处理！\n祝您工作愉快！",
 		"未读",
 		sTime,
 	}

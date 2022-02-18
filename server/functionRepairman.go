@@ -158,29 +158,31 @@ func changeRepairProgress(c *gin.Context) {
 		} else {
 			timeType = "time_e"
 		}
-		database.Raw("select "+timeType+" as time from time_overview where project_number = ?", arrangement.OrderNumber).Scan(&temp)
+		database.Raw("select "+timeType+" as time from time_overview where project_number = ?", arrangement.ProjectNumber).Scan(&temp)
 		reduceTime, _ := strconv.ParseFloat(temp.Time, 64)
 		var repairman Repairman
 		database.First(&repairman, "number = ?", username)
 		database.Model(&repairman).Update("current_work_hour", repairman.CurrentWorkHour-reduceTime)
-		result := database.Find(&arrangement, "order_number = ? and progress != '已完成'", attorneyNo)
+		var totalArrangement Arrangement
+		result := database.Find(&totalArrangement, "order_number = ? and progress != '已完成'", attorneyNo)
+		fmt.Println(totalArrangement)
 		if result.RowsAffected == 0 {
 			var attorney Attorney
 			database.First(&attorney, "number = ?", attorneyNo)
-			database.Model(&arrangement).Update("progress", "待结算")
-			database.Model(&arrangement).Update("actual_finish_time", time.Now().Format("2006-01-02"))
+			database.Model(&attorney).Update("progress", "待结算")
+			database.Model(&attorney).Update("actual_finish_time", time.Now().Format("2006-01-02"))
 			var user User
 			database.First(&user, "number = ?", attorney.UserID)
-			var vehicle Vehicle
-			database.First(&vehicle, "number = ?", attorney.VehicleNumber)
+			var clientVehicle Vehicle
+			database.First(&clientVehicle, "number = ?", attorney.VehicleNumber)
 			var notification Notification
 			notificationNumber := database.Find(&notification).RowsAffected + 1
 			strNumber := fmt.Sprintf("%08d", notificationNumber) //获取通知序号
 			data := Notification{                                //给用户发通知
 				strNumber,
 				user.ContactTel,
-				"【通知】您的车辆" + vehicle.LicenseNumber + "维修完成",
-				"尊敬的用户" + user.Name + "您好，您的车辆" + vehicle.LicenseNumber + "已完成订单号为" + attorney.Number + "的维修委托。请您保持电话畅通，与您对接的业务员将与您联系，以确认后续事宜。\n最后感谢您选择了我们为您提供车辆维修服务，祝您一路顺风、生活愉快。",
+				"【通知】您的车辆" + clientVehicle.LicenseNumber + "维修完成",
+				"尊敬的用户" + user.Name + "您好，您的车辆" + clientVehicle.LicenseNumber + "已完成订单号为" + attorney.Number + "的维修委托。请您保持电话畅通，与您对接的业务员将与您联系，以确认后续事宜。\n最后感谢您选择了我们为您提供车辆维修服务，祝您一路顺风、生活愉快。",
 				"未读",
 				time.Now().Format("2006-01-02 15:04:05"),
 			}
