@@ -1114,8 +1114,9 @@
 					// alert(res.PayMethod);
 					var selections = document.getElementsByName('PayMethod');
 					for(var i = 0; i < 3; i++){
+						alert(selections[i].value + res.PayMethod);
 						if(selections[i].value === res.PayMethod){
-							selections[i].checked = "checked";
+							selections[i].setAttribute("checked", "checked");
 							break;
 						}
 					}
