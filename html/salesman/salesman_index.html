@@ -497,13 +497,13 @@
 
 						<img src='/statics/user/油量.png' width='20px' alt="正在加载图片">
 						<label for="EndPetrol" style='font-size:15px;width: 80px;'>出场油量：</label>
-						<input class="edit_attorney" id='EndPetrol' type='number' min="0" max="100" step="0.1" placeholder='进场时车辆所剩油量' style="width: 130px"/> L
+						<input class="edit_attorney" id='EndPetrol' type='number' min="0" max="100" step="0.1" placeholder='出场时车辆所剩油量' style="width: 130px"/> L
 						<br>
 						<br>
 
 						<img src='/statics/user/里程.png' width='20px' alt="正在加载图片">
 						<label for="EndMile" style='font-size:15px;width: 80px;'>出场里程：</label>
-						<input class="edit_attorney" id='EndMile' type='number' min="0" step="0.1" placeholder='进场时车辆里程数' style="width: 130px"/> km
+						<input class="edit_attorney" id='EndMile' type='number' min="0" step="0.1" placeholder='出场时车辆里程数' style="width: 130px"/> km
 						<br>
 						<br>
 
@@ -604,8 +604,8 @@
 			</div>
 			<form class='modal-footer'>
 <!--				<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>-->
-				<button type='button' class='btn btn-primary' onclick='checkOut()' id='checkOutAttorney' style="display: none">结算</button>				、
-				<button type='button' class='btn btn-primary' onclick="if(checkSubmit('edit_attorney'))saveAttorney()&&dateModify(document.getElementById('ExpectedEndTime').value)" id='confirmAddVehicle'>确认新增</button>
+				<button type='button' class='btn btn-primary' onclick="if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value))checkOut()" id='checkOutAttorney' style="display: none">结算</button>				、
+				<button type='button' class='btn btn-primary' onclick="saveAttorney(true)" id='confirmAddVehicle'>确认新增</button>
 				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 			</form>
 		</div>
@@ -1193,17 +1193,23 @@
 					excluded.value = res.OutRange;
 					var expectedEndTime = document.getElementById('ExpectedEndTime');
 					expectedEndTime.value = res.PredictFinishTime
-					// 这里没有改好
+
 					var endPetrol = document.getElementById('EndPetrol');
 					endPetrol.value = res.EndPetrol;
+					if(res.EndPetrol === 0){
+						endPetrol.value = "";
+					}
 					var endMile = document.getElementById('EndMile');
 					endMile.value = res.EndMile;
+					if(res.EndMile === 0){
+						endMile.value = "";
+					}
 
                     if (Progress === "待结算"){
-						checkout_string = "checkOut(" + attorneyNo + ")";
+						// checkout_string = "checkOut(" + attorneyNo + ")";
                         var btn = document.getElementById('checkOutAttorney');
                         btn.setAttribute("style", "display: inline");
-						btn.setAttribute("onclick", checkout_string);
+						btn.setAttribute("onclick", "if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value))checkOut('" + attorneyNo + "')");
                     }
 				})
 		getProjects(attorneyNo);
@@ -1326,10 +1332,10 @@
 				})
 	}
 
-	function saveAttorney(){
+	function saveAttorney(param){
 		let formData = new FormData();
 		formData.append("attorney_no", document.getElementById("order_number").value);
-		var selections1 = document.getElementsByName('time_request');;
+		var selections1 = document.getElementsByName('time_request');
 		for(var i = 0; i < 2; i++){
 			if(selections1[i].checked){
 				formData.append("repair_type", selections1[i].value);
@@ -1352,9 +1358,8 @@
 			headers: {"Content-Type": "multipart/form-data"}
 		};
 		axios.post("/save_attorney", formData, config).then(res => {
-			alert(res.data);
-			if(res.data === "保存成功！"){
-				// location.reload();
+			if(param){
+				alert(res.data);
 			}
 		})
 	}
@@ -1389,14 +1394,12 @@
 
 	// 在结算订单时更新折扣率
 	function updateDiscountRate(attorney_no, user_id) {
+
 		var finalDiscountRate = document.getElementById('discount_rate').value;
 		let formData = new FormData();
 		formData.append("attorney_no", attorney_no);
 		formData.append("discount_rate", finalDiscountRate);
 		formData.append("user_id", user_id);
-		alert(attorney_no);
-		alert(finalDiscountRate);
-		alert(user_id);
 		let config = {
 			headers: {"Content-Type": "multipart/form-data"}
 		};
@@ -1408,9 +1411,9 @@
 
     // 结算
 	function checkOut(param) {
-		// alert(param);
+		//alert(param);
 		if(checkSubmit(param)) {
-			saveAttorney();
+			saveAttorney(false);
 			let formData = new FormData();
 			formData.append("attorney_no", param);
 			let config = {
@@ -1426,7 +1429,7 @@
 				originalDiscountRate.value = discountRate;
 				var confirmButton = document.getElementById('confirmDiscountChange');
 				// alert("updateDiscountRate(" + param + ", " + user_id + ")");
-				u_attribute = "updateDiscountRate(" + param + ", \"" + user_id + "\")";
+				u_attribute = "updateDiscountRate('" +param + "', \"" + user_id + "\")";
 				confirmButton.setAttribute("onclick", u_attribute);
 			})
 			$('#discountRate').modal("show");

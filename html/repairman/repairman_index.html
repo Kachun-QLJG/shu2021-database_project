@@ -1096,6 +1096,8 @@
 function getParam(param1,param2){
 	document.getElementById("EndMile").class = param1;
 	document.getElementById("button_submit").class = param2;
+	$('#add_parts').modal('show');
+	event.stopPropagation();
 }
 function addPartsForProject(){
 	let formData = new FormData();
@@ -1110,11 +1112,12 @@ function addPartsForProject(){
 
 		if(res.data.status === "成功"){
 			alert("成功!");
+			document.getElementById("part").value = "";
 			$('#add_parts').modal('hide');
 			getProcessingArrangement();
 		}
 		else{
-			alert("添加失败!");
+			alert("添加失败！错误信息：" + res.data.data.Message);
 		}
 	})
 }

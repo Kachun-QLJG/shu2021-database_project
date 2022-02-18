@@ -87,8 +87,6 @@ func changeDiscountRate(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	attorneyNo := c.PostForm("attorney_no")
 	client := c.PostForm("user_id")
-	fmt.Println(client)
-	fmt.Println(attorneyNo)
 	discountRate, _ := strconv.Atoi(c.PostForm("discount_rate"))
 	var attorney Attorney
 	result := database.First(&attorney, "number = ? and salesman_id = ? and user_id = ?", attorneyNo, username, client)
