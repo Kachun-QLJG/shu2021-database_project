@@ -14,8 +14,8 @@
 ## 业务员界面
 
 - [ ] 进入页面后，请将默认打开的设置为进行中订单，而不是待接订单。
-- [ ] 编辑订单时，下方表格项目号、项目名、工时需要合并![](.checklist_images/salesman table.png)
-- [ ] 此外，业务员查项目时固定车型为A，应该需要根据实际车型变化![](.checklist_images/project vehicle-type.png)
+- [ ] 编辑订单时，下方表格项目号、项目名、工时需要合并![](.checklist_images/salesman_table.png)
+- [ ] 此外，业务员查项目时固定车型为A，应该需要根据实际车型变化![](.checklist_images/project_vehicle-type.png)
 - [ ] 初次编辑时（不知道还有没有其他情况下会发生），查询项目工时时，type=u，应该是undefined了，找一下问题出在哪。实在不行就用display:none改一下，不要用class了。![](.checklist_images/get_project_time.png)
 - [ ] 订单详情中，待接订单、已完成订单的字号与进行中订单字号不一致![](.checklist_images/salesman-pending.png)![](.checklist_images/salesman-processing.png)
 - [ ] 添加维修项目后，需要将添加的这一行恢复初始状态（空）![](.checklist_images/salesman-table-clean.png)
