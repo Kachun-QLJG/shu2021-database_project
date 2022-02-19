@@ -58,11 +58,11 @@
 		.outer-png{margin-top:12px;margin-left: 12px;}
 
 		.order-form{}
-		.order-form th{text-align: center;font-size: 15px;}
-		.order-form td{text-align: center;font-size: 12px;}
+		.order-form th {font-size: 17px;text-align: center!important;vertical-align: middle!important;}
+		.order-form th label{font-size: 17px;}
+		.order-form td {font-size: 17px;text-align: center!important;vertical-align: middle!important;}
+		.order-form td h5{font-size: 17px;}
 
-		td{text-align: center!important;vertical-align: middle!important;}
-		th{text-align: center!important;vertical-align: middle!important;}
 		#alert div h4{
 			line-height: 130%;
 		}
@@ -285,7 +285,7 @@
 						<table border="1" class="table table-bordered table-hover" id="ongoing_table"  style="text-align: center; vertical-align: center; font-size: 17px;">
 							<!-- 表头 -->
 							<thead>
-								<tr style="height: 30px; text-align: center">
+								<tr class="order-form">
 									<th id="number_ongoing" >订 单 号</th>
                                     <th>车牌</th>
                                     <th>车架号</th>
@@ -862,6 +862,7 @@
 							span.setAttribute("class","glyphicon");
 							a.appendChild(span);
 							a.setAttribute("onclick","takeOrder(\""+own[i].Number+"\")");
+							tr.setAttribute("class","order-form");
 						}
 					}
 				})
@@ -898,6 +899,7 @@
 						for(var i = 0; i < num; i++){
 							var tr = document.createElement("tr");
 							tbody.appendChild(tr);
+							tr.setAttribute("class", "order-form");
 
 							var td1 = document.createElement("td");
 							tr.appendChild(td1);
@@ -1043,6 +1045,7 @@
 							h58.setAttribute("class", "btn btn-primary");
 							h58.setAttribute("type", "button")
 							h58.setAttribute("onclick","downloadPDF(this)");
+							tr.setAttribute("class","order-form");
 							h58.innerHTML = "下载委托书";
 						}
 					}

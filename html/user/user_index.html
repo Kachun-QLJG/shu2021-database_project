@@ -272,7 +272,7 @@
 				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
 				<label for="license_number" style='font-size:15px;width: 80px;'>车牌号：</label>
 				<input id='license_number' type='text' onchange='check_license_number()' placeholder='请输入车牌号'/>
-				<img src='/statics/user/问号.png' width='20px' alt="正在加载图片">
+				<img src='/statics/user/问号.png' width='20px' alt="正在加载图片" class="popover-toggle" data-toggle="popover2">
 				<span id='checktext2'></span>
 				<br>
 
@@ -726,6 +726,40 @@
 	});
 	function  content()  {
 		return  $("<h4>轿车A：排量 < 1.6升（新能源车也请选择此项）</h4>" + "<h4>轿车B：1.6升 ≤ 排量 ≤ 1.8升</h4>" + "<h4>轿车C：1.8升 < 排量 ≤ 2.3升</h4>" + "<h4>轿车D：2.3升 < 排量 ≤ 3升</h4>" + "<h4>轿车E：3升 ≤ 排量 ≤ 4升</h4>");
+	}
+
+	<!--车牌填写提示-->
+	$(function() {
+		$("[data-toggle='popover2']").each(function() {
+			var element = $(this);
+			element.popover({
+				trigger: 'manual',
+				html: true,
+				title: '车牌填写示例',
+				placement: 'right',
+				content: function() {
+					return content2();
+				}
+			}).on("mouseenter", function() {
+				var _this = this;
+				$(this).popover("show");
+				$(this).siblings(".popover").on("mouseleave", function() {
+					$(_this).popover('hide');
+				});
+			}).on("mouseleave", function() {
+				var _this = this;
+				setTimeout(function() {
+					if(!$(".popover:hover").length) {
+						$(_this).popover("hide")
+					}
+				}, 100);
+			});
+
+		});
+
+	});
+	function  content2()  {
+		return  $("<h4 style='text-align: center'>示例</h4>"+"<img src='/statics/user/示例.jpg' width='150px' alt=\"正在加载图片\">" + "<h5>填写：沪SHU502</h5>");
 	}
 
 	function dateModify(param){
