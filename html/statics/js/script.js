@@ -337,67 +337,44 @@ function getProjectTime(){
 		url: '/get_project_time?project=' + document.getElementById("project").value + '&type=' + document.getElementById("order_number").class
 	})
 		.then(function (response) {
-			time = response.data.Time;
+			let time = response.data.Time;
+			if(time === undefined){
+				time = 0;
+			}
 			document.getElementById("predict_finish_time").value = time;
 		})
 }
 function SsearchForProjects(){
- 	if (document.getElementById("project").value === "") return;
+	delProjectResults();
+ 	if (document.getElementById("project").value === ""){
+		return;
+	}
  	axios({
  		method: 'get',
  		url: '/search_for_projects?text=' + document.getElementById("project").value + '&type=' +document.getElementById("order_number").class
  	})
  		.then(function (response) {
  			{
-				 delProjectResults();
+				 if(response.data.length === 0){
+					 return;
+				 }
 				 var div = document.createElement("div");
 				 div.id ="projects";
 				 div.setAttribute("style", "width:150px; height:auto; position: absolute; top: 20px; left: 0; background-color: white; border: 1px solid black; cursor: pointer;");
 				 document.getElementById("project_input").appendChild(div);
-				 //table.setAttribute("style", "display: inline; width: 90px; position: absolute");
-				 /*list.setAttribute("name", "list");
-				 list.className = "table-responsive";
-				 list.id = "li";
- 				 div.appendChild(list);
-				 var ordertable = document.createElement("table");//生成表格ordertable
- 				 ordertable.id = "ordertable";
- 				 ordertable.className = "table  table-bordered table-hover";
- 				 table.appendChild(ordertable);
- 				 var tbody = document.createElement("tbody");//不知道这是啥
- 				 ordertable.appendChild(tbody);
-				 var tablehead = document.createElement("tr");//生成表格头tablehead
- 				 tablehead.id = "tablehead";
- 				 tbody.appendChild(tablehead);
- 				 var head_1 = document.createElement("th");
- 				 head_1.innerHTML = "维修项目名";
- 				 tablehead.appendChild(head_1);
- 				 var head_2 = document.createElement("th");
- 				 head_2.innerHTML = "维修项目编号";
- 				 tablehead.appendChild(head_2);
-				*/
-				var len = response.data.length;
- 				for (var i = 0; i < len; ++i) {
-					 if(i === 20){
-						 break;
-					 }
-					// var tr = document.createElement("tr");
-					 //table.appendChild(tr);
-					// tr.setAttribute("style","text-align: center; border: 1px solid #000");
-					 var temp = document.createElement("div");
-					 temp.setAttribute("class","select");
-					 temp.setAttribute("id",response.data[i].Id);
-					 temp.setAttribute("onclick","fill(this);delProjectResults()");
-					 temp.setAttribute("style","overflow:hidden;text-overflow:ellipsis;white-space:nowrap;");
-					 //var t1 = document.createElement("td");
-					 //temp.setAttribute("value",JSON.stringify(response.data[i].Name).replace("\"","").replace("\"",""));
- 					 temp.innerHTML = JSON.stringify(response.data[i].Name).replace("\"","").replace("\"","");
-					 //temp.appendChild(t1);
- 					 //var t2 = document.createElement("td");
- 					 //t2.innerHTML = JSON.stringify(response.data[i].Id);
- 					 //temp.appendChild(t2);
- 					 //alert(temp);
- 					 div.appendChild(temp);
- 				}
+				 var len = response.data.length;
+ 				 for (var i = 0; i < len; ++i) {
+					  if(i === 20){
+						  break;
+					  }
+					  var temp = document.createElement("div");
+					  temp.setAttribute("class","select");
+					  temp.setAttribute("id",response.data[i].Id);
+					  temp.setAttribute("onclick","fill(this);delProjectResults()");
+					  temp.setAttribute("style","overflow:hidden;text-overflow:ellipsis;white-space:nowrap;");
+ 					  temp.innerHTML = JSON.stringify(response.data[i].Name).replace("\"","").replace("\"","");
+ 					  div.appendChild(temp);
+ 				 }
  			}
  		})
  }

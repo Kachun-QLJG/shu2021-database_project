@@ -757,10 +757,10 @@
 	}
 
 	function fill(source){
-		document.getElementById("project").value = source.innerHTML;
-		document.getElementById("project_number").value = source.id;
-		getProjectTime();
-		delProjectResults();
+			document.getElementById("project").value = source.innerHTML;
+			document.getElementById("project_number").value = source.id;
+			getProjectTime();
+			delProjectResults();
 	}
 
 	function salesmanInfo(){
@@ -1153,7 +1153,7 @@
 		document.getElementById("project").value ="";
 		document.getElementById("classification").value ="";
 		document.getElementById("repairman_name").value ="";
-		document.getElementById("predict_finish_time").value ="";
+		document.getElementById("predict_finish_time").value = 0;
 		axios({
 			method: 'get',
 			url: '/get_full_attorney_s?attorney_no=' + attorneyNo
@@ -1262,8 +1262,8 @@
 	function getProjects(attorney_no) {
 		try{document.getElementById("detailTable").removeChild(document.getElementById("detailTableRow"))
 		} catch(error){}
-		var table = document.getElementById("detailTable");
-		var tbody = document.createElement("tbody");
+		let table = document.getElementById("detailTable");
+		let tbody = document.createElement("tbody");
 		tbody.setAttribute("id", "detailTableRow");
 		table.appendChild(tbody);
 		axios({
@@ -1271,54 +1271,80 @@
 			url: '/get_arrangements?attorney_no='+ attorney_no
 		})
 				.then(function (response) {
-					var data = response.data;
-					for (var i = 0; i < data.length; i++) {
-						var arrangement = data[i];
-						var project_number = arrangement.ProjectNumber;
-						var project_name = arrangement.ProjectName;
-						var project_time = arrangement.ProjectTime;
-						var repairmen = arrangement.Repairman;
-						for (var j = 0; j < repairmen.length; j++) {
-							var repairman = repairmen[j];
-							var type = repairman.Type;
-							var number = repairman.Number;
-							var name = repairman.Name;
-							var progress = repairman.Progress;
+					let data = response.data;
+					for (let i = 0; i < data.length; i++) {
+						let arrangement = data[i];
+						let project_number = arrangement.ProjectNumber;
+						let project_name = arrangement.ProjectName;
+						let project_time = arrangement.ProjectTime;
+						let repairmen = arrangement.Repairman;
 
-							var tr = document.createElement("tr");
+						let tr = document.createElement("tr");
+						tr.setAttribute("class", "order-form");
+						tbody.appendChild(tr);
+
+						let td1 = document.createElement("td");
+						tr.appendChild(td1);
+						td1.innerHTML = project_number;
+						td1.setAttribute("rowspan",repairmen.length);
+
+						let td2 = document.createElement("td");
+						tr.appendChild(td2);
+						td2.innerHTML = project_name;
+						td2.setAttribute("rowspan",repairmen.length);
+
+						let td3 = document.createElement("td");
+						tr.appendChild(td3);
+						td3.innerHTML = project_time;
+						td3.setAttribute("rowspan",repairmen.length);
+
+						let td4 = document.createElement("td");
+						tr.appendChild(td4);
+						td4.innerHTML = repairmen[0].Type;
+
+						let td5 = document.createElement("td");
+						tr.appendChild(td5);
+						td5.innerHTML = repairmen[0].Number;
+
+						let td6 = document.createElement("td");
+						tr.appendChild(td6);
+						td6.innerHTML = repairmen[0].Name;
+
+						let td7 = document.createElement("td");
+						tr.appendChild(td7);
+						td7.innerHTML = "<b>"+repairmen[0].Progress+"</b>";
+						if(repairmen[0].Progress === "待确认"){
+							td7.setAttribute("style","color: #8a6d3b")
+						}else if(repairmen[0].Progress === "维修中"){
+							td7.setAttribute("style","color: #31708f")
+						}else{
+							td7.setAttribute("style","color: #3c763d")
+						}
+
+						for (let j = 1; j < repairmen.length; j++) {
+							let repairman = repairmen[j];
+							let type = repairman.Type;
+							let number = repairman.Number;
+							let name = repairman.Name;
+							let progress = repairman.Progress;
+
+							let tr = document.createElement("tr");
 							tr.setAttribute("class", "order-form");
 							tbody.appendChild(tr);
 
-							var td1 = document.createElement("td");
-							tr.appendChild(td1);
-							td1.innerHTML = project_number;
-							// alert(project_number);
-
-							var td2 = document.createElement("td");
-							tr.appendChild(td2);
-							td2.innerHTML = project_name;
-							// alert(project_name);
-
-							var td3 = document.createElement("td");
-							tr.appendChild(td3);
-							td3.innerHTML = project_time;
-							// alert(project_time);
-
-							var td4 = document.createElement("td");
+							let td4 = document.createElement("td");
 							tr.appendChild(td4);
 							td4.innerHTML = type;
-							// alert(type);
 
-							var td5 = document.createElement("td");
+							let td5 = document.createElement("td");
 							tr.appendChild(td5);
 							td5.innerHTML = number;
-							// alert(number);
 
-							var td6 = document.createElement("td");
+							let td6 = document.createElement("td");
 							tr.appendChild(td6);
 							td6.innerHTML = name;
 
-							var td7 = document.createElement("td");
+							let td7 = document.createElement("td");
 							tr.appendChild(td7);
 							td7.innerHTML = "<b>"+progress+"</b>";
 							if(progress === "待确认"){
@@ -1328,24 +1354,6 @@
 							}else{
 								td7.setAttribute("style","color: #3c763d")
 							}
-
-							// var tr1 = document.createElement("tr");
-							// tr1.setAttribute("class","order-form");
-							// document.getElementById("detailTableRow").appendChild(tr1);
-							//
-							// td1.innerHTML = specific_problem;
-							// document.getElementById("project").value = "";
-							// var td2 = document.createElement("td");
-							// tr1.appendChild(td2);
-							// td2.innerHTML = type;
-							// var td3 = document.createElement("td");
-							// tr1.appendChild(td3);
-							// td3.innerHTML = repairman_name;
-							// var td4 = document.createElement("td");
-							// tr1.appendChild(td4);
-							// td4.innerHTML = time;
-							//
-							// document.getElementById("predict_finish_time").value = "";
 						}
 
 					}
