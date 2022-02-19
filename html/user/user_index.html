@@ -265,25 +265,25 @@
 			<div class='modal-body'>
 				<img src='/statics/user/井号.png' width='20px' alt="正在加载图片">
 				<label for="number" style='font-size:15px;width: 80px;'>车架号：</label>
-				<input id='number' type='text' onchange='check_number()' placeholder='请输入车架号'/>
+				<input class="add_car" id='number' type='text' onchange='check_number()' placeholder='请输入车架号'/>
 				<span id='checktext1'></span>
 				<br>
 
 				<img src='/statics/user/车牌.png' width='20px' alt="正在加载图片">
 				<label for="license_number" style='font-size:15px;width: 80px;'>车牌号：</label>
-				<input id='license_number' type='text' onchange='check_license_number()' placeholder='请输入车牌号'/>
+				<input class="add_car" id='license_number' type='text' onchange='check_license_number()' placeholder='请输入车牌号'/>
 				<img src='/statics/user/问号.png' width='20px' alt="正在加载图片" class="popover-toggle" data-toggle="popover2">
 				<span id='checktext2'></span>
 				<br>
 
 				<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">
 				<label for="color" style='font-size:15px;width: 80px;'>车辆颜色：</label>
-				<input id='color' type='text' placeholder='请输入车辆颜色'/>
+				<input class="add_car" id='color' type='text' placeholder='请输入车辆颜色'/>
 				<br>
 
 				<img src='/statics/user/车型.png' width='20px' alt="正在加载图片">
 				<label for="model" style='font-size:15px;width: 80px;'>车型：</label>
-				<input id='model' type='text' placeholder='请输入车型'/>
+				<input class="add_car" id='model' type='text' placeholder='请输入车型'/>
 				<br>
 
 				<img src='/statics/user/类别.png' width='20px' alt="正在加载图片">
@@ -300,7 +300,7 @@
 			</div>
 			<form class='modal-footer'>
 				<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>
-				<button type='button' class='btn btn-primary' onclick='checkVehicle();' id='confirmAddVehicle'>确认新增</button>
+				<button type='button' class='btn btn-primary' onclick="if(checkSubmit('add_car'))checkVehicle();" id='confirmAddVehicle'>确认新增</button>
 				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 			</form>
 		</div>
