@@ -429,10 +429,10 @@
 
 				<input type="hidden" id="old_password" name="old_password" />
 				<input type="hidden" id="new_password" name="new_password" />
-			<form class='modal-footer'>
-				<button type='button' class='btn btn-primary' onclick='check()' id='changepasswordbutton'>确认更改</button>
-				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
-			</form>
+				<form class='modal-footer'>
+					<button type='button' class='btn btn-primary' onclick='check()' id='changepasswordbutton'>确认更改</button>
+					<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -486,9 +486,9 @@
 		return check;
 	}
 	function keychangeprofile(){
-			if(event.keyCode === 13){
-				document.getElementById('confirmChangeInfo').click();
-			}
+		if(event.keyCode === 13){
+			document.getElementById('confirmChangeInfo').click();
+		}
 	}
 	function keycarregister(){
 		if(event.keyCode === 13){
@@ -521,64 +521,66 @@
 			method: 'get',
 			url: '/get_vehicle'
 		})
-		.then(function(response){
-			var data = response.data;
-			var num = data.length;
-			for(var i = 1; i <= num; i++){
-					var last = data[i-1];
-					var body = document.getElementById("right");
-					var div1 = document.createElement("div");
-					body.appendChild(div1);
-					div1.className = "col-md-5 outer-col";
-					var div11 = document.createElement("div");
-					div1.appendChild(div11);
-					div11.className = "row inner-row-1";
-					var div111 = document.createElement("div");
-					div11.appendChild(div111);
-					div111.className = "col-md-5 col-md-push-0 inner-col-1";
-					var photo1 = document.createElement("img");
-					div111.appendChild(photo1);
-					photo1.id = "licensephoto"+i;
-					photo1.src = "show_plate?license_number=" + last.LicenseNumber;
-					photo1.className = "middle";
-					photo1.setAttribute("width","256.75px");
-					photo1.setAttribute("height","74.89px");
-					var div112 = document.createElement("div");
-					div11.appendChild(div112);
-					div112.className = "col-md-5 col-md-push-1 inner-row-2";
-					var div1121 = document.createElement("div");
-					div112.appendChild(div1121);
-					div1121.className = "row-md-4 text-center inner-button";
-					var button1 = document.createElement("a");
-					div1121.appendChild(button1);
-					button1.type = "button";
-					button1.id = "history"+i;
-					button1.setAttribute("onclick","historyRecord(this.id)");
-					button1.innerHTML = "历史维修记录";
-					div112.innerHTML = div112.innerHTML+"<br>";
-					var div1122 = document.createElement("div");
-					div112.appendChild(div1122);
-					div1122.className = "row-md-4 text-center inner-button";
-					var button2 = document.createElement("a");
-					div1122.appendChild(button2);
-					button2.type = "button";
-					button2.id = "attorney"+i;
-					button2.setAttribute("onclick","addAttorney(this.id)");
-					button2.innerHTML = "新增维修委托";
-					var div12 = document.createElement("div");
-					div1.appendChild(div12);
-					div12.className = "row align-items-end inner-row-3";
-					var h41 = document.createElement("h4");
-					div12.appendChild(h41);
-					h41.id = "description"+i;
-					h41.innerHTML = last.Color + "·" + last.Model+ "·" + last.Type;
-					div12.innerHTML = div12.innerHTML + "<br>";
-					var h42 = document.createElement("h4");
-					div12.appendChild(h42);
-					h42.id = "number"+i;
-					h42.innerHTML = last.Number;
-			}
-		})
+				.then(function(response){
+					var data = response.data;
+					var num = data.length;
+					for(var i = 1; i <= num; i++){
+						var last = data[i-1];
+						var body = document.getElementById("right");
+						var div1 = document.createElement("div");
+						body.appendChild(div1);
+						div1.className = "col-md-5 outer-col";
+						div1.setAttribute("style","width:650px!important")
+						var div11 = document.createElement("div");
+						div1.appendChild(div11);
+						div11.className = "row inner-row-1";
+						var div111 = document.createElement("div");
+						div11.appendChild(div111);
+						div111.className = "col-md-5 col-md-push-0 inner-col-1";
+						div111.setAttribute("style", "height:100px");
+						var photo1 = document.createElement("img");
+						div111.appendChild(photo1);
+						photo1.id = "licensephoto"+i;
+						photo1.src = "show_plate?license_number=" + last.LicenseNumber;
+						photo1.className = "middle";
+						photo1.setAttribute("height","80%");
+						photo1.setAttribute("style","object-fit: contain;");
+						var div112 = document.createElement("div");
+						div11.appendChild(div112);
+						div112.className = "col-md-5 col-md-push-1 inner-row-2";
+						var div1121 = document.createElement("div");
+						div112.appendChild(div1121);
+						div1121.className = "row-md-4 text-center inner-button";
+						var button1 = document.createElement("a");
+						div1121.appendChild(button1);
+						button1.type = "button";
+						button1.id = "history"+i;
+						button1.setAttribute("onclick","historyRecord(this.id)");
+						button1.innerHTML = "历史维修记录";
+						div112.innerHTML = div112.innerHTML+"<br>";
+						var div1122 = document.createElement("div");
+						div112.appendChild(div1122);
+						div1122.className = "row-md-4 text-center inner-button";
+						var button2 = document.createElement("a");
+						div1122.appendChild(button2);
+						button2.type = "button";
+						button2.id = "attorney"+i;
+						button2.setAttribute("onclick","addAttorney(this.id)");
+						button2.innerHTML = "新增维修委托";
+						var div12 = document.createElement("div");
+						div1.appendChild(div12);
+						div12.className = "row align-items-end inner-row-3";
+						var h41 = document.createElement("h4");
+						div12.appendChild(h41);
+						h41.id = "description"+i;
+						h41.innerHTML = last.Color + "·" + last.Model+ "·" + last.Type;
+						div12.innerHTML = div12.innerHTML + "<br>";
+						var h42 = document.createElement("h4");
+						div12.appendChild(h42);
+						h42.id = "number"+i;
+						h42.innerHTML = last.Number;
+					}
+				})
 	}
 	function historyRecord(param){
 		var num= param.replace(/[^0-9]/ig,"");
@@ -612,38 +614,38 @@
 				vin: document.getElementById("number"+num).innerHTML
 			}
 		})
-			.then(function(response) {
-				var data = response.data;
-				var length = data.length;
-				if(length === 0){
-					var tr = document.createElement("tr");
-					document.getElementById("repair_table").appendChild(tr);
-					var td1 = document.createElement("td");
-					tr.appendChild(td1);
-					td1.innerHTML = "暂无维修记录";
-					td1.setAttribute("colspan","2");
-					td1.setAttribute("style","text-align: center; width: 120px;font-size: 15px;");
-				}
-				else{
-					for(var i = 1; i <= length; i++){
+				.then(function(response) {
+					var data = response.data;
+					var length = data.length;
+					if(length === 0){
 						var tr = document.createElement("tr");
 						document.getElementById("repair_table").appendChild(tr);
 						var td1 = document.createElement("td");
 						tr.appendChild(td1);
-						td1.innerHTML = data[i-1].Time;
+						td1.innerHTML = "暂无维修记录";
+						td1.setAttribute("colspan","2");
 						td1.setAttribute("style","text-align: center; width: 120px;font-size: 15px;");
-						var td2 = document.createElement("td");
-						tr.appendChild(td2);
-						if(data[i-1].Problem === ""){
-							td2.innerHTML = "检修中..."
-						}
-						else{
-							td2.innerHTML = data[i-1].Problem;
-						}
-						td2.setAttribute("style", "text-align: center;font-size: 15px;");
 					}
-				}
-			})
+					else{
+						for(var i = 1; i <= length; i++){
+							var tr = document.createElement("tr");
+							document.getElementById("repair_table").appendChild(tr);
+							var td1 = document.createElement("td");
+							tr.appendChild(td1);
+							td1.innerHTML = data[i-1].Time;
+							td1.setAttribute("style","text-align: center; width: 120px;font-size: 15px;");
+							var td2 = document.createElement("td");
+							tr.appendChild(td2);
+							if(data[i-1].Problem === ""){
+								td2.innerHTML = "检修中..."
+							}
+							else{
+								td2.innerHTML = data[i-1].Problem;
+							}
+							td2.setAttribute("style", "text-align: center;font-size: 15px;");
+						}
+					}
+				})
 		$('#maintenance_record').modal();
 	}
 	function addAttorney(param){
