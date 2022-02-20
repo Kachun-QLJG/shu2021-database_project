@@ -190,20 +190,9 @@ func getFinishedAttorney(c *gin.Context) {
 		RoughProblem     string
 		SpecificProblem  string
 		ActualFinishTime string
-		Progress         string
-		Owner            string
 	}
 	var result []information
-	database.Table("attorney").Select("number as order_number, vehicle_number as vin, rough_problem as rough_problem, specific_problem as specific_problem, actual_finish_time as actual_finish_time, progress as progress").Where("user_id = ? and progress = '已完成'", user.Number).Order("order_number desc").Scan(&result) //查询该用户的，状态是已完成的委托
-	for index := range result {
-		var vehicle Vehicle
-		res := database.First(&vehicle, "number = ? and user_id = ?", result[index].Vin, user.Number)
-		if res.RowsAffected == 1 {
-			result[index].Owner = "是"
-		} else {
-			result[index].Owner = "否"
-		}
-	}
+	database.Table("attorney").Select("number as order_number, vehicle_number as vin, rough_problem as rough_problem, specific_problem as specific_problem, actual_finish_time as actual_finish_time").Where("user_id = ? and progress = '已完成'", user.Number).Order("order_number desc").Scan(&result) //查询该用户的，状态是已完成的委托
 	c.JSON(http.StatusOK, result)
 }
 
@@ -279,7 +268,7 @@ func getVehicle(c *gin.Context) {
 	var user User
 	database.First(&user, "contact_tel = ?", number)
 	var vehicle []Vehicle
-	database.Order("time desc").Find(&vehicle, "user_id = ?", user.Number)
+	database.Find(&vehicle, "user_id = ?", user.Number)
 	c.JSON(http.StatusOK, vehicle)
 }
 
@@ -355,9 +344,9 @@ func addVehicle(c *gin.Context) {
 	var vehicle Vehicle
 	res := database.First(&vehicle, "number = ?", number) //根据输入的车架号，查这辆车是否已被绑定
 	if res.RowsAffected == 0 {                            //如果没有被绑定
-		data := Vehicle{number, licenseNumber, user.Number, color, model, carType, sTime} //新建元组
-		err := database.Create(&data)                                                     //添加到数据库
-		strErr := fmt.Sprintf("%v", err.Error)                                            //将错误（若有）转换成字符串
+		data := Vehicle{number, licenseNumber, user.Number, color, model, carType} //新建元组
+		err := database.Create(&data)                                              //添加到数据库
+		strErr := fmt.Sprintf("%v", err.Error)                                     //将错误（若有）转换成字符串
 		if strErr != "<nil>" {
 			c.JSON(http.StatusOK, gin.H{"status": "失败", "data": strErr})
 		} else {
@@ -388,7 +377,6 @@ func addVehicle(c *gin.Context) {
 			database.Model(&vehicle).Update("color", color)                  //更改颜色为传过来的颜色
 			database.Model(&vehicle).Update("model", model)                  //更改车型为传过来的车型
 			database.Model(&vehicle).Update("type", carType)                 //更改类别为传过来的类别
-			database.Model(&vehicle).Update("time", sTime)                   //更改时间为传过来的时间
 			database.Model(&vehicle).Update("user_id", user.Number)          //更改用户id为传过来的用户id
 			c.JSON(http.StatusOK, gin.H{"status": "成功", "data": "成功"})
 		} else {
