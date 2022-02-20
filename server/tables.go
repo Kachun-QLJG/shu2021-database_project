@@ -51,6 +51,7 @@ type Vehicle struct { //车辆表
 	Color         string `gorm:"type:varchar(10);not null"`             //车辆颜色
 	Model         string `gorm:"type:varchar(40);not null"`             //车型
 	Type          string `gorm:"type:varchar(10);not null"`             //车辆类别
+	Time          string `gorm:"type:varchar(20);not null"`             //绑定时间
 }
 
 type Notification struct { //通知表

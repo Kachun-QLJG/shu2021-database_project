@@ -26,13 +26,6 @@ var (
 	attorneyNoForPdfGen string
 )
 
-func generatePdf(c *gin.Context) {
-	usernameForPdfGen = c.MustGet("username").(string)
-	attorneyNoForPdfGen = c.Query("attorney_no")
-	filename := genPdf(usernameForPdfGen, attorneyNoForPdfGen)
-	c.File(filename)
-}
-
 func checkPermissionForPdf(username string, group string, attorneyNo string) string {
 	if group == "维修员" {
 		return ""

@@ -10,11 +10,6 @@ import (
 	"time"
 )
 
-func startLogout(c *gin.Context) {
-	username := c.MustGet("username").(string)
-	group := c.MustGet("group").(string)
-	c.HTML(http.StatusOK, "logout.html", gin.H{"username": username, "group": group})
-}
 func logout(c *gin.Context) {
 	sessionId, _ := c.Cookie("sessionId")
 	var username string
