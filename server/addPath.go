@@ -29,6 +29,8 @@ func addPath(r *gin.Engine) {
 	r.GET("/u_check_orders_ongoing", authMiddleWare(), checkPermission(), filterUser(), startUCheckOrdersOngoing)   //进入用户查看进行中订单页面
 	r.GET("/u_check_orders_finished", authMiddleWare(), checkPermission(), filterUser(), startUCheckOrdersFinished) //进入用户查看已完成订单页面
 	r.GET("/get_full_attorney", authMiddleWare(), checkPermission(), filterUser(), getFullAttorney)                 //返回完整委托书·所有内容（用戶）
+	r.GET("/get_user_info", authMiddleWare(), checkPermission(), filterUser(), getUserInfo)                         //查询用户个人信息
+	r.GET("/check_userinfo", authMiddleWare(), checkPermission(), filterUser(), checkUserinfo)                      //查询用户个人信息是否填写完毕
 
 	//----------业务员路径----------
 	r.GET("/get_project_time", authMiddleWare(), checkPermission(), filterSalesman(), getProjectTime)                       //业务员根据维修项目来获取预计维修时间

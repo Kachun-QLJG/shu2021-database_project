@@ -210,6 +210,17 @@ func getAttorneyDetail(c *gin.Context) {
 	}
 }
 
+func checkUserinfo(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	var user User
+	database.First(&user, "contact_tel = ?", username)
+	if user.Name == "" || user.ContactPerson == "" || user.Property == "" {
+		c.String(http.StatusOK, "未完成")
+	} else {
+		c.String(http.StatusOK, "完成")
+	}
+
+}
 func createAttorney(c *gin.Context) {
 	username := c.MustGet("username").(string)
 	vin := c.PostForm("vin")
