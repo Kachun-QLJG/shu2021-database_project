@@ -222,9 +222,10 @@ func createAttorney(c *gin.Context) {
 		c.String(http.StatusOK, "请完善个人信息后再提交新的委托申请！")
 		return
 	}
-	result := database.Raw("select * from attorney where user_id = ? and progress != '已完成' and vehicle_number = ?", user.Number, vin)
+	var res Attorney
+	result := database.Raw("select * from attorney where progress != '已完成' and vehicle_number = ?", vin).Scan(&res)
 	if result.RowsAffected != 0 {
-		c.String(http.StatusOK, "该车辆正在维修中！请耐心等待~")
+		c.String(http.StatusOK, "新增委托失败！该车辆正在维修中！请耐心等待~")
 		return
 	}
 	date := time.Now().Format("20060102")
