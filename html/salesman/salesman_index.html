@@ -1060,7 +1060,28 @@
                         var btn = document.getElementById('checkOutAttorney');
                         btn.setAttribute("style", "display: inline");
 						btn.setAttribute("onclick", "if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value))checkOut('" + attorneyNo + "')");
-                    }
+						try{
+							document.getElementById("ExpectedEndTime").removeAttribute("disabled");
+							document.getElementById("EndPetrol").removeAttribute("disabled");
+							document.getElementById("EndMile").removeAttribute("disabled");
+							document.getElementById("ExpectedEndTime").removeAttribute("style");
+							document.getElementById("EndPetrol").removeAttribute("style");
+							document.getElementById("EndMile").removeAttribute("style");
+							document.getElementById("ExpectedEndTime").removeAttribute("title");
+							document.getElementById("EndPetrol").removeAttribute("title");
+							document.getElementById("EndMile").removeAttribute("title");
+						}catch(ERR){};
+					}else{
+						document.getElementById("ExpectedEndTime").setAttribute("disabled","disabled");
+						document.getElementById("EndPetrol").setAttribute("disabled","disabled");
+						document.getElementById("EndMile").setAttribute("disabled","disabled");
+						document.getElementById("ExpectedEndTime").setAttribute("style","cursor: not-allowed;");
+						document.getElementById("EndPetrol").setAttribute("style","cursor: not-allowed;");
+						document.getElementById("EndMile").setAttribute("style","cursor: not-allowed;");
+						document.getElementById("ExpectedEndTime").setAttribute("title","待结算状态方可填写此字段");
+						document.getElementById("EndPetrol").setAttribute("title","待结算状态方可填写此字段");
+						document.getElementById("EndMile").setAttribute("title","待结算状态方可填写此字段");
+					}
 				})
 		getProjects(attorneyNo);
 	}
@@ -1090,12 +1111,12 @@
 				alert("添加失败！错误信息：" + res.data.data.Message);
 			else
 				alert("添加成功！");
+			document.getElementById("project").value ="";
+			document.getElementById("classification").value ="";
+			document.getElementById("repairman_name").value ="";
+			document.getElementById("predict_finish_time").value ="";
+			getProjects(attorney_no);
 		});
-		document.getElementById("project").value ="";
-		document.getElementById("classification").value ="";
-		document.getElementById("repairman_name").value ="";
-		document.getElementById("predict_finish_time").value ="";
-		getProjects(attorney_no);
 	}
 
 	// 根据订单号从库中返回项目
