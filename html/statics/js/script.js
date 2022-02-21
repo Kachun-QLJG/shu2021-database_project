@@ -187,11 +187,11 @@ function read(){
 	axios({
 		method: 'post',
 		url: '/read'
+	}).then(function (response) {
+		closeNotification();
+		showNotificationOrNot();
+		checkNotification();
 	});
-
-	closeNotification();
-	showNotificationOrNot();
-	setTimeout("checkNotification()",3000);
 }
 function closeNotification(){
 	var father = document.getElementById("body");
