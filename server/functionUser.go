@@ -115,7 +115,7 @@ func getFullAttorney(c *gin.Context) {
 	} else {
 		timeType = "time_e"
 	}
-	projectResult := database.Raw("select time_overview.project_number as project_number, project_name as project_name, "+timeType+" as project_time, remark as project_remark\n"+
+	projectResult := database.Raw("select distinct time_overview.project_number as project_number, project_name as project_name, "+timeType+" as project_time, remark as project_remark\n"+
 		"from arrangement inner join time_overview on arrangement.project_number = time_overview.project_number\n"+
 		"where order_number = ?", attorneyNo).Scan(&result.AttorneyProject.Project) //找到该委托所有的维修项目
 	result.AttorneyProject.Num = int(projectResult.RowsAffected) //记录维修项目数量
@@ -212,20 +212,25 @@ func getAttorneyDetail(c *gin.Context) {
 
 func createAttorney(c *gin.Context) {
 	username := c.MustGet("username").(string)
+	vin := c.PostForm("vin")
+	payMethod := c.PostForm("pay_method")
+	startTime := c.PostForm("start_time")
+	roughProblem := c.PostForm("rough_problem")
 	var user User
 	database.First(&user, "contact_tel = ?", username)
 	if user.Name == "" || user.ContactPerson == "" || user.Property == "" {
 		c.String(http.StatusOK, "请完善个人信息后再提交新的委托申请！")
 		return
 	}
+	result := database.Raw("select * from attorney where user_id = ? and progress != '已完成' and vehicle_number = ?", user.Number, vin)
+	if result.RowsAffected != 0 {
+		c.String(http.StatusOK, "该车辆正在维修中！请耐心等待~")
+		return
+	}
 	date := time.Now().Format("20060102")
 	var attorney Attorney
 	number := database.Find(&attorney, "number like ?", date+"___").RowsAffected + 1
 	strNumber := date + fmt.Sprintf("%03d", number)
-	vin := c.PostForm("vin")
-	payMethod := c.PostForm("pay_method")
-	startTime := c.PostForm("start_time")
-	roughProblem := c.PostForm("rough_problem")
 	startPetrol, _ := strconv.ParseFloat(c.PostForm("start_petrol"), 64)
 	startMile, _ := strconv.ParseFloat(c.PostForm("start_mile"), 64)
 	type temp struct {

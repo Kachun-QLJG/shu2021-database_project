@@ -393,12 +393,10 @@ func searchForProjects(c *gin.Context) {
 		Id   string
 		Time float64
 	}
-	database.LogMode(true)
 	if searchText[1] >= 'a' && searchText[1] <= 'z' || searchText[1] >= '0' && searchText[1] <= '9' {
 		database.Limit(20).Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_spelling LIKE ? and ? != ''", searchText, dbType).Scan(&timeOverview)
 	} else {
 		database.Limit(20).Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_name LIKE ? and ? != ''", searchText, dbType).Scan(&timeOverview)
 	}
-	database.LogMode(false)
 	c.JSON(http.StatusOK, timeOverview)
 }
