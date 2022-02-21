@@ -117,7 +117,7 @@ func changeDiscountRate(c *gin.Context) {
 	database.First(&user, "number = ?", client)
 	curDiscountRate := user.DiscountRate
 	if curDiscountRate <= discountRate || curDiscountRate-discountRate > 10 || discountRate < 70 {
-		c.String(http.StatusForbidden, "折扣率设置不合法！")
+		c.String(http.StatusOK, "折扣率设置不合法！")
 		return
 	}
 	database.Model(&user).Update("discount_rate", discountRate)
