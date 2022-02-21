@@ -1249,7 +1249,16 @@
                         var btn = document.getElementById('checkOutAttorney');
                         btn.setAttribute("style", "display: inline");
 						btn.setAttribute("onclick", "if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value))checkOut('" + attorneyNo + "')");
-                    }
+						document.getElementById("ExpectedEndTime").removeAttribute("readonly");
+						document.getElementById("EndPetrol").removeAttribute("readonly");
+						document.getElementById("EndMile").removeAttribute("readonly");
+					}else{
+						try {
+							document.getElementById("ExpectedEndTime").setAttribute("readonly","readonly");
+							document.getElementById("EndPetrol").setAttribute("readonly","readonly");
+							document.getElementById("EndMile").setAttribute("readonly","readonly");
+						}catch(err){};
+					}
 				})
 		getProjects(attorneyNo);
 	}
