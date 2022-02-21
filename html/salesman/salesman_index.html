@@ -28,24 +28,6 @@
 			margin-right:-4px;
 		}
 
-		/*ul li{*/
-		/*	list-style: none;*/
-
-		/*	width:90px;*/
-
-		/*	border: 1px solid #000;*/
-		/*}*/
-
-		/*ul{*/
-		/*	margin:0;*/
-		/*	width: 200px;*/
-		/*	list-style: none;*/
-		/*	box-sizing: border-box;*/
-		/*	padding: 1px;*/
-		/*	border: 1px solid grey;*/
-		/*	visibility: hidden;*/
-		/*}*/
-
 		.middle {float: none;display: inline-block;vertical-align: middle;width: 130%;}
 		.outer-col{background-color: #dff0d8;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;border-radius: 20px;padding: 10px;margin: 1% 3% 1% 2%;}
 		.inner-row-1{display: flex;align-items: center;box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;margin: 10px;background-color: white}
@@ -69,12 +51,6 @@
 		.wcr{color: red}
 		.wcg{color: green}
 
-		/*
-		.row > div {
-			display: inline-block;
-			vertical-align: middle;
-			float: none;
-		}*/
 	</style>
 	<script type="text/javascript">
 		function checkpwd(){
@@ -156,16 +132,6 @@
 				<a id="salesman_name" class="list-group-item" style="cursor: default">姓　　名：</a>
 				<a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer; text-decoration-line: underline">更改密码</a>
 			</div>
-
-<!--			<div class='list-group'>-->
-<!--				<a class='list-group-item list-group-item-success'>-->
-<!--					查看订单详情-->
-<!--				</a>-->
-<!--				&lt;!&ndash; <a class='list-group-item' data-toggle='modal' data-target='#change_password' style="cursor: pointer">更改密码</a> &ndash;&gt;-->
-<!--				&lt;!&ndash; <a class='list-group-item' href='/change_userinfo'>个人信息</a> &ndash;&gt;-->
-<!--&lt;!&ndash;				<a class='list-group-item' data-toggle='modal' data-target='#take_order' style='cursor:pointer; text-decoration-line: underline'>接单</a>&ndash;&gt;-->
-<!--				<a class='list-group-item' data-toggle='modal' data-target='#finished_order' style='cursor:pointer; text-decoration-line: underline' onclick="getFinishedAttorneyS()">已完成</a>-->
-<!--			</div>-->
 		</div>
 
 		<!--右区域-->
@@ -219,56 +185,6 @@
 				</div>
 
 				<br>
-
-				<!--折叠组-2-->
-<!--				<div class="panel panel-info" id="ongoing">-->
-<!--					<div class="panel-heading">-->
-<!--						<h4 class="panel-title">-->
-<!--							<a data-toggle="collapse" data-parent="#accordion"-->
-<!--							   href="#collapseTwo">-->
-<!--								进行中订单-->
-<!--							</a>-->
-<!--						</h4>-->
-<!--					</div>-->
-<!--					<div id="collapseTwo" class="panel-collapse collapse">-->
-<!--&lt;!&ndash;						<div id="ongoing_table_father" style="margin: auto;align-items: center; text-align: center; font-size: 17px;left: 10%">&ndash;&gt;-->
-<!--						<table id="finished_table" border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">-->
-<!--							&lt;!&ndash; 表头 &ndash;&gt;-->
-<!--							<tbody>-->
-<!--							<tr style="height: 30px">-->
-<!--								<th id="number_finished" style="text-align: center; width: 120px">订单号</th>-->
-<!--								<th id="vehicle_number_finished" style="text-align: center">车架号</th>-->
-<!--								<th id="parts_number_finished" style="text-align: center">粗略故障描述</th>-->
-<!--								<th id="parts_name_finished" style="text-align: center">详细故障描述</th>-->
-<!--								<th id="parts_count_finished" style="text-align: center">维修完成时间</th>-->
-<!--								<th id="finished_detail" style="text-align: center">委托书</th>-->
-<!--							</tr>-->
-<!--							</tbody>-->
-<!--							&lt;!&ndash; 传参处 &ndash;&gt;-->
-<!--							<tbody id ="body_second">-->
-<!--							<tr>-->
-<!--								<td rowspan="2">0000001</td>-->
-<!--								<td rowspan="2">12345678901234567</td>-->
-
-<!--								<td>001</td>-->
-<!--								<td>轮毂</td>-->
-<!--								<td>1</td>-->
-
-<!--								&lt;!&ndash; <td rowspan="2"><a href="/show_pdf?attorney_no=00000002" target="_blank">查看pdf</a></td> &ndash;&gt;-->
-<!--								<td rowspan="2"><a data-toggle='modal' data-target='#detail' style="cursor: pointer; text-decoration-line: underline">查看pdf</a></td>-->
-<!--							</tr>-->
-<!--							<tr>-->
-<!--								<td>002</td>-->
-<!--								<td>后视镜</td>-->
-<!--								<td>2</td>-->
-<!--							</tr>-->
-<!--							</tbody>-->
-<!--						</table>-->
-<!--&lt;!&ndash;						</div>&ndash;&gt;-->
-<!--					</div>-->
-<!--				</div>-->
-
-<!--				<br>-->
 
 				<!--折叠组-2-->
 				<div class="panel panel-info">
@@ -568,39 +484,6 @@
 								</tbody>
 							</table>
 						</div>
-
-
-
-<!--						<div id="detail2">-->
-<!--							<label for="project2" style='font-size:15px;width: 90px;'>具体问题：</label>-->
-<!--							<input id='project2' type='text' placeholder='具体故障部位'/>-->
-<!--							&lt;!&ndash;				<img src='/statics/user/问号.png' width='20px' alt="正在加载图片">&ndash;&gt;-->
-<!--							&lt;!&ndash;				<span id='checktext2'></span>&ndash;&gt;-->
-<!--							&lt;!&ndash;				<br>&ndash;&gt;-->
-
-<!--							&lt;!&ndash;				<img src='/statics/user/颜色.png' width='20px' alt="正在加载图片">&ndash;&gt;-->
-<!--							<label for="classification2" style='font-size:15px;width: 60px;'>　工种：</label>-->
-<!--							<select id='classification2'>-->
-<!--								<option>机修工</option>-->
-<!--								<option>电工</option>-->
-<!--								<option>钣金工</option>-->
-<!--								<option>喷漆工</option>-->
-<!--							</select>-->
-
-<!--							&lt;!&ndash;				<img src='/statics/user/车型.png' width='20px' alt="正在加载图片">&ndash;&gt;-->
-<!--							<label for="repairman_name2" style='font-size:15px;width: 115px;'>　维修工姓名：</label>-->
-<!--							<select id='repairman_name2'>-->
-<!--								<option>奚嘉骏</option>-->
-<!--								<option>伍慕庭</option>-->
-<!--								<option>夏逸凡</option>-->
-<!--								<option>张霖锋</option>-->
-<!--							</select>-->
-
-<!--							&lt;!&ndash;				<img src='/statics/user/类别.png' width='20px' alt="正在加载图片">&ndash;&gt;-->
-<!--							<label for="predict_finish_time2" style='font-size:15px;width: 120px;'>　预计所需时间：</label>-->
-<!--							<input id="predict_finish_time2" type='number' min="0" max="10000" step="0.5" placeholder='预计所需时间' style="width: 130px"/>-->
-<!--							<br>-->
-<!--						</div>-->
 					</div>
 				</div>
 
@@ -614,62 +497,6 @@
 		</div>
 	</div>
 </div>
-
-<!-- 已完成订单 -->
-<!--<div class='modal fade' id='finished_order' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden="true" data-backdrop="static" data-backdrop="static">-->
-<!--	<div class='modal-dialog'>-->
-<!--		<div class='modal-content'>-->
-<!--			<div class='modal-header'>-->
-<!--				<button type='button' class='close' data-dismiss='modal' aria-hidden="true" data-backdrop="static" data-backdrop="static" >&times;</button>-->
-<!--				<h3 class='modal-title' id='finishedOrder' style="text-align: center">已完成订单</h3>-->
-<!--			</div>-->
-<!--			<div class='modal-body' id="finished_table_father" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">-->
-<!--				&lt;!&ndash;-->
-<!--				<table border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px; ">-->
-<!--					<tr>-->
-<!--						<th style="text-align: center; width: 70px">车牌号</th>-->
-<!--						<th id="finished_plate" style="text-align: center; width: 210px">沪SHU502</th>-->
-<!--						<th style="text-align: center; width: 70px">车架号</th>-->
-<!--						<th id="finsihed_VIN"style="text-align: center; width: 210px">11111111111111111</th>-->
-<!--					</tr>-->
-<!--				</table>-->
-<!--				&ndash;&gt;-->
-<!--				<table id="finished_table" border="1" style="margin: auto; width: 560px; text-align: center; font-size: 17px;">-->
-<!--					&lt;!&ndash; 表头 &ndash;&gt;-->
-<!--					<tbody>-->
-<!--					<tr style="height: 30px">-->
-<!--						<th id="number_finished" style="text-align: center; width: 120px">订单号</th>-->
-<!--						<th id="vehicle_number_finished" style="text-align: center">车架号</th>-->
-<!--						<th id="parts_number_finished" style="text-align: center">粗略故障描述</th>-->
-<!--						<th id="parts_name_finished" style="text-align: center">详细故障描述</th>-->
-<!--						<th id="parts_count_finished" style="text-align: center">维修完成时间</th>-->
-<!--						<th id="finished_detail" style="text-align: center">委托书</th>-->
-<!--					</tr>-->
-<!--					</tbody>-->
-<!--					&lt;!&ndash; 传参处 &ndash;&gt;-->
-<!--					<tbody id ="body_second">-->
-<!--					<tr>-->
-<!--						<td rowspan="2">0000001</td>-->
-<!--						<td rowspan="2">12345678901234567</td>-->
-
-<!--						<td>001</td>-->
-<!--						<td>轮毂</td>-->
-<!--						<td>1</td>-->
-
-<!--						&lt;!&ndash; <td rowspan="2"><a href="/show_pdf?attorney_no=00000002" target="_blank">查看pdf</a></td> &ndash;&gt;-->
-<!--						<td rowspan="2"><a data-toggle='modal' data-target='#detail' style="cursor: pointer; text-decoration-line: underline">查看pdf</a></td>-->
-<!--					</tr>-->
-<!--					<tr>-->
-<!--						<td>002</td>-->
-<!--						<td>后视镜</td>-->
-<!--						<td>2</td>-->
-<!--					</tr>-->
-<!--					</tbody>-->
-<!--				</table>-->
-<!--			</div>-->
-<!--		</div>-->
-<!--	</div>-->
-<!--</div>-->
 
 <!-- 更改折扣率 -->
 <div class="modal fade" id="discountRate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
@@ -790,11 +617,6 @@
 					document.getElementById("onBound").innerHTML = "进行中订单" + "(" + onbound_num + ")";
 					document.getElementById("Bounded").innerHTML = "已完成订单" + "(" + bounded_num + ")";
 				})
-	}
-
-	function showOptions(){
-		var option_list = document.getElementById("projectOptions");
-		option_list.style.display="inline";
 	}
 
 	function getPendingAttorney(){
@@ -962,29 +784,15 @@
                             tr.appendChild(td7);
                             var progress = own[i].Progress;
                             td7.innerHTML = progress;
-                            // alert(own[i].Progress);
-							// if(own[i].Progress === "待结算"){
-							// 	// td7.innerHTML = own[i].Progress;
-                            //     var a = document.createElement("a");
-                            //     td7.appendChild(a);
-                            //     a.setAttribute("data-toggle", "modal");
-                            //     a.setAttribute("data-target", "#discountRate");
-                            //     a.setAttribute("onclick", "");
-                            //     a.setAttribute("style", "cursor:pointer");
-                            //     // a.setAttribute("onclick", "addSpecificDetail(\""+td1.id+"\",\""+td2.id+"\")");
-                            //     a.innerHTML = "待结算";
-							// }
                             var td8 = document.createElement("td");
                             tr.appendChild(td8);
                             var a = document.createElement("button");
                             td8.appendChild(a);
                             a.setAttribute("data-toggle", "modal");
                             a.setAttribute("data-target", "#take_order");
-							// alert(progress);
                             a.setAttribute("onclick", "addSpecificDetail(this.parentNode.parentNode.children[0].innerHTML,\""+car_type+"\",this.parentNode.parentNode.children[6].innerHTML)");
                             a.setAttribute("class", "btn btn-primary");
 							a.setAttribute("type", "button");
-                            // a.setAttribute("onclick", "addSpecificDetail(\""+td1.id+"\",\""+td2.id+"\")");
                             a.innerHTML = "编辑具体信息";
 
 						}
@@ -1508,84 +1316,6 @@
 				})
 	}
 
-	// var EventUtil = {
-	// 	on:function(elem,type,handler){
-	// 		if(elem.addEventListener){
-	// 			elem.addEventListener(type,handler,false);
-	// 		}else if(elem.attachEvent){
-	// 			elem.attachEvent("on"+type,handler);
-	// 		}
-	// 	},
-	// 	getEvent:function(event){
-	// 		return event||window.event;
-	// 	},
-	// 	getTarget:function(event){
-	// 		return event.target||event.srcElement;
-	// 	},
-	// 	getCharCode:function(event){
-	// 		if(typeof event.handler == "number"){
-	// 			return event.charCode;
-	// 		}else{
-	// 			return event.keyCode;
-	// 		}
-	// 	}
-	// }
-	// function stopPropagation(e){
-	// 	e = window.event||e;
-	// 	if(document.all){
-	// 		e.cancelBubble = true;
-	// 	}else{
-	// 		e.stopPropagation();
-	// 	}
-	// }
-	//
-	// var input = document.getElementById('detail1');
-	// var datalist = document.getElementById('datalist');
-	// var list_array = ['aa','aab','abc'];
-	//
-	// function generatelist(array){
-	// 	var _innerHTML = '';
-	// 	for (var i = 0; i < array.length; i++) {
-	// 		_innerHTML += '<li>'+array[i]+'</li>';
-	// 	}
-	// 	datalist.innerHTML = _innerHTML;
-	// }
-	//
-	//
-	// function findInArray(s){
-	// 	var filter_array = [];
-	// 	if(s!==''){
-	// 		for (var i = 0; i < list_array.length; i++) {
-	// 			if(list_array[i].indexOf(s)===0){
-	// 				filter_array.push(list_array[i])
-	// 			}
-	// 		}
-	// 	}
-	// 	return filter_array;
-	// }
-	//
-	// input.onkeyup = function(){
-	// 	var new_array = findInArray(this.value);
-	// 	generatelist(new_array);
-	// 	if(new_array.length>0){
-	// 		setTimeout(function(){datalist.style.visibility = 'visible';},0);
-	// 	}else{
-	// 		setTimeout(function(){datalist.style.visibility = 'hidden';},0);
-	// 	}
-	// }
-	//
-	// EventUtil.on(document.body,'click',function(e){
-	// 	stopPropagation(e);
-	// 	if(EventUtil.getTarget(e).nodeName==='BODY'){
-	// 		datalist.style.visibility = 'hidden';
-	// 		datalist.innerHTML ='';
-	// 	}
-	// 	if(EventUtil.getTarget(e).nodeName === "LI"){
-	// 		input.value = EventUtil.getTarget(e).innerHTML;
-	// 		datalist.style.visibility = 'hidden';
-	// 		datalist.innerHTML ='';
-	// 	}
-	// })
 </script>
 </body>
 </html>

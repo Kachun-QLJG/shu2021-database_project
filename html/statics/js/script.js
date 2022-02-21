@@ -46,13 +46,6 @@ function register(){
 	let configRegister = {
 		headers: {"Content-Type": "multipart/form-data"}
 	};
-	// let loginData = new FormData();
-	// loginData.append("username", document.getElementById("phone").value);
-	// loginData.append("password", document.getElementById("pswd").value);
-	// loginData.append("ver_code", document.getElementById("ver").value);
-	// let configLogin = {
-	// 	headers: {"Content-Type": "multipart/form-data"}
-	// };
 	axios.post("/register", registerData, configRegister).then(res => {
 		var response = res.data;
 		if(response.status === "失败")
@@ -70,28 +63,6 @@ function register(){
 		else{
 			alert("注册成功！");
 			window.open("/index", "_self");
-			// axios.post("/login", loginData, configLogin).then(res => {
-			// 	var response = res.data;
-			// 	alert(response.status);
-			// 	if (response.status === "失败") {
-			// 		if (response.data === '验证码') {
-			// 			alert("验证码错误！");
-			// 			document.getElementById("wrongPass").innerHTML = '请输入正确的验证码！';
-			// 			document.getElementById("wrongPass").style.display = '';
-			// 			document.getElementById('ver_pic').click();
-			// 		} else {
-			// 			alert("用户名或密码错误！");
-			// 			document.getElementById("wrongPass").innerHTML = '请输入正确的账号和密码！';
-			// 			document.getElementById("wrongPass").style.display = '';
-			// 			document.getElementById('ver_pic').click();
-			// 		}
-			// 	} else {
-			// 		if (response.data === '已登录') {
-			// 			alert("已登录，请勿重复登录！");
-			// 		}
-			// 		window.open("/index", "_self");
-			// 	}
-			// })
 		}
 	})
 
@@ -117,61 +88,7 @@ function changePswd(){
 		}
 	})
 }
-/*function displayChangeStatus() {
-	document.getElementById("register").style.display="none";
-	var text = document.getElementById("text");
-	axios({
-		method : 'get',
-		url: '/check_status'
-	})
-		.then(function(response1) {
-			text.innerHTML = text.innerHTML + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;工作状态：" + response1.data;
-			var body = document.getElementById("con");
-			var div = document.getElementById("workStatus");
-			body.appendChild(div);
-			var h1 = document.createElement("h1");
-			div.appendChild(h1);
-			h1.style.cssText = "display: inline-block;";
-			h1.innerHTML = "更改工作状态：";
-			var select = document.createElement("select");
-			select.id = "select";
-			div.appendChild(select);
-			select.name = "status";
 
-			var option1 = document.createElement("option");
-			select.appendChild(option1);
-			option1.value = "正常";
-			option1.innerHTML = "正常";
-			var option2 = document.createElement("option");
-			select.appendChild(option2);
-			option2.value = "休假";
-			option2.innerHTML = "休假";
-			var option3 = document.createElement("option");
-			select.appendChild(option3);
-			option3.value = "离职";
-			option3.innerHTML = "离职";
-			console.log(response1.data);
-			console.log(response1.data);
-			if (response1.data === "正常") {
-				option1.setAttribute("selected", true);
-			}
-			if (response1.data === "休假") {
-				option2.setAttribute("selected", true);
-			}
-			if (response1.data === "离职") {
-				option3.setAttribute("selected", true);
-			}
-
-			var button = document.createElement("button");
-			div.appendChild(button);
-			button.onclick = function () {
-				changeStatus();
-			};
-			button.style.cssText = "width: 50px; height:20px";
-			button.innerHTML = "更改";
-		})
-}
-*/
 function changeStatus(){		//https://blog.csdn.net/weixin_41949511/article/details/93630346
 	let formData = new FormData();
 	var select = document.getElementById("StatusChange");
@@ -280,22 +197,7 @@ function closeNotification(){
 	var child = document.getElementById("alert");
 	father.removeChild(child);
 }
-/*
-function checkUser(){
-	document.getElementById("logout").style.display="none";
-	axios({
-		method : 'get',
-		url: '/check_group'
-	})
-		.then(function(response){
-			if(response.data === "维修员"||response.data ==="业务员"||response.data ==="普通用户"){
-				document.getElementById("register").style.display="none";
-				document.getElementById("login").style.display="none";
-				document.getElementById("logout").style.display="";
-			}
-		})
-}
-*/
+
 function searchForParts(){
 
 	delPartsResults();
@@ -318,14 +220,7 @@ function searchForParts(){
 					temp.setAttribute("id",response.data[i].Id);
 					temp.setAttribute("onclick","fill(this)");
 					temp.setAttribute("style","overflow:hidden;text-overflow:ellipsis;white-space:nowrap");
-					//var t1 = document.createElement("td");
-					//temp.setAttribute("value",JSON.stringify(response.data[i].Name).replace("\"","").replace("\"",""));
 					temp.innerHTML = JSON.stringify(response.data[i].Name).replace("\"","").replace("\"","");
-					//temp.appendChild(t1);
-					//var t2 = document.createElement("td");
-					//t2.innerHTML = JSON.stringify(response.data[i].Id);
-					//temp.appendChild(t2);
-					//alert(temp);
 					div.appendChild(temp);
 				}
 			})
@@ -417,51 +312,6 @@ function closeFlagProjects() {
 	flagProjects = 0;
 }
 
-/*function searchForParts(){
-	delPartsResults();
-	if(document.getElementById("txt").value === "") return;
-	axios({
-		method: 'get',
-		url: '/search_for_parts?text='+document.getElementById("txt").value
-	})
-		.then(function(response) {
-			{
-				console.log(response.data);
-				var div = document.getElementById("con");//寻找定位的区块
-				var table = document.createElement("div");
-				table.setAttribute("name", "table");
-				table.className="table-responsive";
-				div.appendChild(table);
-				var ordertable = document.createElement("table");//生成表格ordertable
-				ordertable.id = "ordertable";
-				ordertable.className="table  table-bordered table-hover";
-				table.appendChild(ordertable);
-				var tbody = document.createElement("tbody");//不知道这是啥
-				ordertable.appendChild(tbody);
-				var tablehead = document.createElement("tr");//生成表格头tablehead
-				tablehead.id = "tablehead";
-				tbody.appendChild(tablehead);
-				var head_1 = document.createElement("th");
-				head_1.innerHTML="维修项目名";
-				tablehead.appendChild(head_1);
-				var head_2 = document.createElement("th");
-				head_2.innerHTML="维修项目编号";
-				tablehead.appendChild(head_2);
-
-				for(var i=0; response.data[i].Name!==""; ++i) {
-					var temp = document.createElement("tr");
-					var t1 = document.createElement("td");
-					t1.innerHTML = JSON.stringify(response.data[i].Name);
-					temp.appendChild(t1);
-					var t2 = document.createElement("td");
-					t2.innerHTML = JSON.stringify(response.data[i].Id);
-					temp.appendChild(t2);
-					tbody.appendChild(temp);
-				}
-			}
-		})
-}*/
-
 function delPartsResults(){
 	try {
 		var div = document.getElementById("parts");
@@ -469,31 +319,7 @@ function delPartsResults(){
 	}catch (error)
 	{}
 }
-/*
-function delProjectsResults(){
-	try {
-		var div = document.getElementById("project_input");
-		var res = document.getElementById("project1");
-		div.removeChild(res);
-	}catch (error)
-	{}
-}
-*/
-/*
-function getinfo(){
-	axios({
-		method : 'get',
-		url: '/userinfo'
-	})
-	.then(function(response){
-		var data = response.data
-		for(var k in data ){//遍历packJson 对象的每个key/value对,k为key
-			var info = document.getElementById("info");
-			info.innerHTML = info.innerHTML + "<br>" + k +": " + data[k];
-		}
-	})
-}
-*/
+
 function changeinfo(){
 	let formData = new FormData();
 	formData.append("name", document.getElementById("name").value);
@@ -531,8 +357,6 @@ function addVehicle(){
 		}
 		location.reload(true);
 	})
-	// document.getElementById("confirmAddVehicle").innerHTML="新增成功";
-	// window.setTimeout("window.location.reload()", 2000);
 }
 
 function checkVehicle() {
