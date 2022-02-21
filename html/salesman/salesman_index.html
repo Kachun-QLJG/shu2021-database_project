@@ -344,7 +344,7 @@
 
 						<img src='/statics/user/进场时间.png' width='20px' alt="正在加载图片">
 						<label for="StartTime" style='font-size:15px;width: 80px;'>进场时间：</label>
-						<input id="StartTime" readonly="readonly" type="date" min ="2022-01-01" max ="2999-12-31" class="measureDate" placeholder="请选择日期" onblur="dateModify(this.value)" style="color: #9d9d9d">
+						<input id="StartTime" readonly="readonly" type="date" min ="2022-01-01" max ="2999-12-31" class="measureDate" placeholder="请选择日期" style="color: #9d9d9d">
 						<!-- <label for='StartTime'></label><input id='StartTime' type='text'/> -->
 						<br>
 						<br>
@@ -409,7 +409,7 @@
 						<br>
 						<img src='/statics/user/进场时间.png' width='20px' alt="正在加载图片">
 						<label for="ExpectedEndTime" style='font-size:15px;width: 110px;'>预计出厂时间：</label>
-						<input id='ExpectedEndTime' type="date" min ="2022-01-01" max ="2999-12-31" class="measureDate edit_attorney" placeholder="请选择日期" onblur="dateModify(this.value)">
+						<input id='ExpectedEndTime' type="date" min ="2022-01-01" max ="2999-12-31" class="measureDate edit_attorney" placeholder="请选择日期" onblur="dateModify(this.value,false)">
 						<!-- <label for='StartTime'></label><input id='StartTime' type='text'/> -->
 						<br>
 						<br>
@@ -489,8 +489,7 @@
 
 			</div>
 			<form class='modal-footer'>
-<!--				<label style='font-size:1px;width: 80px;color: red;'>没有再次确认哦，真的</label>-->
-				<button type='button' class='btn btn-primary' onclick="if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value))checkOut()" id='checkOutAttorney' style="display: none">结算</button>				、
+				<button type='button' class='btn btn-primary' onclick="if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value,false))checkOut()" id='checkOutAttorney' style="display: none">结算</button>				、
 				<button type='button' class='btn btn-primary' onclick="saveAttorney(true)" id='confirmAddVehicle'>保存编辑</button>
 				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 			</form>
@@ -1053,10 +1052,9 @@
 					}
 
                     if (Progress === "待结算"){
-						// checkout_string = "checkOut(" + attorneyNo + ")";
                         var btn = document.getElementById('checkOutAttorney');
                         btn.setAttribute("style", "display: inline");
-						btn.setAttribute("onclick", "if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value))checkOut('" + attorneyNo + "')");
+						btn.setAttribute("onclick", "if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value),false)checkOut('" + attorneyNo + "')");
                     }
 				})
 		getProjects(attorneyNo);
@@ -1229,10 +1227,15 @@
 		})
 	}
 
-	function dateModify(param){
+	function dateModify(param,temp){
 		if(param === ""){
 			alert("日期不合法");
-			document.getElementById("StartTime").value = "";
+			if(temp){
+				document.getElementById("StartTime").value = "";
+			}
+			else{
+				document.getElementById("ExpectedEndTime").value = "";
+			}
 			return false;
 		}
 		else{
@@ -1276,7 +1279,6 @@
 
     // 结算
 	function checkOut(param) {
-		//alert(param);
 		if(checkSubmit(param)) {
 			saveAttorney(false);
 			let formData = new FormData();
