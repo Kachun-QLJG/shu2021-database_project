@@ -188,8 +188,8 @@ function read(){
 		method: 'post',
 		url: '/read'
 	});
-	closeNotification(1);
-	checkNotification();
+
+	closeNotification();
 	showNotificationOrNot();
 }
 function closeNotification(){

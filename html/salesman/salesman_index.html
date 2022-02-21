@@ -1053,7 +1053,6 @@
 					}
 
                     if (Progress === "待结算"){
-						// checkout_string = "checkOut(" + attorneyNo + ")";
                         var btn = document.getElementById('checkOutAttorney');
                         btn.setAttribute("style", "display: inline");
 						btn.setAttribute("onclick", "if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value))checkOut('" + attorneyNo + "')");
@@ -1276,7 +1275,6 @@
 
     // 结算
 	function checkOut(param) {
-		//alert(param);
 		if(checkSubmit(param)) {
 			saveAttorney(false);
 			let formData = new FormData();
@@ -1293,28 +1291,12 @@
 				var originalDiscountRate = document.getElementById('discount_rate');
 				originalDiscountRate.value = discountRate;
 				var confirmButton = document.getElementById('confirmDiscountChange');
-				// alert("updateDiscountRate(" + param + ", " + user_id + ")");
 				u_attribute = "updateDiscountRate('" +param + "', \"" + user_id + "\")";
 				confirmButton.setAttribute("onclick", u_attribute);
 			})
 			$('#discountRate').modal("show");
 		}
     }
-	function showNotificationOrNot() {
-		axios({
-			method: 'get',
-			url: '/check_notification'
-		})
-				.then(function (response) {
-					var last = response.data;
-					if(last !== null){
-						document.getElementById("notification").style.display = "";
-					}
-					else{
-						document.getElementById("notification").style.display = "none";
-					}
-				})
-	}
 
 </script>
 </body>

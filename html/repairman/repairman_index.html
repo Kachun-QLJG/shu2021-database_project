@@ -995,21 +995,6 @@ function addPartsForProject(){
 		}
 	})
 }
-	function showNotificationOrNot() {
-		axios({
-			method: 'get',
-			url: '/check_notification'
-		})
-				.then(function (response) {
-					var last = response.data;
-					if(last !== null){
-						document.getElementById("notification").style.display = "";
-					}
-					else{
-						document.getElementById("notification").style.display = "none";
-					}
-				})
-	}
 </script>
 </body>
 </html>
