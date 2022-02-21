@@ -1153,15 +1153,18 @@
 		})
 				.then(function (response) {
 					var num = response.data.length;
+					document.getElementById("repairman_number").value = response.data[0].Number;
 					for(var i = 0; i < num; i++){
 						var option = document.createElement("option");
 						document.getElementById("repairman_name").appendChild(option);
-						document.getElementById("repairman_number").value = response.data[i].Number;
+						option.setAttribute("value",response.data[i].Number);
 						option.innerHTML = response.data[i].Name + "（当前工时：" + response.data[i].CurrentWorkHour + "）";
 					}
 				})
 	}
-
+	$('#repairman_name').change(function(){
+		document.getElementById("repairman_number").value = $(this).val();
+	});
     function takeOrder(param){
 		let formData = new FormData();
 		formData.append("attorney_no", param);
