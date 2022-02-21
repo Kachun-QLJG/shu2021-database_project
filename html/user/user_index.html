@@ -571,18 +571,20 @@
 						div1.appendChild(div12);
 						div12.className = "row align-items-end inner-row-3";
 
-						var h41 = document.createElement("h4");
-						div12.appendChild(h41);
-						//h41.id = "description"+i;
-						h41.innerHTML = "车辆颜色："+last.Color;
-						h41.setAttribute("display","inline");
-						h41.setAttribute("style","font-size: 20px;width:24%;font-weight:bold;");
 
-						var h42 = document.createElement("h4");
-						div12.appendChild(h42);
-						h42.innerHTML = "车型：" + last.Model;
-						h42.setAttribute("display","inline");
-						h42.setAttribute("style","font-size: 20px;width:24%;font-weight:bold;");
+
+						var h43 = document.createElement("h4");
+						div12.appendChild(h43);
+						h43.innerHTML = "车架号:";
+						h43.setAttribute("display","inline");
+						h43.setAttribute("style","font-size: 20px;width:15%;font-weight:bold;");
+
+						var h45 = document.createElement("h4");
+						div12.appendChild(h45);
+						h45.id = "number"+i;
+						h45.innerHTML = last.Number;
+						h45.setAttribute("display","inline");
+						h45.setAttribute("style","font-size: 20px;width:30%;font-weight:bold;margin-left:-5px;");
 
 						var h44 = document.createElement("h4");
 						div12.appendChild(h44);
@@ -590,18 +592,18 @@
 						h44.setAttribute("display","inline");
 						h44.setAttribute("style","font-size: 20px;width:30%;font-weight:bold;");
 
-						var h43 = document.createElement("h4");
-						div12.appendChild(h43);
-						h43.innerHTML = "车架号:";
-						h43.setAttribute("display","inline");
-						h43.setAttribute("style","font-size: 20px;font-weight:bold;");
+						var h41 = document.createElement("h4");
+						div12.appendChild(h41);
+						//h41.id = "description"+i;
+						h41.innerHTML = "车辆颜色："+last.Color;
+						h41.setAttribute("display","inline");
+						h41.setAttribute("style","font-size: 20px;width:44%;font-weight:bold;");
 
-						var h45 = document.createElement("h4");
-						div12.appendChild(h45);
-						h45.id = "number"+i;
-						h45.innerHTML = last.Number;
-						h45.setAttribute("display","inline");
-						h45.setAttribute("style","font-size: 20px;font-weight:bold;");
+						var h42 = document.createElement("h4");
+						div12.appendChild(h42);
+						h42.innerHTML = "车型：" + last.Model;
+						h42.setAttribute("display","inline");
+						h42.setAttribute("style","font-size: 20px;width:45%;font-weight:bold;");
 					}
 				})
 	}
