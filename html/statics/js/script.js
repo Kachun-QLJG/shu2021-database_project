@@ -191,6 +191,7 @@ function read(){
 
 	closeNotification();
 	showNotificationOrNot();
+	setTimeout("checkNotification()",3000);
 }
 function closeNotification(){
 	var father = document.getElementById("body");
