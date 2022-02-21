@@ -1057,7 +1057,7 @@
                     if (Progress === "待结算"){
                         var btn = document.getElementById('checkOutAttorney');
                         btn.setAttribute("style", "display: inline");
-						btn.setAttribute("onclick", "if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value),false)checkOut('" + attorneyNo + "')");
+						btn.setAttribute("onclick", "if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value,false))checkOut('" + attorneyNo + "')");
 						try{
 							document.getElementById("ExpectedEndTime").removeAttribute("disabled");
 							document.getElementById("EndPetrol").removeAttribute("disabled");

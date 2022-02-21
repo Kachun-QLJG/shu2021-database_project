@@ -35,8 +35,9 @@ async function logout() {
 	await axios({
 		method: 'post',
 		url: '/logout'
+	}).then(res=>{
+		window.open("/index", "_self");
 	});
-	window.open("/index", "_self");
 }
 function register(){
 	let registerData = new FormData();
