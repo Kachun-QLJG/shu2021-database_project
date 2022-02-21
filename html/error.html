@@ -14,7 +14,6 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <!--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="false">&times;</span><span class="sr-only">Close</span></button>-->
                     <h4 class="modal-title" id="myModalLabel"><b>{{.errdata}}</b></h4>
                 </div>
                 <div class="modal-body">
@@ -23,23 +22,11 @@
                         <div class="form-group">
                             <button onClick="window.location.href='http://127.0.0.1:8080{{.website}}'">返回{{.webName}}</button>
                         </div>
-                        <!--
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" >退出登录</button>
-                        </div>
-                        -->
                     </fieldset>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!--
-<div class="div1">
-	<h1 class="errorhead">ERROR: {{.errdata}}</h1>
-	<pre style="word-wrap: break-word; white-space: pre-wrap;">【错误代码：{{.errcode}}】</pre>
-	<button onClick="window.location.href='http://127.0.0.1:8080{{.website}}'">返回{{.webName}}</button>
-</div>
--->
 </body>
 </html>
