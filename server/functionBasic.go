@@ -18,6 +18,7 @@ func read(c *gin.Context) {
 	var notification Notification
 	database.First(&notification, "user_id = ? and status = ?", username, "未读")
 	database.Model(&notification).Update("status", "已读") //更改消息为已读
+	c.String(http.StatusOK, "成功")
 }
 
 func checkNotification(c *gin.Context) {
