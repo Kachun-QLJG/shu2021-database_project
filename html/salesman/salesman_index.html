@@ -1297,7 +1297,9 @@
 		};
 		axios.post("/change_discount_rate", formData, config).then(res => {
 			alert(res.data);
-			location.reload();
+			if(res.data === "成功"){
+				location.reload();
+			}
 		})
 	}
 
