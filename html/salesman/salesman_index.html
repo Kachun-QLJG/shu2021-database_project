@@ -246,10 +246,7 @@
 					</div>
 				</div>
 			</div>
-
-
 		</div>
-
 		</div>
 	</div>
 </div>
@@ -383,13 +380,13 @@
 						<br>
 
 						<img src='/statics/user/油量.png' width='20px' alt="正在加载图片">
-						<label for="EndPetrol" style='font-size:15px;width: 80px;'>出场油量：</label>
+						<label for="EndPetrol" style='font-size:15px;width: 80px;'>出厂油量：</label>
 						<input class="edit_attorney" id='EndPetrol' type='number' min="0" max="100" step="0.1" placeholder='出场时车辆所剩油量' style="width: 130px"/> L
 						<br>
 						<br>
 
 						<img src='/statics/user/里程.png' width='20px' alt="正在加载图片">
-						<label for="EndMile" style='font-size:15px;width: 80px;'>出场里程：</label>
+						<label for="EndMile" style='font-size:15px;width: 80px;'>出厂里程：</label>
 						<input class="edit_attorney" id='EndMile' type='number' min="0" step="0.1" placeholder='出场时车辆里程数' style="width: 130px"/> km
 						<br>
 						<br>
@@ -457,7 +454,7 @@
 
 			</div>
 			<form class='modal-footer'>
-				<button type='button' class='btn btn-primary' onclick="if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value,false))checkOut()" id='checkOutAttorney' style="display: none">结算</button>				、
+				<button type='button' class='btn btn-primary' onclick="if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value,false))checkOut()" id='checkOutAttorney' style="display: none">结算</button>
 				<button type='button' class='btn btn-primary' onclick="saveAttorney(true)" id='confirmAddVehicle'>保存编辑</button>
 				<button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
 			</form>
@@ -481,7 +478,7 @@
 			</div>
 			<form class="modal-footer">
 				<button type="button" class="btn btn-primary" id="confirmDiscountChange" onclick="updateDiscountRate()">确认更改</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-default"  onclick="location.reload()">取消</button><!--data-dismiss="modal"-->
 			</form>
 		</div>
 	</div>
