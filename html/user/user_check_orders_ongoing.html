@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" ng-app="AngularStore">
 <head>
 	<title>进行中订单</title>
@@ -70,7 +70,7 @@
 				<strong>客户您好!</strong> 您有新的消息需要处理！！！<a onclick="checkNotification()" style="cursor: pointer">立即查看</a>
 			</div>
 			<div class='col-md-10' id='con'  style='text-align: center'>
-				<label style='color: #77bbe2;font-size:50px;'>　　　车辆信息</label>
+				<label style='color: #77bbe2;font-size:50px;'>　　　进行中维修</label>
 			</div>
 
 			<div id="ongoing_table_father" class="table-responsive col-md-12">
@@ -513,10 +513,10 @@
 							td2.innerHTML = data[i-1].Vin;
 							var td3 = document.createElement("td");
 							tr1.appendChild(td3);
-							td3.innerHTML = data[i-1].RoughProblem;
+							td3.innerHTML = data[i-1].RoughProblem.replace(/\n/g,"<br>");
 							var td4 = document.createElement("td");
 							tr1.appendChild(td4);
-							td4.innerHTML = data[i-1].SpecificProblem;
+							td4.innerHTML = data[i-1].SpecificProblem.replace(/\n/g,"<br>");
 							var td5 = document.createElement("td");
 							tr1.appendChild(td5);
 							td5.innerHTML = data[i-1].PredictFinishTime;
@@ -569,7 +569,7 @@
 					document.getElementById("15").innerHTML = last.RepairType;
 					document.getElementById("16").innerHTML = last.RepairClassification;
 
-					document.getElementById("17").innerHTML = last.RoughProblem;
+					document.getElementById("17").innerHTML = last.RoughProblem.replace(/\n/g,"<br>");
 					document.getElementById("18").innerHTML = last.OutRange;
 
 					document.getElementById("19").innerHTML = last.SpecificProblem;

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" ng-app="AngularStore">
 <head>
 	<title>主页</title>
@@ -380,13 +380,13 @@
 						<br>
 
 						<img src='/statics/user/油量.png' width='20px' alt="正在加载图片">
-						<label for="EndPetrol" style='font-size:15px;width: 80px;'>出厂油量：</label>
+						<label for="EndPetrol" style='font-size:15px;width: 80px;'>出场油量：</label>
 						<input class="edit_attorney" id='EndPetrol' type='number' min="0" max="100" step="0.1" placeholder='出场时车辆所剩油量' style="width: 130px"/> L
 						<br>
 						<br>
 
 						<img src='/statics/user/里程.png' width='20px' alt="正在加载图片">
-						<label for="EndMile" style='font-size:15px;width: 80px;'>出厂里程：</label>
+						<label for="EndMile" style='font-size:15px;width: 80px;'>出场里程：</label>
 						<input class="edit_attorney" id='EndMile' type='number' min="0" step="0.1" placeholder='出场时车辆里程数' style="width: 130px"/> km
 						<br>
 						<br>
@@ -636,7 +636,7 @@
 							tr.appendChild(td5);
 							var h55 = document.createElement("h5");
 							td5.appendChild(h55);
-							h55.innerHTML = own[i].RoughProblem;
+							h55.innerHTML = own[i].RoughProblem.replace(/\n/g,"<br>");
 							var td6 = document.createElement("td");
 							tr.appendChild(td6);
 							var a = document.createElement("button");
@@ -737,12 +737,12 @@
                             var td5 = document.createElement("td");
                             tr.appendChild(td5);
                             td5.id = "order_type_" + i;
-                            td5.innerHTML = own[i].RoughProblem;
+                            td5.innerHTML = own[i].RoughProblem.replace(/\n/g,"<br>");
 
                             var td6 = document.createElement("td");
                             tr.appendChild(td6);
                             td6.id = "order_type_" + i;
-                            td6.innerHTML = own[i].SpecificProblem;
+                            td6.innerHTML = own[i].SpecificProblem.replace(/\n/g,"<br>");
 
                             var td7 = document.createElement("td");
                             tr.appendChild(td7);
@@ -899,10 +899,10 @@
 							td2.innerHTML = data[i].Vin
 							var td3 = document.createElement("td");
 							tr.appendChild(td3);
-							td3.innerHTML = data[i].RoughProblem;
+							td3.innerHTML = data[i].RoughProblem.replace(/\n/g,"<br>");
 							var td4 = document.createElement("td");
 							tr.appendChild(td4);
-							td4.innerHTML = data[i].SpecificProblem;
+							td4.innerHTML = data[i].SpecificProblem.replace(/\n/g,"<br>");
 							var td5 = document.createElement("td");
 							tr.appendChild(td5);
 							td5.innerHTML = data[i].PredictFinishTime;
@@ -1024,24 +1024,18 @@
                         btn.setAttribute("style", "display: inline");
 						btn.setAttribute("onclick", "if(checkSubmit('edit_attorney')&&dateModify(document.getElementById('ExpectedEndTime').value,false))checkOut('" + attorneyNo + "')");
 						try{
-							document.getElementById("ExpectedEndTime").removeAttribute("disabled");
 							document.getElementById("EndPetrol").removeAttribute("disabled");
 							document.getElementById("EndMile").removeAttribute("disabled");
-							document.getElementById("ExpectedEndTime").removeAttribute("style");
 							document.getElementById("EndPetrol").removeAttribute("style");
 							document.getElementById("EndMile").removeAttribute("style");
-							document.getElementById("ExpectedEndTime").removeAttribute("title");
 							document.getElementById("EndPetrol").removeAttribute("title");
 							document.getElementById("EndMile").removeAttribute("title");
 						}catch(ERR){};
 					}else{
-						document.getElementById("ExpectedEndTime").setAttribute("disabled","disabled");
 						document.getElementById("EndPetrol").setAttribute("disabled","disabled");
 						document.getElementById("EndMile").setAttribute("disabled","disabled");
-						document.getElementById("ExpectedEndTime").setAttribute("style","cursor: not-allowed;");
 						document.getElementById("EndPetrol").setAttribute("style","cursor: not-allowed;");
 						document.getElementById("EndMile").setAttribute("style","cursor: not-allowed;");
-						document.getElementById("ExpectedEndTime").setAttribute("title","待结算状态方可填写此字段");
 						document.getElementById("EndPetrol").setAttribute("title","待结算状态方可填写此字段");
 						document.getElementById("EndMile").setAttribute("title","待结算状态方可填写此字段");
 					}

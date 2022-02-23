@@ -383,10 +383,10 @@
 							td2.innerHTML = data[i-1].Vin;
 							var td3 = document.createElement("td");
 							tr1.appendChild(td3);
-							td3.innerHTML = data[i-1].RoughProblem;
+							td3.innerHTML = data[i-1].RoughProblem.replace(/\n/g,"<br>");
 							var td4 = document.createElement("td");
 							tr1.appendChild(td4);
-							td4.innerHTML = data[i-1].SpecificProblem;
+							td4.innerHTML = data[i-1].SpecificProblem.replace(/\n/g,"<br>");
 							var td5 = document.createElement("td");
 							tr1.appendChild(td5);
 							td5.innerHTML = data[i-1].ActualFinishTime;
