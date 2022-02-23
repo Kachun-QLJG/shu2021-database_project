@@ -33,8 +33,11 @@ func main() {
 		"./html/salesman/salesman_index.html", "./html/repairman/repairman_index.html") //加载html模板
 	r.Use(Session("SHU")) //验证码生成会使用SHU作为密钥生成session
 	addPath(r)
+	r.NoRoute(func(c *gin.Context) {
+		c.HTML(http.StatusNotFound, "404.html", nil)
+	})
 
-	// 启动HTTP服务，在36b1c95548.qicp.vip启动服务
+	// 启动HTTP服务，在8080端口启动服务
 	err := r.Run(":8080")
 	if err != nil {
 		fmt.Println("启动HTTP服务失败：", err)
