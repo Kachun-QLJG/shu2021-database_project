@@ -239,10 +239,10 @@ func createAttorney(c *gin.Context) {
 		c.String(http.StatusOK, "新增委托失败！该车辆正在维修中！请耐心等待~")
 		return
 	}
-	date := time.Now().Format("20060102")
+	date := time.Now().Format("20060102") //按年+月+日的格式生成订单号前8位
 	var attorney Attorney
-	number := database.Find(&attorney, "number like ?", date+"___").RowsAffected + 1
-	strNumber := date + fmt.Sprintf("%03d", number)
+	number := database.Find(&attorney, "number like ?", date+"___").RowsAffected + 1 //通过模糊查询获得顺序号
+	strNumber := date + fmt.Sprintf("%03d", number)                                  //将顺序号转换成字符串类型并拼接到订单号末尾
 	startPetrol, _ := strconv.ParseFloat(c.PostForm("start_petrol"), 64)
 	startMile, _ := strconv.ParseFloat(c.PostForm("start_mile"), 64)
 	type temp struct {
@@ -370,9 +370,8 @@ func addVehicle(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{"status": "成功", "data": "成功"})
 		}
 	} else { //这辆车已经被绑定
-		//检查这辆车是否有正在处理的订单
 		var attorney Attorney
-		result := database.First(&attorney, "vehicle_number = ? and progress != '已完成'", number)
+		result := database.First(&attorney, "vehicle_number = ? and progress != '已完成'", number) //检查这辆车是否有正在处理的订单
 		if result.RowsAffected == 0 {
 			//通知原车主
 			var notification Notification
@@ -388,8 +387,7 @@ func addVehicle(c *gin.Context) {
 				"未读",
 				sTime,
 			}
-			database.Create(&data) //添加到通知表
-			//更新
+			database.Create(&data)                                           //添加到通知表
 			database.Model(&vehicle).Update("license_number", licenseNumber) //更改车牌号为传过来的车牌号
 			database.Model(&vehicle).Update("color", color)                  //更改颜色为传过来的颜色
 			database.Model(&vehicle).Update("model", model)                  //更改车型为传过来的车型
@@ -439,9 +437,9 @@ func changeUserinfo(c *gin.Context) {
 	property := c.PostForm("property")
 	contactPerson := c.PostForm("contact_person")
 	var user User
-	database.First(&user, "contact_tel = ?", number)
-	database.Model(&user).Update("name", name)                    //更改状态为传过来的状态
-	database.Model(&user).Update("property", property)            //更改状态为传过来的状态
-	database.Model(&user).Update("contact_person", contactPerson) //更改状态为传过来的状态
+	database.First(&user, "contact_tel = ?", number)              //检索当前用户
+	database.Model(&user).Update("name", name)                    //更新客户名称
+	database.Model(&user).Update("property", property)            //更新客户性质
+	database.Model(&user).Update("contact_person", contactPerson) //更新联系人
 	c.String(http.StatusOK, "成功！")
 }

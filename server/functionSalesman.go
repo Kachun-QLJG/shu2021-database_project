@@ -258,7 +258,7 @@ func addProjectForAttorney(c *gin.Context) {
 	workHour, _ := strconv.ParseFloat(temp.Time, 64)
 	var repairman Repairman
 	database.First(&repairman, "number = ?", repairmanNo)
-	database.Model(&repairman).Update("current_work_hour", repairman.CurrentWorkHour+workHour)
+	database.Model(&repairman).Update("current_work_hour", repairman.CurrentWorkHour+workHour) //添加维修工的工时
 	var project TimeOverview
 	database.First(&project, "project_number = ?", projectNo)
 	var notification Notification
@@ -361,13 +361,13 @@ func setAttorneyFinished(c *gin.Context) {
 		return
 	}
 	sTime := time.Now().Format("2006-01-02")
-	database.Model(&attorney).Update("actual_finish_time", sTime)
+	database.Model(&attorney).Update("actual_finish_time", sTime) //更新实际完成时间
 	//database.Model(&attorney).Update("end_petrol", endPetrol)
 	//database.Model(&attorney).Update("end_mile", endMile)
-	database.Model(&attorney).Update("progress", "已完成")
+	database.Model(&attorney).Update("progress", "已完成") //更新订单进度
 	var user User
 	database.First(&user, "number = ?", attorney.UserID)
-	genPdf(user.ContactTel, attorneyNo)
+	genPdf(user.ContactTel, attorneyNo) //调用生成PDF的函数
 	c.JSON(http.StatusOK, gin.H{"url": "/show_pdf?attorney_no=" + attorneyNo, "discountRate": user.DiscountRate, "user_id": user.Number, "attorney_no": attorneyNo})
 }
 
@@ -382,21 +382,21 @@ func getSalesmanInfo(c *gin.Context) {
 }
 
 func searchForProjects(c *gin.Context) {
-	text := c.Query("text")
-	carType := c.Query("type")
-	dbType := strings.ToLower(carType)
-	dbType = "time_" + dbType
-	text = strings.Replace(text, " ", "%", -1)
-	searchText := "%" + strings.ToLower(text) + "%"
-	var timeOverview []struct {
+	text := c.Query("text")                         //获取文本框内的内容
+	carType := c.Query("type")                      //获取车辆类别
+	dbType := strings.ToLower(carType)              //格式化车辆类别为小写
+	dbType = "time_" + dbType                       //生成车辆类别在数据库中的名字
+	text = strings.Replace(text, " ", "%", -1)      //将文本框中的空格替换成%
+	searchText := "%" + strings.ToLower(text) + "%" //在头部和尾部各添加一个%进行模糊查询
+	var timeOverview []struct {                     //返回的结构体
 		Name string
 		Id   string
 		Time float64
 	}
-	if searchText[1] >= 'a' && searchText[1] <= 'z' || searchText[1] >= '0' && searchText[1] <= '9' {
+	if searchText[1] >= 'a' && searchText[1] <= 'z' || searchText[1] >= '0' && searchText[1] <= '9' { //如果框内输入的是首字母
 		database.Limit(20).Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_spelling LIKE ? and ? != ''", searchText, dbType).Scan(&timeOverview)
-	} else {
+	} else { //如果框内输入的是汉字
 		database.Limit(20).Table("time_overview").Select("project_name as name, project_number as id, "+dbType+" as time").Limit(20).Where("project_name LIKE ? and ? != ''", searchText, dbType).Scan(&timeOverview)
 	}
-	c.JSON(http.StatusOK, timeOverview)
+	c.JSON(http.StatusOK, timeOverview) //返回查询结果
 }

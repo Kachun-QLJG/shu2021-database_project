@@ -158,21 +158,21 @@ func login(c *gin.Context) {
 }
 func authMiddleWare() gin.HandlerFunc { //检查登录状态
 	return func(c *gin.Context) {
-		sessionId, err := c.Cookie("sessionId")
-		if err == nil {
+		sessionId, err := c.Cookie("sessionId") //获取Cookie中名为sessionId的值
+		if err == nil {                         //如果没有错误，即获取到了相应的Cookie
 			var session AuthSession
-			result := database.First(&session, "time_hash=?", sessionId)
-			if result.RowsAffected == 1 { //找到了信息
-				sTime := time.Now().Format("2006-01-02 15:04:05")
-				database.Model(&session).Update("last_visit", sTime) //用一次session，更新一次时间。
-				c.Set("username", session.Username)
-				c.Next()
+			result := database.First(&session, "time_hash=?", sessionId) //在登录表中查找该Cookie
+			if result.RowsAffected == 1 {                                //找到了信息
+				sTime := time.Now().Format("2006-01-02 15:04:05")    //获得当前的时间并匹配格式
+				database.Model(&session).Update("last_visit", sTime) //验证一次Cookie，更新一次时间。
+				c.Set("username", session.Username)                  //将用户名写入中间件
+				c.Next()                                             //中间件通过，执行下一个函数
 				return
 			}
 		}
-		// 返回错误
-		c.HTML(http.StatusUnauthorized, "error.html", gin.H{"errdata": "未登录", "website": "/login", "webName": "登录页面"})
-		c.Abort()
+		// 如果有错误，则返回错误
+		c.HTML(http.StatusUnauthorized, "error.html", gin.H{"errdata": "未登录", "website": "/login", "webName": "登录页面"}) //返回错误页面
+		c.Abort()                                                                                                      //中间件不通过，阻止下一个函数的执行
 		return
 	}
 }
