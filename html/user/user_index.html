@@ -613,7 +613,7 @@
 								td2.innerHTML = "检修中..."
 							}
 							else{
-								td2.innerHTML = data[i-1].Problem;
+								td2.innerHTML = data[i-1].Problem.replace(/\n/g,"<br>");
 							}
 							td2.setAttribute("style", "text-align: center;font-size: 15px;");
 						}
